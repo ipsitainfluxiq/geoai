@@ -1,0 +1,17 @@
+<app-header></app-header>
+<div class="fieldset_wrapper">
+        <div *ngIf="userdetails" >
+            <div class="pageheading" style="margin-bottom: 15px;"> My Profile</div>
+            <div class="priofiletablediv">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr *ngIf="userdetails.firstname && userdetails.lastname"><td ><label class="mplabel">Name :</label> {{userdetails.firstname}} {{userdetails.lastname}}</td></tr>
+                    <tr *ngIf="userdetails.year && userdetails.month && userdetails.day"><td ><label class="mplabel">Date Of Birth:</label> {{userdetails.day}}-{{userdetails.month}}-{{userdetails.year}}</td></tr>
+                    <tr><td ><label class="mplabel">Email :</label> {{userdetails.email}}</td></tr>
+                    <tr *ngIf="userdetails.location"><td ><label class="mplabel">Location :</label> {{userdetails.location}}</td></tr>
+                    <tr *ngIf="userdetails.state"><td ><label class="mplabel">State :</label> {{userdetails.state}}</td></tr>
+                </table>
+            </div>
+            <a class="adduserlinknew" style="width: auto; display: inline-block" [routerLink]="['/updateprofile']">Update Profile</a>
+            <a class="adduserlinknew" style="width: auto; display: inline-block" [routerLink]="['/changepassword']">Change Password</a>
+        </div>
+    </div>

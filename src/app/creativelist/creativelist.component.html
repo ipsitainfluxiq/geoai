@@ -1,0 +1,95 @@
+<app-header></app-header>
+
+<div class=" fieldset_wrapper">
+
+  <div class="searchdiv">
+    <label>Search :</label>
+    <input type="text" #listFilter (keyup)="0">
+    <div class="clearfix"></div>
+  </div>
+
+
+  <div class="demo">
+    <table class="tablenew">
+      <tr>
+        <th>#</th>
+        <th>Creative Name<b [ngClass]="getSortClass('creativename')" (click)="manageSorting('creativename')" ></b></th>
+        <th>Description</th>
+        <th class="makeitmiddle">Display Ad</th>
+        <th *ngIf="cookiedetailsforalldetails.type==1">Created By</th> <!--admin-->
+        <th>Action</th>
+      </tr>
+
+      <tbody *ngFor="let item of datalist | orderBy:orderbyquery:orderbytype | usersearch:listFilter.value; let i = index">
+      <tr class="parent" *ngIf=" i>=pagestart && i < pageinitation">
+        <td>{{i+1}}</td>
+        <td>{{item.creativename}}</td>
+        <td class="child-featured" [innerHTML]="_sanitizer.bypassSecurityTrustHtml(item.description)"></td>
+        <td> <iframe frameborder="0" width="400px" [attr.src]="callunsafe(item._id)" ></iframe>
+        </td>
+        <td  *ngIf="cookiedetailsforalldetails.type==1">{{item.Creativeaddata[0].firstname}} {{item.Creativeaddata[0].lastname}}<br>({{item.emailid}})</td>
+        <td *ngIf="item.emailid==mailcookiedetails" class="atagsecondchild">
+          <a [routerLink]="['/creativeedit',item._id]">Edit</a>
+          <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal" (click)="delConfirm(item._id)">Delete</a>
+        </td>
+        <!-- <td *ngIf="item.emailid!=mailcookiedetails" >No permission given</td>-->
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--<script>var params={click_url:"no_macro",cachebuster:"",deviceid:""};var s=document.createElement("script");s.type="text/javascript";s.src="https://cdn.airtory.com/5f08eb2ed9e0f438951f283d4e55a3f2.js";document.body.appendChild(s);var img=document.createElement("img");img.src="https://studio.airtory.com/serve/track/5f08eb2ed9e0f438951f283d4e55a3f2/impression?n="+params.cachebuster+"&deviceid="+params.deviceid;img.setAttribute("style","position:absolute;visibility:hidden;");document.body.appendChild(img);</script>-->
+
+  <div class="pagination paginationdiv">
+    <ul class="pagination--items">
+      <li class="pagination--item">
+        <label>
+          Go to: </label>
+        <input type="text" [(ngModel)]="pageno" (blur)="pageval(3)">
+        <div class="clearfix"></div>
+      </li>
+      <li class="pagination--item">
+        <label>
+          Show rows:</label>
+        <select [(ngModel)]="showrows" (click)="chagevalues()">
+          <option>5</option>
+          <option>10</option>
+          <option>25</option>
+        </select>
+        <div class="clearfix"></div>
+
+      </li>
+      <li class="pagination--item" >  <label>Page {{pageno}} of {{totalpage}}</label></li>
+      <li class="pagination--item" >
+        <img src="../../assets/images/pageprev.png" alt="#" (click)="pageval(1)">
+
+        <img src="../../assets/images/pagenext.png" alt="#" (click)="pageval(2)">
+      </li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+
+</div>
+
+
+<div *ngIf="isModalShown" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Confirm delete</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to delete this creative?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="creativedel()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

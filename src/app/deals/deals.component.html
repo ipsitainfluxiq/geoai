@@ -1,0 +1,68 @@
+<app-header></app-header>
+
+<div class="newpageborder"></div>
+<div class=" geo_body_wrapper">
+  <div class=" geo_new_wrapper">
+    <div class="geo_new_heading"><span><strong>CREATE AN</strong> Audience</span></div>
+    <div class="geo_new_menublock">
+      <ul>
+        <li><a [routerLink]="['/viewability']" href="javascript:void(0)" class="nmenu2"> Viewability</a></li>
+        <li><a [routerLink]="['/locations']" href="javascript:void(0)" class="nmenu1">Locations</a></li>
+        <li><a [routerLink]="['/browser']" href="javascript:void(0)" class="nmenu3"> Browser</a></li>
+        <li><a [routerLink]="['/os']" href="javascript:void(0)" class="nmenu4">Operating Systems</a></li>
+        <li><a [routerLink]="['/devicetypes']" href="javascript:void(0)" class="nmenu5">Device Types </a></li>
+        <li class="active"><a [routerLink]="['/deals']" href="javascript:void(0)" class="nmenu6">Geo Targets</a></li>
+        <li><a [routerLink]="['/pacing']" href="javascript:void(0)" class="nmenu7">Pacing</a></li>
+        <li><a [routerLink]="['/dayparting']" href="javascript:void(0)" class="nmenu8">Dayparting</a></li>
+        <div class="clearfix"></div>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div class=" geo_new_block1">
+      <img src="assets/images/dealsbigicon.png"  alt="#"/>
+      <h2>Deals</h2>
+      <h3>Lorem Ipsum is simply dummy
+        text of the printing and typesetting industry.</h3>
+    </div>
+    <h6 class="h6locationtext">Deals</h6>
+    <div class=" geo_new_block2">
+
+      <div class="create_audience_wrapper dealswrapper">
+        <p>Add Deal IDs to access specific inventory already negotiated with the publisher</p>
+        <textarea [(ngModel)]="dealdetails"></textarea>
+        <div class="clearfix"></div>
+        <input type="button"  value="Add Deal IDs" (click)="adddeals()" class="dealbtn"/>
+        <!-- <input type="button"  value="Ok" (click)="updatedeal(dealdetails)"/>-->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="dealstable">
+          <tr>
+            <th>Deal Id</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let item of pushdeals1; let i=index">
+            <td>{{item}}</td>
+            <td>Active</td>
+            <td><a href="javascript:void(0)" (click)="deletedeal(item)"><img src="assets/images/create_audience_close.png"  alt="#"/></a></td>
+          </tr>
+          <tr *ngFor="let item of pushdealsnew; let i=index">
+            <td>{{item}}</td>
+            <td>Pending</td>
+            <td><a href="javascript:void(0)" (click)="deletedeal(item)"><img src="assets/images/create_audience_close.png"  alt="#"/></a></td>
+          </tr>
+        </table>
+        <div class="clearfix"></div>
+        <div class="budget_formdiv_btn">
+          <input type="button"  value="Ok" (click)="updatedeal()"/>
+          <input type="button"  value="Cancel"/>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footerbtndiv">
+      <input type="button" value="Back" [routerLink]="['/devicetypes']">
+      <input type="button" value="Next" [routerLink]="['/pacing']">
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

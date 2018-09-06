@@ -1,0 +1,59 @@
+<app-header></app-header>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+  <div class="dashboard_right_wrapper">
+    <div class="dashboard1_div1 ">
+      <h4> Add Admin</h4>
+      <div class="dashboard1form">
+
+        <form role="form" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+
+          <label>First Name</label>
+          <input type="text" class="form-control" placeholder="First Name" [formControl]="dataForm.controls['firstname']">
+          <span class="has-error" *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid">First Name is Required !</span>
+
+          <label>Last Name</label>
+          <input type="text" class="form-control" placeholder="Last Name" [formControl]="dataForm.controls['lastname']">
+          <span class="has-error" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid">Last Name is Required !</span>
+
+          <label>Email</label>
+          <input type="text" class="form-control" placeholder="Email" [formControl]="dataForm.controls['email']">
+          <span class="has-error" *ngIf ="dataForm.controls['email'].touched && getemail('blank')==true">Email is Required !</span>
+          <span class="has-error" *ngIf ="dataForm.controls['email'].touched && getemail('invalid')==true">Email is not valid!</span>
+
+          <label>Password</label>
+          <input type="password" class="form-control" placeholder="Password" [formControl]="dataForm.controls['password']">
+          <span class="has-error" *ngIf ="dataForm.controls['password'].touched && !dataForm.controls['password'].valid">Minimum length for password is 8!</span>
+
+          <label>Confirm Password</label>
+          <input type="password" class="form-control" placeholder="Confirm Password"  [formControl]="dataForm.controls['confpassword']">
+          <span class="has-error" *ngIf ="dataForm.controls['confpassword'].touched && !dataForm.controls['confpassword'].valid">Please fill in the required field.</span>
+          <div class="has-error" *ngIf ="dataForm.hasError('mismatchedPasswords') && dataForm.controls['confpassword'].valid ">
+            <strong>Passwords must match</strong>
+          </div>
+
+         <!-- <label>Address</label>
+          <input type="text" class="form-control" placeholder="Address" [formControl]="dataForm.controls['address']">
+          <span class="has-error" *ngIf ="dataForm.controls['address'].touched && !dataForm.controls['address'].valid">Address is Required !</span>
+
+          <label>City</label>
+          <input type="text" class="form-control" placeholder="City" [formControl]="dataForm.controls['city']">
+          <span class="has-error" *ngIf ="dataForm.controls['city'].touched && !dataForm.controls['city'].valid">City is Required !</span>
+
+          <label>State</label>
+          <input type="text" class="form-control" placeholder="State" [formControl]="dataForm.controls['state']">
+          <span class="has-error" *ngIf ="dataForm.controls['state'].touched && !dataForm.controls['state'].valid">State is Required !</span>
+
+          <label>Zip</label>
+          <input type="text" class="form-control" placeholder="Zip" [formControl]="dataForm.controls['zip']">
+          <span class="has-error" *ngIf ="dataForm.controls['zip'].touched && !dataForm.controls['zip'].valid">Zip is Required !</span>
+
+          <label>Phone No</label>
+          <input type="text" appOnlyNumber="true" class="form-control" placeholder="Phone No" [formControl]="dataForm.controls['phone']">
+          <span class="has-error" *ngIf ="dataForm.controls['phone'].touched && !dataForm.controls['phone'].valid">Give the phone number correctly !</span>-->
+
+          <br><input type="submit" value="Save" class="loginbtn2">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

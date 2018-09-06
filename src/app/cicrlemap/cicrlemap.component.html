@@ -1,0 +1,44 @@
+<!--
+<agm-map style="height: 800px" *ngIf="mapval" [latitude]="lat" [longitude]="lng" [fitBounds]="bounds" (mapClick)="mapClicked($event)">
+
+ &lt;!&ndash;   <agm-circle *ngFor="let lineval of markers" [paths]="lineval"  [circleDraggable]="true" [clickable]="true" [draggable]="true" [editable]="true" strokeColor="#E9BE79" fillColor="#EBD8B7" fillOpacity="1" >
+    </agm-circle>&ndash;&gt;
+    <agm-circle [latitude]="lat + 0.3" [longitude]="lng"
+                            [radius]="5000"
+                            [fillColor]="'red'"
+                            [circleDraggable]="true"
+                            [editable]="true">
+    </agm-circle>
+</agm-map>-->
+
+<!--
+<agm-map *ngIf="mapval" [latitude]="lat" [longitude]="lng" [fitBounds]="bounds" (mapClick)="mapClicked($event)">
+    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    <agm-polygon *ngFor="let pathsvals of patharr" [paths]="pathsvals" [clickable]="true" [polyDraggable]="true" [draggable]="true" [editable]="true" strokeColor="#E9BE79" fillColor="#EBD8B7" fillOpacity="1" >
+    </agm-polygon>
+    <agm-polyline [clickable]="true" [draggable]="true" [editable]="true">
+        <agm-polyline-point *ngFor="let lineval of paths" [latitude]="lineval.lat" [longitude]="lineval.lng">
+        </agm-polyline-point>
+    </agm-polyline>
+</agm-map>-->
+
+
+<div class="mapblickwrapper">
+    <div class="map_menuwrapper">
+        <input  type="text" class="map_input" placeholder="address" [(ngModel)]="searchaddress" (keyup)="searchlatlng($event)"/>
+        <a href="javascript:void(0)" class="maplink1" (click)="createsh()"><img src="../../assets/images/map_icon4.jpg"  alt="#"/></a>
+        <div class="clearfix"></div>
+    </div>
+  <!--  <agm-map style="height: 800px" [latitude]="lat" [longitude]="lng" [fitBounds]="bounds" (mapClick)="mapClicked($event)">-->
+    <agm-map style="height: 800px" [latitude]="lat" [longitude]="lng" (mapClick)="mapClicked($event)">
+        <div *ngFor="let item of temparrval; let i = index">
+
+        <agm-circle [latitude]="item.lat" [longitude]="item.lng"
+                    [radius]="1500"
+                    [fillColor]="'red'"
+                    [circleDraggable]="true"
+                    [editable]="true">
+        </agm-circle>
+        </div>
+    </agm-map>
+</div>

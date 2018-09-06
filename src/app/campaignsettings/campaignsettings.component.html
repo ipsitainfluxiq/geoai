@@ -1,0 +1,754 @@
+<app-header></app-header>
+<div class="content" id="basic_information">
+  <!--  <div class="top_banner_body">
+
+
+
+    <div class="top_banner_wrapper">
+
+
+      <img src="../../assets/images/geoai_logo.jpg"  class="geoai_logo"/>
+      <img src="../../assets/images/geoai_top_banner.jpg" class="geoai_top_banner" />
+
+      <a href="#" class="top_bannerbtn">Ad Marketing Pros</a>
+
+      <div class="topnew_menu">
+        <div class="btn-group" dropdown>
+          <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+            <span class="glyphicon glyphicon-menu-hamburger"></span> <span class="caret"></span>
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem"><a class="dropdown-item" [routerLink]="['/campaignsettings']"><h2>Create Campaigns </h2></a></li>
+
+
+          </ul>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>-->
+
+  <div class="fieldset_wrapper">
+
+    <fieldset>
+      <div class="pageheading">{{campaignname}}</div>
+      <!--      <a [routerLink]="['/campaignlist']" class="createaudience_link">Campaign list</a>-->
+      <ul class='nav nav-wizard campaignmenu'>
+
+        <li class='active'><a ><span>1</span> Campaign Settings </a></li>
+
+        <li><a [routerLink]="['/createaudience']"><span>2</span>  Create Audience</a></li>
+
+        <li><a><span>3</span>  Creatives </a></li>
+        <li><a><span>4</span>  Summary and Launch </a></li>
+        <div class="clearfix"></div>
+
+      </ul>
+
+    </fieldset>
+
+    <fieldset>
+
+      <div class="campaign_settings_wrapper">
+
+        <div class="campaign_settings_box1">
+          <label>Name</label>
+          <div  class="errorclass" *ngIf="error">{{error}}</div>
+          <input type="text" (blur)="updatename()" [(ngModel)]="name"/>
+        </div>
+
+        <div class="campaign_settings_box2">
+
+          <div class="campaign_settings_cell">
+
+            <div class="campaign_settings_cell_top">
+
+              <label (click)="sendtype(7)">campaign Type </label>
+              <b>{{geoname}}</b>
+
+              <div class="clearfix"></div>
+            </div>
+            <div *ngIf="divshow7">
+              <div class="budget_wrapper">
+                <div class="create_audience_wrapper">
+
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td [ngClass]="geoid ==1 ? 'activetd' : ''" (click)="gettype(1)"><img src="../../assets/images/campaign_icon1.png"  alt="#"/>
+                        <h1 >Search </h1>
+                      </td>
+                      <td [ngClass]="geoid ==2 ? 'activetd' : ''" (click)="gettype(2)"><img src="../../assets/images/campaign_icon2.png"  alt="#"/>
+                        <h1>Contextual</h1>
+                      </td>
+                      <td [ngClass]="geoid ==3 ? 'activetd' : ''"  (click)="gettype(3)"><img src="../../assets/images/campaign_icon3.png"  alt="#"/>
+                        <h1>Site Retargeting</h1>
+                      </td>
+                      <td [ngClass]="geoid ==4 ? 'activetd' : ''"  (click)="gettype(4)"><img src="../../assets/images/campaign_icon4.png"  alt="#"/>
+                        <h1>IP Targeting</h1>
+                      </td>
+                      <td [ngClass]="geoid ==5 ? 'activetd' : ''"  (click)="gettype(5)"><img src="../../assets/images/campaign_icon5.png"  alt="#"/>
+                        <h1>Geo Optimized</h1>
+                      </td>
+                    </tr>
+
+                  </table>
+
+
+
+                </div>
+                <!-- <label (click)="gettype(1)">Search</label>
+              <label (click)="gettype(2)">Contextual</label>
+              <label (click)="gettype(3)">Site Retargeting</label>
+              <label (click)="gettype(4)">IP Targeting</label>
+              <label (click)="gettype(5)">Geo Optimized</label>-->
+
+
+                <div class="budget_formdiv_btn">
+                  <input type="button" value="OK" (click)="updategeo()">
+                  <input type="button"  value="Cancel"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+
+          </div>
+
+          <div class="campaign_settings_cell">
+
+            <div class="campaign_settings_cell_top">
+
+              <label (click)="sendtype(0)">Flight </label>
+
+              <b>{{dateforstart}}to{{dateforend}}</b>
+
+              <div class="clearfix"></div>
+
+            </div>
+            <div *ngIf="divshow0">
+              <div class="budget_wrapper">
+
+
+                <div  class="errorclass" *ngIf="error1">{{error1}}</div>
+                <div class="budget_formdiv_left">
+
+                  <div class="budget_forminput">
+                    <pre class="preformcontrol">Start date: <em *ngIf="dt">{{ getDate() | date:'fullDate'}}</em></pre>
+                    <!-- <input class="form-control2" type="text" >Start date: <em *ngIf="dt">{{ getDate() | date:'fullDate'}}</em>-->
+
+                  </div>
+                  <div class="clearfix"></div>
+                  <!--</div>-->
+
+                  <div style="display:inline-block; min-height:290px;">
+                    <datepicker [(ngModel)]="dt"></datepicker>
+                  </div>
+
+                </div>
+
+                <div class="budget_formdiv_right">
+                  <pre class="preformcontrol">End date: <em *ngIf="enddate">{{ getendDate() | date:'fullDate'}}</em></pre>
+
+                  <div class="clearfix"></div>
+
+                  <div style="display:inline-block; min-height:290px;">
+                    <datepicker [(ngModel)]="enddate"></datepicker>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="clearfix"></div>
+
+
+
+
+                <div class="budget_formdiv_btn">
+                  <input type="button" value="OK" (click)="updatedate()">
+                  <input type="button"  value="Cancel"/>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+          </div>
+
+
+
+          <div class="campaign_settings_cell">
+
+            <div class="campaign_settings_cell_top">
+
+              <label (click)="sendtype(1)" >Budget </label>
+              <b>${{bidding_amount}} {{bid_value}}, ${{daily_spend_target}}/day, ${{monthly_budget}}/month, ${{campaign_budget}}total</b>
+              <!--  <b *ngIf="submitedval">${{bidding_amount}} CPM,${{daily_spend_target}}/day,${{monthly_budget}}/month,${{campaign_budget}} total</b>-->
+              <div class="clearfix"></div>
+            </div>
+            <!-- <div [ngClass]="{'active': isActive[1], 'disabled': isDisabled[1]}">-->
+            <div *ngIf="divshow">
+              <div class="errorclass" *ngIf="error2">
+                <b>There were errors with your request:</b> {{error2}}</div>
+              <div class="errorclass" *ngIf="error3">{{error3}}</div>
+              <div class="errorclass" *ngIf="error4">{{error4}}</div>
+              <div class="errorclass" *ngIf="error5">{{error5}}</div>
+              <div class="budget_wrapper">
+                <div class="budget_formdiv_left">
+                  <div class="budget_formdiv">
+                    <label>Campaign Budget<img src="../../assets/images/budget_formicon.png" alt="#" /></label>
+                    <div class="clearfix"></div>
+                    <div class="budget_forminput">
+                      <span>$</span>
+                      <input appOnlyNumber="true" id="campaign_budget" class="form-control"  name="campaign_budget" type="number" [(ngModel)]="campaign_budget">
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+
+
+                  <div class="budget_formdiv">
+                    <label>Monthly Budget<img src="../../assets/images/budget_formicon.png" alt="#" /></label>
+                    <div class="clearfix"></div>
+                    <div class="budget_forminput">
+                      <span>$</span>
+                      <input appOnlyNumber="true" id="monthly_budget"  class="form-control"  name="monthly_budget" type="number" [(ngModel)]="monthly_budget">
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+
+                  <div class="budget_formdiv">
+                    <label>Daily Spend Target <img src="../../assets/images/budget_formicon.png" alt="#" /> </label>
+                    <div class="clearfix"></div>
+                    <div class="budget_forminput">
+                      <span>$</span>
+                      <input appOnlyNumber="true" id="daily_spend_target"  class="form-control"  name="daily_spend_target" type="number" [(ngModel)]="daily_spend_target">
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="budget_formdiv_right">
+                  <div class="budget_formdiv">
+                    <label>Bidding Type <img src="../../assets/images/budget_formicon.png" alt="#" /></label>
+                    <div class="clearfix"></div>
+                    <div class="budget_forminput">
+                      <select id="bidding_type"  class="form-control2"  name="bidding_type" [(ngModel)]="bidding_type" >
+                        <option value="cpm_bidding">CPM Bidding</option>
+                        <option value="cpc_bidding">CPC Bidding</option>
+                      </select>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <!--<select id="bidding_type"  name="bidding_type" [(ngModel)]="bidding_type" >
+                <option value="cpm_bidding">CPM Bidding</option>
+                <option value="cpc_bidding">CPC Bidding</option>
+              </select>-->
+
+                  <div class="budget_formdiv">
+                    <label>Bidding Amount<img src="../../assets/images/budget_formicon.png" alt="#" /> </label>
+                    <div class="clearfix"></div>
+                    <div class="budget_forminput">
+                      <span>$</span>
+                      <input appOnlyNumber="true" id="bidding_amount"  class="form-control"  name="bidding_amount" type="number" [(ngModel)]="bidding_amount">
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+
+
+                <div class="budget_formdiv2">
+                  <input type="checkbox" [(ngModel)]="auto"/><label>Auto Adjust Daily Spend Target <span>Campaign Budget and End Date Required </span></label>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="budget_formdiv_btn">
+                  <input type="button" value="OK" (click)="updatebudget()">
+                  <input type="button"  value="Cancel"/>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="campaign_settings_cell">
+
+            <div class="campaign_settings_cell_top">
+
+              <label (click)="sendtype(2)">Capping </label>
+              <b>{{daily_impression}} Daily, {{monthly_impression}} Monthly, {{impressions_c}} Total , {{impressions_f}} impressions per {{p_hour}} hours</b>
+              <div class="clearfix"></div>
+
+            </div>
+            <div *ngIf="divshow2">
+              <div class="errorclass" *ngIf="error6">{{error6}}</div>
+              <div class="errorclass" *ngIf="error7">{{error7}}</div>
+              <div class="errorclass" *ngIf="error8">{{error8}}</div>
+              <div class="errorclass" *ngIf="error9">{{error9}}</div>
+
+              <div class="budget_wrapper">
+                <div class="budget_formdiv_left">
+                  <div class="budget_formdiv">
+                    <h1>Impression Capping </h1>
+                    <div class="clearfix"></div>
+                    <label>Impressions <img src="../../assets/images/budget_formicon.png" alt="#" /></label>
+                    <div class="clearfix"></div>
+                    <div class="budget_forminput">
+                      <input class="form-control2" appOnlyNumber="true" id="impressions_c"  name="impressions_c" type="text" [(ngModel)]="impressions_c">
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="budget_formdiv">
+                    <label>Monthly Impression Capping <img src="../../assets/images/budget_formicon.png" alt="#" /></label>
+                    <div class="clearfix"></div>
+                    <div class="budget_forminput">
+                      <input class="form-control2"  appOnlyNumber="true" id="monthly_impression"  name="monthly_impression" type="text" [(ngModel)]="monthly_impression">
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="budget_formdiv">
+                    <label>Daily Impression Capping  <img src="../../assets/images/budget_formicon.png" alt="#" /> </label>
+                    <div class="clearfix"></div>
+                    <div class="budget_forminput">
+                      <input class="form-control2"  appOnlyNumber="true" id="daily_impression"  name="daily_impression" type="text" [(ngModel)]="daily_impression">
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="budget_formdiv_right">
+                  <div class="budget_formdiv">
+                    <h1>Frequency Capping <img src="../../assets/images/budget_formicon.png" alt="#" /></h1>
+                    <div class="clearfix"></div>
+                    <div class="budget_forminput">
+                      <div class="budget_forminput_sub1">
+                        <label>Impressions</label>
+                        <input  class="form-control2"  appOnlyNumber="true" id="impressions_f"  name="impressions_f" type="text" [(ngModel)]="impressions_f">
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="budget_forminput_sub2">
+                        <label>Per Hours</label>
+                        <select  class="form-control2" id="p_hour"  name="p_hour" [(ngModel)]="p_hour" >
+                          <option *ngFor="let item of items; let i=index" value="{{item}}">{{item}}</option>
+                        </select>
+                        <div class="clearfix"></div>
+                      </div>
+                      <a href="javascript:void(0)"  class="clearbtn">Clear</a>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="budget_formdiv_btn">
+                  <input type="button"  value="OK" (click)="updatecapping()"/>
+                  <input type="button"  value="Cancel"/>
+                </div>
+              </div>
+              <!--  <label>Impression Capping</label>
+              <label>Impressions</label>
+              <input appOnlyNumber="true" id="impressions_c"  name="impressions_c" type="text" [(ngModel)]="impressions_c">
+              <label>Monthly Impression Capping</label>
+              <input appOnlyNumber="true" id="monthly_impression"  name="monthly_impression" type="text" [(ngModel)]="monthly_impression">
+              <label>Daily Impression Capping</label>
+              <input appOnlyNumber="true" id="daily_impression"  name="daily_impression" type="text" [(ngModel)]="daily_impression">
+              <label>Frequency Capping</label>
+              <label>Impressions</label>
+              <input appOnlyNumber="true" id="impressions_f"  name="impressions_f" type="text" [(ngModel)]="impressions_f">
+              <label>Per Hours</label>
+              <select id="p_hour"  name="p_hour" [(ngModel)]="p_hour" >
+                <option *ngFor="let item of items; let i=index" value="{{item}}">{{item}}</option>
+              </select>
+              <input type="button" value="OK" (click)="updatecapping()">-->
+            </div>
+          </div>
+
+
+
+          <div class="campaign_settings_cell">
+
+            <div class="campaign_settings_cell_top">
+
+              <label (click)="sendtype(3)">Conversions </label>
+              <div class="errorclass" *ngIf="sizeerrors">{{sizeerrors}}</div>
+              <b>{{viewthrupercentage1}}.0% view, {{clickthrupercentage1}}.0% click</b>
+              <div class="clearfix"></div>
+
+            </div>
+            <div *ngIf="divshow3">
+              <div class="budget_wrapper">
+
+                <tabset>
+                  <tab heading="Site Conversions">
+                  </tab>
+                  <tab heading="Geo Conversions" (select)="initializeval()" >
+
+                    <!-- <input type="text" [(ngModel)]="searchaddress">
+                      <input type="button" value="Search" (click)="searchlatlng()">-->
+
+
+                    <div class="GeoJSON_block"><span >Upload GeoJSON</span></div>
+
+                   <!-- <div class="GeoJSON_block"><span (click)="getjson()">Upload GeoJSON</span></div>
+                    <div *ngIf="uploadjson">
+                      <input type="file"  ngFileSelect [options]="basicOptions" (onUpload)="handleUpload($event)">
+                      <input type="button"  value="Upload" (click)="callupload()"/>
+                      <input type="button"  value="Cancel" />
+                    </div>-->
+
+
+
+
+
+                    <div class="mapblickwrapper">
+
+                      <div class="map_menuwrapper">
+                        <input  type="text" class="map_input" placeholder="address" [(ngModel)]="searchaddress" (keyup)="searchlatlng($event)"/>
+                        <!--<input type="button" value="Search" (click)="searchlatlng()">-->
+
+                        <a href="javascript:void(0)" class="maplink1"><img src="../../assets/images/map_icon2.jpg"  alt="#"/></a>
+                        <a href="javascript:void(0)" class="maplink1" (click)="createsh(1)"><img src="../../assets/images/map_icon3.jpg"  alt="#"/></a>
+                        <a href="javascript:void(0)" class="maplink1" (click)="createsh(2)"><img src="../../assets/images/map_icon4.jpg"  alt="#"/></a>
+
+                        <a href="javascript:void(0)" class="maplink2"><img src="../../assets/images/map_icon5.jpg"  alt="#"/></a>
+
+                        <div class="clearfix"></div>
+
+
+                      </div>
+
+                      <agm-map *ngIf="mapval" [latitude]="lat" [longitude]="lng" [fitBounds]="bounds" (mapClick)="mapClicked($event)">
+                        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                        <agm-polygon *ngFor="let pathsvals of patharr" [paths]="pathsvals" [clickable]="true" [polyDraggable]="true" [draggable]="true" [editable]="true" strokeColor="#E9BE79" fillColor="#EBD8B7" fillOpacity="1" >
+                        </agm-polygon>
+
+                        <agm-polyline [clickable]="true" [draggable]="true" [editable]="true">
+                          <agm-polyline-point *ngFor="let lineval of paths" [latitude]="lineval.lat" [longitude]="lineval.lng">
+                          </agm-polyline-point>
+
+                        </agm-polyline>
+                      </agm-map>
+
+
+                    </div>
+
+
+
+                    <div class="map_menuwrapper menuwrapper_buttom">
+                      <select class="map_select" [(ngModel)]="polydelete" (click)="mapdelete()">
+                        <option>Actions</option>
+                        <option value="removeselected">Remove Selected</option>
+                        <option value="removeall">Remove All</option>
+                      </select>
+
+                      <input  type="text" class="map_input" placeholder="address" [(ngModel)]="searchaddress" (keyup)="searchlatlng($event)"/>
+                      <!--<input type="button" value="Search" (click)="searchlatlng()">-->
+
+                      <div class="clearfix"></div>
+
+
+                    </div>
+
+                    <div class="new_table_wrapper">
+                      <div class="GeoJSON_block2"> <a href="javascript:void(0)">Download GeoJSON</a> </div>
+
+
+                      <table>
+
+                        <tr>
+                          <th><input type="checkbox" (click)="allcheck()" [(ngModel)]="checkuncheck"></th>
+                          <th>Name</th>
+
+                          <th>Geo Type</th>
+                          <th>&nbsp;</th>
+                        </tr>
+                        <!--<tr *ngFor="let item of show">-->
+                        <tr *ngFor="let item of fence; let i=index">
+                          <td><input type="checkbox" [(ngModel)]="item.fencecheckbox"></td>
+                          <td><img src="../../assets/images/tab_new_icon5.png"  alt="#" /><input [(ngModel)]="item.fencename" type="text"><div class="clearfix"></div></td>
+                          <td>Conversion	</td>
+                          <td><div class="table_closebtn"><a href="javascript:void(0)" (click)="deletepolyshape(item)"><img src="../../assets/images/tab_new_icon3.png"  alt="#" /></a></div></td>
+                        </tr>
+
+                        <!--<tr>
+                            <td><input type="checkbox"></td>
+                            <td><img src="../../assets/images/tab_new_icon5.png"  alt="#" /><input type="text"> <div class="clearfix"></div></td>
+                            <td>Conversion	</td>
+                            <td><div class="table_closebtn"><a href="javascript:void(0)"><img src="../../assets/images/tab_new_icon3.png"  alt="#" /></a></div></td>
+                          </tr>
+                          <tr>
+                            <td><input type="checkbox"></td>
+                            <td><img src="../../assets/images/tab_new_icon5.png"  alt="#" /><input type="text"><div class="clearfix"></div></td>
+                            <td>Conversion	</td>
+                            <td><div class="table_closebtn"><a href="javascript:void(0)"><img src="../../assets/images/tab_new_icon3.png"  alt="#" /></a></div></td>
+                          </tr>-->
+
+
+                      </table>
+
+                      <div class="clearfix"></div>
+
+                      <div class="budget_formdiv_btn">
+                        <input type="button"  value="Save" (click)="savepolygon()"/>
+                        <input type="button"  value="Cancel"/>
+                      </div>
+                    </div>
+
+
+
+
+                  </tab>
+
+                </tabset>
+              </div>
+
+              <div class="budget_wrapper budget_wrapper_new">
+                <div class="budget_formdiv_left settingblock">
+                  <h1>CPA Settings <img src="../../assets/images/budget_formicon.png" alt="#" /></h1>
+                  <p class="settingblockptext"><strong>View Thru Percentage</strong></p>
+                  <div>
+                    <ion-range-slider #viewthrupercentage
+                                      [disable]=slidedisable
+                                      type="single"
+                                      [min]="0"
+                                      max="100"
+                                      [from]=viewthrupercentage1
+                                      (onUpdate)="myOnUpdate($event,1)"
+                                      (onChange)="myOnChange($event,1)"
+                                      (onFinish)="myOnFinish($event,1)"
+                    ></ion-range-slider>
+                  </div>
+
+
+
+                  <p class="settingblockptext"><strong>Click Thru Percentage</strong></p>
+                  <ion-range-slider #clickthrupercentage
+                                    [disable]=slidedisable
+                                    type="single"
+                                    [min]="0"
+                                    max="100"
+                                    [from]=clickthrupercentage1
+                                    (onUpdate)="myOnUpdate($event,2)"
+                                    (onChange)="myOnChange($event,2)"
+                                    (onFinish)="myOnFinish($event,2)"
+                  ></ion-range-slider>
+
+
+</div>
+
+
+                <div class="budget_formdiv_right settingblock">
+
+                  <h1>Attribution Settings</h1>
+                  <p class="settingblockptext"><strong>View Attribution Window by Days</strong></p>
+                  <ion-range-slider #viewattr
+                                    type="single"
+                                    [min]="0"
+                                    max="30"
+                                    [from]=viewattrval
+                                    (onUpdate)="myOnUpdate($event,3)"
+                                    (onChange)="myOnChange($event,3)"
+                                    (onFinish)="myOnFinish($event,3)"
+                  ></ion-range-slider>
+                  <p class="settingblockptext"><strong>Click Attribution Window by Days</strong></p>
+                  <ion-range-slider #clickattr
+                                    type="single"
+                                    [min]="0"
+                                    max="30"
+                                    [from]=clickattrval
+                                    (onUpdate)="myOnUpdate($event,4)"
+                                    (onChange)="myOnChange($event,4)"
+                                    (onFinish)="myOnFinish($event,4)"
+                  ></ion-range-slider>
+
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="budget_formdiv_btn">
+                  <input type="button"  value="Save" [disabled]="disableconversions" [ngClass]="disableconversions ==true ? 'disabled_class' : ''"(click)="updateslider()"/>
+                  <input type="button"  value="Cancel"/>
+                </div>
+
+              </div>
+
+
+
+
+            </div>
+          </div>
+
+
+          <div class="campaign_settings_cell">
+
+            <div class="campaign_settings_cell_top">
+
+              <label (click)="sendtype(4)">Goals </label>
+              <b *ngIf="goals=='cpc'">{{goals}}${{impressions_goals}}</b>
+              <b *ngIf="goals=='ctr'">{{goals}}%{{impressions_goals}}</b>
+              <b *ngIf="goals=='cpa'">{{goals}}${{impressions_goals}}</b>
+              <div class="clearfix"></div>
+            </div>
+
+
+            <div *ngIf="divshow4">
+              <div class="budget_wrapper">
+
+
+                <div  class="errorclass" *ngIf="error10"><b><br>There were errors with your request: </b>{{error10}}</div>
+
+                <div class="budget_formdiv_left">
+                  <label>Campaign Goals <img src="assets/images/budget_formicon.png" alt="#" /></label>
+                  <br>
+                  <input type="radio" name="goals" value="none" (click)="callfunction(0)" [disabled]="valcpc" [(ngModel)]="goals">&nbsp;&nbsp;None<br>
+                  <input type="radio" name="goals" value="cpc" (click)="callfunction(1)" [(ngModel)]="goals">&nbsp;&nbsp;CPC<br>
+                  <input type="radio" name="goals" value="ctr"  [disabled]="valcpc" (click)="callfunction(2)" [(ngModel)]="goals">&nbsp;&nbsp;CTR<br>
+                  <input type="radio" name="goals" value="cpa" (click)="callfunction(3)"[(ngModel)]="goals">&nbsp;&nbsp;CPA<br>
+                </div>
+                <div class="budget_formdiv_right">
+
+                  <div *ngIf="calforcpc">
+                    <div class="budget_forminput">
+                      <label>Campaign Goal Value <img src="assets/images/budget_formicon.png" alt="#" /></label>
+                      <div class="clearfix"></div>
+
+                      <span>$</span><input type="text" class="form-control" appOnlyNumber="true"   name="impressions_goals" [(ngModel)]="impressions_goals">
+                      <div class="clearfix"></div>
+                    </div>
+
+                  </div>
+                  <div *ngIf="calforctr">
+                    <div class="budget_forminput">
+                      <label>Campaign Goal Value <img src="assets/images/budget_formicon.png" alt="#" /></label>
+                      <div class="clearfix"></div>
+
+                      <input type="text" class="form-control" appOnlyNumber="true"   name="impressions_goals" [(ngModel)]="impressions_goals"><span>%</span>
+                      <div class="clearfix"></div>
+
+                    </div>
+                  </div>
+
+                  <div *ngIf="calforcpa">
+                    <div class="budget_forminput">
+                      <label>Campaign Goal Value <img src="assets/images/budget_formicon.png" alt="#" /></label>
+                      <div class="clearfix"></div>
+                      <span>$</span><input class="form-control" type="text" appOnlyNumber="true" name="impressions_goals" [(ngModel)]="impressions_goals">
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+
+
+                <!--<input type="button" value="OK" (click)="updategoal()">-->
+
+                <div class="budget_formdiv_btn">
+                  <input type="button" value="OK" [disabled]="disableokforcpc" [ngClass]="disableokforcpc ==true ? 'disabled_class' : ''" (click)="updategoal()">
+                  <input type="button"  value="Cancel"/>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="sendtype(5)">OBA Compliance </label>
+              <b>{{oba}}</b>
+              <div class="clearfix"></div>
+            </div>
+
+
+
+
+            <div *ngIf="divshow5">
+              <div class="budget_wrapper">
+                <h6 class="complianceh6text">OBA compliance provides users with quick and easy access to opt-out of receiving advertisements. Choose from two OBA compliance providers (Truste and Evidon), OR choose 'already present' for third-party ads with their own opt-out</h6>
+
+                <div class="budget_forminput newforminput2">
+                  <select id="oba"  name="oba" [(ngModel)]="oba" (click)="selectoba()"  class="form-control2">
+                    <option *ngFor="let item of obas; let i=index" value="{{item}}">{{item}}</option>
+                  </select>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="budget_formdiv_btn">
+                  <input type="button" [disabled]="isokDisabled" id="obaid" value="OK" (click)="updateoba()">
+                  <input type="button"  value="Cancel"/>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="campaign_settings_cell">
+
+            <div class="campaign_settings_cell_top">
+
+              <label>Retail Markup </label>
+              <b>None</b>
+
+              <div class="clearfix"></div>
+
+            </div>
+
+          </div>
+          <!--           <div class="clearfix"></div>
+              <label>Campaign Specific Markups</label>
+              <p>No Campaign Specific Markups currently exist</p>
+              <label (click)="sendtype(6)">New Markup</label>
+                <div [ngClass]="{'active': isActive[0], 'disabled': isDisabled[0]}">
+                  <div class="errorclass" *ngIf="error11"> <b>There were errors with your request: </b>{{error11}}</div>
+                  <div class="errorclass" *ngIf="error12">{{error12}}</div>
+                  <label>Fee Name</label>
+                  <input type="text" id="fee"  name="fee" [(ngModel)]="fee">
+                  <label>Enter Markup Amount</label>
+                 &lt;!&ndash; <select id="m_name"  name="m_name" [(ngModel)]="m_name" (click)="selectm_name()">&ndash;&gt;
+                  <select id="m_name"  name="m_name" [(ngModel)]="m_name" (click)="selectm_name()">
+                    <option value="by_CPM" >by CPM</option>
+                    <option value="by_Percent_Media" >by Percent (Media)</option>
+                    <option value="by_Percent_Speed" >by Percent (Speed)</option>
+                  </select>
+                  <div *ngIf="bycpm">
+                    <span>$</span>
+                  <input type="text" appOnlyNumber="true" id="m_cpm"  name="m_cpm" [(ngModel)]="m_cpm">
+                    <span>/cpm</span>
+                  </div>
+                  <div *ngIf="bymedia">
+                  <input type="text" appOnlyNumber="true" id="m_media"  name="m_media" [(ngModel)]="m_media">
+                    <span>% of media</span>
+                  </div>
+                  <div *ngIf="byspeed">
+                  <input type="text" appOnlyNumber="true" id="m_speed"  name="m_speed" [(ngModel)]="m_speed">
+                    <span>% of spend</span>
+                  </div>
+
+
+              </div>
+              <input type="button" value="Add" (click)="updatemarkup()">
+            </div>
+          </div>
+-->
+          <!--<a href="javascript:void(0)"  class="createaudience_link">Create Audience &#9658;</a>-->
+          <a [routerLink]="['/createaudience']" class="createaudience_link">Create Audience &#9658;</a>
+          <div class="clearfix"></div>
+
+
+        </div>
+
+
+
+      </div>
+
+  
+
+    </fieldset>
+  </div>
+</div>
+
+<div *ngIf="loadervalue" class="loder_body">
+  <div class="loder_wrapper">
+    <div class="loader"></div>
+  </div>
+</div>

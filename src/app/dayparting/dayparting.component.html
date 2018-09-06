@@ -1,0 +1,172 @@
+<app-header></app-header>
+
+<div class="newpageborder"></div>
+<div class=" geo_body_wrapper">
+  <div class=" geo_new_wrapper">
+    <div class="geo_new_heading"><span><strong>CREATE AN</strong> Audience</span></div>
+    <div class="geo_new_menublock">
+      <ul>
+
+        <li><a [routerLink]="['/viewability']" href="javascript:void(0)" class="nmenu2"> Viewability</a></li>
+        <li><a [routerLink]="['/locations']" href="javascript:void(0)" class="nmenu1">Geo Targets</a></li>
+        <li><a [routerLink]="['/browser']" href="javascript:void(0)" class="nmenu3"> Browser</a></li>
+        <li><a [routerLink]="['/os']" href="javascript:void(0)" class="nmenu4">Operating Systems</a></li>
+        <li><a [routerLink]="['/devicetypes']" href="javascript:void(0)" class="nmenu5">Device Types </a></li>
+        <li><a [routerLink]="['/deals']" href="javascript:void(0)" class="nmenu6">Deals</a></li>
+        <li><a [routerLink]="['/pacing']" href="javascript:void(0)" class="nmenu7">Pacing</a></li>
+        <li class="active"><a [routerLink]="['/dayparting']" href="javascript:void(0)" class="nmenu8">Dayparting</a></li>
+        <div class="clearfix"></div>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div class=" geo_new_block1">
+      <img src="assets/images/newdatebig.png"  alt="#"/>
+      <h2>Dayparting</h2>
+      <h3>Lorem Ipsum is simply dummy
+        text of the printing and typesetting industry.</h3>
+    </div>
+    <h6 class="h6locationtext">Device Types</h6>
+    <div class=" geo_new_block2">
+
+
+      <div class="create_audience_wrapper daypartingwrapper create_audience_wrappernew">
+        <p class="ptext">Set specific periods of the day for the campaign to run during. All times are in Central Time.</p>
+        <div class="dchakeboxdiv newbluechakebox"><input type="checkbox" id='0' [(ngModel)]="applyforall" (click)="opensinglediv()"><label for ='0'> Apply changes across all days</label></div>
+
+
+
+
+
+
+        <div *ngIf="openonediv" class="dchakeboxcondiv2">
+          <p>All Day <img src="assets/images/plus-newpage.png"  alt="#"/></p>
+          <ion-range-slider #allday
+                            type="double"
+                            [min]="0.00"
+                            max="24"
+                            [from]=this.daypartval[0].from
+                            [to]=this.daypartval[0].to
+                            (onUpdate)="myOnUpdateforone($event)"
+                            (onChange)="myOnChangeforone($event)"
+                            (onFinish)="myOnFinishforone($event)"
+          ></ion-range-slider>
+          <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+          <div class="clearfix"></div>
+        </div>
+
+
+
+
+
+        <div *ngIf="openalldiv" class="dchakeboxcondiv2">
+          <p>Monday <img src="assets/images/plus-newpage.png"  alt="#"/></p>
+          <ion-range-slider #monday
+                            type="double"
+                            [min]="0.00"
+                            max="24"
+                            [from]=this.daypartval[0].from
+                            [to]=this.daypartval[0].to
+                            (onUpdate)="myOnUpdate($event,0)"
+                            (onChange)="myOnChange($event,0)"
+                            (onFinish)="myOnFinish($event,0)"
+          ></ion-range-slider>
+
+          <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+          <div class="clearfix"></div>
+          <p>Tuesday <img src="assets/images/plus-newpage.png"  alt="#"/></p>
+          <ion-range-slider #tuesday
+                            type="double"
+                            [min]="0"
+                            max="24"
+                            [from]=this.daypartval[1].from
+                            [to]=this.daypartval[1].to
+                            (onUpdate)="myOnUpdate($event,1)"
+                            (onChange)="myOnChange($event,1)"
+                            (onFinish)="myOnFinish($event,1)"
+          ></ion-range-slider>
+
+          <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+          <div class="clearfix"></div>
+          <p>Wednesday <img src="assets/images/plus-newpage.png"  alt="#"/></p>
+          <ion-range-slider #wedday
+                            type="double"
+                            [min]="0"
+                            max="24"
+                            [from]=this.daypartval[2].from
+                            [to]=this.daypartval[2].to
+                            (onUpdate)="myOnUpdate($event,2)"
+                            (onChange)="myOnChange($event,2)"
+                            (onFinish)="myOnFinish($event,2)"
+          ></ion-range-slider>
+
+          <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+          <div class="clearfix"></div>
+          <p>Thursday <img src="assets/images/plus-newpage.png"  alt="#"/></p>
+          <ion-range-slider #thursday
+                            type="double"
+                            [min]="0"
+                            max="24"
+                            [from]=this.daypartval[3].from
+                            [to]=this.daypartval[3].to
+                            (onUpdate)="myOnUpdate($event,3)"
+                            (onChange)="myOnChange($event,3)"
+                            (onFinish)="myOnFinish($event,3)"
+          ></ion-range-slider>
+
+          <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+          <div class="clearfix"></div>
+          <p>Friday <img src="assets/images/plus-newpage.png"  alt="#"/></p>
+          <ion-range-slider #friday
+                            type="double"
+                            [min]="0"
+                            max="24"
+                            [from]=this.daypartval[4].from
+                            [to]=this.daypartval[4].to
+                            (onUpdate)="myOnUpdate($event,4)"
+                            (onChange)="myOnChange($event,4)"
+                            (onFinish)="myOnFinish($event,4)"
+          ></ion-range-slider>
+
+          <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+          <div class="clearfix"></div>
+          <p>Saturday <img src="assets/images/plus-newpage.png"  alt="#"/></p>
+          <ion-range-slider #satday
+                            type="double"
+                            [min]="0"
+                            max="24"
+                            [from]=this.daypartval[5].from
+                            [to]=this.daypartval[5].to
+                            (onUpdate)="myOnUpdate($event,5)"
+                            (onChange)="myOnChange($event,5)"
+                            (onFinish)="myOnFinish($event,5)"
+          ></ion-range-slider>
+
+          <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+          <div class="clearfix"></div>
+          <p>Sunday <img src="assets/images/plus-newpage.png"  alt="#"/></p>
+          <ion-range-slider #viewthrupercentage
+                            type="double"
+                            [min]="0"
+                            max="24"
+                            [from]=this.daypartval[6].from
+                            [to]=this.daypartval[6].to
+                            (onUpdate)="myOnUpdate($event,6)"
+                            (onChange)="myOnChange($event,6)"
+                            (onFinish)="myOnFinish($event,6)"
+          ></ion-range-slider>
+
+          <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+          <div class="clearfix"></div>
+        </div>
+        <div class="new_btnwrapper"> <input type="button" value="OK" (click)="updatedaypart()" class="browsertabbtn"></div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="footerbtndiv">
+      <input type="button" value="Back" [routerLink]="['/pacing']">
+      <input type="button" value="Next">
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

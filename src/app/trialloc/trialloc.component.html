@@ -1,0 +1,43 @@
+<!--
+<p>Locations</p>
+<div class="location_tablewrapper">
+  <h6>Available Locations </h6>
+  <table>
+    <tr>
+      <td>
+        <div class="location_heading">
+          <h2>Selected Locations</h2>
+          <span></span>
+          <div class="clearfix"></div>
+        </div>
+        <div class="location_contain">
+          <ul *ngFor="let item of selected_locations; let i=index">
+            <li>
+              <img src="assets/images/close_location.png" alt="#" class="loc_img1" (click)="deletelocations(item.attr_id,item.attr_name,item)"/>
+              <label>{{item.attr_name}}</label></li>
+          </ul>
+        </div>
+      </td>
+      <td>&nbsp;</td>
+      <td>
+        <div class="location_heading">
+          <div *ngIf="count>0"><img src="assets/images/location_arrow_left.png"  alt="#" class="loc_img1" (click)="childlist(0,0,2)"/></div>
+          <h2>{{locationnameforreverse}}</h2>
+          <span class="searchbar_location"></span>
+          <div class="clearfix"></div>
+        </div>
+        <div class="location_contain">
+          <ul *ngFor="let item of datalist; let i=index">
+            <li><img src="assets/images/location_menuicon.png" alt="#" class="loc_img1" (click)="addtolist(item.location_id,item.location_name)"/> <label>{{item.location_name}}</label><img src="assets/images/location_arrow_right.png"  alt="#" class="loc_img2" (click)="childlist(item.location_id,item.location_name,1)"/></li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  </table>
+  &lt;!&ndash;  <input type="button"  value="Ok" (click)="submitlocation(selected_locations)" class="browsertabbtn2"/>&ndash;&gt;
+  <div class="budget_formdiv_btn">
+    &lt;!&ndash;   <input type="button"  value="Save" (click)="submitlocation(selected_locations)"/>
+       <input type="button"  value="Cancel"/>&ndash;&gt;
+  </div>
+</div>
+-->

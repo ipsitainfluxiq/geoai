@@ -1,0 +1,102 @@
+<app-header></app-header>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+  <div class="dashboard_right_wrapper">
+    <div class="dashboard1_div1 table-responsive">
+      <h4>Admin List</h4>
+
+      <div style=" padding-bottom: 10px; width: 100%;">
+
+        <div class="adminserchdiv">
+          <label>Search :</label> <input type="text" #listFilter (keyup)="0">
+        </div>
+
+        <a [routerLink]="['/adminadd']" class="adadminlink">Add Admin</a>
+
+        <div class="clearfix"></div>
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="tablediv">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th>#</th>
+            <th>Name <b [ngClass]="getSortClass('firstname')" (click)="manageSorting('firstname')" ></b></th>
+            <th>Email<b [ngClass]="getSortClass('email')" (click)="manageSorting('email')" ></b></th>
+            <th>Action</th>
+          </tr>
+
+          <tbody *ngFor="let item of datalist | orderBy:orderbyquery:orderbytype | usersearch:listFilter.value; let i = index">
+          <tr *ngIf=" i>=pagestart && i < pageinitation">
+            <td>{{i+1}}</td>
+            <td>{{item.firstname}} {{item.lastname}}</td>
+            <td>{{item.email}}</td>
+            <td><a [routerLink]="['/adminedit',item._id]">Edit</a>
+              <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal" (click)="delConfirm(item._id)">Delete</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="pagination paginationdiv">
+    <ul class="pagination--items">
+      <li class="pagination--item">
+        <label>
+          Go to: </label>
+        <input type="text" [(ngModel)]="pageno" (blur)="pageval(3)">
+        <div class="clearfix"></div>
+
+      </li>
+      <li class="pagination--item">
+        <label>
+          Show rows:</label>
+        <select [(ngModel)]="showrows" (click)="chagevalues()">
+          <option>5</option>
+          <option>10</option>
+          <option>25</option>
+        </select>
+        <div class="clearfix"></div>
+
+      </li>
+      <li class="pagination--item" >  <label>Page {{pageno}} of {{totalpage}}</label></li>
+      <li class="pagination--item" >
+        <img src="../../assets/images/pageprev.png" alt="#" (click)="pageval(1)">
+
+        <img src="../../assets/images/pagenext.png" alt="#" (click)="pageval(2)">
+      </li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+
+
+</div>
+
+<!--<button type="button" class="btn btn-primary" (click)="staticModal.show()">SStatic modal</button>-->
+<div *ngIf="isModalShown" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Confirm delete</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to delete this admin?</p>
+        <!--        Click <b>&times;</b> to close modal.-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="admindel()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<app-footer></app-footer>-->
+
+<div class="clearfix"></div>
+
+<!--  ______________________________________________page_initiation_______________________________________  -->

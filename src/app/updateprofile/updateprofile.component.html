@@ -1,0 +1,66 @@
+<app-header></app-header>
+
+  <div class="fieldset_wrapper">
+      <div class="pageheading" style="margin-bottom: 15px;"> Update profile</div>
+
+    <div class="updateprofile_formwrapper">
+
+        <form role="form" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+          <div class="col-xs-12 form-group">
+          <label>First Name</label>
+          <input type="text" class="form-control" placeholder="First Name" [formControl]="dataForm.controls['firstname']">
+          <span *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid">First Name is Required !</span>
+          </div>
+          <div class="col-xs-12 form-group">
+          <label>Last Name</label>
+          <input type="text" class="form-control" placeholder="Last Name" [formControl]="dataForm.controls['lastname']">
+          <span *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid">Last Name is Required !</span>
+          </div>
+          <div class="col-xs-12 form-group">
+          <label>Email</label>
+          <input type="text" class="form-control" placeholder="Email" [formControl]="dataForm.controls['email']" readonly>
+          </div>
+
+            <div class="col-xs-12 form-group" id="birthday_contain">
+               <label>Birthday</label>
+               <div class="row">
+                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 tripplecolumn_left">
+                   <select id="showmonth" class="chkselect_input"  [formControl]="dataForm.controls['month']">
+                     <option value="">Select Month</option>
+                     <option *ngFor="let item of months" value="{{item}}">{{item}}</option>
+                   </select>
+                 </div>
+                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 tripplecolumn_middle">
+                   <input type="text" name="calender_day" id="calender_day" class="signup_box_input" value="" placeholder="Day"  [formControl]="dataForm.controls['day']"  appOnlyNumber="true" maxlength="2" >
+                 </div>
+                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 tripplecolumn_right">
+                   <input type="text" name="calender_year" id="calender_year" class="signup_box_input" value="" placeholder="year"  [formControl]="dataForm.controls['year']"  appOnlyNumber="true" maxlength="4">
+                 </div>
+               </div>
+             </div>
+
+          <div class="col-xs-12 form-group">
+             <label>Phone</label>
+             <input type="text" class="form-control" placeholder="Phone" [formControl]="dataForm.controls['phone']">
+          </div>
+          <div class="col-xs-12 form-group">
+              <label>Location</label>
+           <input type="text" class="form-control" placeholder="Location" [formControl]="dataForm.controls['location']">
+          </div>
+           <div class="col-xs-12 form-group" id="state_contain">
+             <label>State</label>
+             <select name="your-state" id="showlocation" class="chkselect_input" [formControl]="dataForm.controls['state']" >
+               <option value="">Select State</option>
+               <option *ngFor="let item of state" value="{{item}}">{{item}}</option>
+             </select>
+           </div>
+
+
+
+          <input type="submit" value="Update" class="loginbtn2">
+        </form>
+
+
+    </div>
+
+    </div>

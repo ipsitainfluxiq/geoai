@@ -1,0 +1,53 @@
+<app-header></app-header>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+  <div class="dashboard_right_wrapper">
+    <div class="dashboard1_div1 ">
+      <h4> Edit Admin</h4>
+      <div class="dashboard1form">
+
+        <form role="form" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+
+          <label>First Name</label>
+          <input type="text" class="form-control" placeholder="First Name" [formControl]="dataForm.controls['firstname']">
+          <span *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid">First Name is Required !</span>
+
+          <label>Last Name</label>
+          <input type="text" class="form-control" placeholder="Last Name" [formControl]="dataForm.controls['lastname']">
+          <span *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid">Last Name is Required !</span>
+
+          <label>Email</label>
+          <input type="text" class="form-control" placeholder="Email" [formControl]="dataForm.controls['email']" readonly>
+<!--
+
+          <label>Address</label>
+          <input type="text" class="form-control" placeholder="Address" [formControl]="dataForm.controls['address']">
+          <span *ngIf ="dataForm.controls['address'].touched && !dataForm.controls['address'].valid">Address is Required !</span>
+
+          <label>City</label>
+          <input type="text" class="form-control" placeholder="City" [formControl]="dataForm.controls['city']">
+          <span *ngIf ="dataForm.controls['city'].touched && !dataForm.controls['city'].valid">City is Required !</span>
+
+          <label>State</label>
+          <input type="text" class="form-control" placeholder="State" [formControl]="dataForm.controls['state']">
+          <span *ngIf ="dataForm.controls['state'].touched && !dataForm.controls['state'].valid">State is Required !</span>
+
+          <label>Zip</label>
+          <input type="text" class="form-control" placeholder="Zip" [formControl]="dataForm.controls['zip']">
+          <span *ngIf ="dataForm.controls['zip'].touched && !dataForm.controls['zip'].valid">Zip is Required !</span>
+
+          <label>Phone No</label>
+          <input type="text" appOnlyNumber="true" class="form-control" placeholder="Phone No" [formControl]="dataForm.controls['phone']">
+          <span *ngIf ="dataForm.controls['phone'].touched && !dataForm.controls['phone'].valid">Give the phone number correctly !</span>
+-->
+
+
+          <br><input type="submit" value="Save" class="loginbtn2">
+        </form>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--<app-footer></app-footer>-->

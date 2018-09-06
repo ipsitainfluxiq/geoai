@@ -1,0 +1,182 @@
+@font-face{font-family:'open_sansregular';src:url('../fonts/opensans-regular-webfont.eot');src:url('../fonts/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+url('../fonts/opensans-regular-webfont.woff2') format('woff2'),
+url('../fonts/opensans-regular-webfont.woff') format('woff'),
+url('../fonts/opensans-regular-webfont.ttf') format('truetype'),
+url('../fonts/opensans-regular-webfont.svg#open_sansregular') format('svg');font-weight:normal;font-style:normal;}
+@font-face{font-family:'OpenSansSemibold';src:url('../fonts/OpenSans-Semibold.eot');src:url('../fonts/OpenSans-Semibold.eot?#iefix') format('embedded-opentype'),
+url('../fonts/OpenSans-Semibold.woff2') format('woff2'),
+url('../fonts/OpenSans-Semibold.woff') format('woff'),
+url('../fonts/OpenSans-Semibold.ttf') format('truetype'),
+url('../fonts/OpenSans-Semibold.svg#OpenSans-Semibold') format('svg');font-weight:600;font-style:normal;}
+@font-face{font-family:'OpenSansItalic';src:url('../fonts/OpenSans-Italic.eot');src:url('../fonts/OpenSans-Italic.eot?#iefix') format('embedded-opentype'),
+url('../fonts/OpenSans-Italic.woff2') format('woff2'),
+url('../fonts/OpenSans-Italic.woff') format('woff'),
+url('../fonts/OpenSans-Italic.ttf') format('truetype'),
+url('../fonts/OpenSans-Italic.svg#OpenSans-Italic') format('svg');font-weight:normal;font-style:italic;}
+@font-face{font-family:'OpenSansLight';src:url('../fonts/OpenSans-Light.eot');src:url('../fonts/OpenSans-Light.eot?#iefix') format('embedded-opentype'),
+url('../fonts/OpenSans-Light.woff2') format('woff2'),
+url('../fonts/OpenSans-Light.woff') format('woff'),
+url('../fonts/OpenSans-Light.ttf') format('truetype'),
+url('../fonts/OpenSans-Light.svg#OpenSans-Light') format('svg');font-weight:300;font-style:normal;}
+@font-face{font-family:'ralewaybold';src:url('../fonts/raleway-bold_0-webfont.woff2') format('woff2'),
+url('../fonts/raleway-bold_0-webfont.woff') format('woff');font-weight:normal;font-style:normal;}
+@font-face{font-family:'RobotoBlack';src:url('../fonts/Roboto-Black.eot');src:url('../fonts/Roboto-Black.eot?#iefix') format('embedded-opentype'),
+url('../fonts/Roboto-Black.woff2') format('woff2'),
+url('../fonts/Roboto-Black.woff') format('woff'),
+url('../fonts/Roboto-Black.ttf') format('truetype'),
+url('../fonts/Roboto-Black.svg#Roboto-Black') format('svg');font-weight:900;font-style:normal;}
+.geo_new_wrapper{width:1597px;margin:0px auto;padding:30px;background:#fff!important;border:solid 1px #d6d6d6;}
+.geo_new_heading{background:#eaeaea;padding:0 0 0 10px;}
+.geo_new_heading span{display:inline-block;background:#fff;font-family:'open_sansregular';color:#00aeec;font-size:30px;padding:0 10px;}
+.geo_new_heading span strong{text-transform:uppercase;color:#000000;}
+.geo_new_menublock{margin:30px auto;}
+.geo_new_menublock ul{margin:0;padding:0px;}
+.geo_new_menublock ul li{list-style:none;}
+.geo_new_menublock ul li a{display:block;float:left;height:auto;background:#eaeaea;text-align:center;padding:8px;position:relative;margin:0 15px 0 0;font-size:16px;text-decoration:none;color:#4f5467;font-family:'OpenSansSemibold';text-transform:uppercase;padding-left:55px;padding-right:6px;}
+.geo_new_menublock ul li a:after{content:"";border-top:20px solid transparent;border-bottom:19px solid transparent;border-left:15px solid #eaeaea;position:absolute;right:-15px;top:0;}
+.geo_new_menublock ul li a:before{content:"";border-top:20px solid transparent;border-bottom:20px solid transparent;border-left:15px solid #fff;position:absolute;left:0;top:0;}
+.geo_new_menublock ul li:first-child a{border-top-left-radius:0px;border-bottom-left-radius:0px;}
+.geo_new_menublock ul li:first-child a:before{display:none;}
+.geo_new_menublock ul li:last-child a{border-top-right-radius:0px;border-bottom-right-radius:0px;margin:0px;}
+.geo_new_menublock ul li:last-child a:after{display:none;}
+.geo_new_menublock ul li a:hover{background:#1eb5f5;color:#fff;}
+.geo_new_menublock ul li a:hover:after{border-left-color:#1eb5f5;}
+.geo_new_menublock .nmenu1{background:#eaeaea url(../images/new_menublock1.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu2{background:#eaeaea url(../images/new_menublock2.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu3{background:#eaeaea url(../images/new_menublock3.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu4{background:#eaeaea url(../images/new_menublock4.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu5{background:#eaeaea url(../images/new_menublock5.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu6{background:#eaeaea url(../images/new_menublock6.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu7{background:#eaeaea url(../images/new_menublock7.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu8{background:#eaeaea url(../images/new_menublock8.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu1:hover{background:#1eb5f5 url(../images/new_menublock1_hover.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu2:hover{background:#1eb5f5 url(../images/new_menublock2_hover.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu3:hover{background:#1eb5f5 url(../images/new_menublock3_hover.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu4:hover{background:#1eb5f5 url(../images/new_menublock4_hover.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu5:hover{background:#1eb5f5 url(../images/new_menublock5_hover.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu6:hover{background:#1eb5f5 url(../images/new_menublock6_hover.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu7:hover{background:#1eb5f5 url(../images/new_menublock7_hover.png) no-repeat 22px center;}
+.geo_new_menublock .nmenu8:hover{background:#1eb5f5 url(../images/new_menublock8_hover.png) no-repeat 22px center;}
+.geo_new_menublock .active .nmenu1{background:#1eb5f5 url(../images/new_menublock1_hover.png) no-repeat 22px center;}
+.geo_new_menublock .active .nmenu2{background:#1eb5f5 url(../images/new_menublock2_hover.png) no-repeat 22px center;}
+.geo_new_menublock .active .nmenu3{background:#1eb5f5 url(../images/new_menublock3_hover.png) no-repeat 22px center;}
+.geo_new_menublock .active .nmenu4{background:#1eb5f5 url(../images/new_menublock4_hover.png) no-repeat 22px center;}
+.geo_new_menublock .active .nmenu5{background:#1eb5f5 url(../images/new_menublock5_hover.png) no-repeat 22px center;}
+.geo_new_menublock .active .nmenu6{background:#1eb5f5 url(../images/new_menublock6_hover.png) no-repeat 22px center;}
+.geo_new_menublock .active .nmenu7{background:#1eb5f5 url(../images/new_menublock7_hover.png) no-repeat 22px center;}
+.geo_new_menublock .active .nmenu8{background:#1eb5f5 url(../images/new_menublock8_hover.png) no-repeat 22px center;}
+.geo_new_menublock .active a{background:#1eb5f5;color:#fff;}
+.geo_new_menublock .active a:after{border-left-color:#1eb5f5;}
+.geo_new_block1{width:100%;text-align:center;background:#eaeaea;border-top:solid 5px #01b9f6;padding:25px 25px 0 25px;}
+.geo_new_block1 h2{margin:0;padding:20px 0;font-size:30px;color:#01b9f6;text-transform:uppercase;}
+.geo_new_block1 h3{width:390px;border-bottom:solid 15px #4f5467;margin:0 auto;padding-bottom:40px;font-size:16px;color:#767676;font-family:'open_sansregular';line-height:24px;}
+.h6locationtext{padding:20px 0;margin:0px;text-align:left;font-size:24px;font-family:'OpenSansSemibold';}
+.geo_new_block2{text-align:left;background:#eaeaea;padding:25px;}
+.geo_new_block2 .switchptext{display:inline-block;float:left;margin:7px 0 0 10px;}
+.geo_new_block2 ui-switch{display:inline-block;float:left;}
+.geo_new_block2 h2{font-size:20px;font-family:'OpenSansSemibold';color:#333;padding:25px 0 10px 0;margin:0px;}
+.geo_new_block_heading{text-align:left;border-bottom:solid 1px #fff;background:#01b9f6;padding:2px 20px;}
+.geo_new_block_heading h4{width:152px;display:block;float:left;background:url(../images/new_location_img2.png) no-repeat left center;margin:0;padding:8px 0 8px 30px;font-size:20px;color:#ffffff;font-family:'OpenSansSemibold';}
+.geo_new_block_heading img{display:block;float:right;margin-top:6px;}
+.geo_new_block2_con{padding:0 26px 26px 26px;}
+.geo_new_block2_con h3{margin:0;padding:13px 0;text-align:left;font-size:18px;color:#4f5467;font-family:'OpenSansSemibold';}
+.geo_new_block2_conleft{width:49.9%;float:left;background:#ffffff;border:solid 1px #d6d6d6;padding:2px;}
+.geo_new_block2_conright{width:49.9%;float:right;background:#ffffff;border:solid 1px #d6d6d6;padding:2px;}
+.geo_new_block2_con h5{background:#4f5467;padding:7px 14px;margin:0px;}
+.geo_new_block2_con h5 span{display:block;font-family:'open_sansregular';font-size:16px;color:#fff;text-align:left;margin:0;width:240px;float:left;padding:3px 0;}
+.geo_new_block2_con .gnsearchbox{width:168px;float:right;background:#73788a;}
+.geo_new_block2_con .gnsearchbox .gn_searchinput{width:146px;display:block;float:left;background:#73788a;background:none;border:none;height:24px;font-family:'open_sansregular';font-size:14px;color:#fff!important;padding:0 5px;}
+.geo_new_block2_con .gnsearchbox .gn_searchbtn{background:#73788a url(../images/new_location_img4.png) no-repeat center center;width:22px;height:24px;border:none;cursor:pointer;}
+.geo_new_block2_con .geo_new_block2_textwrapper{height:180px;padding:10px;overflow-y:scroll;}
+.geo_new_block2_con .geo_new_block2_textwrapper ul{margin:0;padding:0;}
+.geo_new_block2_con .geo_new_block2_textwrapper ul li{background:#eaeaea url(../images/new_location_img5.png) no-repeat 20px center;margin-bottom:1px;padding:5px 5px 5px 50px;text-align:left;font-size:15px;color:#4f5467;font-family:'open_sansregular';}
+.pacing_textcontain{width:400px;}
+.pacing_textcontain .form-control{width:360px;height:35px;border:solid 1px #d6d6d6;padding:0 5px;font-family:'open_sansregular';font-size:14px;color:#333;display:block;float:left;}
+.pacing_textcontain span{display:block;width:40px;font-family:'open_sansregular';font-size:14px;color:#fff;background:#4f5467;float:right;height:35px;text-align:center;line-height:35px;}
+.footerbtndiv{width:100%;padding-top:30px;}
+.footerbtndiv input{background-color:#008cba;border-radius:0;color:#fff;cursor:pointer;display:inline-block;font-family:"Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;font-size:16px;font-weight:normal;line-height:normal;border:none;margin:6px 0!important;padding:11px 10px 8px 10px!important;position:relative;text-align:center;text-decoration:none;transition:background-color 300ms ease-out 0s;border-bottom:solid 2px #007095;width:80px;float:left;}
+.footerbtndiv input:last-of-type{float:right;}
+.geo_body_wrapper{width:100%;background:#fff url(../images/geoai4a-bg.png) no-repeat center top;padding:40px 0;}
+.newpageborder{margin-top:-30px;background:#01b9f6;height:50px;border-bottom:solid 5px #009adb;}
+.browserwrapper span{display:inline-block;padding-right:30px;font-family:'open_sansregular';font-size:16px;color:#333;}
+.browserwrapper span b{font-weight:normal;padding-left:10px;}
+.browserwrapper span img{margin-right:10px;}
+.browserwrapper span label{font-weight:normal;margin:0 0 15px 0;padding:0;padding-left:10px;font-family:'open_sansregular';font-size:16px;color:#333;}
+.browserwrapper span input{margin-left:5px;}
+.browserwrapper input[type="button"]{background-color:#008cba;border-radius:0;color:#fff;cursor:pointer;display:inline-block;font-family:"Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;font-size:16px;font-weight:normal;line-height:normal;border:none;margin:6px 0!important;padding:11px 10px 8px 10px!important;position:relative;text-align:center;text-decoration:none;transition:background-color 300ms ease-out 0s;border-bottom:solid 2px #007095;width:80px;float:right;}
+.dealstable th{background-color:#4f5467!important;}
+.create_audience_wrappernew{padding:0px!important;}
+.create_audience_wrappernew .ptext{padding:10px!important;margin:0px!important;}
+.create_audience_wrappernew .dchakeboxdiv{background-color:#4f5467!important;margin:0px;border:none;border-radius:0px;}
+.create_audience_wrappernew .dchakeboxdiv label{font-size:14px;color:#fff;text-transform:uppercase;}
+.create_audience_wrappernew input[type=checkbox]:not(old){width:0px;}
+.create_audience_wrappernew .dchakeboxcondiv2{padding:10px;background:#fff;}
+.new_btnwrapper{padding:10px;background:#fff;}
+.showpacetext{display:inline-block;float:right;padding:7px 0 0 0;}
+.viewability_form input[type="text"]{width:280px;display:inline-block!important;box-shadow:none!important;border:1px solid #cccccc!important;height:37px;border-radius:0px;font-size:16px;padding:0 5px;color:#000;background-color:#fff!important;margin:0 5px;}
+.viewability_form label{margin:0;padding:0;font-weight:normal!important;font-size:18px!important;color:#666666!important;font-family:Calibri!important;}
+.viewability_form span{font-size:14px;color:#ff0000;}
+@media(max-width:1700px){.geo_new_wrapper{width:90%;}
+    .geo_new_menublock{margin:25px auto;}
+    .geo_new_menublock ul li a{margin:5px 15px 5px 0;}
+    .geo_new_menublock ul li:last-child a{margin:5px 15px 5px 0;}
+    .geo_new_menublock ul li:last-child a:after{display:block;}
+}
+@media(max-width:1199px){.geo_new_block2_conleft{width:100%;float:none;background:#ffffff;border:solid 1px #d6d6d6;padding:2px;}
+    .geo_new_block2_conright{width:100%;float:none;;background:#ffffff;border:solid 1px #d6d6d6;padding:2px;margin-top:15px;}
+}
+@media(max-width:767px){.geo_new_block2_con h5 span{display:block;width:100%;float:none;text-align:center;}
+    .geo_new_block2_con .gnsearchbox{float:none;margin:0 auto;float:none;margin-top:10px;}
+    .pacing_textcontain{width:300px;}
+    .pacing_textcontain .form-control{width:260px;}
+    .viewability_form input[type="text"]{width:170px;display:block;margin:5px 0;}
+    .geo_new_block2{padding:10px;}
+    .geo_new_wrapper{padding:10px;}
+    .geo_new_block1 h3{width:100%;}
+}
+@media(max-width:400px){.viewability_wrapper select{width:100%;}
+    .footerbtndiv{width:100%;padding-top:15px;}
+    .geo_new_menublock ul li a{width:95%;text-align:left;}
+    .geo_new_menublock ul li:first-child a:before{display:block;}
+    .geo_new_menublock ul li a{padding-left:55px;padding-right:10px;}
+    .geo_new_menublock .nmenu1{background:#eaeaea url(../images/new_menublock1.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu2{background:#eaeaea url(../images/new_menublock2.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu3{background:#eaeaea url(../images/new_menublock3.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu4{background:#eaeaea url(../images/new_menublock4.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu5{background:#eaeaea url(../images/new_menublock5.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu6{background:#eaeaea url(../images/new_menublock6.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu7{background:#eaeaea url(../images/new_menublock7.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu8{background:#eaeaea url(../images/new_menublock8.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu1:hover{background:#1eb5f5 url(../images/new_menublock1_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu2:hover{background:#1eb5f5 url(../images/new_menublock2_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu3:hover{background:#1eb5f5 url(../images/new_menublock3_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu4:hover{background:#1eb5f5 url(../images/new_menublock4_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu5:hover{background:#1eb5f5 url(../images/new_menublock5_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu6:hover{background:#1eb5f5 url(../images/new_menublock6_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu7:hover{background:#1eb5f5 url(../images/new_menublock7_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .nmenu8:hover{background:#1eb5f5 url(../images/new_menublock8_hover.png) no-repeat 20px center;}
+    .geo_new_block1 h3{width:100%;}
+    .pacing_textcontain{width:200px;}
+    .pacing_textcontain .form-control{width:160px;}
+    .geo_new_menublock .active .nmenu1{background:#1eb5f5 url(../images/new_menublock1_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .active .nmenu2{background:#1eb5f5 url(../images/new_menublock2_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .active .nmenu3{background:#1eb5f5 url(../images/new_menublock3_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .active .nmenu4{background:#1eb5f5 url(../images/new_menublock4_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .active .nmenu5{background:#1eb5f5 url(../images/new_menublock5_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .active .nmenu6{background:#1eb5f5 url(../images/new_menublock6_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .active .nmenu7{background:#1eb5f5 url(../images/new_menublock7_hover.png) no-repeat 20px center;}
+    .geo_new_menublock .active .nmenu8{background:#1eb5f5 url(../images/new_menublock8_hover.png) no-repeat 20px center;}
+}
+.geo_new_block2 h4{width:100%;text-align:center;background:#eaeaea;padding:25px;}
+.geo_new_block2 h6{width:100%;text-align:center;}
+.h6locationtext1{padding:20px 0;margin:0px;text-align:center;font-size:24px;cursor:pointer}
+.geo_new_block2 .searchblocks{display:inline-block}
+.GeoJSON_block4{width:100%;text-align:center;color:#008cba!important;padding:0px 25px 0px 25px;cursor:pointer;}
+.spaninblock:hover{color:#23527c;text-decoration:underline;}
+.searchbuttons{background-color:#008cba;color:#fff;cursor:pointer;display:inline-block;line-height:normal;border:none;padding:11px 10px 8px 10px!important;position:relative;text-align:center;text-decoration:none;border-bottom:solid 2px #007095;margin:0 5px 0 5px !important;}
+.search_column{text-align:center;padding-top:1%;}
+.geo_new_block2 .searchclass{margin-top:5px;float:left;width:30%;}
+.geo_new_block2 .searchclass p{margin-bottom:5px;font-size:16px;font-family:'open_sansregular';color:#000000;}
+.geo_new_block2 .rightaligneddiv{float:right;width:70%;margin-top:5px;}
+.geo_new_block2 .twodiv{display:inline-block;width:100%;}
+.mapbtn3{border-radius:0px!important;background:#008cba!important;border:none!important;border-bottom:solid 2px #007095!important;font-family:"Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;font-size:16px;color:#fff!important;padding:11px 10px 8px 10px!important;text-shadow:none;text-align:center;margin:20px 0 0 0;}

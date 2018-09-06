@@ -1,0 +1,272 @@
+
+<div class="content" id="basic_information">
+
+  <div class="fieldset_wrapper">
+
+    <fieldset>
+
+      <div class="campaign_settings_wrapper">
+
+
+        <div class="campaign_settings_box1">
+          <!--<label>My best campaign yet!(8) </label>-->
+        </div>
+
+        <div class="campaign_settings_box3">
+
+
+
+
+
+
+          <div class="campaign_settings_cell">
+<!--            <div class="create_audience_wrapper">
+
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td class="activetd"><img src="assets/images/create_audience_icon1.png"  alt="#"/>
+                    <h1 (click)="select(1)">Browser</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon2.png"  alt="#"/>
+                    <h1 (click)="select(2)">Dayparting</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon3.png"  alt="#"/>
+                    <h1 (click)="select(3)">Deals</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon4.png"  alt="#"/>
+                    <h1 (click)="select(4)">Device Types</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon5.png"  alt="#"/>
+                    <h1 (click)="select(5)">Locations</h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="assets/images/create_audience_icon6.png"  alt="#"/>
+                    <h1 (click)="select(6)">Operating Systems</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon7.png"  alt="#"/>
+                    <h1 (click)="select(7)">Pacing</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon8.png"  alt="#"/>
+                    <h1 (click)="select(8)">Third party Segments</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon9.png"  alt="#"/>
+                    <h1 (click)="select(9)">Viewability</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon10.png"  alt="#"/>
+                    <h1 (click)="select(10)">Website Filtering</h1>
+                  </td>
+
+                </tr>
+              </table>
+
+
+
+            </div>-->
+            <div class="clearfix"></div>
+            <div class="clearfix"></div>
+
+            <div *ngIf="browserselect">
+
+              <label>Browsers</label>
+              <br>
+              <input id="select1" name="select1" type="checkbox" [(ngModel)]="select1">Chrome<br>
+              <input id="select2" name="select2" type="checkbox" [(ngModel)]="select2"/>Firefox<br>
+              <input id="select3" name="select3" type="checkbox" [(ngModel)]="select3"/>Konqueror<br>
+              <input id="select4" name="select4" type="checkbox" [(ngModel)]="select4"/>Microsoft IE<br>
+              <input id="select5" name="select5" type="checkbox" [(ngModel)]="select5"/>Opera<br>
+              <input id="select6" name="select6" type="checkbox" [(ngModel)]="select6"/>Other<br>
+              <input id="select7" name="select7" type="checkbox" [(ngModel)]="select7"/>Safari<br>
+              <input type="button" value="OK" (click)="updatebrowsers()">
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+
+          <div class="campaign_settings_cell">
+
+            <div class="campaign_settings_cell_top">
+
+              <label>Browser</label>
+              <b>1 Browser <img src="assets/images/create_audience_close.png"  alt="#"/></b>
+              <div class="clearfix"></div>
+            </div>
+
+
+
+
+
+          </div>
+
+          <div class="campaign_settings_cell">
+
+            <div class="campaign_settings_cell_top">
+
+              <label (click)="sendtype(21)">Location </label>
+              <b *ngIf="fence_length1">{{fence_length1}}</b>
+
+              <div *ngIf="divshow21">
+
+
+
+
+                <div class="showerror" *ngIf="error11">{{error11}}</div>
+
+                <b>
+                  <span *ngFor="let item of show_locations1; let i=index">{{item.attr_name}}<span *ngIf=" i< show_locations1.length-1"> , </span></span>
+                </b>
+                <tabset>
+                  <tab heading="Locations">
+                    <!-- <p>Selectable Locations</p>
+                                <tr *ngFor="let item of details; let i=index">
+                                <td>{{item}}</td>
+                                </tr>-->
+
+                    <div class="location_tablewrapper">
+
+                      <h6>Available Locations </h6>
+
+                      <table>
+                        <tr>
+                          <td>
+                            <div class="location_heading">
+                              <h2>Selected Locations</h2>
+                              <span></span>
+                              <div class="clearfix"></div>
+
+                            </div>
+
+                            <div class="location_contain">
+                              <ul *ngFor="let item of selected_locations1; let i=index">
+                                <li>
+                                  <img src="assets/images/close_location.png" alt="#" class="loc_img1" (click)="deletelocations1(item.attr_id,item.attr_name,item)"/>
+                                  <label>{{item.attr_name}}</label></li>
+                              </ul>
+                              <!-- <span class="nolocation">No Data</span>-->
+                            </div>
+
+
+                          </td>
+
+                          <td>&nbsp;</td>
+                          <td>
+                            <div class="location_heading">
+                              <div *ngIf="count1>0"><img src="assets/images/location_arrow_left.png"  alt="#" class="loc_img1" (click)="childlist1(0,0,2)"/></div>
+                              <h2>{{locationnameforreverse}}</h2>
+                              <span class="searchbar_location"></span>
+                              <div class="clearfix"></div>
+
+                            </div>
+
+                            <div class="location_contain">
+
+                              <ul *ngFor="let item of details1; let i=index">
+
+                                <li><img src="assets/images/location_menuicon.png" alt="#" class="loc_img1" (click)="addtolist(item.id,item.name)"/> <label>{{item.name}}</label><img src="assets/images/location_arrow_right.png"  alt="#" class="loc_img2" (click)="childlist1(item.id,item.name,1)"/></li>
+
+                              </ul>
+
+
+                            </div>
+
+
+                          </td>
+
+
+                        </tr>
+
+
+                      </table>
+                      <input type="button"  value="Ok" (click)="submitlocation1(selected_locations1)"/>
+                    </div>
+
+
+                  </tab>
+                  <tab heading="Geo Fencing" (select)="initializeval1()" >
+                    <div class="GeoJSON_block"> <span>Upload GeoJSON</span></div>
+                    <div class="mapblickwrapper">
+                      <div class="map_menuwrapper">
+                        <input  type="text" class="map_input" placeholder="address" [(ngModel)]="searchaddress1" (keyup)="searchlatlng1($event)"/>
+                        <a href="javascript:void(0)" class="maplink1"><img src="../../assets/images/map_icon2.jpg"  alt="#"/></a>
+                        <a href="javascript:void(0)" class="maplink1" (click)="createsh1(1)"><img src="../../assets/images/map_icon3.jpg"  alt="#"/></a>
+                        <a href="javascript:void(0)" class="maplink1" (click)="createsh1(2)"><img src="../../assets/images/map_icon4.jpg"  alt="#"/></a>
+                        <a href="javascript:void(0)" class="maplink2"><img src="../../assets/images/map_icon5.jpg"  alt="#"/></a>
+                        <div class="clearfix"></div>
+                      </div>
+                      <agm-map *ngIf="mapval1" [latitude]="lat1" [longitude]="lng1" [fitBounds]="bounds1" (mapClick)="mapClicked1($event)">
+                        <agm-marker [latitude]="lat1" [longitude]="lng1"></agm-marker>
+                        <agm-polygon *ngFor="let pathsvals1 of patharr1" [paths]="pathsvals1" [clickable]="true" [polyDraggable]="true" [draggable]="true" [editable]="true" strokeColor="#E9BE79" fillColor="#EBD8B7" fillOpacity="1" >
+                        </agm-polygon>
+                        <agm-polyline [clickable]="true" [draggable]="true" [editable]="true">
+                          <agm-polyline-point *ngFor="let lineval of paths1" [latitude]="lineval.lat" [longitude]="lineval.lng">
+                          </agm-polyline-point>
+                        </agm-polyline>
+                      </agm-map>
+                    </div>
+                    <div class="map_menuwrapper menuwrapper_buttom">
+                      <select class="map_select" [(ngModel)]="polydelete1" (click)="mapdelete1()">
+                        <option>Actions</option>
+                        <option value="removeselected">Remove Selected</option>
+                        <option value="removeall">Remove All</option>
+                      </select>
+                      <input  type="text" class="map_input" placeholder="address" [(ngModel)]="searchaddress1" (keyup)="searchlatlng1($event)"/>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="new_table_wrapper">
+                      <div class="GeoJSON_block2"> <a href="javascript:void(0)">Download GeoJSON</a> </div>
+                      <table>
+                        <tr>
+                          <th><input type="checkbox" (click)="allcheck1()" [(ngModel)]="checkuncheck1"></th>
+                          <th>Name</th>
+                          <th>Geo Type</th>
+                          <th>&nbsp;</th>
+                        </tr>
+                        <tr *ngFor="let item of fence1; let i=index">
+                          <td><input type="checkbox" [(ngModel)]="item.fencecheckbox"></td>
+                          <td><img src="../../assets/images/tab_new_icon5.png"  alt="#" /><input [(ngModel)]="item.fencename" type="text"><div class="clearfix"></div></td>
+                          <td>Conversion	</td>
+                          <td><div class="table_closebtn"><a href="javascript:void(0)" (click)="deletepolyshape1(item)"><img src="../../assets/images/tab_new_icon3.png"  alt="#" /></a></div></td>
+                        </tr>
+                      </table>
+                      <div class="clearfix"></div>
+                      <div class="budget_formdiv_btn">
+                        <input type="button"  value="Save" (click)="savepolygon1()"/>
+                        <input type="button"  value="Cancel"/>
+                      </div>
+                    </div>
+                  </tab>
+                </tabset>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+
+
+
+
+
+
+          </div>
+
+
+
+
+          <a href="javascript:void(0)"  class="createaudience_link" style="float:left;"> &#9668; Campaign Settings </a>
+
+          <a href="javascript:void(0)"  class="createaudience_link">Creatives &#9658;</a>
+
+          <div class="clearfix"></div>
+
+
+        </div>
+
+
+
+      </div>
+
+    </fieldset>
+
+
+
+  </div>
+</div>

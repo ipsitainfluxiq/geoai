@@ -1,0 +1,69 @@
+<app-header></app-header>
+
+<div class="newpageborder"></div>
+<div class=" geo_body_wrapper">
+
+    <div class=" geo_new_wrapper">
+
+        <div class="geo_new_heading"><span><strong>CREATE AN</strong> Audience</span></div>
+
+        <div class="geo_new_menublock">
+
+            <ul>
+
+                <li><a [routerLink]="['/viewability']" href="javascript:void(0)" class="nmenu2"> Viewability</a></li>
+                <li><a [routerLink]="['/locations']" href="javascript:void(0)" class="nmenu1">Geo Targets</a></li>
+                <li><a [routerLink]="['/browser']" href="javascript:void(0)" class="nmenu3"> Browser</a></li>
+                <li><a [routerLink]="['/os']" href="javascript:void(0)" class="nmenu4">Operating Systems</a></li>
+                <li><a [routerLink]="['/devicetypes']" href="javascript:void(0)" class="nmenu5">Device Types </a></li>
+                <li><a [routerLink]="['/deals']" href="javascript:void(0)" class="nmenu6">Deals</a></li>
+                <li class="active"><a [routerLink]="['/pacing']" href="javascript:void(0)" class="nmenu7">Pacing</a></li>
+                <li><a [routerLink]="['/dayparting']" href="javascript:void(0)" class="nmenu8">Dayparting</a></li>
+                <div class="clearfix"></div>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class=" geo_new_block1">
+
+            <img src="assets/images/geoai4a-icon.png"  alt="#"/>
+            <h2>Pacing</h2>
+            <h3>Lorem Ipsum is simply dummy
+                text of the printing and typesetting industry.</h3>
+
+        </div>
+
+        <h6 class="h6locationtext">Pacing</h6>
+
+        <div class=" geo_new_block2">
+            <div class="showerror" *ngIf="paceerror">{{paceerror}}</div>
+            <!--<ui-switch  (change)="onChange($event)" [(ngModel)]="paceenable"></ui-switch> --><span class="switchptext">Enable Automated Pacing (Recommended)</span>
+            <b class="showpacetext" *ngIf="showpace">{{showpace}}</b>
+            <div class="clearfix"></div>
+
+            <div *ngIf="divshowpace">
+                <div class="clearfix"></div>
+                <h2>Throttle the delivery of ad impressions</h2>
+                <div class="pacing_textcontain">
+                    <input type="text" class="form-control" appOnlyNumber="true" [(ngModel)]="pacingval"><span>%</span>
+                    <div class="clearfix"></div></div>
+
+                <input type="button" value="OK" (click)="updatepacing(pacingval)" class="browsertabbtn2">
+            </div>
+        </div>
+
+
+
+        <div class="footerbtndiv">
+            <input type="button" value="Back" [routerLink]="['/deals']">
+            <input type="button" value="Next" (click)="updatepacing(pacingval)" [routerLink]="['/dayparting']">
+
+            <div class="clearfix"></div>
+
+        </div>
+
+
+</div>
+
+
+</div>

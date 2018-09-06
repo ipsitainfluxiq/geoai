@@ -1,0 +1,18 @@
+<!--
+<agm-map *ngIf="mapval" [latitude]="lat" [longitude]="lng" [fitBounds]="bounds" (mapClick)="mapClicked($event)">
+  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+  <agm-polygon *ngFor="let pathsvals of patharr" [paths]="pathsvals" [clickable]="true" [polyDraggable]="true" [draggable]="true" [editable]="true" strokeColor="#E9BE79" fillColor="#EBD8B7" fillOpacity="1" >
+  </agm-polygon>
+&lt;!&ndash;  <agm-polyline [clickable]="true" [draggable]="true" [editable]="true">
+    <agm-polyline-point *ngFor="let lineval of paths" [latitude]="lineval.lat" [longitude]="lineval.lng">
+    </agm-polyline-point>
+  </agm-polyline>&ndash;&gt;
+</agm-map>-->
+
+
+<!--<div id="map"></div>-->
+
+<button (click)="callforadd()">Save</button>
+<button (click)="logout()">Logout</button>
+<div id="map"></div>
+

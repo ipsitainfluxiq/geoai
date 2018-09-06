@@ -1,0 +1,65 @@
+<div class="content" id="basic_information">
+    <div class="top_banner_body">
+
+
+
+        <div class="top_banner_wrapper">
+
+
+            <img src="../../assets/images/geoai_logo.jpg"  class="geoai_logo"/>
+            <img src="../../assets/images/geoai_top_banner.jpg" class="geoai_top_banner" />
+
+            <!--<a href="#" class="top_bannerbtn"  >Ad Marketing Pros</a>-->
+            <a [routerLink]="['/accountdetails']" class="top_bannerbtn" *ngIf="usernamedetail" >{{usernamedetail.firstname}} {{usernamedetail.lastname}}</a>
+            <div class="topnew_menu hide">
+                <div class="btn-group" dropdown>
+                    <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+                        <span class="glyphicon glyphicon-menu-hamburger"></span> <span class="caret"></span>
+                    </button>
+                    <ul *dropdownMenu class="dropdown-menu" role="menu">
+                       <!-- <li role="menuitem"><a class="dropdown-item" [routerLink]="['/campaignsettings']"><h2>Create Campaigns </h2></a></li>-->
+                        <li role="menuitem" class="dropdown-submenu"><a class="dropdown-item"><h2>Manage Audience</h2></a>
+                            <ul class="dropdown-menu">
+                                <li role="menuitem"><a class="dropdown-item" [routerLink]="['/viewability']" (click)="resetcookie1()"><h2>Create Audience</h2></a></li>
+                                <li role="menuitem"><a class="dropdown-item" [routerLink]="['/audiencelist']"><h2>Audience List</h2></a></li>
+                            </ul>
+
+                        </li>
+
+                        <li role="menuitem" class="dropdown-submenu"><a class="dropdown-item"><h2>Manage Creatives</h2></a>
+                            <ul class="dropdown-menu">
+                                <!--<li role="menuitem"><a class="dropdown-item" [routerLink]="['/creativeadd']" ><h2>Add Creatives</h2></a></li>
+                                <li role="menuitem"><a class="dropdown-item" [routerLink]="['/creativelist']"><h2>Creative List</h2></a></li>-->
+                                <li role="menuitem"><a class="dropdown-item" [routerLink]="['/adbanneraddnew']"><h2>Add Adbanner</h2></a></li>
+                                <li role="menuitem"><a class="dropdown-item" [routerLink]="['/adbannerlist']"><h2>Adbanner List</h2></a></li>
+                            </ul>
+
+                        </li>
+
+
+                        <!--<li role="menuitem"><a class="dropdown-item" [routerLink]="['/simplesolution']"><h2>Make a Order</h2></a></li>-->
+                        <!--<li role="menuitem"><a class="dropdown-item" (click)="resetcookie()"><h2>Create Campaigns </h2></a></li>-->
+                        <li role="menuitem"><a class="dropdown-item" (click)="resetcookie2()"><h2>Add A Campaign </h2></a></li>
+                       <!-- <li role="menuitem"><a class="dropdown-item" [routerLink]="['/campaignlist']"><h2>Campaign List </h2></a></li>-->
+                      <!--  <li role="menuitem"><a class="dropdown-item" [routerLink]="['/campaignlistnew']"><h2>Campaign List </h2></a></li>-->
+                        <li role="menuitem"><a class="dropdown-item" [routerLink]="['/campaignlists']"><h2>Campaign List </h2></a></li>
+                        <li role="menuitem" class="dropdown-submenu" *ngIf="cookiedetailsforalldetails.type==1"><a class="dropdown-item"><h2>Manage Admin</h2></a>
+                            <ul class="dropdown-menu">
+                                <li role="menuitem"><a class="dropdown-item" [routerLink]="['/adminadd']" ><h2>Add admin</h2></a></li>
+                                <li role="menuitem"><a class="dropdown-item" [routerLink]="['/adminlist']"><h2>Admin List</h2></a></li>
+                            </ul>
+
+                        </li>
+
+                        <li role="menuitem"><a class="dropdown-item" [routerLink]="['/userlist']"><h2>User List </h2></a></li>
+                        <li role="menuitem"><a class="dropdown-item" (click)="logout()"><h2>Log Out</h2></a></li>
+
+
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+

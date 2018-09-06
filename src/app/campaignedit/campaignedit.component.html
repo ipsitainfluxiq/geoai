@@ -1,0 +1,69 @@
+<app-header></app-header>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+  <div class="dashboard_right_wrapper">
+    <div class="dashboard1_div1 ">
+      <h4> Edit Campaign</h4>
+      <div class="dashboard1form">
+
+        <form role="form" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+
+          <label>Campaign Name</label>
+          <input type="text" class="form-control" placeholder="Campaign Name" [formControl]="dataForm.controls['campaignname']">
+          <span class="has-error" *ngIf ="dataForm.controls['campaignname'].touched && !dataForm.controls['campaignname'].valid">Campaign Name is Required !</span>
+
+          <label>Flight Start-End Date</label>
+          <div class="budget_formdiv_left">
+            <div class="budget_forminput">
+              <pre class="preformcontrol" *ngIf=" this.getval">Start date: <em *ngIf="dt">{{ getDate() | date:'fullDate'}}</em></pre>
+            </div>
+            <div class="clearfix"></div>
+            <div style="display:inline-block; min-height:290px;">
+              <datepicker  [formControl]="dataForm.controls['dt']"></datepicker>
+            </div>
+          </div>
+
+
+          <div class="budget_formdiv_right">
+            <pre class="preformcontrol" *ngIf=" this.getval">End date: <em *ngIf="enddate">{{ getendDate() | date:'fullDate'}}</em></pre>
+
+            <div class="clearfix"></div>
+
+            <div style="display:inline-block; min-height:290px;">
+              <datepicker [formControl]="dataForm.controls['enddate']"></datepicker>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+
+          <label>Campaign Budget</label>
+          <input type="text" class="form-control" placeholder="Campaign Budget" [formControl]="dataForm.controls['campaignbudget']">
+          <span class="has-error" *ngIf ="dataForm.controls['campaignbudget'].touched && !dataForm.controls['campaignbudget'].valid">Campaign Budget is Required !</span>
+
+          <label>Monthly Budget</label>
+          <input type="text" class="form-control" placeholder="Monthly Budget" [formControl]="dataForm.controls['monthlybudget']">
+          <span class="has-error" *ngIf ="dataForm.controls['monthlybudget'].touched && !dataForm.controls['monthlybudget'].valid">Campaign Budget is Required !</span>
+
+          <label>Bidding Amount Budget</label>
+          <input type="text" class="form-control" placeholder="Bidding Amount Budget" [formControl]="dataForm.controls['biddingamountnbudget']">
+          <span class="has-error" *ngIf ="dataForm.controls['biddingamountnbudget'].touched && !dataForm.controls['biddingamountnbudget'].valid">Campaign Budget is Required !</span>
+
+          <label>Daily Spend Target</label>
+          <input type="text" class="form-control" placeholder="Daily Spend Target" [formControl]="dataForm.controls['dailyspendtarget']">
+          <span class="has-error" *ngIf ="dataForm.controls['dailyspendtarget'].touched && !dataForm.controls['dailyspendtarget'].valid">Campaign Budget is Required !</span>
+
+          <label>Bidding Type</label>
+          <select class="form-control2"  name="bidding_type" [formControl]="dataForm.controls['bidding_type']" >
+            <option value="">Select Bidding</option>
+            <option value="cpm_bidding">CPM Bidding</option>
+            <option value="cpc_bidding">CPC Bidding</option>
+          </select>
+
+          <br><input type="submit" value="Save" class="loginbtn2 cancel">
+          <button type="button" [routerLink]="['/creativelist']" class="loginbtn2 cancel">Cancel</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

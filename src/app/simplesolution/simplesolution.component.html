@@ -1,0 +1,3652 @@
+<app-header></app-header>
+<!--<div class="top_banner_body">
+  <div class="top_banner_wrapper">
+    <img src="../../assets/images/geoai_logo.jpg"  class="geoai_logo"/>
+    <img src="../../assets/images/geoai_top_banner.jpg" class="geoai_top_banner" />
+
+    <a href="#" class="top_bannerbtn">Ad Marketing Pros</a>
+
+    <div class="topnew_menu">
+      <div class="btn-group" dropdown>
+        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+          <span class="glyphicon glyphicon-menu-hamburger"></span> <span class="caret"></span>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem"><a class="dropdown-item" [routerLink]="['/campaignsettings']"><h2>Create Campaigns </h2></a></li>
+
+
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="clearfix"></div>
+  </div>
+</div>-->
+<div class="fieldset_wrapper">
+
+  <div class="pageheading">Order Form</div>
+
+  <ul class='nav nav-wizard'>
+
+    <li class='active'><a><span>1</span> Simple Solutions </a></li>
+
+    <li><a (click)="callsubmit()"><span>2</span>  Basic Information </a></li>
+
+    <li><a (click)="callsubmit()"><span>3</span>  Confirmation </a></li>
+    <div class="clearfix"></div>
+
+  </ul>
+
+
+
+<legend>Simple Solutions</legend>
+<h6 class="h6text">
+  Introducing Simple Solutions™, a simple way to grow your digital revenues by offering your local advertisers advanced audience targeting, powered by unstructured data. Simple Solutions is a suite of products designed to make selling and ordering on the Simpli.fi platform easy and profitable.
+</h6>
+<!--<form role="form" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">-->
+  <div *ngIf="error" class="has-error">{{error}}</div>
+<div *ngIf="b==true" class="allradios" class="labelinputtext">
+  <div ngClass="{{haserrorcls('Simply_Solutions__c')}}">
+    <div class="showerror" ngClass="{{showerrorcls('Simply_Solutions__c')}}">You must choose a Simple Solution.</div>
+<input id="Simply_Geo__c" name="Simply_Solutions__c" type="radio" value="Simply Geo" (click)="sendtype(0)" [(ngModel)]="simply_geo">
+<label for="Simply_Geo__c" class="label1text">
+  Simply
+  <strong>Mobile</strong>
+</label>
+  <div [ngClass]="{'active': isActive[0], 'disabled': isDisabled[0]}">
+  <div class="child-box geoai_formwrapper" id="simply_geo_box">
+  <p>Simply Mobile™ solutions offers accurate geo-targeting across desktop and mobile platforms.</p>
+  <p>Define the geography you want your advertising to serve within (state, region, city, ZIP codes):</p>
+<div class="geoai_form_con">
+    <label for="Geo_Targeting__c">
+    Geo Targeting
+  </label>
+  <textarea id="Geo_Targeting__c" name="Geo_Targeting__c" [(ngModel)]="simply_geotargeting"></textarea>
+  <p class="note">Limit to 255 Characters. Define the geography you want your advertising to serve within (state, region, city, ZIP codes)</p>
+</div>
+    <div class="geoai_form_con">
+    <label for="Geo_Fencing__c">
+    GeoFencing
+  </label>
+  <textarea id="Geo_Fencing__c" name="Geo_Fencing__c" [(ngModel)]="simply_geofencing"></textarea>
+  <p class="note">If you have a brick and mortar location, Simpli.fi is able to utilize geo-fencing! Just let us know what locations you'd like us to target by sending a street address and any parameters around that address you'd like us to include (parking lots, sidewalks, etc). Finally, tell us for how long after someone enters the fence we should serve them ads (10 minutes up to 30 days).</p>
+  </div>
+    <div class="clearfix"></div>
+  <h3 class="label1text2">Choose a device type</h3>
+<!--  <div class="Solution_Geo_Details__c_errors"></div>-->
+    <div ngClass="{{haserrorcls('Solution_Geo_Details__c')}}">
+
+  <input checked id="Simply_Geo_Display__c" name="Solution_Geo_Details__c" type="checkbox" value="Display" [(ngModel)]="simply_display">
+  <label  for="Simply_Geo_Display__c">
+    Desktop and Laptop
+  </label>
+  <input checked id="Simply_Geo_Tablet__c" name="Solution_Geo_Details__c" type="checkbox" value="Tablet" [(ngModel)]="simply_tablet">
+  <label  for="Simply_Geo_Tablet__c">
+    Tablet
+  </label>
+  <input checked id="Simply_Geo_Smartphone__c" name="Solution_Geo_Details__c" type="checkbox" value="Mobile" [(ngModel)]="simply_mobile">
+  <label  for="Simply_Geo_Smartphone__c">
+    Smartphone
+  </label>
+      <div class="showerror" ngClass="{{showerrorcls('Simply_Geo_Display__c')}}">You must choose at least one device type.</div>
+    </div>
+  </div>
+</div>
+<p></p>
+
+      <input id="Simply_Premium__c" name="Simply_Solutions__c" type="radio" value="Simply Premium" (click)="sendtype('1')" [(ngModel)]="simply_premium">
+      <label for="Simply_Premium__c" class="label1text">
+        Simply
+        <strong>Premium</strong>
+      </label>
+  <div [ngClass]="{'active': isActive[1], 'disabled': isDisabled[1]}">
+      <div class="child-box geoai_formwrapper" id="simply_geo_box">
+        <p>Simply Premium™ solutions offer an audience visiting a verified whitelist of premium websites.</p>
+        <p>Define the geography you want your advertising to serve within (state, region, city, ZIP codes):</p>
+
+<div class="geoai_form_con">
+        <label for="Geo_Targeting__c">
+          Geo Targeting
+        </label>
+        <textarea id="Geo_Targeting__c" name="Geo_Targeting__c" [(ngModel)]="premium_geotargeting"></textarea>
+        <p class="note">Limit to 255 Characters. Define the geography you want your advertising to serve within (state, region, city, ZIP codes)</p>
+</div>
+        <div class="geoai_form_con">
+        <label for="Geo_Fencing__c">
+          GeoFencing
+        </label>
+        <textarea id="Geo_Fencing__c" name="Geo_Fencing__c" [(ngModel)]="premium_geofencing"></textarea>
+
+
+
+        <p class="note">If you have a brick and mortar location, Simpli.fi is able to utilize geo-fencing! Just let us know what locations you'd like us to target by sending a street address and any parameters around that address you'd like us to include (parking lots, sidewalks, etc). Finally, tell us for how long after someone enters the fence we should serve them ads (10 minutes up to 30 days).</p>
+        </div>
+        <div class="clearfix"></div>
+
+        <h3 class="label1text2">Choose Categories</h3>
+        <div ngClass="{{haserrorcls('Solution_Premium_Details__c')}}">
+          <div class="showerror" ngClass="{{showerrorcls('Solution_Premium_Details__c')}}">You must choose at least one Premium Category.</div>
+          <div>
+            <input id="Simply_Premium_News_Information__C" name="Solution_Premium_Details__c" type="checkbox" [(ngModel)]="premium_news">
+            <label for="Simply_Premium_News_Information__C">
+              News & Information
+            </label>
+          </div>
+
+          <div>
+            <input id="Simply_Premium_Business_Finance__C" name="Solution_Premium_Details__c" type="checkbox" [(ngModel)]="premium_buisness">
+            <label for="Simply_Premium_Business_Finance__C">
+              Business & Finance
+            </label>
+          </div>
+
+          <div>
+            <input id="Simply_Premium_Political__C" name="Solution_Premium_Details__c" type="checkbox" [(ngModel)]="premium_politics">
+            <label for="Simply_Premium_Political__C">
+              Political
+            </label>
+          </div>
+
+          <div>
+            <input id="Simply_Premium_Sports__C" name="Solution_Premium_Details__c" type="checkbox" [(ngModel)]="premium_sports">
+            <label for="Simply_Premium_Sports__C">
+              Sports
+            </label>
+          </div>
+
+        <div>
+            <input id="Simply_Premium_Arts_Entertainment__C" name="Solution_Premium_Details__c" type="checkbox" [(ngModel)]="premium_arts">
+            <label for="Simply_Premium_Arts_Entertainment__C">
+              Arts & Entertainment
+            </label>
+        </div>
+
+          <div>
+            <input id="Simply_Premium_Shopping__C" name="Solution_Premium_Details__c" type="checkbox" [(ngModel)]="premium_shopping">
+            <label for="Simply_Premium_Shopping__C">
+              Shopping (Retail & eCommerce)
+            </label>
+          </div>
+      </div>
+      </div>
+  </div>
+<p></p>
+
+<input id="Simply_Audiences__c" name="Simply_Solutions__c" type="radio" value="Simply Audiences" (click)="sendtype('2')" [(ngModel)]="simply_audiences">
+<label for="Simply_Audiences__c" class="label1text">
+  Simply
+  <strong>Audiences</strong>
+</label>
+  <div [ngClass]="{'active': isActive[2], 'disabled': isDisabled[2]}">
+<div class="child-box geoai_formwrapper" id="simpli_audiences_box">
+  <p>Simply Audiences™ solutions provide advertisers with targeted audience starters for common advertising categories. Campaigns use a blend of optimized tactics including keyword search, category contextual and keyword contextual targeting.</p>
+  <p>Define the geography you want your advertising to serve within (state, region, city, ZIP codes):</p>
+
+  <div class="geoai_form_con">
+  <label for="Geo_Targeting__c">
+    Geo Targeting
+  </label>
+  <textarea id="Geo_Targeting__c" name="Geo_Targeting__c" [(ngModel)]="audiences_geotargeting"></textarea>
+  <p class="note">Limit to 255 Characters. Define the geography you want your advertising to serve within (state, region, city, ZIP codes)</p>
+  </div>
+    <div class="geoai_form_con">
+  <label for="Geo_Fencing__c">
+    GeoFencing
+  </label>
+  <textarea id="Geo_Fencing__c" name="Geo_Fencing__c" [(ngModel)]="audiences_geofencing"></textarea>
+  <p class="note">If you have a brick and mortar location, Simpli.fi is able to utilize geo-fencing! Just let us know what locations you'd like us to target by sending a street address and any parameters around that address you'd like us to include (parking lots, sidewalks, etc). Finally, tell us for how long after someone enters the fence we should serve them ads (10 minutes up to 30 days).</p>
+    </div>
+      <div class="clearfix"></div>
+  <h3>Choose Categories</h3>
+  <input id="Audience_Categories__c" name="Audience_Categories__c" type="hidden" value="">
+  <div class="audience-list">
+    <ul>
+      <li>
+        <div class="thumb"  (click)="checked($event)">
+          arrw
+        </div>
+
+
+       <input id="page_context_1" name="simply_audience_categories" type="checkbox" value="Automotive" [(ngModel)]="audiences_automative" (click)="allcheck($event)">
+        <label for="page_context_1">Automotive</label>
+        <ul ngClass="{{isopen}}">
+
+          <li>
+            <input class="second" id="page_context_2" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_fuel" ngModel="audiences_automative_fuel">
+            <label for="page_context_2">Alternative Fuel Vehicles</label>
+
+          </li>
+          <li>
+            <input id="page_context_3" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_convertible"  ngModel="audiences_automative_convertible">
+            <label for="page_context_3">Convertible</label>
+
+          </li>
+          <li>
+            <input id="page_context_4" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_coupe">
+            <label for="page_context_4">Coupe</label>
+
+          </li>
+          <li>
+            <input id="page_context_5" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_minivan">
+            <label for="page_context_5">Minivan</label>
+
+          </li>
+          <li>
+            <input id="page_context_6" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_motorcycle">
+            <label for="page_context_6">Motorcycle</label>
+
+          </li>
+          <li>
+            <input id="page_context_7" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_nonus">
+            <label for="page_context_7">Non US</label>
+
+          </li>
+          <li>
+            <input id="page_context_8" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_parts">
+            <label for="page_context_8">Parts and Accessories</label>
+
+          </li>
+          <li>
+            <div class="thumb11"  (click)="checked($event)">
+              arrw11
+            </div>
+            <input id="page_context_9" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_price" (click)="allcheck($event)">
+            <label for="page_context_9">Price</label>
+            <ul ngClass="{{isopen11}}">
+              <li>
+                <input id="page_context_10" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_price_economy">
+                <label for="page_context_10">Economy</label>
+
+              </li>
+              <li>
+                <input id="page_context_11" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_price_germanyeco">
+                <label for="page_context_11">Germany Economy</label>
+
+              </li>
+              <li>
+                <input id="page_context_12" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_price_germanylux">
+                <label for="page_context_12">Germany Luxury</label>
+
+              </li>
+              <li>
+                <input id="page_context_13" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_price_germanymid">
+                <label for="page_context_13">Germany Midrange</label>
+
+              </li>
+              <li>
+                <input id="page_context_14" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_price_luxary">
+                <label for="page_context_14">Luxury</label>
+
+              </li>
+              <li>
+                <input id="page_context_15" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_price_midrange">
+                <label for="page_context_15">Midrange</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_16" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_rv">
+            <label for="page_context_16">RV</label>
+
+          </li>
+          <li>
+            <div class="thumb12"  (click)="checked($event)">
+              arrw12
+            </div>
+            <input id="page_context_17" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_sedan" (click)="allcheck($event)">
+            <label for="page_context_17">Sedan</label>
+            <ul ngClass="{{isopen12}}">
+              <li>
+                <input id="page_context_18" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_sedan_compact">
+                <label for="page_context_18">Compact</label>
+
+              </li>
+              <li>
+                <input id="page_context_19" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_sedan_large">
+                <label for="page_context_19">Large</label>
+
+              </li>
+              <li>
+                <input id="page_context_20" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_sedan_midsize">
+                <label for="page_context_20">Midsize</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_21" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_services">
+            <label for="page_context_21">Services</label>
+
+          </li>
+          <li>
+            <input id="page_context_22" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_sportscar">
+            <label for="page_context_22">Sports Car</label>
+
+          </li>
+          <li>
+            <input id="page_context_23" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_suv">
+            <label for="page_context_23">SUV</label>
+
+          </li>
+          <li>
+            <div class="thumb13"  (click)="checked($event)">
+              arrw13
+            </div>
+            <input id="page_context_24" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_truck" (click)="allcheck($event)">
+            <label for="page_context_24">Truck</label>
+            <ul ngClass="{{isopen13}}">
+              <li>
+                <input id="page_context_25" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_truck_fullsize">
+                <label for="page_context_25">Full Size</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb14"  (click)="checked($event)">
+              arrw14
+            </div>
+            <input id="page_context_26" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_us" (click)="allcheck($event)">
+            <label for="page_context_26">US</label>
+            <ul ngClass="{{isopen14}}">
+              <li>
+                <input id="page_context_27" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_us_chry">
+                <label for="page_context_27">Chrysler</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb15"  (click)="checked($event)">
+              arrw15
+            </div>
+            <input id="page_context_28" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_used" (click)="allcheck($event)">
+            <label for="page_context_28">Used</label>
+            <ul ngClass="{{isopen15}}">
+              <li>
+                <input id="page_context_29" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_automative_used_certified">
+                <label for="page_context_29">Certified Pre Owned</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_30" name="simply_audience_categories" type="checkbox" value="Automotive" [(ngModel)]="audiences_automative_wagon">
+            <label for="page_context_30">Wagon and Crossover</label>
+          </li>
+        </ul>
+        <!--</details>-->
+        <!--</div>-->
+      </li>
+      <li>
+        <div class="thumb1"  (click)="checked($event)">
+          arrw1
+        </div>
+        <input id="page_context_31" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer" (click)="allcheck($event)">
+        <label for="page_context_31">Consumer Packaged Goods</label>
+        <ul ngClass="{{isopen1}}">
+          <li>
+            <div class="thumb16"  (click)="checked($event)">
+              arrw16
+            </div>
+            <input id="page_context_32" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beauty" (click)="allcheck($event)">
+            <label for="page_context_32">Beauty and Personal Care</label>
+            <ul ngClass="{{isopen16}}">
+              <li>
+                <input id="page_context_33" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beauty_cosmetics">
+                <label for="page_context_33">Cosmetics</label>
+
+              </li>
+              <li>
+                <input id="page_context_34" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beauty_fragrance">
+                <label for="page_context_34">Fragrance</label>
+
+              </li>
+              <li>
+                <input id="page_context_35" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beauty_hair">
+                <label for="page_context_35">Hair and Beauty Services</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb17"  (click)="checked($event)">
+              arrw17
+            </div>
+            <input id="page_context_36" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beverages" (click)="allcheck($event)">
+            <label for="page_context_36">Beverages</label>
+            <ul ngClass="{{isopen17}}">
+              <li>
+                <div class="thumb18"  (click)="checked($event)">
+                  arrw18
+                </div>
+                <input id="page_context_37" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beverages_beerwine" (click)="allcheck($event)">
+                <label for="page_context_37">Beer Wine and Spirits</label>
+                <ul ngClass="{{isopen18}}">
+                  <li>
+                    <input id="page_context_38" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beverages_beerwine_beer">
+                    <label for="page_context_38">Beer</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <input id="page_context_39" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beverages_beerwine_carbonated">
+                <label for="page_context_39">Carbonated</label>
+
+              </li>
+              <li>
+                <input id="page_context_40" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beverages_beerwine_coffee">
+                <label for="page_context_40">Coffee</label>
+
+              </li>
+              <li>
+                <input id="page_context_41" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beverages_beerwine_juices">
+                <label for="page_context_41">Juices</label>
+
+              </li>
+              <li>
+                <input id="page_context_42" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_beverages_beerwine_tea">
+                <label for="page_context_42">Tea</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_43" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_contests">
+            <label for="page_context_43">Contests and Sweepstakes</label>
+
+          </li>
+          <li>
+            <div class="thumb19"  (click)="checked($event)">
+              arrw19
+            </div>
+            <input id="page_context_44" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_food" (click)="allcheck($event)">
+            <label for="page_context_44">Food and Nutrition</label>
+            <ul ngClass="{{isopen19}}">
+              <li>
+                <div class="thumb20"  (click)="checked($event)">
+                  arrw20
+                </div>
+                <input id="page_context_45" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_food_snacks" (click)="allcheck($event)">
+                <label for="page_context_45">Snacks</label>
+                <ul ngClass="{{isopen20}}">
+                  <li>
+                    <input id="page_context_46" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_food_snacks_savory">
+                    <label for="page_context_46">Savory</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_47" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_food_snacks_sweet">
+                    <label for="page_context_47">Sweet</label>
+
+                  </li>
+                </ul>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb21"  (click)="checked($event)">
+              arrw21
+            </div>
+            <input id="page_context_48" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_pet" (click)="allcheck($event)">
+            <label for="page_context_48">Pets and Animals</label>
+            <ul ngClass="{{isopen21}}">
+              <li>
+                <input id="page_context_49" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_pet_cat">
+                <label for="page_context_49">Cats</label>
+
+              </li>
+              <li>
+                <input id="page_context_50" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_pet_dog">
+                <label for="page_context_50">Dogs</label>
+
+              </li>
+              <li>
+                <input id="page_context_51" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_pet_food">
+                <label for="page_context_51">Food and Supplies</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_52" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_consumer_recipes">
+            <label for="page_context_52">Recipes</label>
+
+          </li>
+        </ul>
+
+      </li>
+      <li>
+        <div class="thumb2"  (click)="checked($event)">
+          arrw2
+        </div>
+        <input id="page_context_60" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment" (click)="allcheck($event)">
+        <label for="page_context_60">Entertainment</label>
+        <ul ngClass="{{isopen2}}">
+          <li>
+            <input id="page_context_61" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_parks">
+            <label for="page_context_61">Amusement Parks Rodeos and Festivals</label>
+
+          </li>
+          <li>
+            <div class="thumb22"  (click)="checked($event)">
+              arrw22
+            </div>
+            <input id="page_context_62" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games" (click)="allcheck($event)">
+            <label for="page_context_62">Games</label>
+            <ul ngClass="{{isopen22}}">
+              <li>
+                <div class="thumb23"  (click)="checked($event)">
+                  arrw23
+                </div>
+                <input id="page_context_63" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore" (click)="allcheck($event)">
+                <label for="page_context_63">Hardcore Gamers</label>
+                <ul ngClass="{{isopen23}}">
+                  <li>
+                    <div class="thumb25"  (click)="checked($event)">
+                      arrw25
+                    </div>
+                    <input id="page_context_64" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres" (click)="allcheck($event)">
+                    <label for="page_context_64">Genres</label>
+                    <ul ngClass="{{isopen25}}">
+                      <li>
+                        <input id="page_context_65" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_action">
+                        <label for="page_context_65">Action</label>
+
+                      </li>
+                      <li>
+                        <input id="page_context_66" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_games_hardcore_genres_adventure" >
+                        <label for="page_context_66">Adventure</label>
+
+                      </li>
+                      <li>
+                        <input id="page_context_67" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_games_hardcore_genres_puzzle">
+                        <label for="page_context_67">Puzzle</label>
+
+                      </li>
+                      <li>
+                        <input id="page_context_68" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_games_hardcore_genres_racing">
+                        <label for="page_context_68">Racing</label>
+
+                      </li>
+                      <li>
+                        <input id="page_context_107" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_games_hardcore_genres_reality">
+                        <label for="page_context_107">Reality</label>
+
+                      </li>
+                      <li>
+                        <input id="page_context_69" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_games_hardcore_genres_role">
+                        <label for="page_context_69">Role Playing Game</label>
+
+                      </li>
+                      <li>
+                        <input id="page_context_70" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_games_hardcore_genres_simulation">
+                        <label for="page_context_70">Simulation</label>
+
+                      </li>
+                      <li>
+                        <div class="thumb26"  (click)="checked($event)">
+                          arrw26
+                        </div>
+                        <input id="page_context_71" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports" (click)="allcheck($event)">
+                        <label for="page_context_71">Sports</label>
+                        <ul ngClass="{{isopen26}}">
+                          <li>
+                            <input id="page_context_357" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_autoracing">
+                            <label for="page_context_357">Auto Racing</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_358" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_baseball">
+                            <label for="page_context_358">Baseball</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_359" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_basketball">
+                            <label for="page_context_359">Basketball</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_360" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_boating">
+                            <label for="page_context_360">Boating and Sailing</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_361" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_cricket">
+                            <label for="page_context_361">Cricket</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_362" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_cycling">
+                            <label for="page_context_362">Cycling</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_363" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_fantasylg">
+                            <label for="page_context_363">Fantasy Leagues</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_364" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_football">
+                            <label for="page_context_364">Football</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_365" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_golf">
+                            <label for="page_context_365">Golf</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_366" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_hockey">
+                            <label for="page_context_366">Hockey</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_367" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_hunting">
+                            <label for="page_context_367">Hunting</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_368" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_outdoors">
+                            <label for="page_context_368">Outdoors</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_369" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_rugby">
+                            <label for="page_context_369">Rugby</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_370" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_snow">
+                            <label for="page_context_370">Snow</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_371" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_soccer">
+                            <label for="page_context_371">Soccer</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_372" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_sportgoods">
+                            <label for="page_context_372">Sporting Goods</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_373" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_sports_tennis">
+                            <label for="page_context_373">Tennis</label>
+
+                          </li>
+                        </ul>
+
+                      </li>
+                      <li>
+                        <input id="page_context_72" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_hardcore_genres_strategy">
+                        <label for="page_context_72">Strategy</label>
+
+                      </li>
+                    </ul>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <div class="thumb27"  (click)="checked($event)">
+                  arrw27
+                </div>
+                <input id="page_context_73" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_platform" (click)="allcheck($event)">
+                <label for="page_context_73">Platforms</label>
+                <ul ngClass="{{isopen27}}">
+                  <li>
+                    <input id="page_context_75" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_platform_gameboy">
+                    <label for="page_context_75">GameBoy Advance</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_76" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_platform_gamecube">
+                    <label for="page_context_76">GameCube</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_77" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_platform_pc">
+                    <label for="page_context_77">PC</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_78" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_platform_playstation">
+                    <label for="page_context_78">PlayStation</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_74" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_platform_wii">
+                    <label for="page_context_74">Wii</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_79" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_platform_wireless">
+                    <label for="page_context_79">Wireless</label>
+
+                  </li>
+                  <li>
+                    <div class="thumb28"  (click)="checked($event)">
+                      arrw28
+                    </div>
+                    <input id="page_context_80" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_games_platform_xbox" (click)="allcheck($event)">
+                    <label for="page_context_80">Xbox</label>
+                    <ul ngClass="{{isopen28}}">
+                      <li>
+                        <input id="page_context_81" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_games_platform_xbox_360">
+                        <label for="page_context_81">360</label>
+
+                      </li>
+                    </ul>
+
+                  </li>
+                </ul>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_82" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_genealogy" >
+            <label for="page_context_82">Genealogy</label>
+
+          </li>
+          <li>
+            <div class="thumb29"  (click)="checked($event)">
+              arrw29
+            </div>
+            <input id="page_context_83" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies" (click)="allcheck($event)">
+            <label for="page_context_83">Movies</label>
+            <ul ngClass="{{isopen29}}">
+              <li>
+                <input id="page_context_84" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies_action">
+                <label for="page_context_84">Action and Adventure</label>
+
+              </li>
+              <li>
+                <input id="page_context_85" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies_animation">
+                <label for="page_context_85">Animation</label>
+
+              </li>
+              <li>
+                <input id="page_context_86" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies_childrens">
+                <label for="page_context_86">Childrens</label>
+
+              </li>
+              <li>
+                <input id="page_context_87" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies_classics">
+                <label for="page_context_87">Classics</label>
+
+              </li>
+              <li>
+                <input id="page_context_88" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies_comedy">
+                <label for="page_context_88">Comedy</label>
+
+              </li>
+              <li>
+                <input id="page_context_89" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies_drama">
+                <label for="page_context_89">Drama</label>
+
+              </li>
+              <li>
+                <input id="page_context_90" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies_horror">
+                <label for="page_context_90">Horror</label>
+
+              </li>
+              <li>
+                <div class="thumb30"  (click)="checked($event)">
+                  arrw30
+                </div>
+                <input id="page_context_91" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies_romance" (click)="allcheck($event)">
+                <label for="page_context_91">Romance</label>
+                <ul ngClass="{{isopen30}}">
+                  <li>
+                    <input id="page_context_258" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies_romance_personals">
+                    <label for="page_context_258">Personals</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <input id="page_context_92" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_movies_science">
+                <label for="page_context_92">Science Fiction and Fantasy</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb31"  (click)="checked($event)">
+              arrw31
+            </div>
+            <input id="page_context_93" name="simply_audience_categories" type="checkbox"  [(ngModel)]="audiences_entertainment_music" (click)="allcheck($event)">
+            <label for="page_context_93">Music</label>
+            <ul ngClass="{{isopen31}}">
+              <li>
+                <input id="page_context_94" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_music_country">
+                <label for="page_context_94">Country</label>
+
+              </li>
+              <li>
+                <input id="page_context_95" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_music_electronic">
+                <label for="page_context_95">Electronic</label>
+
+              </li>
+              <li>
+                <input id="page_context_96" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_music_instru">
+                <label for="page_context_96">Instruments and Education</label>
+
+              </li>
+              <li>
+                <input id="page_context_97" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_music_pop">
+                <label for="page_context_97">Pop</label>
+
+              </li>
+              <li>
+                <input id="page_context_98" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_music_rb">
+                <label for="page_context_98">R and B</label>
+
+              </li>
+              <li>
+                <input id="page_context_99" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_music_rap">
+                <label for="page_context_99">Rap</label>
+
+              </li>
+              <li>
+                <input id="page_context_100" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_music_rock">
+                <label for="page_context_100">Rock</label>
+
+              </li>
+              <li>
+                <input id="page_context_101" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_music_world">
+                <label for="page_context_101">World</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_102" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_perform">
+            <label for="page_context_102">Performing Arts</label>
+
+          </li>
+          <li>
+            <input id="page_context_103" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_radio">
+            <label for="page_context_103">Radio</label>
+
+          </li>
+          <li>
+            <div class="thumb32"  (click)="checked($event)">
+              arrw32
+            </div>
+            <input id="page_context_104" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_tele" (click)="allcheck($event)">
+            <label for="page_context_104">Television</label>
+            <ul ngClass="{{isopen32}}">
+              <li>
+                <input id="page_context_105" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_tele_broadcast">
+                <label for="page_context_105">Broadcast Networks</label>
+
+              </li>
+              <li>
+                <input id="page_context_106" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_entertainment_tele_cable">
+                <label for="page_context_106">Cable Networks</label>
+
+              </li>
+            </ul>
+
+          </li>
+        </ul>
+
+      </li>
+      <li>
+        <div class="thumb3"  (click)="checked($event)">
+          arrw3
+        </div>
+        <input id="page_context_108" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance" (click)="allcheck($event)">
+        <label for="page_context_108">Finance</label>
+          <ul ngClass="{{isopen3}}">
+          <li>
+            <div class="thumb33"  (click)="checked($event)">
+              arrw33
+            </div>
+            <input id="page_context_114" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand" (click)="allcheck($event)">
+            <label for="page_context_114">Brand</label>
+            <ul ngClass="{{isopen33}}">
+              <li>
+                <div class="thumb34"  (click)="checked($event)">
+                  arrw34
+                </div>
+                <input id="page_context_115" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_bank" (click)="allcheck($event)">
+                <label for="page_context_115">Banking</label>
+                <ul ngClass="{{isopen34}}">
+                  <li>
+                    <input id="page_context_116" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_bank_boa">
+                    <label for="page_context_116">Bank of America</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_117" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_bank_chase">
+                    <label for="page_context_117">Chase</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_118" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_bank_citi">
+                    <label for="page_context_118">Citibank</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_119" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_bank_us">
+                    <label for="page_context_119">US Bank</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_120" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_bank_wach">
+                    <label for="page_context_120">Wachovia</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_121" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_bank_washington">
+                    <label for="page_context_121">Washington Mutual</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_122" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_bank_wellsfargo">
+                    <label for="page_context_122">Wells Fargo</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <div class="thumb35"  (click)="checked($event)">
+                  arrw35
+                </div>
+                <input id="page_context_123" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_credit" (click)="allcheck($event)">
+                <label for="page_context_123">Credit Cards</label>
+                <ul ngClass="{{isopen35}}">
+                  <li>
+                    <input id="page_context_124" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_credit_american">
+                    <label for="page_context_124">American Express</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_125" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_credit_capitalone">
+                    <label for="page_context_125">Capital One</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_126" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_credit_citicard">
+                    <label for="page_context_126">Citicard</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_127" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_credit_discover">
+                    <label for="page_context_127">Discover</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_128" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_credit_mastercard">
+                    <label for="page_context_128">Mastercard</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_129" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_brand_credit_visa">
+                    <label for="page_context_129">Visa</label>
+
+                  </li>
+                </ul>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_130" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_creditservice" >
+            <label for="page_context_130">Credit Services</label>
+
+          </li>
+          <li>
+            <div class="thumb36"  (click)="checked($event)">
+              arrw36
+            </div>
+            <input id="page_context_131" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_deposits" (click)="allcheck($event)">
+            <label for="page_context_131">Deposits</label>
+            <ul ngClass="{{isopen36}}">
+              <li>
+                <input id="page_context_132" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_deposits_buisness">
+                <label for="page_context_132">Business Accounts</label>
+
+              </li>
+              <li>
+                <input id="page_context_133" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_deposits_checking">
+                <label for="page_context_133">Checking Accounts</label>
+
+              </li>
+              <li>
+                <input id="page_context_134" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_deposits_savings">
+                <label for="page_context_134">Savings Accounts</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb37"  (click)="checked($event)">
+              arrw37
+            </div>
+            <input id="page_context_135" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance" (click)="allcheck($event)">
+            <label for="page_context_135">Insurance</label>
+            <ul ngClass="{{isopen37}}">
+              <li>
+                <input id="page_context_136" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_automobile">
+                <label for="page_context_136">Automobile</label>
+
+              </li>
+              <li>
+                <input id="page_context_137" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_home">
+                <label for="page_context_137">Homeowners and Property</label>
+
+              </li>
+              <li>
+                <input id="page_context_138" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_life">
+                <label for="page_context_138">Life</label>
+
+              </li>
+              <li>
+                <input id="page_context_139" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_medical">
+                <label for="page_context_139">Medical and Dental</label>
+
+              </li>
+              <li>
+                <div class="thumb38"  (click)="checked($event)">
+                  arrw38
+                </div>
+                <input id="page_context_140" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel" (click)="allcheck($event)">
+                <label for="page_context_140">Travel</label>
+                <ul ngClass="{{isopen38}}">
+                  <li>
+                    <div class="thumb39"  (click)="checked($event)">
+                      arrw39
+                    </div>
+                    <input id="page_context_423" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_air" (click)="allcheck($event)">
+                    <label for="page_context_423">Air and Charter</label>
+                    <ul ngClass="{{isopen39}}">
+                      <li>
+                        <input id="page_context_424" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_air_budget">
+                        <label for="page_context_424">Budget Airlines</label>
+
+                      </li>
+                    </ul>
+
+                  </li>
+                  <li>
+                    <input id="page_context_425" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_buisnesstravel">
+                    <label for="page_context_425">Business Travel</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_426" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_carrental">
+                    <label for="page_context_426">Car Rental</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_427" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_casiono" >
+                    <label for="page_context_427">Casino Resorts</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_428" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_cruises">
+                    <label for="page_context_428">Cruises</label>
+
+                  </li>
+                  <li>
+                    <div class="thumb40"  (click)="checked($event)">
+                      arrw40
+                    </div>
+                    <input id="page_context_429" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination" (click)="allcheck($event)">
+                    <label for="page_context_429">Destinations</label>
+                    <ul ngClass="{{isopen40}}">
+                      <li>
+                        <input id="page_context_430" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_africa">
+                        <label for="page_context_430">Africa</label>
+
+                      </li>
+                      <li>
+                        <div class="thumb41"  (click)="checked($event)">
+                          arrw41
+                        </div>
+                        <input id="page_context_431" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_asia" (click)="allcheck($event)">
+                        <label for="page_context_431">Asia</label>
+                        <ul ngClass="{{isopen41}}">
+                          <li>
+                            <input id="page_context_432" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_asia_china">
+                            <label for="page_context_432">China</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_433" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_asia_hong">
+                            <label for="page_context_433">Hong Kong</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_434" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_asia_india">
+                            <label for="page_context_434">India</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_435" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_asia_japan">
+                            <label for="page_context_435">Japan</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_436" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_asia_korea">
+                            <label for="page_context_436">Korea</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_437" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_asia_macau">
+                            <label for="page_context_437">Macau</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_438" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_asia_taiwan">
+                            <label for="page_context_438">Taiwan</label>
+
+                          </li>
+                        </ul>
+
+                      </li>
+                      <li>
+                        <input id="page_context_439" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_caribbean">
+                        <label for="page_context_439">Caribbean</label>
+
+                      </li>
+                      <li>
+                        <div class="thumb42"  (click)="checked($event)">
+                          arrw42
+                        </div>
+                        <input id="page_context_440" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe" (click)="allcheck($event)">
+                        <label for="page_context_440">Europe</label>
+                        <ul ngClass="{{isopen42}}">
+                          <li>
+                            <input id="page_context_441" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_austria">
+                            <label for="page_context_441">Austria</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_442" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_denmark">
+                            <label for="page_context_442">Denmark</label>
+
+                          </li>
+                          <li>
+                            <div class="thumb43"  (click)="checked($event)">
+                              arrw43
+                            </div>
+                            <input id="page_context_443" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_france" (click)="allcheck($event)">
+                            <label for="page_context_443">France</label>
+                            <ul ngClass="{{isopen43}}">
+                              <li>
+                                <input id="page_context_444" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_france_paris">
+                                <label for="page_context_444">Paris</label>
+
+                              </li>
+                            </ul>
+
+                          </li>
+                          <li>
+                            <input id="page_context_445" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_germany">
+                            <label for="page_context_445">Germany</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_446" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_greece">
+                            <label for="page_context_446">Greece</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_447" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_italy">
+                            <label for="page_context_447">Italy</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_448" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_portugal">
+                            <label for="page_context_448">Portugal</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_449" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_spain">
+                            <label for="page_context_449">Spain</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_450" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_switzerland">
+                            <label for="page_context_450">Switzerland</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_451" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_turkey">
+                            <label for="page_context_451">Turkey</label>
+
+                          </li>
+                          <li>
+                            <div class="thumb44"  (click)="checked($event)">
+                              arrw44
+                            </div>
+                            <input id="page_context_452" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_ukie" (click)="allcheck($event)">
+                            <label for="page_context_452">UKIE</label>
+                            <ul ngClass="{{isopen44}}">
+                              <li>
+                                <input id="page_context_453" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_ukie_england">
+                                <label for="page_context_453">England</label>
+
+                              </li>
+                              <li>
+                                <input id="page_context_454" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_ukie_scotland">
+                                <label for="page_context_454">Scotland</label>
+
+                              </li>
+                              <li>
+                                <input id="page_context_455" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_europe_ukie_wales">
+                                <label for="page_context_455">Wales</label>
+
+                              </li>
+                            </ul>
+
+                          </li>
+                        </ul>
+
+                      </li>
+                      <li>
+                        <input id="page_context_456" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_latinam">
+                        <label for="page_context_456">Latin America</label>
+
+                      </li>
+                      <li>
+                        <div class="thumb45"  (click)="checked($event)">
+                          arrw45
+                        </div>
+                        <input id="page_context_457" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_middleeast" (click)="allcheck($event)">
+                        <label for="page_context_457">Middle East</label>
+                        <ul ngClass="{{isopen45}}">
+                          <li>
+                            <input id="page_context_458" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_middleeast_israel">
+                            <label for="page_context_458">Israel</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_459" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_middleeast_kuwait">
+                            <label for="page_context_459">Kuwait</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_460" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_middleeast_oman">
+                            <label for="page_context_460">Oman</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_461" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_middleeast_qatar">
+                            <label for="page_context_461">Qatar</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_462" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_middleeast_saudiarab">
+                            <label for="page_context_462">Saudi Arabia</label>
+
+                          </li>
+                          <li>
+                            <div class="thumb46"  (click)="checked($event)">
+                              arrw46
+                            </div>
+                            <input id="page_context_463" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_middleeast_unitedarab" (click)="allcheck($event)">
+                            <label for="page_context_463">United Arab Emirates</label>
+                            <ul ngClass="{{isopen46}}">
+                              <li>
+                                <input id="page_context_464" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_middleeast_unitedarab_dubai">
+                                <label for="page_context_464">Dubai</label>
+
+                              </li>
+                            </ul>
+
+                          </li>
+                        </ul>
+
+                      </li>
+                      <li>
+                        <div class="thumb47"  (click)="checked($event)">
+                          arrw47
+                        </div>
+                        <input id="page_context_465" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica" (click)="allcheck($event)">
+                        <label for="page_context_465">North America</label>
+                        <ul ngClass="{{isopen47}}">
+                          <li>
+                            <input id="page_context_466" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_canada">
+                            <label for="page_context_466">Canada</label>
+
+                          </li>
+                          <li>
+                            <div class="thumb48"  (click)="checked($event)">
+                              arrw48
+                            </div>
+                            <input id="page_context_467" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_mexico" (click)="allcheck($event)">
+                            <label for="page_context_467">Mexico</label>
+                            <ul ngClass="{{isopen48}}">
+                              <li>
+                                <input id="page_context_468" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_mexico_cancun">
+                                <label for="page_context_468">Cancun</label>
+
+                              </li>
+                            </ul>
+
+                          </li>
+                          <li>
+                            <div class="thumb49"  (click)="checked($event)">
+                              arrw49
+                            </div>
+                            <input id="page_context_469" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us" (click)="allcheck($event)" >
+                            <label for="page_context_469">United States</label>
+                            <ul ngClass="{{isopen49}}">
+                              <li>
+                                <input id="page_context_470" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_alaska">
+                                <label for="page_context_470">Alaska</label>
+
+                              </li>
+                              <li>
+                                <div class="thumb50"  (click)="checked($event)">
+                                  arrw50
+                                </div>
+                                <input id="page_context_471" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_arizona" (click)="allcheck($event)">
+                                <label for="page_context_471">Arizona</label>
+                                <ul ngClass="{{isopen50}}">
+                                  <li>
+                                    <input id="page_context_472" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_arizona_phoenix">
+                                    <label for="page_context_472">Phoenix</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_473" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_arizona_tucson">
+                                    <label for="page_context_473">Tucson</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb51"  (click)="checked($event)">
+                                  arrw51
+                                </div>
+                                <input id="page_context_474" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_california" (click)="allcheck($event)">
+                                <label for="page_context_474">California</label>
+                                <ul ngClass="{{isopen51}}">
+                                  <li>
+                                    <input id="page_context_475" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_california_lake">
+                                    <label for="page_context_475">Lake Tahoe</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_476" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_california_los">
+                                    <label for="page_context_476">Los Angeles</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_477" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_california_sand">
+                                    <label for="page_context_477">San Diego</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_478" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_california_sanf">
+                                    <label for="page_context_478">San Francisco</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_479" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_california_sanj">
+                                    <label for="page_context_479">San Jose</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb52"  (click)="checked($event)">
+                                  arrw52
+                                </div>
+                                <input id="page_context_480" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_colorado" (click)="allcheck($event)">
+                                <label for="page_context_480">Colorado</label>
+                                <ul ngClass="{{isopen52}}">
+                                  <li>
+                                    <input id="page_context_481" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_colorado_denver">
+                                    <label for="page_context_481">Denver</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb53"  (click)="checked($event)">
+                                  arrw53
+                                </div>
+                                <input id="page_context_482" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_florida" (click)="allcheck($event)">
+                                <label for="page_context_482">Florida</label>
+                                <ul ngClass="{{isopen53}}">
+                                  <li>
+                                    <input id="page_context_483" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_florida_daytona">
+                                    <label for="page_context_483">Daytona Beach</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_484" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_florida_fort">
+                                    <label for="page_context_484">Fort Lauderdale</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_485" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_florida_myers">
+                                    <label for="page_context_485">Fort Myers</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_486" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_florida_miami">
+                                    <label for="page_context_486">Miami</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_487" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_florida_orlando">
+                                    <label for="page_context_487">Orlando</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_488" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_florida_tampa">
+                                    <label for="page_context_488">Tampa</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_489" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_florida_westpalm">
+                                    <label for="page_context_489">West Palm Beach</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb54"  (click)="checked($event)">
+                                  arrw54
+                                </div>
+                                <input id="page_context_490" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_georgia" (click)="allcheck($event)">
+                                <label for="page_context_490">Georgia</label>
+
+                                <ul ngClass="{{isopen54}}">
+                                  <li>
+                                    <input id="page_context_491" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_georgia_atlanta">
+                                    <label for="page_context_491">Atlanta</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb55"  (click)="checked($event)">
+                                  arrw55
+                                </div>
+                                <input id="page_context_492" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_hawali" (click)="allcheck($event)">
+                                <label for="page_context_492">Hawaii</label>
+                                <ul ngClass="{{isopen55}}">
+                                  <li>
+                                    <input id="page_context_493" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_hawali_mauli">
+                                    <label for="page_context_493">Maui</label>
+
+                                  </li>
+                                  <li>
+                                    <div class="thumb56"  (click)="checked($event)">
+                                      arrw56
+                                    </div>
+                                    <input id="page_context_494" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_hawali_oahu" (click)="allcheck($event)">
+                                    <label for="page_context_494">Oahu</label>
+                                    <ul ngClass="{{isopen56}}">
+                                      <li>
+                                        <input id="page_context_495" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_hawali_oahu_honolulu">
+                                        <label for="page_context_495">Honolulu</label>
+
+                                      </li>
+                                    </ul>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb57"  (click)="checked($event)">
+                                  arrw57
+                                </div>
+                                <input id="page_context_496" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_illinois" (click)="allcheck($event)">
+                                <label for="page_context_496">Illinois</label>
+                                <ul ngClass="{{isopen57}}">
+                                  <li>
+                                    <input id="page_context_497" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_illinois_chicago">
+                                    <label for="page_context_497">Chicago</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb58"  (click)="checked($event)">
+                                  arrw58
+                                </div>
+                                <input id="page_context_498" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_louisiana" (click)="allcheck($event)">
+                                <label for="page_context_498">Louisiana</label>
+                                <ul ngClass="{{isopen58}}">
+                                  <li>
+                                    <input id="page_context_499" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_louisiana_orleans">
+                                    <label for="page_context_499">New Orleans</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb59"  (click)="checked($event)">
+                                  arrw59
+                                </div>
+                                <input id="page_context_500" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_maryland" (click)="allcheck($event)">
+                                <label for="page_context_500">Maryland</label>
+                                <ul ngClass="{{isopen59}}">
+                                  <li>
+                                    <input id="page_context_501" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_maryland_balti">
+                                    <label for="page_context_501">Baltimore</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb60"  (click)="checked($event)">
+                                  arrw60
+                                </div>
+                                <input id="page_context_502" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_massa" (click)="allcheck($event)">
+                                <label for="page_context_502">Massachusetts</label>
+                                <ul ngClass="{{isopen60}}">
+                                  <li>
+                                    <input id="page_context_503" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_massa_boston">
+                                    <label for="page_context_503">Boston</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb61"  (click)="checked($event)">
+                                  arrw61
+                                </div>
+                                <input id="page_context_504" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_minnes" (click)="allcheck($event)">
+                                <label for="page_context_504">Minnesota</label>
+                                <ul ngClass="{{isopen61}}">
+                                  <li>
+                                    <input id="page_context_505" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_minnes_minnea">
+                                    <label for="page_context_505">Minneapolis</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb62"  (click)="checked($event)">
+                                  arrw62
+                                </div>
+                                <input id="page_context_506" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_missouri" (click)="allcheck($event)">
+                                <label for="page_context_506">Missouri</label>
+                                <ul ngClass="{{isopen62}}">
+                                  <li>
+                                    <input id="page_context_507" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_missouri_stlouis">
+                                    <label for="page_context_507">St. Louis</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb63"  (click)="checked($event)">
+                                  arrw63
+                                </div>
+                                <input id="page_context_508" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_nevada"  (click)="allcheck($event)">
+                                <label for="page_context_508">Nevada</label>
+                                <ul ngClass="{{isopen63}}">
+                                  <li>
+                                    <input id="page_context_509" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_nevada_vegas">
+                                    <label for="page_context_509">Las Vegas</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_510" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_neveda_reno">
+                                    <label for="page_context_510">Reno</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb64"  (click)="checked($event)">
+                                  arrw64
+                                </div>
+                                <input id="page_context_511" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_newjersy" (click)="allcheck($event)">
+                                <label for="page_context_511">New Jersey</label>
+                                <ul ngClass="{{isopen64}}">
+                                  <li>
+                                    <input id="page_context_512" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_newjersy_newark">
+                                    <label for="page_context_512">Newark</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <input id="page_context_513" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_newyork">
+                                <label for="page_context_513">New York</label>
+
+                              </li>
+                              <li>
+                                <div class="thumb65"  (click)="checked($event)">
+                                  arrw65
+                                </div>
+                                <input id="page_context_514" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_ncaro" (click)="allcheck($event)">
+                                <label for="page_context_514">North Carolina</label>
+                                <ul ngClass="{{isopen65}}">
+                                  <li>
+                                    <input id="page_context_515" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_ncaro_raleigh">
+                                    <label for="page_context_515">Raleigh</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb66"  (click)="checked($event)">
+                                  arrw66
+                                </div>
+                                <input id="page_context_516" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_oregon" (click)="allcheck($event)">
+                                <label for="page_context_516">Oregon</label>
+                                <ul ngClass="{{isopen66}}">
+                                  <li>
+                                    <input id="page_context_517" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_oregon_portland">
+                                    <label for="page_context_517">Portland</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb67"  (click)="checked($event)">
+                                  arrw67
+                                </div>
+                                <input id="page_context_518" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_pennsy" (click)="allcheck($event)" >
+                                <label for="page_context_518">Pennsylvania</label>
+                                <ul ngClass="{{isopen67}}">
+                                  <li>
+                                    <input id="page_context_519" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_pensy_phila">
+                                    <label for="page_context_519">Philadelphia</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb68"  (click)="checked($event)">
+                                  arrw68
+                                </div>
+                                <input id="page_context_520" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_texas"  (click)="allcheck($event)" >
+                                <label for="page_context_520">Texas</label>
+                                <ul ngClass="{{isopen68}}">
+                                  <li>
+                                    <input id="page_context_521" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_texas_dallas">
+                                    <label for="page_context_521">Dallas</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb69"  (click)="checked($event)">
+                                  arrw69
+                                </div>
+                                <input id="page_context_522" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_utah"  (click)="allcheck($event)">
+                                <label for="page_context_522">Utah</label>
+                                <ul ngClass="{{isopen69}}">
+                                  <li>
+                                    <input id="page_context_523" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_utah_saltlake">
+                                    <label for="page_context_523">Salt Lake City</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <input id="page_context_524" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_virginia">
+                                <label for="page_context_524">Virginia</label>
+
+                              </li>
+                              <li>
+                                <div class="thumb70"  (click)="checked($event)">
+                                  arrw70
+                                </div>
+                                <input id="page_context_526" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_washington" (click)="allcheck($event)">
+                                <label for="page_context_526">Washington</label>
+                                <ul ngClass="{{isopen70}}">
+                                  <li>
+                                    <input id="page_context_527" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_washington_seattle">
+                                    <label for="page_context_527">Seattle</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <input id="page_context_525" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_northamarica_us_washingtondc">
+                                <label for="page_context_525">Washington D.C.</label>
+
+                              </li>
+                            </ul>
+
+                          </li>
+                        </ul>
+
+                      </li>
+                      <li>
+                        <div class="thumb71"  (click)="checked($event)">
+                          arrw71
+                        </div>
+                        <input id="page_context_528" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_oceania" (click)="allcheck($event)">
+                        <label for="page_context_528">Oceania</label>
+                        <ul ngClass="{{isopen71}}">
+                          <li>
+                            <input id="page_context_529" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_oceania_australia">
+                            <label for="page_context_529">Australia</label>
+
+                          </li>
+                          <li>
+                            <input id="page_context_530" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_destination_oceania_newzealand">
+                            <label for="page_context_530">New Zealand</label>
+
+                          </li>
+                        </ul>
+
+                      </li>
+                    </ul>
+
+                  </li>
+                  <li>
+                    <input id="page_context_531" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_europelastmnt">
+                    <label for="page_context_531">Europe Last Minute</label>
+
+                  </li>
+                  <li>
+                    <div class="thumb72"  (click)="checked($event)">
+                      arrw72
+                    </div>
+                    <input id="page_context_532" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_hotel" (click)="allcheck($event)">
+                    <label for="page_context_532">Hotels and Lodging</label>
+                    <ul ngClass="{{isopen72}}">
+                      <li>
+                        <input id="page_context_533" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_hotel_midscale">
+                        <label for="page_context_533">Midscale</label>
+
+                      </li>
+                      <li>
+                        <input id="page_context_534" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_hotel_upscale">
+                        <label for="page_context_534">Upscale and Luxury</label>
+
+                      </li>
+                    </ul>
+
+                  </li>
+                  <li>
+                    <input id="page_context_535" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_onlinetravel">
+                    <label for="page_context_535">Online Travel Aggregator</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_536" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_rail">
+                    <label for="page_context_536">Rail</label>
+
+                  </li>
+                  <li>
+                    <div class="thumb73"  (click)="checked($event)">
+                      arrw73
+                    </div>
+                    <input id="page_context_537" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_vacations" (click)="allcheck($event)">
+                    <label for="page_context_537">Vacations</label>
+                    <ul ngClass="{{isopen73}}">
+                      <li>
+                        <input id="page_context_538" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_vacations_beach">
+                        <label for="page_context_538">Beach and Sun</label>
+
+                      </li>
+                      <li>
+                        <input id="page_context_539" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_vacations_family">
+                        <label for="page_context_539">Family</label>
+
+                      </li>
+                      <li>
+                        <input id="page_context_540" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_insurance_travel_vacations_honeymoon">
+                        <label for="page_context_540">Honeymoon and Romantic</label>
+
+                      </li>
+                    </ul>
+
+                  </li>
+                </ul>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb74"  (click)="checked($event)">
+              arrw74
+            </div>
+            <input id="page_context_109" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_investment" (click)="allcheck($event)">
+            <label for="page_context_109">Investment</label>
+            <ul ngClass="{{isopen74}}">
+              <li>
+                <input id="page_context_110" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_investment_commodities">
+                <label for="page_context_110">Commodities</label>
+
+              </li>
+              <li>
+                <input id="page_context_141" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_investment_currency">
+                <label for="page_context_141">Currency Trading</label>
+
+              </li>
+              <li>
+                <input id="page_context_142" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_investment_discount">
+                <label for="page_context_142">Discount Brokerages</label>
+
+              </li>
+              <li>
+                <input id="page_context_143" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_investment_fullsc">
+                <label for="page_context_143">Full Service Brokerages</label>
+
+              </li>
+              <li>
+                <input id="page_context_111" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_investment_bau">
+                <label for="page_context_111">Germany Baufinanzierung</label>
+
+              </li>
+              <li>
+                <div class="thumb75"  (click)="checked($event)">
+                  arrw75
+                </div>
+                <input id="page_context_144" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_investment_mutualfunds" (click)="allcheck($event)">
+                <label for="page_context_144">Mutual Funds</label>
+                <ul ngClass="{{isopen75}}">
+                  <li>
+                    <input id="page_context_145" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_investment_mutualfunds_etf">
+                    <label for="page_context_145">ETF</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <input id="page_context_146" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_investment_options">
+                <label for="page_context_146">Options</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb76"  (click)="checked($event)">
+              arrw76
+            </div>
+            <input id="page_context_112" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_loans"  (click)="allcheck($event)">
+            <label for="page_context_112">Loans</label>
+            <ul ngClass="{{isopen76}}">
+              <li>
+                <input id="page_context_147" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_loans_buisness">
+                <label for="page_context_147">Business</label>
+
+              </li>
+              <li>
+                <input id="page_context_113" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_loans_personal">
+                <label for="page_context_113">International Personal</label>
+
+              </li>
+              <li>
+                <div class="thumb77"  (click)="checked($event)">
+                  arrw77
+                </div>
+                <input id="page_context_148" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_loans_mortgage" (click)="allcheck($event)">
+                <label for="page_context_148">Mortgage</label>
+                <ul ngClass="{{isopen77}}">
+                  <li>
+                    <input id="page_context_149" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_loans_mortgage_home">
+                    <label for="page_context_149">Home Equity</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_150" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_loans_mortgage_new">
+                    <label for="page_context_150">New</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_151" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_loans_mortgage_refinance">
+                    <label for="page_context_151">Refinance</label>
+
+                  </li>
+                </ul>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_152" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_onlinepay">
+            <label for="page_context_152">Online Payments</label>
+
+          </li>
+          <li>
+            <div class="thumb78"  (click)="checked($event)">
+              arrw78
+            </div>
+            <input id="page_context_153" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_reales"  (click)="allcheck($event)">
+            <label for="page_context_153">Real Estate</label>
+            <ul ngClass="{{isopen78}}">
+              <li>
+                <input id="page_context_154" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_reales_commercial">
+                <label for="page_context_154">Commercial</label>
+
+              </li>
+              <li>
+                <input id="page_context_155" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_reales_purchase">
+                <label for="page_context_155">Residential Purchase</label>
+
+              </li>
+              <li>
+                <input id="page_context_156" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_reales_rental">
+                <label for="page_context_156">Residential Rental</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_157" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_rplaning">
+            <label for="page_context_157">Retirement Planning</label>
+
+          </li>
+          <li>
+            <input id="page_context_158" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_finance_tax">
+            <label for="page_context_158">Tax</label>
+
+          </li>
+        </ul>
+
+      </li>
+
+      <li>
+        <div class="thumb4"  (click)="checked($event)">
+          arrw4
+        </div>
+        <input id="page_context_159" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma" (click)="allcheck($event)">
+        <label for="page_context_159">Health Pharma</label>
+        <ul ngClass="{{isopen4}}">
+          <li>
+            <div class="thumb79"  (click)="checked($event)">
+              arrw79
+            </div>
+            <input id="page_context_160" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_bones" (click)="allcheck($event)">
+            <label for="page_context_160">Bones Joints and Muscles</label>
+            <ul ngClass="{{isopen79}}">
+              <li>
+                <div class="thumb80"  (click)="checked($event)">
+                  arrw80
+                </div>
+                <input id="page_context_161" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_bones_arthritis"  (click)="allcheck($event)">
+                <label for="page_context_161">Arthritis</label>
+                <ul ngClass="{{isopen80}}">
+                  <li>
+                    <input id="page_context_162" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_bones_arthritis_osteo">
+                    <label for="page_context_162">Osteoarthritis</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <input id="page_context_163" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_bones_osteop">
+                <label for="page_context_163">Osteoporosis</label>
+
+              </li>
+              <li>
+                <input id="page_context_164" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_bones_pain">
+                <label for="page_context_164">Pain</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb81"  (click)="checked($event)">
+              arrw81
+            </div>
+            <input id="page_context_165" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_circulatory" (click)="allcheck($event)">
+            <label for="page_context_165">Circulatory System</label>
+            <ul ngClass="{{isopen81}}">
+              <li>
+                <input id="page_context_166" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_circulatory_cardio">
+                <label for="page_context_166">Cardiovascular</label>
+
+              </li>
+              <li>
+                <input id="page_context_167" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_circulatory_choles">
+                <label for="page_context_167">Cholesterol</label>
+
+              </li>
+              <li>
+                <input id="page_context_168" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_circulatory_hyper">
+                <label for="page_context_168">Hypertensive Disease</label>
+
+              </li>
+              <li>
+                <input id="page_context_169" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_circulatory_heart">
+                <label for="page_context_169">Ischemic Heart Disease</label>
+
+              </li>
+              <li>
+                <input id="page_context_170" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_circulatory_stroke">
+                <label for="page_context_170">Stroke</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_171" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_dental">
+            <label for="page_context_171">Dental</label>
+
+          </li>
+          <li>
+            <div class="thumb82"  (click)="checked($event)">
+              arrw82
+            </div>
+            <input id="page_context_172" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_diges" (click)="allcheck($event)">
+            <label for="page_context_172">Digestive System</label>
+            <ul ngClass="{{isopen82}}">
+              <li>
+                <input id="page_context_173" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_diges_gerd">
+                <label for="page_context_173">GERD and Heartburn</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb83"  (click)="checked($event)">
+              arrw83
+            </div>
+            <input id="page_context_174" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_endo" (click)="allcheck($event)">
+            <label for="page_context_174">Endocrine Immune Systems and Metabolism</label>
+            <ul ngClass="{{isopen83}}">
+              <li>
+                <input id="page_context_175" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_endo_dia">
+                <label for="page_context_175">Diabetes</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_176" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_infant">
+            <label for="page_context_176">Infant Health</label>
+
+          </li>
+          <li>
+            <div class="thumb84"  (click)="checked($event)">
+              arrw84
+            </div>
+            <input id="page_context_177" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_infections" (click)="allcheck($event)" >
+            <label for="page_context_177">Infections and Parasites</label>
+            <ul ngClass="{{isopen84}}">
+              <li>
+                <input id="page_context_178" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_infections_foot">
+                <label for="page_context_178">Foot or Nail Fungus</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb85"  (click)="checked($event)">
+              arrw85
+            </div>
+            <input id="page_context_179" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_nervous" (click)="allcheck($event)">
+            <label for="page_context_179">Nervous System and Sense Organs</label>
+            <ul ngClass="{{isopen85}}">
+              <li>
+                <input id="page_context_181" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_nervous_alzhe">
+                <label for="page_context_181">Alzheimers Disease</label>
+
+              </li>
+              <li>
+                <input id="page_context_180" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_nervous_headaches">
+                <label for="page_context_180">Headaches</label>
+
+              </li>
+              <li>
+                <input id="page_context_182" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_nervous_vision">
+                <label for="page_context_182">Vision</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_183" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_pregnancy">
+            <label for="page_context_183">Pregnancy and Childbirth</label>
+
+          </li>
+          <li>
+            <div class="thumb86"  (click)="checked($event)">
+              arrw86
+            </div>
+            <input id="page_context_184" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_respi" (click)="allcheck($event)">
+            <label for="page_context_184">Respiratory System</label>
+            <ul ngClass="{{isopen86}}">
+              <li>
+                <input id="page_context_185" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_respi_allergies">
+                <label for="page_context_185">Allergies</label>
+
+              </li>
+              <li>
+                <input id="page_context_186" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_respi_asthma">
+                <label for="page_context_186">Asthma</label>
+
+              </li>
+              <li>
+                <input id="page_context_187" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_respi_cold">
+                <label for="page_context_187">Cold and Flu</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_188" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_skin">
+            <label for="page_context_188">Skin and Subcutaneous Tissue</label>
+
+          </li>
+          <li>
+            <input id="page_context_189" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_sleep">
+            <label for="page_context_189">Sleep</label>
+
+          </li>
+          <li>
+            <div class="thumb87"  (click)="checked($event)">
+              arrw87
+            </div>
+            <input id="page_context_190" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_wellness" (click)="allcheck($event)">
+            <label for="page_context_190">Wellness</label>
+            <ul ngClass="{{isopen87}}">
+              <li>
+                <input id="page_context_191" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_wellness_exercise">
+                <label for="page_context_191">Exercise and Fitness</label>
+
+              </li>
+              <li>
+                <input id="page_context_192" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_wellness_smoking">
+                <label for="page_context_192">Smoking Cessation</label>
+
+              </li>
+              <li>
+                <input id="page_context_193" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_wellness_weight">
+                <label for="page_context_193">Weight Loss</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb88"  (click)="checked($event)">
+              arrw88
+            </div>
+            <input id="page_context_194" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_womenhealth" (click)="allcheck($event)">
+            <label for="page_context_194">Womens Health</label>
+            <ul ngClass="{{isopen88}}">
+              <li>
+                <input id="page_context_195" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_healthpharma_womenhealth_meno">
+                <label for="page_context_195">Menopause</label>
+
+              </li>
+            </ul>
+
+          </li>
+        </ul>
+
+      </li>
+      <li>
+        <div class="thumb5"  (click)="checked($event)">
+          arrw5
+        </div>
+        <input id="page_context_196" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_internationalinterest">
+        <label for="page_context_196">International Interest</label>
+          <ul ngClass="{{isopen5}}">
+          <li>
+            <input id="page_context_197" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_internationalinterest_avtars">
+            <label for="page_context_197">Avatars</label>
+
+          </li>
+          <li>
+            <div class="thumb89"  (click)="checked($event)">
+              arrw89
+            </div>
+            <input id="page_context_198" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_internationalinterest_hispanic" (click)="allcheck($event)">
+            <label for="page_context_198">Hispanic Targeting</label>
+            <ul ngClass="{{isopen89}}">
+              <li>
+                <input id="page_context_199" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_internationalinterest_hispanic_inferred">
+                <label for="page_context_199">Inferred by Language Preference</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_200" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_internationalinterest_indiainterest">
+            <label for="page_context_200">India Interest</label>
+
+          </li>
+          <li>
+            <input id="page_context_201" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_internationalinterest_languagec">
+            <label for="page_context_201">Language Chinese</label>
+
+          </li>
+          <li>
+            <input id="page_context_202" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_internationalinterest_languagej">
+            <label for="page_context_202">Language Japanese</label>
+
+          </li>
+          <li>
+            <input id="page_context_203" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_internationalinterest_languagek">
+            <label for="page_context_203">Language Korean</label>
+
+          </li>
+        </ul>
+
+      </li>
+      <li>
+        <div class="thumb6"  (click)="checked($event)">
+          arrw6
+        </div>
+        <input id="page_context_204" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues" (click)="allcheck($event)">
+        <label for="page_context_204">Issues and Causes</label>
+          <ul ngClass="{{isopen6}}">
+          <li>
+            <input id="page_context_205" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_charity">
+            <label for="page_context_205">Charity and Community Service</label>
+
+          </li>
+          <li>
+            <div class="thumb90"  (click)="checked($event)">
+              arrw90
+            </div>
+            <input id="page_context_206" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_education" (click)="allcheck($event)">
+            <label for="page_context_206">Education</label>
+            <ul ngClass="{{isopen90}}">
+              <li>
+                <input id="page_context_218" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_education_college">
+                <label for="page_context_218">College and University</label>
+
+              </li>
+              <li>
+                <div class="thumb91"  (click)="checked($event)">
+                  arrw91
+                </div>
+                <input id="page_context_219" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_education_adult" (click)="allcheck($event)">
+                <label for="page_context_219">Continuing and Adult Education</label>
+                <ul ngClass="{{isopen91}}">
+                  <li>
+                    <input id="page_context_220" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_education_adult_computer">
+                    <label for="page_context_220">Computer Skills</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <div class="thumb92"  (click)="checked($event)">
+                  arrw92
+                </div>
+                <input id="page_context_221" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_education_foreign" (click)="allcheck($event)">
+                <label for="page_context_221">Foreign Language Instruction</label>
+                <ul ngClass="{{isopen92}}">
+                  <li>
+                    <input id="page_context_222" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_education_foreign_english">
+                    <label for="page_context_222">English</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <input id="page_context_223" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_education_kto12">
+                <label for="page_context_223">K to 12</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_207" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_energy">
+            <label for="page_context_207">Energy</label>
+
+          </li>
+          <li>
+            <input id="page_context_208" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_envio">
+            <label for="page_context_208">Environment</label>
+
+          </li>
+          <li>
+            <input id="page_context_209" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_affairs">
+            <label for="page_context_209">Foreign Affairs</label>
+
+          </li>
+          <li>
+            <input id="page_context_210" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_govtreform">
+            <label for="page_context_210">Government Reform</label>
+
+          </li>
+          <li>
+            <input id="page_context_211" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_green">
+            <label for="page_context_211">Green</label>
+
+          </li>
+          <li>
+            <div class="thumb93"  (click)="checked($event)">
+              arrw93
+            </div>
+            <input id="page_context_212" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_healthcare" (click)="allcheck($event)">
+            <label for="page_context_212">Healthcare</label>
+            <ul ngClass="{{isopen93}}">
+              <li>
+                <input id="page_context_340" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_healthcare_nursing">
+                <label for="page_context_340">Nursing</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_213" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_homeland">
+            <label for="page_context_213">Homeland Security Used</label>
+
+          </li>
+          <li>
+            <input id="page_context_214" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_jobs">
+            <label for="page_context_214">Jobs</label>
+
+          </li>
+          <li>
+            <input id="page_context_215" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_social">
+            <label for="page_context_215">Social Security</label>
+
+          </li>
+          <li>
+            <input id="page_context_216" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_issues_taxes">
+            <label for="page_context_216">Taxes</label>
+
+          </li>
+        </ul>
+
+      </li>
+      <li>
+        <div class="thumb7"  (click)="checked($event)">
+          arrw7
+        </div>
+        <input id="page_context_217" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_lifestages" (click)="allcheck($event)">
+        <label for="page_context_217">Life Stages</label>
+        <ul ngClass="{{isopen7}}">
+          <li>
+            <input id="page_context_224" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_lifestages_moving">
+            <label for="page_context_224">Moving</label>
+
+          </li>
+          <li>
+            <div class="thumb94"  (click)="checked($event)">
+              arrw94
+            </div>
+            <input id="page_context_225" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_lifestages_parenting"  (click)="allcheck($event)">
+            <label for="page_context_225">Parenting and Children</label>
+            <ul ngClass="{{isopen94}}">
+              <li>
+                <input id="page_context_226" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_lifestages_parenting_baby">
+                <label for="page_context_226">Baby</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_227" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_lifestages_seniors">
+            <label for="page_context_227">Seniors</label>
+
+          </li>
+          <li>
+            <input id="page_context_228" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_lifestages_teen">
+            <label for="page_context_228">Teen</label>
+
+          </li>
+          <li>
+            <input id="page_context_229" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_lifestages_wedding">
+            <label for="page_context_229">Wedding</label>
+
+          </li>
+          <li>
+            <input id="page_context_230" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_lifestages_women">
+            <label for="page_context_230">Women</label>
+
+          </li>
+        </ul>
+
+      </li>
+      <li>
+        <div class="thumb8"  (click)="checked($event)">
+          arrw8
+        </div>
+        <input id="page_context_231" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce" (click)="allcheck($event)">
+        <label for="page_context_231">Miscellaneous</label>
+        <ul ngClass="{{isopen8}}">
+          <li>
+            <input id="page_context_232" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_arts">
+            <label for="page_context_232">Arts and Humanities</label>
+
+          </li>
+          <li>
+            <input id="page_context_233" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_aviation">
+            <label for="page_context_233">Aviation and Aeronautics</label>
+
+          </li>
+          <li>
+            <input id="page_context_234" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_gas">
+            <label for="page_context_234">Europe Gas and Electric</label>
+
+          </li>
+          <li>
+            <input id="page_context_235" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_military">
+            <label for="page_context_235">Government and Military</label>
+
+          </li>
+          <li>
+            <div class="thumb96"  (click)="checked($event)">
+              arrw96
+            </div>
+            <input id="page_context_236" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_hobbies" (click)="allcheck($event)">
+            <label for="page_context_236">Hobbies</label>
+            <ul ngClass="{{isopen96}}">
+              <li>
+                <input id="page_context_237" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_hobbies_photo">
+                <label for="page_context_237">Photography</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb97"  (click)="checked($event)">
+              arrw97
+            </div>
+            <input id="page_context_238" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_holidays" (click)="allcheck($event)">
+            <label for="page_context_238">Holidays and Observances</label>
+            <ul ngClass="{{isopen97}}">
+              <li>
+                <input id="page_context_239" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_holidays_back">
+                <label for="page_context_239">Back to School</label>
+
+              </li>
+              <li>
+                <input id="page_context_240" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_holidays_fathers">
+                <label for="page_context_240">Fathers Day</label>
+
+              </li>
+              <li>
+                <input id="page_context_241" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_holidays_halloween">
+                <label for="page_context_241">Halloween</label>
+
+              </li>
+              <li>
+                <input id="page_context_242" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_holidays_mothers">
+                <label for="page_context_242">Mothers Day</label>
+
+              </li>
+              <li>
+                <input id="page_context_243" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_holidays_spring">
+                <label for="page_context_243">Spring Holidays</label>
+
+              </li>
+              <li>
+                <input id="page_context_244" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_holidays_valen">
+                <label for="page_context_244">Valentines Day</label>
+
+              </li>
+              <li>
+                <input id="page_context_245" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_holidays_winter">
+                <label for="page_context_245">Winter Holidays</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb98"  (click)="checked($event)">
+              arrw98
+            </div>
+            <input id="page_context_246" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_law" (click)="allcheck($event)">
+            <label for="page_context_246">Law and Legal Research</label>
+            <ul ngClass="{{isopen98}}">
+              <li>
+                <input id="page_context_247" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_law_class">
+                <label for="page_context_247">Class Action Lawsuits</label>
+
+              </li>
+              <li>
+                <input id="page_context_248" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_law_injury">
+                <label for="page_context_248">Personal Injury Lawsuits</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb99"  (click)="checked($event)">
+              arrw99
+            </div>
+            <input id="page_context_249" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_news"  (click)="allcheck($event)">
+            <label for="page_context_249">News</label>
+            <ul ngClass="{{isopen99}}">
+              <li>
+                <input id="page_context_250" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_news_finance">
+                <label for="page_context_250">Business and Finance</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb100"  (click)="checked($event)">
+              arrw100
+            </div>
+            <input id="page_context_251" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_poeple"  (click)="allcheck($event)">
+            <label for="page_context_251">People</label>
+            <ul ngClass="{{isopen100}}">
+              <li>
+                <input id="page_context_252" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_poeple_actors">
+                <label for="page_context_252">Actors and Actresses</label>
+
+              </li>
+              <li>
+                <input id="page_context_253" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_poeple_athletes">
+                <label for="page_context_253">Athletes</label>
+
+              </li>
+              <li>
+                <input id="page_context_254" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_poeple_models">
+                <label for="page_context_254">Models</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_255" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_reference">
+            <label for="page_context_255">Reference</label>
+
+          </li>
+          <li>
+            <div class="thumb101"  (click)="checked($event)">
+              arrw101
+            </div>
+            <input id="page_context_256" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_religion"  (click)="allcheck($event)">
+            <label for="page_context_256">Religion and Spirituality</label>
+            <ul ngClass="{{isopen101}}">
+              <li>
+                <input id="page_context_257" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_religion_astro">
+                <label for="page_context_257">Astrology</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_259" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_science">
+            <label for="page_context_259">Science</label>
+
+          </li>
+          <li>
+            <input id="page_context_260" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_misce_weather">
+            <label for="page_context_260">Weather</label>
+
+          </li>
+        </ul>
+
+      </li>
+      <li>
+
+        <input id="page_context_261" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_politics" (click)="allcheck($event)">
+        <label for="page_context_261">Politics</label>
+
+      </li>
+      <li>
+        <div class="thumb9"  (click)="checked($event)">
+          arrw9
+        </div>
+        <input id="page_context_262" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail" (click)="allcheck($event)">
+        <label for="page_context_262">Retail</label>
+        <ul ngClass="{{isopen9}}">
+          <li>
+            <div class="thumb102"  (click)="checked($event)">
+              arrw102
+            </div>
+            <input id="page_context_263" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_apparel"  (click)="allcheck($event)">
+            <label for="page_context_263">Apparel</label>
+            <ul ngClass="{{isopen102}}">
+              <li>
+                <input id="page_context_264" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_apparel_wear">
+                <label for="page_context_264">Athletic Wear</label>
+
+              </li>
+              <li>
+                <input id="page_context_265" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_apparel_fashion">
+                <label for="page_context_265">Fashion</label>
+
+              </li>
+              <li>
+                <input id="page_context_266" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_apparel_footwear">
+                <label for="page_context_266">Footwear</label>
+
+              </li>
+              <li>
+                <input id="page_context_267" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_apparel_intimate">
+                <label for="page_context_267">Intimate</label>
+
+              </li>
+              <li>
+                <input id="page_context_268" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_apparel_watch">
+                <label for="page_context_268">Jewelry and Watches</label>
+
+              </li>
+              <li>
+                <input id="page_context_269" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_apparel_womens">
+                <label for="page_context_269">Womens</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_270" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_auctions">
+            <label for="page_context_270">Auctions</label>
+
+          </li>
+          <li>
+            <input id="page_context_271" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_books">
+            <label for="page_context_271">Books</label>
+
+          </li>
+          <li>
+            <div class="thumb103"  (click)="checked($event)">
+              arrw103
+            </div>
+            <input id="page_context_272" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_etailer" (click)="allcheck($event)">
+            <label for="page_context_272">Etailers</label>
+            <ul ngClass="{{isopen103}}">
+              <li>
+                <input id="page_context_273" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_etailer_amazon">
+                <label for="page_context_273">Amazon</label>
+
+              </li>
+              <li>
+                <input id="page_context_274" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_etailer_ebay">
+                <label for="page_context_274">Ebay</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb104"  (click)="checked($event)">
+              arrw104
+            </div>
+            <input id="page_context_275" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_merchandise" (click)="allcheck($event)">
+            <label for="page_context_275">General Merchandise</label>
+            <ul ngClass="{{isopen104}}">
+              <li>
+                <input id="page_context_276" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_merchandise_discounter">
+                <label for="page_context_276">Germany Discounter</label>
+
+              </li>
+              <li>
+                <input id="page_context_277" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_merchandise_premium">
+                <label for="page_context_277">Germany Premium</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb105"  (click)="checked($event)">
+              arrw105
+            </div>
+            <input id="page_context_278" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_gifts"  (click)="allcheck($event)">
+            <label for="page_context_278">Gifts</label>
+            <ul ngClass="{{isopen105}}">
+              <li>
+                <input id="page_context_279" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_gifts_flowers">
+                <label for="page_context_279">Flowers</label>
+
+              </li>
+              <li>
+                <input id="page_context_280" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_gifts_food">
+                <label for="page_context_280">Food and Beverages</label>
+
+              </li>
+              <li>
+                <input id="page_context_281" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_gifts_cards">
+                <label for="page_context_281">Greeting Cards and Stationery</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb106"  (click)="checked($event)">
+              arrw106
+            </div>
+            <input id="page_context_282" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_home" (click)="allcheck($event)">
+            <label for="page_context_282">Home</label>
+            <ul ngClass="{{isopen106}}">
+              <li>
+                <input id="page_context_283" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_home_appliances">
+                <label for="page_context_283">Appliances</label>
+
+              </li>
+              <li>
+                <input id="page_context_284" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_home_bed">
+                <label for="page_context_284">Bed and Bath</label>
+
+              </li>
+              <li>
+                <input id="page_context_285" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_home_cleaning">
+                <label for="page_context_285">Cleaning and Supplies</label>
+
+              </li>
+              <li>
+                <input id="page_context_286" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_home_furniture">
+                <label for="page_context_286">Furniture</label>
+
+              </li>
+              <li>
+                <input id="page_context_287" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_home_garden">
+                <label for="page_context_287">Garden and Patio</label>
+
+              </li>
+              <li>
+                <input id="page_context_288" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_home_housewares">
+                <label for="page_context_288">Housewares</label>
+
+              </li>
+              <li>
+                <div class="thumb107"  (click)="checked($event)">
+                  arrw107
+                </div>
+                <input id="page_context_289" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_home_improve" (click)="allcheck($event)">
+                <label for="page_context_289">Improvements</label>
+                <ul ngClass="{{isopen107}}">
+                  <li>
+                    <input id="page_context_290" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_home_improve_kitchen">
+                    <label for="page_context_290">Kitchen Remodeling</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_291" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_home_improve_tools">
+                    <label for="page_context_291">Tools</label>
+
+                  </li>
+                </ul>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb108"  (click)="checked($event)">
+              arrw108
+            </div>
+            <input id="page_context_292" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_goods" (click)="allcheck($event)">
+            <label for="page_context_292">Luxury Goods</label>
+            <ul ngClass="{{isopen108}}">
+              <li>
+                <input id="page_context_293" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_goods_beauty">
+                <label for="page_context_293">Beauty</label>
+
+              </li>
+              <li>
+                <input id="page_context_294" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_goods_food">
+                <label for="page_context_294">Food</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb109"  (click)="checked($event)">
+              arrw109
+            </div>
+            <input id="page_context_295" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_resturents"  (click)="allcheck($event)">
+            <label for="page_context_295">Restaurants</label>
+            <ul ngClass="{{isopen109}}">
+              <li>
+                <input id="page_context_296" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_resturents_fastfood">
+                <label for="page_context_296">Fast Food</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb110"  (click)="checked($event)">
+              arrw110
+            </div>
+            <input id="page_context_297" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers" (click)="allcheck($event)">
+            <label for="page_context_297">Retailers</label>
+            <ul ngClass="{{isopen110}}">
+              <li>
+                <div class="thumb111"  (click)="checked($event)">
+                  arrw111
+                </div>
+                <input id="page_context_298" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_dshoes" (click)="allcheck($event)">
+                <label for="page_context_298">Department Stores</label>
+                <ul ngClass="{{isopen111}}">
+                  <li>
+                    <input id="page_context_299" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_dshoes_jc">
+                    <label for="page_context_299">JC Penney</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_300" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_dshoes_kohls">
+                    <label for="page_context_300">Kohls</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_301" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_dshoes_macys">
+                    <label for="page_context_301">Macys</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_302" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_dshoes_sears">
+                    <label for="page_context_302">Sears</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <div class="thumb112"  (click)="checked($event)">
+                  arrw112
+                </div>
+                <input id="page_context_303" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_electronics" (click)="allcheck($event)">
+                <label for="page_context_303">Electronics</label>
+                <ul ngClass="{{isopen112}}">
+                  <li>
+                    <input id="page_context_304" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_electronics_bestbuy">
+                    <label for="page_context_304">Best Buy</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_305" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_electronics_city">
+                    <label for="page_context_305">Circuit City</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_306" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_electronics_radio">
+                    <label for="page_context_306">Radio Shack</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <div class="thumb113"  (click)="checked($event)">
+                  arrw113
+                </div>
+                <input id="page_context_307" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_homeimp" (click)="allcheck($event)">
+                <label for="page_context_307">Home Improvement</label>
+                <ul ngClass="{{isopen113}}">
+                  <li>
+                    <input id="page_context_308" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_homeimp_depot">
+                    <label for="page_context_308">Home Depot</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_309" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_homeimp_lowes">
+                    <label for="page_context_309">Lowes</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <div class="thumb114"  (click)="checked($event)">
+                  arrw114
+                </div>
+                <input id="page_context_310" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_massmerchants"  (click)="allcheck($event)">
+                <label for="page_context_310">Mass Merchants</label>
+                <ul ngClass="{{isopen114}}">
+                  <li>
+                    <input id="page_context_311" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_massmerchants_kmart">
+                    <label for="page_context_311">Kmart</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_312" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_massmerchants_target">
+                    <label for="page_context_312">Target</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_313" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_massmerchants_walmart">
+                    <label for="page_context_313">Walmart</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <div class="thumb115"  (click)="checked($event)">
+                  arrw115
+                </div>
+                <input id="page_context_314" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_officesupply" (click)="allcheck($event)">
+                <label for="page_context_314">Office Supply</label>
+                <ul ngClass="{{isopen115}}">
+                  <li>
+                    <input id="page_context_315" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_officesupply_staples">
+                    <label for="page_context_315">Staples</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <div class="thumb116"  (click)="checked($event)">
+                  arrw116
+                </div>
+                <input id="page_context_316" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_apparel"  (click)="allcheck($event)">
+                <label for="page_context_316">Specialty Apparel</label>
+                <ul ngClass="{{isopen116}}">
+                  <li>
+                    <input id="page_context_317" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_apparel_gap">
+                    <label for="page_context_317">Gap</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_318" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_apparel_navy">
+                    <label for="page_context_318">Old Navy</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_319" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_apparel_victorias">
+                    <label for="page_context_319">Victorias Secret</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <div class="thumb117"  (click)="checked($event)">
+                  arrw117
+                </div>
+                <input id="page_context_320" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_clubs" (click)="allcheck($event)">
+                <label for="page_context_320">Warehouse Clubs</label>
+                <ul ngClass="{{isopen117}}">
+                  <li>
+                    <input id="page_context_321" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_clubs_costco">
+                    <label for="page_context_321">Costco</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_322" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_retailers_clubs_same">
+                    <label for="page_context_322">Sams Club</label>
+
+                  </li>
+                </ul>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_323" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_retail_toys">
+            <label for="page_context_323">Toys</label>
+
+          </li>
+        </ul>
+
+      </li>
+      <li>
+        <div class="thumb10"  (click)="checked($event)">
+          arrw10
+        </div>
+        <input id="page_context_324" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness" (click)="allcheck($event)">
+        <label for="page_context_324">Small Business and B2B</label>
+        <ul ngClass="{{isopen10}}">
+          <li>
+            <div class="thumb118"  (click)="checked($event)">
+              arrw118
+            </div>
+            <input id="page_context_325" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b" (click)="allcheck($event)">
+            <label for="page_context_325">B2B</label>
+            <ul ngClass="{{isopen118}}">
+              <li>
+                <div class="thumb119"  (click)="checked($event)">
+                  arrw119
+                </div>
+                <input id="page_context_326" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp" (click)="allcheck($event)">
+                <label for="page_context_326">Corporate Services</label>
+                <ul ngClass="{{isopen119}}">
+                  <li>
+                    <div class="thumb120"  (click)="checked($event)">
+                      arrw120
+                    </div>
+                    <input id="page_context_327" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human" (click)="allcheck($event)">
+                    <label for="page_context_327">Human Resources</label>
+                    <ul ngClass="{{isopen120}}">
+                      <li>
+                        <div class="thumb121"  (click)="checked($event)">
+                          arrw121
+                        </div>
+                        <input id="page_context_328" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit" (click)="allcheck($event)">
+                        <label for="page_context_328">Recruiting</label>
+                        <ul ngClass="{{isopen121}}">
+                          <li>
+                            <div class="thumb122"  (click)="checked($event)">
+                              arrw122
+                            </div>
+                            <input id="page_context_329" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology" (click)="allcheck($event)">
+                            <label for="page_context_329">Technology</label>
+                            <ul ngClass="{{isopen122}}">
+                              <li>
+                                <div class="thumb123"  (click)="checked($event)">
+                                  arrw123
+                                </div>
+                                <input id="page_context_374" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware" (click)="allcheck($event)">
+                                <label for="page_context_374">Computer Hardware</label>
+                                <ul ngClass="{{isopen123}}">
+                                  <li>
+                                    <input id="page_context_375" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_desktops">
+                                    <label for="page_context_375">Desktops</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_376" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_networking">
+                                    <label for="page_context_376">Networking</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_377" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_notebooks">
+                                    <label for="page_context_377">Notebooks</label>
+
+                                  </li>
+                                  <li>
+                                    <div class="thumb124"  (click)="checked($event)">
+                                      arrw124
+                                    </div>
+                                    <input id="page_context_378" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_peri" (click)="allcheck($event)">
+                                    <label for="page_context_378">Peripherals</label>
+                                    <ul ngClass="{{isopen124}}">
+                                      <li>
+                                        <input id="page_context_379" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_peri_monitors">
+                                        <label for="page_context_379">Monitors</label>
+
+                                      </li>
+                                      <li>
+                                        <input id="page_context_380" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_peri_printers">
+                                        <label for="page_context_380">Printers</label>
+
+                                      </li>
+                                      <li>
+                                        <input id="page_context_381" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_peri_storaged">
+                                        <label for="page_context_381">Storage Devices</label>
+
+                                      </li>
+                                    </ul>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <input id="page_context_382" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compservices">
+                                <label for="page_context_382">Computer Services</label>
+
+                              </li>
+                              <li>
+                                <div class="thumb125"  (click)="checked($event)">
+                                  arrw125
+                                </div>
+                                <input id="page_context_383" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compsoftware" (click)="allcheck($event)">
+                                <label for="page_context_383">Computer Software</label>
+                                <ul ngClass="{{isopen125}}">
+                                  <li>
+                                    <input id="page_context_384" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compsoftware_productivity">
+                                    <label for="page_context_384">Business Productivity</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_385" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compsoftware_security">
+                                    <label for="page_context_385">Security and Utilities</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb126"  (click)="checked($event)">
+                                  arrw126
+                                </div>
+                                <input id="page_context_386" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec" (click)="allcheck($event)">
+                                <label for="page_context_386">Consumer Electronics</label>
+                                <ul ngClass="{{isopen126}}">
+                                  <li>
+                                    <div class="thumb127"  (click)="checked($event)">
+                                      arrw127
+                                    </div>
+                                    <input id="page_context_387" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_audio" (click)="allcheck($event)">
+                                    <label for="page_context_387">Audio</label>
+                                    <ul ngClass="{{isopen127}}">
+                                      <li>
+                                        <input id="page_context_388" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_audio_mp3">
+                                        <label for="page_context_388">MP3</label>
+
+                                      </li>
+                                    </ul>
+
+                                  </li>
+                                  <li>
+                                    <div class="thumb128"  (click)="checked($event)">
+                                      arrw128
+                                    </div>
+                                    <input id="page_context_389" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_cart" (click)="allcheck($event)">
+                                    <label for="page_context_389">Car Technology</label>
+                                    <ul ngClass="{{isopen128}}">
+                                      <li>
+                                        <input id="page_context_390" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_cart_navi">
+                                        <label for="page_context_390">Navigation</label>
+
+                                      </li>
+                                    </ul>
+
+                                  </li>
+                                  <li>
+                                    <div class="thumb129"  (click)="checked($event)">
+                                      arrw129
+                                    </div>
+                                    <input id="page_context_391" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_communication" (click)="allcheck($event)">
+                                    <label for="page_context_391">Communication</label>
+                                    <ul ngClass="{{isopen129}}">
+                                      <li>
+                                        <div class="thumb130"  (click)="checked($event)">
+                                          arrw130
+                                        </div>
+                                        <input id="page_context_392" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_communication_mobile" (click)="allcheck($event)">
+                                        <label for="page_context_392">Mobile</label>
+                                        <ul ngClass="{{isopen130}}">
+                                          <li>
+                                            <div class="thumb131"  (click)="checked($event)">
+                                              arrw131
+                                            </div>
+                                            <input id="page_context_393" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_communication_mobile_cellular" (click)="allcheck($event)">
+                                            <label for="page_context_393">Cellular Telephones</label>
+                                            <ul ngClass="{{isopen131}}">
+                                              <li>
+                                                <input id="page_context_394" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_communication_mobile_cellular_sphones">
+                                                <label for="page_context_394">Smart Phones</label>
+
+                                              </li>
+                                            </ul>
+
+                                          </li>
+                                        </ul>
+
+                                      </li>
+                                    </ul>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_395" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_digicam">
+                                    <label for="page_context_395">Digital Cameras</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_396" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_pdas">
+                                    <label for="page_context_396">Handhelds and PDAs</label>
+
+                                  </li>
+                                  <li>
+                                    <div class="thumb132"  (click)="checked($event)">
+                                      arrw132
+                                    </div>
+                                    <input id="page_context_397" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_homevideo"  (click)="allcheck($event)">
+                                    <label for="page_context_397">Home Video</label>
+                                    <ul ngClass="{{isopen132}}">
+                                      <li>
+                                        <input id="page_context_398" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_homevideo_cam">
+                                        <label for="page_context_398">Camcorder</label>
+
+                                      </li>
+                                      <li>
+                                        <input id="page_context_399" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_compelec_homevideo_vh">
+                                        <label for="page_context_399">VHS and DVD</label>
+
+                                      </li>
+                                    </ul>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <input id="page_context_351" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_internetnewmedia">
+                                <label for="page_context_351">Internet and New Media</label>
+                              </li>
+                              <li>
+                                <div class="thumb133"  (click)="checked($event)">
+                                  arrw133
+                                </div>
+                                <input id="page_context_400" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_internetservices" (click)="allcheck($event)">
+                                <label for="page_context_400">Internet Services</label>
+                                <ul ngClass="{{isopen133}}">
+                                  <li>
+                                    <input id="page_context_401" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_internetservices_domain">
+                                    <label for="page_context_401">Domain Registration</label>
+
+                                  </li>
+                                  <li>
+                                    <div class="thumb134"  (click)="checked($event)">
+                                      arrw134
+                                    </div>
+                                    <input id="page_context_402" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_internetservices_community" (click)="allcheck($event)">
+                                    <label for="page_context_402">Online Community</label>
+                                    <ul ngClass="{{isopen134}}">
+                                      <li>
+                                        <input id="page_context_403" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_internetservices_community_chat">
+                                        <label for="page_context_403">Chat</label>
+
+                                      </li>
+                                      <li>
+                                        <input id="page_context_404" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_internetservices_community_email">
+                                        <label for="page_context_404">Email</label>
+
+                                      </li>
+                                      <li>
+                                        <input id="page_context_405" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_internetservices_community_messenger">
+                                        <label for="page_context_405">Messenger</label>
+
+                                      </li>
+                                      <li>
+                                        <input id="page_context_406" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_internetservices_community_photos">
+                                        <label for="page_context_406">Photos</label>
+
+                                      </li>
+                                    </ul>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_407" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_internetservices_webhosting">
+                                    <label for="page_context_407">Web Hosting</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb135"  (click)="checked($event)">
+                                  arrw135
+                                </div>
+                                <input id="page_context_408" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_ithardware" (click)="allcheck($event)">
+                                <label for="page_context_408">IT Hardware</label>
+                                <ul ngClass="{{isopen135}}">
+                                  <li>
+                                    <input id="page_context_409" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_ithardware_servers">
+                                    <label for="page_context_409">Servers</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                              <li>
+                                <div class="thumb136"  (click)="checked($event)">
+                                  arrw136
+                                </div>
+                                <input id="page_context_410" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_itsoftware" (click)="allcheck($event)">
+                                <label for="page_context_410">IT Software</label>
+                                <ul ngClass="{{isopen136}}">
+                                  <li>
+                                    <input id="page_context_411" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_itsoftware_backup">
+                                    <label for="page_context_411">Backup and Security</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_412" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_itsoftware_databases">
+                                    <label for="page_context_412">Databases</label>
+
+                                  </li>
+                                  <li>
+                                    <input id="page_context_413" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_b2b_corp_human_recruit_technology_comphardware_itsoftware_developers">
+                                    <label for="page_context_413">Developers</label>
+
+                                  </li>
+                                </ul>
+
+                              </li>
+                            </ul>
+
+                          </li>
+                        </ul>
+
+                      </li>
+                    </ul>
+
+                  </li>
+                </ul>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb137"  (click)="checked($event)">
+              arrw137
+            </div>
+            <input id="page_context_330" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment" (click)="allcheck($event)">
+            <label for="page_context_330">Career Employment</label>
+            <ul ngClass="{{isopen137}}">
+              <li>
+                <div class="thumb138"  (click)="checked($event)">
+                  arrw138
+                </div>
+                <input id="page_context_331" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_account" (click)="allcheck($event)">
+                <label for="page_context_331">Accounting and Finance</label>
+                <ul ngClass="{{isopen138}}">
+                  <li>
+                    <input id="page_context_332" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_account_bank">
+                    <label for="page_context_332">Banking and Mortgage</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <input id="page_context_333" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_advertise">
+                <label for="page_context_333">Advertising and Public Relations</label>
+
+              </li>
+              <li>
+                <input id="page_context_334" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_arts">
+                <label for="page_context_334">Arts Entertainment and Publishing</label>
+
+              </li>
+              <li>
+                <input id="page_context_335" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_adminstrative">
+                <label for="page_context_335">Clerical and Administrative</label>
+
+              </li>
+              <li>
+                <input id="page_context_336" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_facilities">
+                <label for="page_context_336">Construction and Facilities</label>
+
+              </li>
+              <li>
+                <input id="page_context_337" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_customer">
+                <label for="page_context_337">Customer Service</label>
+
+              </li>
+              <li>
+                <input id="page_context_338" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_education">
+                <label for="page_context_338">Education and Training</label>
+
+              </li>
+              <li>
+                <input id="page_context_339" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_engineering">
+                <label for="page_context_339">Engineering and Architecture</label>
+
+              </li>
+              <li>
+                <input id="page_context_341" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_travel">
+                <label for="page_context_341">Hospitality and Travel</label>
+
+              </li>
+              <li>
+                <input id="page_context_342" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_law">
+                <label for="page_context_342">Law Enforcement and Security</label>
+
+              </li>
+              <li>
+                <input id="page_context_343" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_legal">
+                <label for="page_context_343">Legal</label>
+
+              </li>
+              <li>
+                <input id="page_context_344" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_management">
+                <label for="page_context_344">Management Consulting</label>
+
+              </li>
+              <li>
+                <input id="page_context_345" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_operations">
+                <label for="page_context_345">Manufacturing and Operations</label>
+
+              </li>
+              <li>
+                <input id="page_context_346" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_marketing">
+                <label for="page_context_346">Marketing</label>
+
+              </li>
+              <li>
+                <input id="page_context_347" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_work">
+                <label for="page_context_347">Non Profit and Volunteer Work</label>
+
+              </li>
+              <li>
+                <input id="page_context_348" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_biotech">
+                <label for="page_context_348">Pharmaceutical and Biotechnology</label>
+
+              </li>
+              <li>
+                <input id="page_context_349" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_food">
+                <label for="page_context_349">Restaurant and Food Service</label>
+
+              </li>
+              <li>
+                <input id="page_context_350" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_sales">
+                <label for="page_context_350">Sales</label>
+
+              </li>
+              <li>
+                <div class="thumb139"  (click)="checked($event)">
+                  arrw139
+                </div>
+                <input id="page_context_352" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_tele" (click)="allcheck($event)">
+                <label for="page_context_352">Telecommunications</label>
+                <ul ngClass="{{isopen139}}">
+                  <li>
+                    <input id="page_context_416" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_tele_cable">
+                    <label for="page_context_416">Cable</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_417" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_tele_wireless">
+                    <label for="page_context_417">Cellular and Wireless Services</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_418" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_tele_access">
+                    <label for="page_context_418">Internet Access</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_419" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_tele_local">
+                    <label for="page_context_419">Local Service</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_420" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_tele_long">
+                    <label for="page_context_420">Long Distance</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_421" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_tele_multi">
+                    <label for="page_context_421">Multi Service Packages</label>
+
+                  </li>
+                  <li>
+                    <input id="page_context_422" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_tele_satellite">
+                    <label for="page_context_422">Satellite</label>
+
+                  </li>
+                </ul>
+
+              </li>
+              <li>
+                <input id="page_context_353" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_employment_trans">
+                <label for="page_context_353">Transportation and Logistics</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <div class="thumb140"  (click)="checked($event)">
+              arrw140
+            </div>
+            <input id="page_context_354" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_small" (click)="allcheck($event)">
+            <label for="page_context_354">Small Business</label>
+            <ul ngClass="{{isopen140}}">
+              <li>
+                <input id="page_context_355" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_small_services">
+                <label for="page_context_355">Office Supplies and Services</label>
+
+              </li>
+            </ul>
+
+          </li>
+          <li>
+            <input id="page_context_356" name="simply_audience_categories" type="checkbox" [(ngModel)]="audiences_buisness_truck">
+            <label for="page_context_356">Trucking and Freight</label>
+
+          </li>
+        </ul>
+
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="clearfix"></div>
+
+
+</div>
+  </div>
+<p></p>
+<input id="Simply_Intent__c" name="Simply_Solutions__c" type="radio" value="Simply Intent" (click)="sendtype('3')" [(ngModel)]="simply_intent">
+<label for="Simply_Intent__c" class="label1text">
+  Simply
+  <strong>Intent</strong>
+</label>
+  <div [ngClass]="{'active': isActive[3], 'disabled': isDisabled[3]}">
+<div class="child-box geoai_formwrapper" id="simpli_intent_box" >
+  <p>Simply Intent™ solutions use a blend of optimized tactics including keyword search, category contextual and keyword contextual targeting to reach a custom audience.</p>
+  <p>Define the geography you want your advertising to serve within (state, region, city, ZIP codes):</p>
+  <div class="geoai_form_con">
+
+  <label for="Geo_Targeting__c">
+    Geo Targeting
+  </label>
+  <textarea id="Geo_Targeting__c" name="Geo_Targeting__c" [(ngModel)]="intent_geotargeting"></textarea>
+
+  <p class="note">Limit to 255 Characters. Define the geography you want your advertising to serve within (state, region, city, ZIP codes)</p>
+  </div>
+    <div class="geoai_form_con">
+  <label for="Geo_Fencing__c">
+    GeoFencing
+  </label>
+  <textarea id="Geo_Fencing__c" name="Geo_Fencing__c" [(ngModel)]="intent_geofencing"></textarea>
+  <p class="note">If you have a brick and mortar location, Simpli.fi is able to utilize geo-fencing! Just let us know what locations you'd like us to target by sending a street address and any parameters around that address you'd like us to include (parking lots, sidewalks, etc). Finally, tell us for how long after someone enters the fence we should serve them ads (10 minutes up to 30 days).</p>
+    </div>
+      <div class="geoai_form_con">
+
+  <label for="Simply_Intent_Business_Intelligence__c">
+    Please describe the audience you are trying to reach. Include information such as demographic, psychographic, business category, keywords, etc.
+  </label>
+  <div ngClass="{{haserrorcls('Simply_Intent_Business_Intelligence__c')}}">
+  <textarea id="Simply_Intent_Business_Intelligence__c" name="Simply_Intent_Business_Intelligence__c" [(ngModel)]="intent_audiencetype"></textarea>
+    <div class="showerror" ngClass="{{showerrorcls('Simply_Intent_Business_Intelligence__c')}}">This field is required.</div>
+</div>
+      </div>
+  <div class="clearfix"></div>
+</div>
+  </div>
+<p></p>
+<input id="Simply_Reach__c" name="Simply_Solutions__c" type="radio" value="Simply Reach" (click)="sendtype('4')" [(ngModel)]="simply_reach">
+
+<label for="Simply_Reach__c"  class="label1text">
+  Simply
+  <strong>Reach</strong>
+</label>
+  <div [ngClass]="{'active': isActive[4], 'disabled': isDisabled[4]}">
+<div class="child-box geoai_formwrapper" id="simpli_reach_box">
+  <p>Simply Reach™ solutions allow advertisers to use retargeting technology to build a customized "digital mirror" of an existing online or offline audience.</p>
+  <p>Define the geography you want your advertising to serve within (state, region, city, ZIP codes):</p>
+  <div class="geoai_form_con">
+  <label for="Geo_Targeting__c">
+    Geo Targeting
+  </label>
+  <textarea id="Geo_Targeting__c" name="Geo_Targeting__c" [(ngModel)]="reach_geotargeting"></textarea>
+  <p class="note">Define the geography you want your advertising to serve within (state, region, city, ZIP codes)</p>
+  </div>
+    <div class="geoai_form_con">
+  <label for="Geo_Fencing__c">
+    GeoFencing
+  </label>
+  <textarea id="Geo_Fencing__c" name="Geo_Fencing__c" [(ngModel)]="reach_geofencing"></textarea>
+  <p class="note">If you have a brick and mortar location, Simpli.fi is able to utilize geo-fencing! Just let us know what locations you'd like us to target by sending a street address and any parameters around that address you'd like us to include (parking lots, sidewalks, etc). Finally, tell us for how long after someone enters the fence we should serve them ads (10 minutes up to 30 days).</p>
+    </div>
+      <div class="geoai_form_con">
+  <label for="Simply_Reach_Core_Audience__c">
+    Please describe the audience you would like to mirror, i.e. Modern Family viewers, Country Radio listeners:
+  </label>
+
+
+  <textarea id="Simply_Reach_Core_Audience__c" name="Simply_Reach_Core_Audience__c" [(ngModel)]="reach_audiencemirror"></textarea>
+
+      </div>
+<div class="clearfix"></div>
+
+</div>
+  </div>
+</div>
+</div>
+<!--<a [routerLink]="['/basicinformation']">Next</a>-->
+<button (click)="callsubmit()" class="subbtn1">OK</button>
+
+<!--<input type="submit" value="Next">-->
+</div>

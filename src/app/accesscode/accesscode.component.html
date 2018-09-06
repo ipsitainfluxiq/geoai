@@ -1,0 +1,46 @@
+<!--<div class="signup_middle_right">
+  <div class="signupbox_formwrapper">
+    <div class="wpcf7-not-valid-tip" *ngIf="is_error">{{is_error}}</div>
+    <form name="dataForm" method="post" action="login" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+      <h4> Access Code</h4>
+      <div class="row">
+        <div class="col-xs-12 form-group" id="email_contain">
+          <strong>>Access code</strong>
+          <input type="text" class="form-control" [formControl]="dataForm.controls['accesscode']">
+          <div class="wpcf7-not-valid-tip" *ngIf ="dataForm.hasError('accesscode')"><span>Access code is Required !</span>
+        </div>
+        <input type="submit" value="Go" class="loginbtn2">
+      </div>
+      </div>
+    </form>
+  </div>
+</div>-->
+
+
+
+
+
+<div id="login_box" class="login_box_wrapper">
+  <a href="/"><img src="../../assets/images/geai_logo.png" class="geai_logo"></a>
+  <div class="relay_msg"></div>
+  <div class="loginbox_formwrapper">
+    <h4>Access Code</h4>
+    <form name="frmLogin" method="post" action="login" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+      <div class="wpcf7-not-valid-tip" *ngIf="is_error">{{is_error}}</div>
+      <div class="row">
+        <div class="col-xs-12 form-group" id="username_contain">
+          <input type="text" name="accesscode" id="accesscode" class="login_box_input" maxlength="255" value="" placeholder="Access Code"  [formControl]="dataForm.controls['accesscode']">
+<!--
+          <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.hasError('accesscode')">Access code is Required !</span>
+-->
+          <span *ngIf ="dataForm.controls['accesscode'].touched && !dataForm.controls['accesscode'].valid" class="wpcf7-not-valid-tip">Access code is Required !</span>
+        </div>
+        <div id="controls_area" class="col-xs-12 form-group2">
+          <div id="submit_box" class="col-xs-4 login_bottomwrapper">
+            <input type="submit" value="Submit" id="login_button">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

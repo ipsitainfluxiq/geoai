@@ -1,0 +1,635 @@
+<!------HEADER SECTION--->
+
+<!--<header class="headerdiv">
+  <div class="headerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+  </div>
+  <div class="container-fluid menublock">
+    <div class="menudiv">
+      <nav class="navbar navbar-default">
+        &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
+        <div class="navbar-header">
+          <span class="responsivemenu">MENU</span>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <div class="clearfix"></div>
+        </div>
+        &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Mission control</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Default Rules</a></li>
+            <li class="active"><a [routerLink]="['/']">$Money</a></li>
+
+          </ul>
+        </div>
+        &lt;!&ndash; /.navbar-collapse &ndash;&gt;
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</header>-->
+<app-headernew></app-headernew>
+<!------end Header SECTION--->
+
+
+<!------Body SECTION--->
+
+<div class="adminmainwarpper">
+  <div class="bodytopsearchlistwrapper">
+    <div class="bodytopactiondiv">
+      <div class="formblock topsearchlist">
+       <!-- <form class="form form-inline" role="form">-->
+        <div class="form form-inline">
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <select class="classic" (change)="showcampaignlists(filterval1)" [(ngModel)]="filterval1">
+                <option value="2" selected>All</option>
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+                <option value="3">Pending</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group hide">
+            <div class="col-xs-12 txtfield">
+              <select class="classic">
+                <option>Today</option>
+                <option>Yesterday</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group dtrangecls">
+            <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+              <div class="col-xs-12 divinner">
+                <div class="datefieldcontainer">
+                <!--  <input class="datefieldcls" type="date" name="selected_date" />-->
+                  <input type="text"
+                         placeholder="Start Date"
+                         class="form-control"
+                         bsDatepicker
+                         [(ngModel)]="startdate"
+                         [minDate] = "isdate"
+                  >
+                  <span class="openbuttoncls">
+                  <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+              <div class="col-xs-12 divinner">
+                <div class="datefieldcontainer">
+                 <!-- <input class="datefieldcls" type="date" name="selected_date" />-->
+                  <input type="text"
+                         placeholder="End Date"
+                         class="form-control"
+                         bsDatepicker
+                         [(ngModel)]="enddate"
+                         [minDate] = "isdate"
+
+                  >
+                  <span class="openbuttoncls">
+                  <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btnblack" (click)="showresult()">Go</button>
+          </div>
+     <!--   </form>-->
+      </div>
+      </div>
+    </div>
+    <div class="rightbtndiv" *ngIf="cookiedetailsforalldetails_type!=1 && cookiedetailsforalldetails_type!=2">
+        <div class="rightbtndiv">
+            <a href="javascript:void(0)" class="btnblue" [routerLink]="['/addcampaign']">Add Campaign</a>
+        </div>
+      <h3>Remaining Budget <span *ngIf="totalamt==0">$ 0</span>
+          <span *ngIf="totalamt>0">$ {{totalamt}}</span></h3>
+
+    </div>
+
+  </div>
+  <div class="bodytopactiondivbg">
+    <div class="bodytopactiondiv">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 bodytopactiondivbgleft" [routerLink]="['/addcampaign']">
+            <span>New Campaign</span>
+          </div>
+          <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 bodytopactiondivbgright">
+            <div class="bodytopactiondlist1">
+              <ul class="list-inline">
+                <li><a [routerLink]="['/']">All</a></li>
+                <li><a [routerLink]="['/']">Impresslons <label>0</label></a></li>
+                <li><a [routerLink]="['/']">Clicks <label>0</label></a></li>
+                <li><a [routerLink]="['/']">CTR <label>0</label></a></li>
+                <li><a [routerLink]="['/']">CV <label>0</label></a></li>
+                <li><a [routerLink]="['/']">CVR <label>0</label></a></li>
+                <li><a [routerLink]="['/']">eCPA <label>0</label></a></li>
+                <li><a [routerLink]="['/']">Cost <label>0.00%</label></a></li>
+                <li><a [routerLink]="['/']">Rev. <label>0.00%</label></a></li>
+                <li><a [routerLink]="['/']">N Rev <label>$0.00</label></a></li>
+                <li><a [routerLink]="['/']">ROI% <label class="greentxt">+35%</label></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bodytopactiondivwrapper" *ngIf="campaignlistarr?.length>0">
+    <div class="bodytopactiondiv">
+      <div class="bodytopactiondlist">
+        <input type="checkbox" [(ngModel)]="selectallcampaign" (click)="allcheck()">
+        <span>Select All : </span>
+        <ul class="list-inline">
+          <li (click)="resumecampaigns(1)"><a><img src="../../assets/images/geoaiadmin_iconresume.png" > Resume</a></li>
+          <li (click)="resumecampaigns(0)"><a><img src="../../assets/images/geoaiadmin_iconpause.png"> Pause</a></li>
+          <li (click)="resumecampaigns(0)"><a><!--<img src="../../assets/images/geoaiadmin_iconactive.png">--><span class="iconactive"></span> Active</a></li>
+          <li (click)="resumecampaigns(0)"><a><!--<img src="../../assets/images/geoaiadmin_iconinactive.png">--><span class="iconinactive"></span> Inactive</a></li>
+          <li (click)="resumecampaigns(0)"><a><!--<img src="../../assets/images/geoaiadmin_iconpending.png">--><span class="iconpending"></span> Pending</a></li>
+         <!-- <li><a><img src="../../assets/images/geoaiadmin_iconcancelrunreport.png"> Cancel Run Report</a></li>-->
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid bodymaindiv">
+    <div id="no-more-tables" *ngIf="campaignlistarr?.length>0">
+      <table class="col-md-12 table-bordered table-striped table-condensed cf">
+        <thead class="cf">
+        <tr>
+          <th class="numeric text-center">Status</th>
+          <th class="numeric text-center"></th>
+          <th class="numeric text-center">campaign name</th>
+          <th class="numeric text-center">Rem.Budget</th>
+          <th class="numeric text-center">Daily limit<br> spend(60%)($12/$20)</th>
+          <th class="numeric text-center">Win to bid<br> percentages/40%(20/8)</th>
+          <th class="numeric text-center">Total Campaign<br> spend(10%)($100/$1000)</th>
+          <th class="numeric text-center">Top bid<br> amount<br> per impression</th>
+          <th class="numeric text-center">The CPM</th>
+          <th class="numeric text-center">The EPC</th>
+          <th class="numeric text-center">The EPCM</th>
+          <th class="numeric text-center">The CPA</th>
+          <th class="numeric text-center">Total spend in<br> comparative<br> to what the<br> CPA amount is </th>
+          <th class="numeric text-center">Manage audience</th>
+          <th class="numeric text-center">Manage creative</th>
+          <th class="numeric text-center">Date Range <br>(Start - End)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of campaignlistarr | paginate: { itemsPerPage: 5, currentPage: p }; let i=index" [ngClass]="addtdclass(item.status)">
+          <td data-title="Status" class="text-center statustd"  >
+            <ul class="list-inline statusicon" id="column1">
+              <!-- <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>-->
+              <!--<li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>-->
+              <li *ngIf="item.status==3"><input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i])" [(ngModel)]="checkboxvalue[i]"  *ngIf="cookiedetailsforalldetails_type==1"></li>
+              <li *ngIf="item.status!=3"><input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i])" [(ngModel)]="checkboxvalue[i]"></li>
+              <!--  <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>-->
+              <li><a [routerLink]="['/editcampaign',item._id]"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+              <!--<li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>-->
+              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+              <li><a [routerLink]="['/addcampaign',item._id]"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+            </ul>
+          </td>
+          <td data-title="Active Status" class="borderdiv text-center">
+            <ul class="list-inline statusiconsub">
+              <li (click)="changestatus(item)"><a *ngIf="item.status==1"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+              <li (click)="changestatus(item)"><a *ngIf="item.status==0"><img src="../../assets/images/geoaiadmin_iconpause.png"></a></li>
+              <li><a *ngIf="item.status==3 && cookiedetailsforalldetails_type!=1"><img src="../../assets/images/pending_icon.png"></a></li>
+            </ul>
+          </td>
+          <td data-title="campaign name" class=" text-center">{{item.campaignname}}</td>
+          <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+          <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+          <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+          <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+          <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+          <td data-title="The CPM" class="numeric text-center">120</td>
+          <td data-title="The EPC" class="numeric text-center">{{item.epc}}</td>
+          <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+          <td data-title="The CPA" class="numeric text-center">{{item.cpa}}</td>
+          <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+          <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+          <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+          <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>{{showproperdateformat(item.startdate)}}</span></span><span>End Date<span>{{showproperdateformat(item.enddate)}}</span></span></td>
+        </tr>
+
+        <!-- <tr>
+           <td data-title="Status" class="text-center statustd">
+             <ul class="list-inline statusicon">
+               <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>
+               <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>
+               <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>
+               <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+               <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>
+               <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+               <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+               <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+             </ul>
+           </td>
+           <td data-title="Active Status" class="borderdiv text-center">
+             <ul class="list-inline statusiconsub">
+               <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+             </ul>
+           </td>
+           <td data-title="campaign name" class=" text-center">ip a d Reg Path CPM New</td>
+           <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+           <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+           <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+           <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+           <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+           <td data-title="The CPM" class="numeric text-center">120</td>
+           <td data-title="The EPC" class="numeric text-center">5.20%</td>
+           <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+           <td data-title="The CPA" class="numeric text-center">$61.63</td>
+           <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+           <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+           <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+           <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>02-25-2018</span></span><span>End Date<span>04-31-2018</span></span></td>
+         </tr>
+
+                        <tr>
+                          <td data-title="Status" class="text-center statustd">
+                            <ul class="list-inline statusicon">
+                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>
+                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>
+                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>
+                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>
+                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+                            </ul>
+                          </td>
+                          <td data-title="Active Status" class="borderdiv text-center">
+                            <ul class="list-inline statusiconsub">
+                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+                            </ul>
+                          </td>
+                          <td data-title="campaign name" class=" text-center">ip a d Reg Path CPM New</td>
+                          <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+                          <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+                          <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+                          <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+                          <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+                          <td data-title="The CPM" class="numeric text-center">120</td>
+                          <td data-title="The EPC" class="numeric text-center">5.20%</td>
+                          <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+                          <td data-title="The CPA" class="numeric text-center">$61.63</td>
+                          <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+                          <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+                          <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+                          <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>02-25-2018</span></span><span>End Date<span>04-31-2018</span></span></td>
+                        </tr>
+
+
+                                        <tr>
+                                          <td data-title="Status" class="text-center statustd">
+                                            <ul class="list-inline statusicon">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="Active Status" class="borderdiv text-center">
+                                            <ul class="list-inline statusiconsub">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="campaign name" class=" text-center">ip a d Reg Path CPM New</td>
+                                          <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+                                          <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+                                          <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+                                          <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+                                          <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+                                          <td data-title="The CPM" class="numeric text-center">120</td>
+                                          <td data-title="The EPC" class="numeric text-center">5.20%</td>
+                                          <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+                                          <td data-title="The CPA" class="numeric text-center">$61.63</td>
+                                          <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+                                          <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>02-25-2018</span></span><span>End Date<span>04-31-2018</span></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                          <td data-title="Status" class="text-center statustd">
+                                            <ul class="list-inline statusicon">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="Active Status" class="borderdiv text-center">
+                                            <ul class="list-inline statusiconsub">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="campaign name" class=" text-center">ip a d Reg Path CPM New</td>
+                                          <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+                                          <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+                                          <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+                                          <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+                                          <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+                                          <td data-title="The CPM" class="numeric text-center">120</td>
+                                          <td data-title="The EPC" class="numeric text-center">5.20%</td>
+                                          <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+                                          <td data-title="The CPA" class="numeric text-center">$61.63</td>
+                                          <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+                                          <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>02-25-2018</span></span><span>End Date<span>04-31-2018</span></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                          <td data-title="Status" class="text-center statustd">
+                                            <ul class="list-inline statusicon">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="Active Status" class="borderdiv text-center">
+                                            <ul class="list-inline statusiconsub">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="campaign name" class=" text-center">ip a d Reg Path CPM New</td>
+                                          <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+                                          <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+                                          <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+                                          <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+                                          <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+                                          <td data-title="The CPM" class="numeric text-center">120</td>
+                                          <td data-title="The EPC" class="numeric text-center">5.20%</td>
+                                          <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+                                          <td data-title="The CPA" class="numeric text-center">$61.63</td>
+                                          <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+                                          <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>02-25-2018</span></span><span>End Date<span>04-31-2018</span></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                          <td data-title="Status" class="text-center statustd">
+                                            <ul class="list-inline statusicon">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="Active Status" class="borderdiv text-center">
+                                            <ul class="list-inline statusiconsub">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="campaign name" class=" text-center">ip a d Reg Path CPM New</td>
+                                          <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+                                          <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+                                          <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+                                          <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+                                          <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+                                          <td data-title="The CPM" class="numeric text-center">120</td>
+                                          <td data-title="The EPC" class="numeric text-center">5.20%</td>
+                                          <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+                                          <td data-title="The CPA" class="numeric text-center">$61.63</td>
+                                          <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+                                          <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>02-25-2018</span></span><span>End Date<span>04-31-2018</span></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                          <td data-title="Status" class="text-center statustd">
+                                            <ul class="list-inline statusicon">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="Active Status" class="borderdiv text-center">
+                                            <ul class="list-inline statusiconsub">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="campaign name" class=" text-center">ip a d Reg Path CPM New</td>
+                                          <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+                                          <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+                                          <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+                                          <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+                                          <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+                                          <td data-title="The CPM" class="numeric text-center">120</td>
+                                          <td data-title="The EPC" class="numeric text-center">5.20%</td>
+                                          <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+                                          <td data-title="The CPA" class="numeric text-center">$61.63</td>
+                                          <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+                                          <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>02-25-2018</span></span><span>End Date<span>04-31-2018</span></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                          <td data-title="Status" class="text-center statustd">
+                                            <ul class="list-inline statusicon">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="Active Status" class="borderdiv text-center">
+                                            <ul class="list-inline statusiconsub">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="campaign name" class=" text-center">ip a d Reg Path CPM New</td>
+                                          <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+                                          <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+                                          <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+                                          <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+                                          <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+                                          <td data-title="The CPM" class="numeric text-center">120</td>
+                                          <td data-title="The EPC" class="numeric text-center">5.20%</td>
+                                          <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+                                          <td data-title="The CPA" class="numeric text-center">$61.63</td>
+                                          <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+                                          <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>02-25-2018</span></span><span>End Date<span>04-31-2018</span></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                          <td data-title="Status" class="text-center statustd">
+                                            <ul class="list-inline statusicon">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="Active Status" class="borderdiv text-center">
+                                            <ul class="list-inline statusiconsub">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="campaign name" class=" text-center">ip a d Reg Path CPM New</td>
+                                          <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+                                          <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+                                          <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+                                          <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+                                          <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+                                          <td data-title="The CPM" class="numeric text-center">120</td>
+                                          <td data-title="The EPC" class="numeric text-center">5.20%</td>
+                                          <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+                                          <td data-title="The CPA" class="numeric text-center">$61.63</td>
+                                          <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+                                          <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>02-25-2018</span></span><span>End Date<span>04-31-2018</span></span></td>
+                                        </tr>
+
+
+                                        <tr>
+                                          <td data-title="Status" class="text-center statustd">
+                                            <ul class="list-inline statusicon">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="Active Status" class="borderdiv text-center">
+                                            <ul class="list-inline statusiconsub">
+                                              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
+                                            </ul>
+                                          </td>
+                                          <td data-title="campaign name" class=" text-center">ip a d Reg Path CPM New</td>
+                                          <td data-title="Rem.Budget" class="numeric text-center">$20.00</td>
+                                          <td data-title="Daily limit spend(60%)($12/$20)" class="numeric text-center">$20.00</td>
+                                          <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
+                                          <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
+                                          <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
+                                          <td data-title="The CPM" class="numeric text-center">120</td>
+                                          <td data-title="The EPC" class="numeric text-center">5.20%</td>
+                                          <td data-title="The EPCM" class="numeric text-center">$0.51</td>
+                                          <td data-title="The CPA" class="numeric text-center">$61.63</td>
+                                          <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage audience" class="numeric text-center">$65.23</td>
+                                          <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
+                                          <td data-title="Date Range (Start - End)" class="numeric text-center"><span>Start Date <span>02-25-2018</span></span><span>End Date<span>04-31-2018</span></span></td>
+                                        </tr>-->
+
+        </tbody>
+      </table>
+
+      <div class="clearfix"></div>
+
+      <div class="pagination_wrapper" *ngIf="campaignlistarr?.length>5">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+    <div *ngIf="campaignlistarr?.length==0" class="norecord">
+      <h4>No Records Available</h4>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!------End Body SECTION--->
+
+
+
+<!------Footer SECTION--->
+<app-footernew></app-footernew>
+<!--<footer class="footerdiv">
+  <div class="footerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+    <div class="footercopyright text-center">
+      <p>Copyright 2017 GeoAI Technologies, LLC. All Rights Reserved | <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">T & C</a></p>
+    </div>
+  </div>
+</footer>-->
+
+<!------End Footer SECTION--->
+
+
+
+
+<!-- Modal -->
+
+<div class="modal fade comingsoonModal" id="comingsoon" tabindex="-1" role="dialog" aria-labelledby="comingsoonModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modallogowrapper">
+          <a href="javascript:void(0)"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+        </div>
+        <h1>Coming Soon!</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--END Modal -->

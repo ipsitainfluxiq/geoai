@@ -1,0 +1,70 @@
+<app-header></app-header>
+
+<div class="newpageborder"></div>
+<div class=" geo_body_wrapper">
+  <div class=" geo_new_wrapper">
+    <div class="geo_new_heading"><span><strong>CREATE AN</strong> Audience</span></div>
+    <div class="geo_new_menublock">
+      <ul>
+        <li class="active"><a [routerLink]="['/viewability']" href="javascript:void(0)" class="nmenu2 "> Viewability</a></li>
+        <li><a [routerLink]="['/locations']" href="javascript:void(0)" class="nmenu1">Geo Targets</a></li>
+        <li><a [routerLink]="['/browser']" href="javascript:void(0)" class="nmenu3"> Browser</a></li>
+        <li><a [routerLink]="['/os']" href="javascript:void(0)" class="nmenu4">Operating Systems</a></li>
+        <li><a [routerLink]="['/devicetypes']" href="javascript:void(0)" class="nmenu5">Device Types </a></li>
+        <li><a [routerLink]="['/deals']" href="javascript:void(0)" class="nmenu6">Deals</a></li>
+        <li ><a [routerLink]="['/pacing']" href="javascript:void(0)" class="nmenu7">Pacing</a></li>
+        <li ><a [routerLink]="['/dayparting']" href="javascript:void(0)" class="nmenu8">Dayparting</a></li>
+        <div class="clearfix"></div>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div class=" geo_new_block1">
+      <img src="assets/images/viewbigicon.png"  alt="#"/>
+      <h2>Viewability</h2>
+      <h3>Lorem Ipsum is simply dummy
+        text of the printing and typesetting industry.</h3>
+    </div>
+    <h6 class="h6locationtext">Viewability</h6>
+    <div class=" geo_new_block2">
+
+
+
+      <div class="create_audience_wrapper viewability_wrapper viewability_form">
+
+        <label>Audience Name: </label>
+        <input type="text" [(ngModel)]="audiencename"/>
+        <span *ngIf ="errorforname">{{errorforname}}</span>
+      </div>
+
+
+      <div class="create_audience_wrapper viewability_wrapper">
+        <div class="viewability_right">
+          <p>Integral Viewability Threshold</p>
+          <select id="view"  name="view" [(ngModel)]="view" class="form-control2">
+            <option *ngFor="let item of viewabilitis; let i=index" value="{{item}}">{{item}}</option>
+          </select>
+        </div>
+        <div class="viewability_left">
+          <p> This will restrict the creatives to only serve on domains which have known chances of a creative being in view. Turning this on will reduce the available inventory.</p>
+          <p>Good: The best 55% of inventory is available</p>
+          <p>Better: The best 40% of inventory is available</p>
+          <p>Best: The best 25% of inventory is available</p>
+        </div>
+        <div class="clearfix"></div>
+        <input type="button" value="OK" (click)="selectview(view)" class="browsertabbtn2">
+        <div class="clearfix"></div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="footerbtndiv">
+    <!--  <input type="button" value="Back" [routerLink]="['/locations']">-->
+      <input type="button" value="Next" [routerLink]="['/locations']">
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+</div>
+
+

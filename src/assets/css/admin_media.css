@@ -1,0 +1,28 @@
+@media(max-width:1300px){.dashboard_left{width:21%;}
+    .dashboard_right{width:100%;}
+    .dbblog{width:23.5%;margin:0.5%;float:left;border-radius:5px;}
+    .dbblog .fa{font-size:40px;color:#fff;}
+}
+@media(max-width:1199px){.dashboard_left{width:100%;float:none;min-height:inherit;text-align:center;height:auto;}
+    .dashboard_left h2{text-align:center;}
+    .dashboard_wrappertop img{width:250px;display:block;margin:0 auto;}
+    .dashboard_right{width:100%;margin:0 auto;float:none;min-height:inherit;border:none;padding:10px 0;}
+    .tablediv{overflow-x:auto;width:100%;margin:0 auto;}
+    .dbblog{width:47%;margin:1%;float:left;border-radius:5px;}
+}
+@media(max-width:991px){.login_bg{height:auto;padding:100px 0;}
+    .login_wrapper{width:80%;padding-left:5%;padding-right:5%;}
+    .login_formbox{width:90%;margin:0 auto;}
+    .login_formbox input[type="text"]{width:90%;}
+    .dashboard1form{width:100%;}
+    .fpassword{float:none;margin:10px auto;}
+    .login_formbox .loginbtn{float:none;margin:0 auto;}
+}
+@media(max-width:540px){.dbblog{width:90%;margin:0 auto;float:none;border-radius:5px;margin-bottom:15px;}
+}
+@media(max-width:380px){.adminserchdiv{display:block;float:none;padding-top:0;margin:0 auto;width:240px;}
+    .adadminlink{float:none;display:block;margin:0 auto;margin-top:10px;width:90px;text-align:center;padding-right:2px;}
+}
+.tdvideo{max-width:375px !important;}
+.childimgwraqpper{position:relative;}
+.childimg{position:absolute;left:50%;top:50%;transform:translate(-50%, -50%);z-index:44;background:#fff;border:1px solid rgba(0, 0, 0, .5);padding:3px;border-radius:5px;}

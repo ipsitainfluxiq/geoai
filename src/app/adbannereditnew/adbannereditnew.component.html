@@ -1,0 +1,63 @@
+<app-header></app-header>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+  <div class="dashboard_right_wrapper">
+    <div class="dashboard1_div1 ">
+      <h4> Edit Adbanner</h4>
+      <div class="dashboard1form">
+
+        <form role="form" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+
+          <label>Adbanner Name</label>
+          <input type="text" class="form-control" placeholder="Adbanner Name" [formControl]="dataForm.controls['adbannername']">
+          <span class="has-error" *ngIf ="dataForm.controls['adbannername'].touched && !dataForm.controls['adbannername'].valid">First Name is Required !</span>
+
+
+          <label>Adbanner Height-Width</label>
+          <select name="your-list"  [formControl]="dataForm.controls['height_width']" (change)="adbannerheightwidth()">
+            <option value="">Select Height-Width</option>
+            <option value="1">320 x 50 (MMA XXLarge)</option>
+            <option value="2">300 x 50 (MMA XLarge)</option>
+            <option value="3">216 x 36 (MMA Large)</option>
+            <option value="4">168 x 28 (MMA Medium)</option>
+            <option value="5">120 x 20 (MMA Small)</option>
+          </select>
+          <span class="has-error" *ngIf ="dataForm.controls['height_width'].touched && !dataForm.controls['height_width'].valid">Adbanner Height Width is Required !</span>
+          <div *ngIf="showdivforimageupload">
+            <div  class="img-responsive center-block clearfix">
+              <h4 class="modal-title center-block" style="padding-bottom: 5px; text-align: center">Upload Images</h4>
+              <label class="upload-button filechoosebtnbg center-block">
+                <!--<input class="img-responsive center-block clearfix" type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput">-->
+              </label>
+            </div>
+            <div *ngIf="progress">
+              <div *ngIf="progress != 100">
+                Uploading: {{ progress }}%
+              </div>
+            </div>
+            <div *ngIf="progress == 100">
+              Image Uploaded..!
+            </div>
+            <div class="browsefileblockimg">
+                  <div class="browsefileblockimgmultiplerowsingle" *ngIf="files.length>0 && imgsizeerror==null">
+                    <div class="browsefileblockimgmultiplerowimgagebig">
+                      <img  class="img-responsive center-block firstimgheightset" style="width: 100%; height: auto" src="../../assets/uploads/{{files[0].response.filename}}" >  <!--LOCAL-->
+                      <!-- <img  class="img-responsive center-block" style="width: 100%; height: auto" src="http://http://foremostlaboratories.com/assets/images/uploads/{{files[0].response[0]}}" >-->
+                    </div>
+                    <!-- <input type="button"  *ngIf="files.length>0" value="Delete" class="form-control btn btn-primary btnform  center-block" (click)="deleteimage1(0)" style="margin: 0 auto; width: 30%; float: none">-->
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+            <span class="has-error"  *ngIf="imgsizeerror">{{imgsizeerror}}</span>
+          </div>
+
+
+          <label>Priority</label>
+          <input type="text" class="form-control" placeholder="Priority" [formControl]="dataForm.controls['priority']">
+          <span class="has-error" *ngIf ="dataForm.controls['priority'].touched && !dataForm.controls['priority'].valid">Priority is Required !</span>
+          <input type="checkbox" [formControl]="dataForm.controls['status']"><span class="wpcf7-list-item-label">Check the box to Make Active.</span>
+          <br><input type="submit" value="Save" class="loginbtn2">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

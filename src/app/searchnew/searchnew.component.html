@@ -1,0 +1,841 @@
+<app-headernew></app-headernew>
+<!--<div class="adminmainwarpper search_heading">
+ <h2>Search Your Audience</h2>
+  <div class="col-lg-12 search_heading_wrapper">
+    <div class="col-lg-6 txtfieldnew"><span class="bluebg">Business</span></div>
+    <div class="col-lg-6 txtfieldnew"><span class="bluebg">Consumer</span></div>
+  </div>
+  <div class="txtfieldnew">Your Current Audience SIze is: </div>
+</div>-->
+<div class=" geo_body_wrapper">
+  <div class=" geo_new_wrapper">
+    <div class="geo_new_heading"><span><strong>SEARCH YOUR</strong> Audience</span></div>
+    <div class="geo_new_menublock">
+      <ul>
+        <li [ngClass]="topmenu1 ? 'active' : ''"><a href="javascript:void(0)" class="nmenu1" (click)="addclasstopmenu(1)"> Business</a></li>
+        <li [ngClass]="topmenu2 ? 'active' : ''"><a href="javascript:void(0)" class="nmenu2" (click)="addclasstopmenu(2)">Consumer</a></li>
+        <div class="clearfix"></div>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class=" geo_new_block1 geo_new_block1_new">
+    </div>
+    <div class="geo_new_block2 geo_new_block2_new">
+      <h4 *ngIf="consumer_value?.count!=null">Your Current Audience Size: {{consumer_value.count.SearchCount}}</h4>
+      <div *ngIf="consumer_value?.count!=null" style="text-align: center">
+        <button (click)="viewallsearch()" class="mapbtn3">View All</button>
+      </div>
+      <div class="search_column" *ngIf="topmenu1">
+        <input type="button" class="searchnewbuttons" value="Geography" (click)="opengeodiv(1)">
+      </div>
+      <div class="search_column" *ngIf="topmenu2">
+        <input type="button" class="searchnewbuttons" value="Geography" (click)="opengeodiv(2)">
+        <input type="button" class="searchnewbuttons" value="Individual Information" (click)="openinfodiv()">
+        <input type="button" class="searchnewbuttons" value="Household Information" (click)="openhouseholddiv()">
+        <input type="button" class="searchnewbuttons" value="Interests / Hobbies / Lifestyles" (click)="openinterestsdiv()">
+      </div>
+      <div class="clearfix"></div>
+      <div class="submenuwrapper" *ngIf="geodiv">
+        <div class="submenulist">
+          <p (click)="openstatediv()" class="submenuu"  [ngClass]="statesubmenu ? 'active' : ''">State
+            <span class="submenulistselectoption" *ngIf="selected_locations?.length">{{selected_locations.length}}</span>
+
+          </p>
+          <p (click)="opencitydiv()"  class="submenuu"  [ngClass]="citysubmenu ? 'active' : ''">City
+            <span class="submenulistselectoption" *ngIf="selected_locationscity?.length">{{selected_locationscity.length}}</span>
+          </p>
+
+          <p (click)="opencountrydiv()"  class="submenuu" [ngClass]="countrysubmenu ? 'active' : ''">County
+            <span class="submenulistselectoption" *ngIf="selected_locationscountry?.length">{{selected_locationscountry.length}}</span>
+          </p>
+
+          <p (click)="openzipdiv()"  class="submenuu" [ngClass]="zipsubmenu ? 'active' : ''">ZIP Code
+            <span class="submenulistselectoption" *ngIf="ziplength>0">{{ziplength}}</span>
+          </p>
+          <p (click)="openaddressdiv()"  class="submenuu" [ngClass]="addresssubmenu ? 'active' : ''"> Address
+            <span class="submenulistselectoption" *ngIf="addressval!=null">1</span>
+          </p>
+          <p (click)="openradiusdiv()" class="submenuu" [ngClass]="radiussubmenu ? 'active' : ''">Radius Around an Address or ZIP Code
+            <span class="submenulistselectoption" *ngIf="geomilesorshapeslength!=null && radiussubmenu">{{geomilesorshapeslength}}</span>
+          </p>
+          <p (click)="openmapdiv()" class="submenuu" [ngClass]="mapsubmenu ? 'active' : ''">Map Based Search
+            <span class="submenulistselectoption" *ngIf="totalshapeslength">{{totalshapeslength}}</span>
+          </p>
+        </div>
+      </div>
+      <div class="submenuwrapper" *ngIf="infodiv">
+        <div class="submenulist">
+          <p (click)="openagediv()" class="submenuu">Age</p>
+          <p (click)="opengenderdiv()"  class="submenuu">Gender</p>
+          <p (click)="openindhouseholddiv()"  class="submenuu">Head of Household</p>
+        </div>
+      </div>
+
+      <div class="submenuwrapper" *ngIf="householddiv">
+        <div class="submenulist">
+          <p (click)="openincomediv()" class="submenuu">Estimated Household Income</p>
+          <p (click)="openhomevaluediv()" class="submenuu">Home Market Value</p>
+          <p (click)="openmedianhomeincomediv()" class="submenuu">Median Home Income in 2010 Census</p>
+          <p (click)="openmedianhomevaluediv()" class="submenuu">Median Home Value in 2010 Census</p>
+          <p (click)="openresidencediv()" class="submenuu">Length of Residence</p>
+          <p (click)="openmaritaldiv()" class="submenuu"> Marital Status</p>
+          <p (click)="opennetworthdiv()" class="submenuu">Net Worth</p>
+        </div>
+      </div>
+
+      <div *ngIf="interestsdiv" class="submenuwrapper">
+        <div class="submenulist">
+          <p class="submenuu">Interests / Hobbies / Lifestyles</p>
+        </div>
+      </div>
+      <div *ngIf="selected_locationscity?.length>0" class="selectedcitycls">
+        <h2>Selected Cities</h2>
+        <div *ngFor="let item of selected_locationscity; let i=index" class="adddivp">
+          <div class="showcitiesclass" >{{item.city}}<span (click)="removefromcitylist(item.city,item)"></span></div>
+        </div>
+      </div>
+      <div *ngIf="selected_locationscountry?.length>0" class="selectedcitycls">
+        <h2>Selected Counties:</h2>
+        <div *ngFor="let item of selected_locationscountry; let i=index" class="adddivp">
+          <div class="showcitiesclass">{{item.country}}<span (click)="removefromcountrylist(item.country,item)"></span></div>
+        </div>
+      </div>
+        <div *ngIf="statediv" class="submenuwrapper">
+            <div class="submenulist">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="location_heading">
+                                <h2>Select State(s)</h2>
+                                <span></span>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="location_contain">
+                                <ul *ngFor="let item of usstates; let i=index">
+                                    <li id="state_{{item.attr_id}}" ><label (click)="addtolist(item.attr_id,item.attr_name,item)">{{item.attr_name}}</label></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+      <div *ngIf="citydiv"  class="submenuwrapper">
+        <div class="submenulist">
+          <table>
+            <tr>
+              <td>
+                <div class="location_heading">
+                  <h2>Select State(s)</h2>
+                  <span></span>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="location_contain">
+                  <ul *ngFor="let item of usstates; let i=index">
+                    <li id="showcity_{{item.attr_id}}" ><label (click)="show_cities(item.attr_id)">{{item.attr_name}}</label></li>
+                  </ul>
+                </div>
+              </td>
+              <td>&nbsp;</td>
+              <td>
+                <div class="location_heading" *ngIf="show_state_cities?.length>0">
+                  <h2>Select City(ies)</h2>
+                  <span></span>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="location_contain" *ngIf="show_state_cities?.length>0">
+                  <ul *ngFor="let item of show_state_cities; let i=index">
+                    <li id="city_{{item.city}}" ><label (click)="addtocitylist(item.city,item)">{{item.city}}</label></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div *ngIf="countrydiv" class="submenuwrapper">
+        <div class="submenulist">
+          <table>
+            <tr>
+              <td>
+                <div class="location_heading">
+                  <h2>Select State(s)</h2>
+                  <span></span>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="location_contain">
+                  <ul *ngFor="let item of usstates; let i=index">
+                    <li><label (click)="show_countries(item.attr_id)">{{item.attr_name}}</label></li>
+                  </ul>
+                </div>
+              </td>
+              <td>&nbsp;</td>
+              <td>
+                <div class="location_heading" *ngIf="show_state_countries?.length>0">
+                  <h2>Select County(ies)</h2>
+                  <span></span>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="location_contain" *ngIf="show_state_countries?.length>0">
+                  <ul *ngFor="let item of show_state_countries; let i=index">
+                    <li><label (click)="addtocountrylist(item.country,item)">{{item.country}}</label></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </table></div>
+      </div>
+
+      <div *ngIf="zipdiv" class="submenuwrapper submenuformblock">
+        <div class="formblock">
+          <div class="form-inline">
+            <div class="form-group form-group-fullwidth">
+              <h3>Enter 3 or 5-digit ZIP Codes in boxes below.</h3>
+              <div class="row">
+                <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval" (blur)="zipvalidate(zipval)"></div>
+                <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval1" (blur)="zipvalidate(zipval1)"></div>
+                <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval2" (blur)="zipvalidate(zipval2)"></div>
+                <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval3" (blur)="zipvalidate(zipval3)"></div>
+                <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval4" (blur)="zipvalidate(zipval4)"></div>
+                <br> <!--<span class="has-error" *ngIf="ziperror">{{ziperror}}</span>-->
+                <span class="has-error" *ngIf ="getzip('invalid')==true">Enter a valid 3 or 5 ZIP code(s).</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="addressdiv" class="submenuwrapper submenuformblock">
+        <div class="formblock">
+          <div class="form-inline">
+           <div class="form-group form-group-fullwidth">
+          <!-- <h2>Address</h2>-->
+            <input type="text" class="form-control" [(ngModel)]="addressval">
+            <div class="clearfix"></div>
+            <small>e.g. 123 Main St</small>
+           </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="radiusdiv" class="submenuwrapper submenuformblock">
+        <div class="formblock">
+          <div class="form-inline">
+            <div class="form-group">
+              <h3>Number of Miles</h3>
+                <input type="text" class="form-control" [(ngModel)]="geomiles">
+                <div class="clearfix"></div>
+                <small>e.g. 3.5 (range of .1 to 150 miles)</small>
+
+              <span class="errorclass">{{geoerror}}</span>
+            </div>
+            <div class="form-group">
+              <h3>Address</h3>
+              <div class="pacing_textcontain formblock">
+                <input type="text" class="form-control" [(ngModel)]="geoaddress">
+                <div class="clearfix"></div>
+                <small>e.g. 123 Main St</small>
+                <span class="errorclass">{{errorvalgeomiles}}</span>
+              </div>
+            </div>
+            <div class="form-group form-group-fullwidth">
+              <h3>ZIP</h3>
+
+                <input type="text" class="form-control" [(ngModel)]="geozip">
+                <div class="clearfix"></div>
+                <small>e.g. 68137</small>
+                <span class="errorclass">{{errorvalgeozip}}</span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+     <!-- <div class="twodiv hide">
+        &lt;!&ndash;Left alligned div&ndash;&gt;
+        <div>
+          <div *ngIf="namediv" class="submenuwrapper">
+            <p (click)="openfullnamediv()" class="searchbuttons1">Name</p>
+          </div>
+                &lt;!&ndash;  <div class="clearfix"></div>&ndash;&gt;
+
+          <div *ngIf="phonediv" class="searchclass">
+            <p (click)="openuserphonediv()" class="searchbuttons1">Phone</p>
+            <p (click)="openareacodediv()" class="searchbuttons1">Area Code</p>
+          </div>
+
+          &lt;!&ndash; <div class="clearfix"></div>&ndash;&gt;
+          &lt;!&ndash; <div class="clearfix"></div>&ndash;&gt;
+
+
+        </div>
+        &lt;!&ndash; <div class="clearfix"></div>&ndash;&gt;
+        &lt;!&ndash;Right alligned div&ndash;&gt;
+        <div class="rightaligneddiv">
+          <div *ngIf="statediv">
+            <div class="location_tablewrapper paddingadd">
+              <table>
+                <tr>
+                  <td>
+                    <div class="location_heading">
+                      &lt;!&ndash; <div *ngIf="count>0"><img src="assets/images/location_arrow_left.png"  alt="#" class="loc_img1" (click)="childlist(0,0,2)"/></div>&ndash;&gt;
+                      <h2>Select State(s)</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of usstates; let i=index">
+                        <li id="state1_{{item.attr_id}}" ><label (click)="addtolist(item.attr_id,item.attr_name,item)">{{item.attr_name}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </table></div>
+          </div>
+
+
+          <div *ngIf="countrydiv">
+            <div class="location_tablewrapper addlocationtablewrapper addmarginbottom">
+              <table>
+                <tr>
+                  <td>
+                    <div class="location_heading">
+                      <h2>Select State(s)</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of usstates; let i=index">
+                        <li><label (click)="show_countries(item.attr_id)">{{item.attr_name}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <div class="location_heading" *ngIf="show_state_countries?.length>0">
+                      <h2>Select Country(ies)</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of show_state_countries; let i=index">
+                        <li><label (click)="addtocountrylist(item.country,item)">{{item.country}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </table></div>
+            <div *ngIf="selected_locationscountry?.length>0">
+              <h2>Selected countries:</h2>
+              <div *ngFor="let item of selected_locationscountry; let i=index" class="adddivp">
+                <div class="showcitiesclass" (click)="removefromcountrylist(item.country,item)">{{item.country}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="zipdiv" class="paddingadd1 addborder">
+            <h2>Zip Codes</h2>
+            <h2>Enter 3 or 5-digit ZIP Codes in boxes below.</h2>
+            <div class="col-lg-2"><input type="text" class="form-control" [(ngModel)]="zipval" (blur)="zipvalication(zipval)"></div>
+            <div class="col-lg-2"><input type="text" class="form-control" [(ngModel)]="zipval1" (blur)="zipvalication(zipval1)"></div>
+            <div class="col-lg-2"><input type="text" class="form-control" [(ngModel)]="zipval2" (blur)="zipvalication(zipval2)"></div>
+            <div class="col-lg-2"><input type="text" class="form-control" [(ngModel)]="zipval3" (blur)="zipvalication(zipval3)"></div>
+            <div class="col-lg-2"><input type="text" class="form-control" [(ngModel)]="zipval4" (blur)="zipvalication(zipval4)"></div>
+            <br><span class="errorclass1" *ngIf="ziperror">{{ziperror}}</span>
+          </div>
+          <div *ngIf="addressdiv">
+            <h2>Address</h2>
+            <div class="pacing_textcontain">
+              <input type="text" class="form-control" [(ngModel)]="addressval">
+              <div class="clearfix"></div>
+              <small>e.g. 123 Main St</small>
+            </div>
+          </div>
+
+          <div *ngIf="radiusdiv">
+            <h2>Number of Miles</h2>
+            <div class="pacing_textcontain">
+              <input type="text" class="form-control" [(ngModel)]="geomiles">
+              <div class="clearfix"></div>
+              <small>e.g. 3.5 (range of .1 to 150 miles)</small>
+            </div>
+            <h2>Address</h2>
+            <div class="pacing_textcontain">
+              <input type="text" class="form-control" [(ngModel)]="geoaddress">
+              <div class="clearfix"></div>
+              <small>e.g. 123 Main St</small>
+            </div>
+            <h2>ZIP</h2>
+            <div class="pacing_textcontain">
+              <input type="text" class="form-control" [(ngModel)]="geozip">
+              <div class="clearfix"></div>
+              <small>e.g. 68137</small>
+            </div>
+            <br><span class="errorclass">{{geoerror}}</span>
+            <br><span class="errorclass">{{errorvalgeomiles}}</span>
+            <br><span class="errorclass">{{errorvalgeozip}}</span>
+          </div>
+
+          <div *ngIf="mapdiv">
+            <h2>Map Based Search enables you to select from a variety of options, such as, Draw a Shape, Define Radius, Drive Route and/or Define a Boundary.</h2>
+            &lt;!&ndash;<div id="map"></div>&ndash;&gt;
+          </div>
+
+          <div *ngIf="agediv">
+            <div class="location_tablewrapper paddingadd">
+              <table>
+                <tr>
+                  <td>
+                    <div class="location_heading">
+                      <h2>Select Age(s)</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of age_list; let i=index">
+                        <li id="age_{{item.code}}" ><label (click)="addtoagelist(item.code,item.value,item)">{{item.value}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </table></div>
+          </div>
+
+
+          <div *ngIf="incomediv">
+            <div class="location_tablewrapper paddingadd">
+              <table>
+                <tr>
+                  <td>
+                    <div class="location_heading">
+                      <h2>Select one or more Estimated Household Income Range(s) below</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of incomelist; let i=index">
+                        <li id="income_{{item.code}}" ><label (click)="addtoincomelist(item.code,item.value,item)">{{item.value}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </table></div>
+          </div>
+
+          <div *ngIf="homevaluediv">
+            <div class="location_tablewrapper paddingadd">
+              <table>
+                <tr>
+                  <td>
+                    <div class="location_heading">
+                      <h2>Select one or more Home Market Value Range(s) below</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of home_value_list; let i=index">
+                        <li id="homevalue_{{item.code}}" ><label (click)="addtohomevaluelist(item.code,item.value,item)">{{item.value}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </table></div>
+          </div>
+
+          <div *ngIf="maritaliv">
+            <div class="location_tablewrapper paddingadd">
+              <table>
+                <tr>
+                  <td>
+                    <div class="location_heading">
+                      <h2>Marital Status</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of marital_list; let i=index">
+                        <li id="marital_{{item.code}}" ><label (click)="addtomarital_list(item.code,item.value,item)">{{item.value}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </table></div>
+          </div>
+
+          <div *ngIf="residencediv">
+            <div class="location_tablewrapper paddingadd">
+              <table>
+                <tr>
+                  <td>
+                    <div class="location_heading">
+                      <h2>Select one or more Length of Residence Value ranges below</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of residence_list; let i=index">
+                        <li id="residence_{{item.code}}" ><label (click)="addtoresidence_list(item.code,item.value,item)">{{item.value}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </table></div>
+          </div>
+          &lt;!&ndash;not done yet&ndash;&gt;
+          <div *ngIf="medianhomevaluediv">
+            <div class="location_tablewrapper paddingadd">
+              <table>
+                <tr>
+                  <td>
+                    <div class="location_heading">
+                      <h2>Select one or more Length of Residence Value ranges below</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of median_home_value_list; let i=index">
+                        <li id="medianhomevalue_{{item.code}}" ><label (click)="addtomedianhome_list(item.code,item.value,item)">{{item.value}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </table></div>
+          </div>
+
+          <div *ngIf="medianhomeincomediv">
+            <div class="location_tablewrapper paddingadd">
+              <table>
+                <tr>
+                  <td>
+                    <div class="location_heading">
+                      <h2>Select one or more Median Income ranges below.</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of median_income_list; let i=index">
+                        <li id="medianincomevalue_{{item.code}}" ><label (click)="addtomedianincome_list(item.code,item.value,item)">{{item.value}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </table></div>
+          </div>
+
+          <div *ngIf="networthdiv">
+            <div class="location_tablewrapper paddingadd">
+              <table>
+                <tr>
+                  <td>
+                    <div class="location_heading">
+                      <h2>Select one or more Net Worth Value ranges below.</h2>
+                      <span></span>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="location_contain">
+                      <ul *ngFor="let item of networth_list; let i=index">
+                        <li id="networth_{{item.code}}" ><label (click)="addtonetworth_list(item.code,item.value,item)">{{item.value}}</label></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </table></div>
+          </div>
+
+          <div *ngIf="genderdiv">
+            <div class="location_tablewrapper paddingadd">
+              &lt;!&ndash;   <div class="location_heading">&ndash;&gt;
+              <h2 class="h2foroption">Select Gender</h2>
+              &lt;!&ndash; <span></span>
+                      <div class="clearfix"></div>&ndash;&gt;
+              &lt;!&ndash; </div>&ndash;&gt;
+              &lt;!&ndash;  <div class="location_contain">&ndash;&gt;
+              <select name="your-gender" class="chkselect_input selectclass" [(ngModel)]="Ind_Gender_Code" >
+                <option value="" selected="selected">Select Gender</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="U">Unknown</option>
+              </select>
+              &lt;!&ndash; </div>&ndash;&gt;
+            </div>
+          </div>
+
+
+          <div *ngIf="individualhouseholddiv">
+            <div class="location_tablewrapper paddingadd">
+              <h2 class="h2foroption">Head of Household</h2>
+              <input type="radio" name="headofhousehold" value="1"  [(ngModel)]="headofhouseholdonly">Select head of the household only<br>
+              <input type="radio" name="headofhousehold" value="0, 1, 2, 3, 4, 5, 6, 7, 8, 9" [(ngModel)]="headofhouseholdonly"> Select all members of the household<br>
+            </div>
+          </div>
+
+          <div *ngIf="fullnamediv" class="paddingadd addborder">
+            &lt;!&ndash; <div class="paddingtop">
+               <div class="labelforinput"><p>First Name</p></div><div class="nameinput"> <input type="text" [(ngModel)]="fname"></div>                       <br><small>e.g. Jim</small>
+             </div>
+
+             <div class="clearfix"></div>
+             <div class="paddingtop">
+               <div class="labelforinput"><p>Middle Name</p></div><div class="nameinput"> <input type="text" [(ngModel)]="mname"></div>
+               <br><small>e.g. A</small>
+             </div>
+
+             <div class="clearfix"></div>
+             <div class="paddingtop">
+               <div class="labelforinput"><p>Last Name</p></div><div class="nameinput"> <input type="text" [(ngModel)]="lname"></div>
+               <br> <small>e.g. Johnson</small>
+             </div>&ndash;&gt;
+            <h2>First Name</h2>
+            <div class="pacing_textcontain">
+              <input type="text" class="form-control" [(ngModel)]="fname">
+              <div class="clearfix"></div>
+              <small>e.g. Jim</small>
+            </div>
+            <h2>Middle Name</h2>
+            <div class="pacing_textcontain">
+              <input type="text" class="form-control" [(ngModel)]="mname">
+              <div class="clearfix"></div>
+              <small>e.g. A</small>
+            </div>
+            <h2>Last Name</h2>
+            <div class="pacing_textcontain">
+              <input type="text" class="form-control" [(ngModel)]="lname">
+              <div class="clearfix"></div>
+              <small>e.g. Johnson</small>
+            </div>
+          </div>
+
+
+
+          <div *ngIf="userphonediv" class="paddingadd addborder">
+            &lt;!&ndash; <div class="paddingtop">
+               <div class="labelforinput"><p>Phone</p></div><div class="nameinput"> <input type="text" [(ngModel)]="phoneval"></div>                       <br><small>e.g. 402.555.6789</small>
+               <br><span class="errorclass">{{phoneerror}}</span>
+             </div>&ndash;&gt;
+            <h2>Phone</h2>
+            <div class="pacing_textcontain">
+              <input type="text" class="form-control" [(ngModel)]="phoneval">
+              <div class="clearfix"></div>
+              <small>e.g. 402.555.6789</small>
+              <br><span class="errorclass">{{phoneerror}}</span>
+            </div>
+          </div>
+
+          <div *ngIf="areacodediv" class="paddingadd addborder">
+            <h2>Area Codes fdfs</h2>
+            <h3>Enter Area Codes in boxes below.</h3>
+            <div class="row">
+              <div class="col-lg-2"><input type="text" class="form-control" [(ngModel)]="areacodeval" (blur)="areacodevalication(areacodeval)"></div>
+              <div class="col-lg-2"><input type="text" class="form-control" [(ngModel)]="areacodeval1" (blur)="areacodevalication(areacodeval1)"></div>
+              <div class="col-lg-2"><input type="text" class="form-control" [(ngModel)]="areacodeval2" (blur)="areacodevalication(areacodeval2)"></div>
+              <div class="col-lg-2"><input type="text" class="form-control" [(ngModel)]="areacodeval3" (blur)="areacodevalication(areacodeval3)"></div>
+              <div class="col-lg-2"><input type="text" class="form-control" [(ngModel)]="areacodeval4" (blur)="areacodevalication(areacodeval4)"></div>
+              <br><span class="errorclass1" *ngIf="areacodeerror">{{areacodeerror}}</span>
+            </div>
+          </div>
+
+          <button (click)="callforsearch()" class="mapbtn1" *ngIf="this.tabopen!=null">Search</button>
+        </div>
+      </div>-->
+    </div>
+    <div class="mapbtn1wrapper">
+    <button (click)="callforsearch()" class="mapbtn1" *ngIf="this.tabopen!=null">Search</button>
+    </div>
+  </div>
+</div>
+<app-footernew></app-footernew>
+
+
+  <div *ngIf="modalmapShown" class="modal fade mapwrapper" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+       tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body"  style="margin-right: 18px; margin-bottom: 40px;">
+          <h2>Map Based Search enables you to select from a variety of options, such as, Draw a Shape, Define Radius, Drive Route and/or Define a Boundary.</h2>
+          <div class="GeoJSON_block" style="cursor: pointer"> <a href="../../assets/uploads/test.csv" download>Download Demo GeoJSON with Lat-Lng</a></div>
+          <div class="GeoJSON_block" style="cursor: pointer"> <a href="../../assets/uploads/testaddress.csv" download>Download Demo GeoJSON with Address</a></div>
+          <div class="GeoJSON_block"  style="cursor: pointer"><span (click)="getjson()">Upload GeoJSON</span></div>
+          <div *ngIf="uploadjson" style="text-align: center">
+            <input class="img-responsive center-block clearfix" type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput">
+            <input type="button"  value="Upload" (click)="callupload()" class="mapbtn11" style="width: auto"/>
+            <input type="button"  value="Cancel" class="mapbtn11" style="width: auto"/>
+            <span *ngIf="csverroris" class="has-error">{{csverroris}}</span>
+         </div>
+
+          <div id="map"></div>
+          <div *ngIf="uploadarray?.length>0 && format==1" class="csvtable col-md-12">
+            <div class="row csvheading">
+              <div class="col-sm-1">#</div>
+              <div class="col-sm-1">ZIP</div>
+              <div class="col-sm-2">Lattitude</div>
+              <div class="col-sm-2">Longitude</div>
+              <div class="col-sm-2">City</div>
+              <div class="col-sm-2">State</div>
+              <div class="col-sm-1">County</div>
+              <div class="col-sm-1">Action</div>
+            </div>
+            <div class="singleline"></div>
+            <div class="row csvoddeven" *ngFor="let item of uploadarray; let i=index">
+              <div class="col-sm-1">{{i+1}}</div>
+              <div class="col-sm-1">{{item[0]}}</div>
+              <div class="col-sm-2" (click)="showmappointer(item)" style="cursor: pointer;">{{item[1]}}</div>
+              <div class="col-sm-2" (click)="showmappointer(item)" style="cursor: pointer;">{{item[2]}}</div>
+              <div class="col-sm-2">{{item[3]}}</div>
+              <div class="col-sm-2">{{item[4]}}</div>
+              <div class="col-sm-1">{{item[5]}}</div>
+              <div class="col-sm-1" (click)="deletebeforeimport(item)"><img src="../../assets/images/close_arrow.png"></div>
+            </div>
+          </div>
+
+          <div *ngIf="uploadarray?.length>0 && format==2" class="csvtable col-md-12">
+            <div class="row csvheading">
+              <div class="col-sm-1">#</div>
+              <div class="col-sm-4">Address</div>
+              <div class="col-sm-3">Lat</div>
+              <div class="col-sm-3">Long</div>
+              <div class="col-sm-1">Action</div>
+            </div>
+            <div class="singleline"></div>
+            <div class="row csvoddeven" *ngFor="let item of uploadarray; let i=index">
+              <div class="col-sm-1">{{i+1}}</div>
+              <div class="col-sm-4">{{item[0]}}</div>
+              <div class="col-sm-3" (click)="showmappointer(item)" style="cursor: pointer;">{{item[1]}}</div>
+              <div class="col-sm-3" (click)="showmappointer(item)" style="cursor: pointer;">{{item[2]}}</div>
+              <div class="col-sm-1" (click)="deletebeforeimport(item)"><img src="../../assets/images/close_arrow.png"></div>
+            </div>
+          </div>
+          <div class="selectedcitycls" *ngIf="totalshapesnew?.length>0">
+            <h2>Selected Shapes</h2>
+            <div *ngFor="let item of totalshapesnew; let i=index" class="adddivp">
+              <div class="showcitiesclass" >Polygon {{i+1}}<span (click)="deletepolyshape(item)"></span></div>
+            </div>
+          </div>
+          <input type="button"  value="Import" (click)="callimport()" class="mapbtn1"/>
+          <button (click)="callforsearch()" class="mapbtn1">Search</button>
+          <h4 *ngIf="consumer_value?.count!=null">Your Current Audience Size: {{consumer_value.count.SearchCount}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div *ngIf="ModalShownforsearch" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Search Result</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="tablediv">
+          <div class="dashboard1_div1">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Phone</th>
+              <!--  <th>City</th>-->
+                <th>State</th>
+                <th>Zip</th>
+                <th>Email</th>
+              </tr>
+
+              <tbody *ngFor="let item of searchresult; let i = index">
+              <tr>
+                <td>{{i+1}}</td>
+                <td><span [innerHTML]="_sanitizer.bypassSecurityTrustHtml(item.First_Name)"></span>&nbsp;<span>{{item.Middle_Initial}}</span> <span [innerHTML]="_sanitizer.bypassSecurityTrustHtml(item.Last_Name)"></span></td>
+                <td>{{item.Age_Advanced}}</td>
+                <td *ngIf="item.Ind_Gender_Code=='M'">Male</td>
+                <td *ngIf="item.Ind_Gender_Code=='F'">Female</td>
+                <td *ngIf="item.Ind_Gender_Code=='U'">Unknown</td>
+                <td>{{item.Latitude}}</td>
+                <td>{{item.Longitude}}</td>
+                <td>{{item.Phone}}</td>
+              <!--  <td>{{item.Physical_State_Physical_City}}</td>-->
+                <td>{{item.Physical_State}}</td>
+                <td>{{item.Physical_Zip}}</td>
+                <td>{{item.Email}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="ModalShownforbusinesssearch" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Search Result</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="tablediv">
+          <div class="dashboard1_div1 div_height">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <th>#</th>
+                <th>Company Id</th>
+                <th>Company Name</th>
+                <th>Company Description</th>
+                <th>How Many Years</th>
+                <th>Total Number Of Employees</th>
+                <th>Sales Volume</th>
+             <!--   <th>Linkedin Profile</th>-->
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>City</th>
+                <th>Zip</th>
+                <th>State</th>
+              </tr>
+              <tbody *ngFor="let item of searchresult; let i = index">
+              <tr>
+                <td>{{i+1}}</td>
+                <td>{{item.Id}}</td>
+                <td><span [innerHTML]="_sanitizer.bypassSecurityTrustHtml(item.Company_Name)"></span></td>
+                <td>{{item.SIC01_Description}}</td>
+                <td>{{item.Years_In_Business}}</td>
+                <td>{{item.Employees_Total}}</td>
+                <td>{{item.Sales_Volume}}</td>
+                <!--<td>{{item.URL_linkedIN}}</td>-->
+                <td>{{item.Email}}</td>
+                <td>{{item.Phone}}</td>
+                <td>{{item.Latitude}}</td>
+                <td>{{item.Longitude}}</td>
+                <td>{{item.Physical_City}}</td>
+                <td>{{item.Physical_Zip}}</td>
+                <td>{{item.Physical_State}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="openloader" class="loder_body">
+  <div class="loder_wrapper">
+    <div class="loader"></div>
+  </div>
+</div>

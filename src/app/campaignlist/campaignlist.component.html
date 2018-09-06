@@ -1,0 +1,99 @@
+<app-header></app-header>
+
+
+<div class=" fieldset_wrapper">
+
+    <div class="searchdiv">
+        <label>Search :</label>
+        <input type="text" #listFilter (keyup)="0">
+        <div class="clearfix"></div>
+    </div>
+
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="campaignlisttable">
+       <!-- <tr *ngFor="let item of errorstoactivate">
+            <td>{{item}}</td>
+        </tr>-->
+        <tr>
+            <th>ID<b [ngClass]="getSortClass('id')" (click)="manageSorting('id')" ></b></th>
+            <th>Name<b [ngClass]="getSortClass('name')" (click)="manageSorting('name')" ></b></th>
+            <th>Status</th>
+            <th>Action</th>
+
+        </tr>
+
+        <tbody *ngFor="let item of datalist | orderBy:orderbyquery:orderbytype | usersearch:listFilter.value; let i = index">
+
+        <tr *ngIf=" i>=pagestart && i < pageinitation">
+            <td>{{item.id}}</td>
+            <td>{{item.name}} </td>
+            <td>{{item.status}}</td>
+            <td>
+                <a (click)="calledit(item.id)" class="adimn_iconbtn"> <img src="../../assets/images/admin_edit.png" alt="#" width="18px"></a>
+                <a (click)="callactive(item.id,1)" class="adimn_iconbtn"><img src="../../assets/images/admin_play.png" alt="#" width="25px"></a>
+                <a (click)="callactive(item.id,2)" class="adimn_iconbtn"><img src="../../assets/images/admin_pause.png" alt="#" width="14px"></a>
+                <a (click)="callactive(item.id,3)" class="adimn_iconbtn"><img src="../../assets/images/admin_stop.png" alt="#" width="20px"></a>
+               <!-- <a *ngIf ="enablepause" (click)="callactive(item.id,2)">Pause</a>
+                <a *ngIf ="enableend" (click)="callactive(item.id,3)">End</a>-->
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination paginationdiv">
+        <ul class="pagination--items">
+            <li class="pagination--item">
+                <label>
+                    Go to: </label>
+                <input type="text" [(ngModel)]="pageno" (blur)="pageval(3)">
+                <div class="clearfix"></div>
+
+            </li>
+            <li class="pagination--item">
+                <label>
+                    Show rows:</label>
+                <select [(ngModel)]="showrows" (click)="chagevalues()">
+                    <option>5</option>
+                    <option>10</option>
+                    <option>25</option>
+                </select>
+                <div class="clearfix"></div>
+
+            </li>
+            <li class="pagination--item" >  <label>Page {{pageno}} of {{totalpage}}</label></li>
+            <li class="pagination--item" >
+                <img src="../../assets/images/pageprev.png" alt="#" (click)="pageval(1)">
+
+                <img src="../../assets/images/pagenext.png" alt="#" (click)="pageval(2)">
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+
+<!--modal using angular 2-->
+
+
+<div *ngIf="isactionModalShown" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"  (click)="staticModal.hide()">&times;</button>
+                <img src="../../assets/images/geoai_logo.jpg" alt="logo">
+                <h4 class="modal-title"><span>Details</span></h4>
+            </div>
+            <div class="modal-body text-center signupeamilbody">
+
+
+                <h4 *ngFor="let item of errorstoactivate">
+                   {{item}}
+                </h4>
+
+                <h5 *ngIf="updatetoactivate">{{updatetoactivate}}</h5>
+            </div>
+        </div>
+    </div>
+</div>

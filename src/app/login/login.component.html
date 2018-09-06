@@ -1,0 +1,50 @@
+
+<div id="login_box" class="login_box_wrapper">
+
+
+  <a href="/"><img src="../../assets/images/geai_logo.png" class="geai_logo"></a>
+
+  <!--<h3 id="login_welcome_msg" >Welcome to <span>Nex Med Solutions</span></h3>-->
+
+  <!--<h3>Rep’s login</h3>-->
+  <div class="relay_msg"></div>
+
+
+  <div class="loginbox_formwrapper">
+
+    <!-- <h4>Login to your account</h4>-->
+
+    <form name="frmLogin" method="post" action="login" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+      <div class="wpcf7-not-valid-tip" *ngIf="is_error">{{is_error}}</div>
+      <div class="row">
+        <div class="col-xs-12 form-group" id="username_contain">
+          <!--<strong>User Name / Email</strong>-->
+          <input type="text" name="username" id="username" class="login_box_input" maxlength="255" value="" placeholder="Email" [formControl]="dataForm.controls['email']">
+          <span *ngIf ="dataForm.controls['email'].touched && !dataForm.controls['email'].valid" class="wpcf7-not-valid-tip">Email id can not be blank!</span>
+        </div>
+        <div class="col-xs-12 form-group" id="password_contain">
+          <!--  <strong>Password</strong>-->
+          <input type="password" name="password" id="password" class="login_box_input" maxlength="255" value="" placeholder="Password" [formControl]="dataForm.controls['password']">
+          <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['password'].touched && !dataForm.controls['password'].valid">Please fill in the required field.</span>
+        </div>
+        <div id="controls_area" class="col-xs-12 form-group2">
+
+          <div id="submit_box" class="col-xs-4 login_bottomwrapper">
+            <input type="submit" value="sign in" id="login_button">
+          </div>
+
+          <div id="remember_me_area" class="col-xs-8 login_bottomwrapper2">
+            <span class="notregistered">Not registered? <a routerLink="/signupnew">Request Sign Up Here</a></span>
+            <a [routerLink]="['/forgetpassword']"  class="forgotpassword">Forgot your password?</a>
+            <div class="clearfix;"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </form>
+
+  </div>
+
+</div>
+

@@ -1,0 +1,162 @@
+<app-header></app-header>
+
+
+<div class=" fieldset_wrapper">
+
+  <div class="searchdiv">
+    <label>Search :</label>
+    <input type="text" #listFilter (keyup)="0">
+    <div class="clearfix"></div>
+  </div>
+
+
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="campaignlisttable">
+    <tr>
+      <th>ID</th>
+      <th>Campaign Name<b [ngClass]="getSortClass('campaignname')" (click)="manageSorting('campaignname')" ></b></th>
+      <th>Flight Start Date<b [ngClass]="getSortClass('startdate')" (click)="manageSorting('startdate')" ></b></th>
+      <th>Flight End Date<b [ngClass]="getSortClass('enddate')" (click)="manageSorting('enddate')" ></b></th>
+      <th>Campaign Budget<b [ngClass]="getSortClass('campaignbudget')" (click)="manageSorting('campaignbudget')" ></b></th>
+      <th>Monthly Budget<b [ngClass]="getSortClass('monthlybudget')" (click)="manageSorting('monthlybudget')" ></b></th>
+      <th>Bidding Amount Budget<b [ngClass]="getSortClass('biddingamountbudget')" (click)="manageSorting('biddingamountbudget')" ></b></th>
+      <th>Daily Spend Target<b [ngClass]="getSortClass('dailyspendtarget')" (click)="manageSorting('dailyspendtarget')" ></b></th>
+      <th>Bidding Type<b [ngClass]="getSortClass('bidding_type')" (click)="manageSorting('bidding_type')" ></b></th>
+      <th>Action</th>
+      <th>Manage details</th>
+
+    </tr>
+
+    <tbody *ngFor="let item of datalist | orderBy:orderbyquery:orderbytype | usersearch:listFilter.value; let i = index">
+
+    <tr *ngIf=" i>=pagestart && i < pageinitation">
+      <td>{{i+1}}</td>
+      <td>{{item.campaignname}} </td>
+      <td>{{item.startdate}}</td>
+      <td>{{item.enddate}}</td>
+      <td>{{item.campaignbudget}}</td>
+      <td>{{item.monthlybudget}}</td>
+      <td>{{item.biddingamountnbudget}}</td>
+      <td>{{item.dailyspendtarget}}</td>
+      <td>{{item.bidding_type}}</td>
+      <td>
+        <a [routerLink]="['/campaignedit',item._id]">Edit</a>
+        <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal" (click)="delConfirm(item._id)">Delete</a>
+      </td>
+      <td>
+        <a (click)="openaudiencemodal(item._id)">Manage Audience</a><br>
+        <a (click)="opencreativesmodal()">Manage Creatives</a>
+
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination paginationdiv">
+    <ul class="pagination--items">
+      <li class="pagination--item">
+        <label>
+          Go to: </label>
+        <input type="text" [(ngModel)]="pageno" (blur)="pageval(3)">
+        <div class="clearfix"></div>
+
+      </li>
+      <li class="pagination--item">
+        <label>
+          Show rows:</label>
+        <select [(ngModel)]="showrows" (click)="chagevalues()">
+          <option>5</option>
+          <option>10</option>
+          <option>25</option>
+        </select>
+        <div class="clearfix"></div>
+
+      </li>
+      <li class="pagination--item" >  <label>Page {{pageno}} of {{totalpage}}</label></li>
+      <li class="pagination--item" >
+        <img src="../../assets/images/pageprev.png" alt="#" (click)="pageval(1)">
+
+        <img src="../../assets/images/pagenext.png" alt="#" (click)="pageval(2)">
+      </li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+
+<!--modal using angular 2-->
+
+
+<div *ngIf="isactionModalShown" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Confirm delete</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to delete this campaign?</p>
+        <!--        Click <b>&times;</b> to close modal.-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="admindel()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="ModalaudienceShown" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade modalconbody" role="dialog" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">All Audiences </h4>
+        <a [routerLink]="['/viewability']" class="addbutton addbuttonbtn">Add Audience</a>  <div class="clearfix"></div>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ampaignlisttable">
+        <div *ngFor="let item of audiencelist; let i = index" class="addmultiplediv addmultiplediv2">
+          <!--<input type="radio" class="addmultipleradio" [(ngModel)]=getaudienceid name="audiencename" (click)="addaudiencetocampaignlist(item._id)">-->
+          <input type="radio" class="addmultipleradio" name="audiencename" [(ngModel)]=getaudienceid (click)="addaudiencetocampaignlist(item._id)" value={{item._id}}>
+          <p class="addmultipleaudience">{{item.audiencename}} </p>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="ModalcreativeShown" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">All Creatives</h4>
+        <a [routerLink]="['/adbanneradd']" class="addbutton addbuttonbtn">Add Creatives</a>
+        <div class="clearfix"></div>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="campaignlisttable">
+          <tr>
+          <!--  <th>Select Creative</th>-->
+            <th>Creative Name</th>
+            <th style="text-align: center;">Creative Image</th>
+          </tr>
+        <tr *ngFor="let item of creativelist; let i = index">
+          <!--<td><input type="radio" value="item._id"></td>-->
+          <td><input type="radio" value="item._id" name="adbannername">&nbsp;&nbsp;{{item.adbannername}} </td>
+          <td *ngIf="item.image"><img width="100%" src="../../assets/uploads/{{item.image}}" ></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

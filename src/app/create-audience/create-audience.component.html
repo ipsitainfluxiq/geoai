@@ -1,0 +1,876 @@
+<app-header></app-header>
+<div class="content" id="basic_information">
+  <!--
+  <div class="top_banner_body">
+    <div class="top_banner_wrapper">
+      <img src="../../assets/images/geoai_logo.jpg"  class="geoai_logo"/>
+      <img src="../../assets/images/geoai_top_banner.jpg" class="geoai_top_banner" />
+
+      <a href="#" class="top_bannerbtn">Ad Marketing Pros</a>
+
+
+      <div class="clearfix"></div>
+    </div>
+  </div>-->
+
+  <div class="fieldset_wrapper">
+    <fieldset>
+      <div class="pageheading">Create a Campaign</div>
+      <ul class='nav nav-wizard campaignmenu'>
+        <li><a [routerLink]="['/campaignsettings']" ><span>1</span> Campaign Settings </a></li>
+        <li class='active'><a><span>2</span>  Create Audience</a></li>
+        <li><a><span>3</span>  Creatives </a></li>
+        <li><a><span>4</span>  Summary and Launch </a></li>
+        <div class="clearfix"></div>
+      </ul>
+    </fieldset>
+
+    <fieldset>
+
+      <div class="campaign_settings_wrapper">
+        <div class="campaign_settings_box1">
+          <!--<label>My best campaign yet!(8) </label>-->
+        </div>
+        <div class="campaign_settings_box3">
+          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label>Create Audience </label>
+              <b>Choose your options</b>
+              <div class="clearfix"></div>
+            </div>
+
+
+
+            <div class="create_audience_wrapper">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td><img src="assets/images/create_audience_icon1.png"  alt="#" (click)="select(1)"/>
+                    <h1 (click)="select(1)">Browser</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon2.png"  alt="#" (click)="select(2)"/>
+                    <h1 (click)="select(2)">Dayparting</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon3.png"  alt="#" (click)="select(3)"/>
+                    <h1 (click)="select(3)">Deals</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon4.png"  alt="#" (click)="select(4)"/>
+                    <h1 (click)="select(4)">Device Types</h1>
+                  </td>
+                  <!--        <td><img src="assets/images/campaign_icon4.png"  alt="#" (click)="select(11)"/>
+                    <h1 (click)="select(11)">Ip Ranges</h1>
+                  </td>-->
+                  <td class="activetd"><img src="assets/images/create_audience_icon5.png"  alt="#" (click)="select(5)"/>
+                    <h1 (click)="select(5)">Locations</h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td><img src="assets/images/create_audience_icon6.png"  alt="#" (click)="select(6)"/>
+                    <h1 (click)="select(6)">Operating Systems</h1>
+                  </td>
+                  <td><img src="assets/images/create_audience_icon7.png"  alt="#" (click)="select(7)"/>
+                    <h1 (click)="select(7)">Pacing</h1>
+                  </td>
+                  <!--<td><img src="assets/images/create_audience_icon8.png"  alt="#"/>
+                    <h1 (click)="select(8)">Third party Segments</h1>
+                  </td>-->
+                  <td ><img src="assets/images/create_audience_icon9.png"  alt="#" (click)="select(9)"/>
+                    <h1 (click)="select(9)">Viewability</h1>
+                  </td>
+                  <!--  <td><img src="assets/images/create_audience_icon10.png"  alt="#"/>
+                    <h1 (click)="select(10)">Website Filtering</h1>
+                  </td>-->
+                </tr>
+              </table>
+            </div>
+            <div class="clearfix"></div>
+            <div class="clearfix"></div>
+            <!--            <div *ngIf="browserselect">
+
+              <label>Browsers</label>
+              <br>
+
+              <ul *ngFor="let item of allbrowsers; let i=index">
+
+                <input type="checkbox" [(ngModel)]="allbrowserslist[item.id]"  /><label>{{item.name}}</label>
+              </ul>
+              <input type="button" value="OK" (click)="updatebrowsers(selected_browsers)">
+            </div>
+            <div class="clearfix"></div>-->
+          </div>
+
+
+
+
+
+
+
+          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="select(1)">Browser</label>
+              <b>{{len}} <img src="assets/images/create_audience_close.png"  alt="#" (click)="callmodal(1)"/></b>
+              <div class="clearfix"></div>
+            </div>
+
+            <div *ngIf="browserselect">
+              <div class="create_audience_wrapper ulchakeboxcon newbluechakebox">
+
+                <ul *ngFor="let item of allbrowsers; let i=index">
+
+                  <input id={{item.id}} type="checkbox" [(ngModel)]="allbrowserslist[item.id]"  /><label for={{item.id}}>{{item.name}}</label>
+
+                  <div class="clearfix"></div>
+                </ul>
+                <input type="button" value="OK" (click)="updatebrowsers(selected_browsers)" class="browsertabbtn">
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="clearfix"></div>
+            </div>
+          </div>
+
+
+
+
+          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="select(2)">Dayparting</label>
+              <b>{{showdaypartval}}<img src="assets/images/create_audience_close.png"  alt="#" (click)="callmodal(2)"/></b>
+              <div class="clearfix"></div>
+            </div>
+
+
+            <div *ngIf="divdayparting">
+              <div class="create_audience_wrapper daypartingwrapper">
+                <p class="ptext">Set specific periods of the day for the campaign to run during. All times are in Central Time.</p>
+                <div class="dchakeboxdiv newbluechakebox"><input type="checkbox" id='0' [(ngModel)]="applyforall" (click)="opensinglediv()"><label for ='0'> Apply changes across all days</label></div>
+
+
+
+
+
+
+                <div *ngIf="openonediv" class="dchakeboxcondiv2">
+                  <p>All Day <img src="assets/images/location_menuicon.png"  alt="#"/></p>
+                  <ion-range-slider #allday
+                                    type="double"
+                                    [min]="0.00"
+                                    max="24"
+                                    [from]=responsedaypart.campaigns[0].week_dayparting[0][0]
+                                    [to]=responsedaypart.campaigns[0].week_dayparting[0][responsedaypart.campaigns[0].week_dayparting[0].length-1]
+                                    (onUpdate)="myOnUpdateforone($event)"
+                                    (onChange)="myOnChangeforone($event)"
+                                    (onFinish)="myOnFinishforone($event)"
+                  ></ion-range-slider>
+                  <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+                  <div class="clearfix"></div>
+                </div>
+
+
+
+
+
+                <div *ngIf="openalldiv" class="dchakeboxcondiv2">
+                  <!--   <div  class="dchakeboxcondiv2">-->
+                  <p>Monday <img src="assets/images/location_menuicon.png"  alt="#"/></p>
+                  <ion-range-slider #monday
+                                    type="double"
+                                    [min]="0.00"
+                                    max="24"
+                                    [from]=responsedaypart.campaigns[0].week_dayparting[0][0]
+                                    [to]=responsedaypart.campaigns[0].week_dayparting[0][responsedaypart.campaigns[0].week_dayparting[0].length-1]
+                                    (onUpdate)="myOnUpdate($event,1)"
+                                    (onChange)="myOnChange($event,1)"
+                                    (onFinish)="myOnFinish($event,1)"
+                  ></ion-range-slider>
+
+                  <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+                  <div class="clearfix"></div>
+                  <p>Tuesday <img src="assets/images/location_menuicon.png"  alt="#"/></p>
+                  <ion-range-slider #tuesday
+                                    type="double"
+                                    [min]="0"
+                                    max="24"
+                                    [from]=responsedaypart.campaigns[0].week_dayparting[1][0]
+                                    [to]=responsedaypart.campaigns[0].week_dayparting[1][responsedaypart.campaigns[0].week_dayparting[1].length-1]
+                                    (onUpdate)="myOnUpdate($event,2)"
+                                    (onChange)="myOnChange($event,2)"
+                                    (onFinish)="myOnFinish($event,2)"
+                  ></ion-range-slider>
+
+                  <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+                  <div class="clearfix"></div>
+                  <p>Wednesday <img src="assets/images/location_menuicon.png"  alt="#"/></p>
+                  <ion-range-slider #wedday
+                                    type="double"
+                                    [min]="0"
+                                    max="24"
+                                    [from]=responsedaypart.campaigns[0].week_dayparting[2][0]
+                                    [to]=responsedaypart.campaigns[0].week_dayparting[2][responsedaypart.campaigns[0].week_dayparting[2].length-1]
+                                    (onUpdate)="myOnUpdate($event,3)"
+                                    (onChange)="myOnChange($event,3)"
+                                    (onFinish)="myOnFinish($event,3)"
+                  ></ion-range-slider>
+
+                  <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+                  <div class="clearfix"></div>
+                  <p>Thursday <img src="assets/images/location_menuicon.png"  alt="#"/></p>
+                  <ion-range-slider #thursday
+                                    type="double"
+                                    [min]="0"
+                                    max="24"
+                                    [from]=responsedaypart.campaigns[0].week_dayparting[3][0]
+                                    [to]=responsedaypart.campaigns[0].week_dayparting[3][responsedaypart.campaigns[0].week_dayparting[3].length-1]
+                                    (onUpdate)="myOnUpdate($event,4)"
+                                    (onChange)="myOnChange($event,4)"
+                                    (onFinish)="myOnFinish($event,4)"
+                  ></ion-range-slider>
+
+                  <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+                  <div class="clearfix"></div>
+                  <p>Friday <img src="assets/images/location_menuicon.png"  alt="#"/></p>
+                  <ion-range-slider #friday
+                                    type="double"
+                                    [min]="0"
+                                    max="24"
+                                    [from]=responsedaypart.campaigns[0].week_dayparting[4][0]
+                                    [to]=responsedaypart.campaigns[0].week_dayparting[4][responsedaypart.campaigns[0].week_dayparting[4].length-1]
+                                    (onUpdate)="myOnUpdate($event,5)"
+                                    (onChange)="myOnChange($event,5)"
+                                    (onFinish)="myOnFinish($event,5)"
+                  ></ion-range-slider>
+
+                  <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+                  <div class="clearfix"></div>
+                  <p>Saturday <img src="assets/images/location_menuicon.png"  alt="#"/></p>
+                  <ion-range-slider #satday
+                                    type="double"
+                                    [min]="0"
+                                    max="24"
+                                    [from]=responsedaypart.campaigns[0].week_dayparting[5][0]
+                                    [to]=responsedaypart.campaigns[0].week_dayparting[5][responsedaypart.campaigns[0].week_dayparting[5].length-1]
+                                    (onUpdate)="myOnUpdate($event,6)"
+                                    (onChange)="myOnChange($event,6)"
+                                    (onFinish)="myOnFinish($event,6)"
+                  ></ion-range-slider>
+
+                  <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+                  <div class="clearfix"></div>
+                  <p>Sunday <img src="assets/images/location_menuicon.png"  alt="#"/></p>
+                  <ion-range-slider #viewthrupercentage
+                                    type="double"
+                                    [min]="0"
+                                    max="24"
+                                    [from]=responsedaypart.campaigns[0].week_dayparting[6][0]
+                                    [to]=responsedaypart.campaigns[0].week_dayparting[6][responsedaypart.campaigns[0].week_dayparting[6].length-1]
+                                    (onUpdate)="myOnUpdate($event,7)"
+                                    (onChange)="myOnChange($event,7)"
+                                    (onFinish)="myOnFinish($event,7)"
+                  ></ion-range-slider>
+
+                  <img src="assets/images/create_audience_close.png"  alt="#" class="sliderclose"/>
+                  <div class="clearfix"></div>
+                </div>
+                <input type="button" value="OK" (click)="updatedaypart()" class="browsertabbtn">
+                <div class="clearfix"></div>
+              </div>
+
+
+
+              <div class="clearfix"></div>
+
+
+
+            </div>
+          </div>
+
+
+
+
+
+
+          <!--<div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="select(3)">Deals</label>
+              <b>{{deallen}} <img src="assets/images/create_audience_close.png"  alt="#"/></b>
+              <div class="clearfix"></div>
+
+            </div>
+
+
+              <div *ngIf=deals>
+
+                <div class="create_audience_wrapper dealswrapper">
+
+                <p>Add Deal IDs to access specific inventory already negotiated with the publisher</p>
+                <textarea [(ngModel)]="dealdetails"></textarea>
+                <div class="clearfix"></div>
+                <input type="button"  value="Add Deal IDs" (click)="adddeals(dealdetails)" class="dealbtn"/>
+                &lt;!&ndash; <input type="button"  value="Ok" (click)="updatedeal(dealdetails)"/>&ndash;&gt;
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th>Deal Id</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                  <tr *ngFor="let item of pushdeals; let i=index">
+                    <td>{{item}}</td>
+                    <td>{{dealstatusval}}</td>
+                    <td><a href="javascript:void(0)" (click)="deletedeal(item)"><img src="assets/images/create_audience_close.png"  alt="#"/></a></td>
+                  </tr>
+                </table>
+                <div class="clearfix"></div>
+                <div class="budget_formdiv_btn">
+                  <input type="button"  value="Ok" (click)="updatedeal(pushdeals)"/>
+                  <input type="button"  value="Cancel"/>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>-->
+
+
+          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="select(3)">Deals</label>
+              <b>{{deallen}} <img src="assets/images/create_audience_close.png"  alt="#" (click)="callmodal(3)"/></b>
+              <div class="clearfix"></div>
+
+            </div>
+
+
+            <div *ngIf=deals>
+
+              <div class="create_audience_wrapper dealswrapper">
+
+                <p>Add Deal IDs to access specific inventory already negotiated with the publisher</p>
+                <textarea [(ngModel)]="dealdetails"></textarea>
+                <div class="clearfix"></div>
+                <input type="button"  value="Add Deal IDs" (click)="adddeals()" class="dealbtn"/>
+                <!-- <input type="button"  value="Ok" (click)="updatedeal(dealdetails)"/>-->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th>Deal Id</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                  <tr *ngFor="let item of pushdeals1; let i=index">
+                    <td>{{item}}</td>
+                    <td>Active</td>
+                    <td><a href="javascript:void(0)" (click)="deletedeal(item)"><img src="assets/images/create_audience_close.png"  alt="#"/></a></td>
+                  </tr>
+                  <tr *ngFor="let item of pushdealsnew; let i=index">
+                    <td>{{item}}</td>
+                    <td>Pending</td>
+                    <td><a href="javascript:void(0)" (click)="deletedeal(item)"><img src="assets/images/create_audience_close.png"  alt="#"/></a></td>
+                  </tr>
+                </table>
+                <div class="clearfix"></div>
+                <div class="budget_formdiv_btn">
+                  <input type="button"  value="Ok" (click)="updatedeal()"/>
+                  <input type="button"  value="Cancel"/>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+
+
+
+          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="select(4)">Device Types</label>
+              <b>{{len1}}&nbsp;<img src="assets/images/create_audience_close.png"  alt="#" (click)="callmodal(4)"/></b>
+              <div class="clearfix"></div>
+            </div>
+
+
+            <div *ngIf=device_types>
+
+              <div class="create_audience_wrapper ulchakeboxcon newbluechakebox">
+
+                <ul *ngFor="let item of alldevices; let i=index">
+                  <input type="checkbox" id={{item.id}} [(ngModel)]="alldevicelist[item.id]"  /><label for={{item.id}}>{{item.name}}</label>
+                  <div class="clearfix"></div>
+                </ul>
+                <div class="clearfix"></div>
+                <input type="button" value="OK" (click)="updatedevice()" class="browsertabbtn">
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+
+            </div>
+          </div>
+
+
+
+
+
+<!--          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="select(11)">Ip Ranges</label>
+              <b>None <img src="assets/images/create_audience_close.png"  alt="#"/></b>
+              <div class="clearfix"></div>
+            </div>
+            <div *ngIf=openiprange>
+              <div class="create_audience_wrapper dealswrapper">
+                <p> Whitelisted user targeting is available through the use of IP ranges. Enter one dash-separated IP range per line. Consider the following example:
+                  (ex: 192.168.1.1 - 192.168.1.9)</p>
+                <textarea [(ngModel)]="ipdetails"></textarea>
+                <div class="clearfix"></div>
+                <input type="button"  value="Add" (click)="addips(ipdetails)" class="dealbtn"/>
+                <input type="button"  value="Remove" class="dealbtn"/>
+                <input type="button"  value="Clear" class="dealbtn"/>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Status</th>
+                  </tr>
+                  <tr *ngFor="let item of puships; let i=index">
+                    <td>{{item}}</td>
+                    <td>{{item}}</td>
+                    <td>Active	</td>
+                    <td><a href="javascript:void(0)" (click)="deleteip(item)"><img src="assets/images/create_audience_close.png"  alt="#"/></a></td>
+                  </tr>
+                </table>
+                <div class="clearfix"></div>
+                <div class="budget_formdiv_btn">
+                  <input type="button"  value="Ok" (click)="updateip(puships)"/>
+                  <input type="button"  value="Cancel"/>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>-->
+
+
+
+
+
+          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="select(5)">Location </label>
+             <!-- <div class="clearfix"></div>-->
+              <b *ngIf="fence_length">{{fence_length}}</b>
+             <!-- <b>
+                <span *ngFor="let item of show_locations; let i=index">{{item.attr_name}}<span *ngIf=" i< show_locations.length-1"> , </span></span>
+              </b>-->
+
+              <div class="clearfix"></div>
+
+            </div>
+
+            <div *ngIf="locations">
+
+              <div class="locationconboxwrapper">
+
+                <div class="showerror" *ngIf="error">{{error}}</div>
+                <b>
+                  <span *ngFor="let item of show_locations; let i=index">{{item.attr_name}}<span *ngIf=" i< show_locations.length-1"> , </span></span>
+                </b>
+                <tabset>
+                  <tab heading="Locations">
+                    <div class="location_tablewrapper">
+                      <h6>Available Locations </h6>
+                      <table>
+                        <tr>
+                          <td>
+                            <div class="location_heading">
+                              <h2>Selected Locations</h2>
+                              <span></span>
+                              <div class="clearfix"></div>
+                            </div>
+                            <div class="location_contain">
+                              <ul *ngFor="let item of selected_locations; let i=index">
+                                <li>
+                                  <img src="assets/images/close_location.png" alt="#" class="loc_img1" (click)="deletelocations(item.attr_id,item.attr_name,item)"/>
+                                  <label>{{item.attr_name}}</label></li>
+                              </ul>
+                            </div>
+                          </td>
+                          <td>&nbsp;</td>
+                          <td>
+                            <div class="location_heading">
+                              <div *ngIf="count>0"><img src="assets/images/location_arrow_left.png"  alt="#" class="loc_img1" (click)="childlist(0,0,2)"/></div>
+                              <h2>{{locationnameforreverse}}</h2>
+                              <span class="searchbar_location"></span>
+                              <div class="clearfix"></div>
+
+                            </div>
+
+                            <div class="location_contain">
+
+                              <ul *ngFor="let item of details; let i=index">
+
+                                <li><img src="assets/images/location_menuicon.png" alt="#" class="loc_img1" (click)="addtolist(item.id,item.name)"/> <label>{{item.name}}</label><img src="assets/images/location_arrow_right.png"  alt="#" class="loc_img2" (click)="childlist(item.id,item.name,1)"/></li>
+
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+
+                    <!--  <input type="button"  value="Ok" (click)="submitlocation(selected_locations)" class="browsertabbtn2"/>-->
+
+
+                      <div class="budget_formdiv_btn">
+                        <input type="button"  value="Save" (click)="submitlocation(selected_locations)"/>
+                        <input type="button"  value="Cancel"/>
+                      </div>
+
+
+                    </div>
+                  </tab>
+
+                  <tab heading="Geo Fencing" (select)="initializeval()" >
+
+
+                    <div class="GeoJSON_block"><span (click)="getjson()">Upload GeoJSON</span></div>
+                    <div *ngIf="uploadjson">
+                      <!--<input type="file"  ngFileSelect [options]="basicOptions" (onUpload)="handleUpload($event)">-->
+                      <!-- <input type="file">-->
+                      <input type="button"  value="Upload" (click)="callupload()"/>
+                      <input type="button"  value="Cancel" />
+                    </div>
+
+
+                    <!--<div class="GeoJSON_block"> <span>Upload GeoJSON</span></div>-->
+                    <div class="mapblickwrapper">
+                      <div class="map_menuwrapper">
+                        <input  type="text" class="map_input" placeholder="address" [(ngModel)]="searchaddress" (keyup)="searchlatlng($event)"/>
+                        <a href="javascript:void(0)" class="maplink1"><img src="../../assets/images/map_icon2.jpg"  alt="#"/></a>
+                        <a href="javascript:void(0)" class="maplink1" (click)="createsh(1)"><img src="../../assets/images/map_icon3.jpg"  alt="#"/></a>
+                        <a href="javascript:void(0)" class="maplink1" (click)="createsh(2)"><img src="../../assets/images/map_icon4.jpg"  alt="#"/></a>
+                        <a href="javascript:void(0)" class="maplink2"><img src="../../assets/images/map_icon5.jpg"  alt="#"/></a>
+                        <div class="clearfix"></div>
+                      </div>
+                      <agm-map *ngIf="mapval" [latitude]="lat" [longitude]="lng" [fitBounds]="bounds" (mapClick)="mapClicked($event)">
+                        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                        <agm-polygon *ngFor="let pathsvals of patharr" [paths]="pathsvals" [clickable]="true" [polyDraggable]="true" [draggable]="true" [editable]="true" strokeColor="#E9BE79" fillColor="#EBD8B7" fillOpacity="1" >
+                        </agm-polygon>
+                        <agm-polyline [clickable]="true" [draggable]="true" [editable]="true">
+                          <agm-polyline-point *ngFor="let lineval of paths" [latitude]="lineval.lat" [longitude]="lineval.lng">
+                          </agm-polyline-point>
+                        </agm-polyline>
+                      </agm-map>
+                    </div>
+                    <div class="map_menuwrapper menuwrapper_buttom">
+                      <select class="map_select" [(ngModel)]="polydelete" (click)="mapdelete()">
+                        <option>Actions</option>
+                        <option value="removeselected">Remove Selected</option>
+                        <option value="removeall">Remove All</option>
+                      </select>
+                      <input  type="text" class="map_input" placeholder="address" [(ngModel)]="searchaddress" (keyup)="searchlatlng($event)"/>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="new_table_wrapper">
+                      <div class="GeoJSON_block2"> <a href="javascript:void(0)">Download GeoJSON</a> </div>
+                      <table>
+                        <tr>
+                          <th><input type="checkbox" (click)="allcheck()" [(ngModel)]="checkuncheck" ></th>
+                          <th>Name</th>
+                          <th>Geo Type</th>
+                          <th>&nbsp;</th>
+                        </tr>
+                        <tr *ngFor="let item of fence; let i=index">
+                          <td><input type="checkbox" [(ngModel)]="item.fencecheckbox"></td>
+                          <td><img src="../../assets/images/tab_new_icon5.png"  alt="#" /><input [(ngModel)]="item.fencename" type="text"><div class="clearfix"></div></td>
+                          <td>Conversion	</td>
+                          <td><div class="table_closebtn"><a href="javascript:void(0)" (click)="deletepolyshape(item)"><img src="../../assets/images/tab_new_icon3.png"  alt="#" /></a></div></td>
+                        </tr>
+                      </table>
+                      <div class="clearfix"></div>
+                      <div class="budget_formdiv_btn">
+                        <input type="button"  value="Save" (click)="savepolygon()"/>
+                        <input type="button"  value="Cancel"/>
+                      </div>
+                    </div>
+                  </tab>
+                </tabset>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+
+
+
+
+
+
+          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="select(6)">Operating Systems</label>
+              <b>{{oslen}}&nbsp;<img src="assets/images/create_audience_close.png"  alt="#" (click)="callmodal(6)"/></b>
+              <div class="clearfix"></div>
+            </div>
+
+
+            <div *ngIf="operating_systems">
+
+              <div class="create_audience_wrapper ulchakeboxcon newbluechakebox">
+
+                <ul *ngFor="let item of allos; let i=index">
+                  <input type="checkbox" id="{{item.id}}" [(ngModel)]="alloslist[item.id]"  /><label for="{{item.id}}">{{item.name}}</label>
+
+                  <div class="clearfix"></div>
+
+                </ul>
+                <div class="clearfix"></div>
+                <input type="button" value="OK" (click)="updateos()" class="browsertabbtn">
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+
+            </div>
+          </div>
+
+
+
+
+
+
+          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="select(7)">Pacing</label>
+              <b *ngIf="showpace">{{showpace}}&nbsp;<img src="assets/images/create_audience_close.png"  alt="#" (click)="callmodal(7)"/></b>
+              <div class="clearfix"></div>
+
+            </div>
+
+            <div *ngIf="pacing">
+              <div class="create_audience_wrapper pacingwrapper">
+                <div class="showerror" *ngIf="paceerror">{{paceerror}}</div>
+
+
+                <!--<ui-switch  (change)="onChange($event)" [(ngModel)]="paceenable"></ui-switch>--> <p>Enable Automated Pacing (Recommended)</p>
+                <div class="clearfix"></div>
+
+                <div *ngIf="divshowpace">
+                  <div class="clearfix"></div>
+                  <h2>Throttle the delivery of ad impressions</h2>
+                  <div class="pacing_textcontain">
+                    <input type="text" class="form-control" appOnlyNumber="true" [(ngModel)]="pacingval"><span>%</span>
+                    <div class="clearfix"></div></div>
+
+                  <input type="button" value="OK" (click)="updatepacing(pacingval)" class="browsertabbtn2">
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+
+
+
+
+
+
+          <div class="campaign_settings_cell">
+            <div class="campaign_settings_cell_top">
+              <label (click)="select(9)">Viewability</label>
+              <b >{{view1}}&nbsp;<img src="assets/images/create_audience_close.png"  alt="#" (click)="callmodal(9)"/></b>
+              <div class="clearfix"></div>
+            </div>
+
+
+            <div *ngIf="viewability">
+              <div class="create_audience_wrapper viewability_wrapper">
+
+                <div class="viewability_right">
+
+                  <p>Integral Viewability Threshold</p>
+
+                  <select id="view"  name="view" [(ngModel)]="view" class="form-control2">
+                    <option *ngFor="let item of viewabilitis; let i=index" value="{{item}}">{{item}}</option>
+                  </select>
+                </div>
+
+                <div class="viewability_left">
+                  <p> This will restrict the creatives to only serve on domains which have known chances of a creative being in view. Turning this on will reduce the available inventory.</p>
+                  <p>Good: The best 55% of inventory is available</p>
+                  <p>Better: The best 40% of inventory is available</p>
+                  <p>Best: The best 25% of inventory is available</p>
+
+                </div>
+
+                <div class="clearfix"></div>
+
+
+                <input type="button" value="OK" (click)="selectview(view)" class="browsertabbtn2">
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+          <a [routerLink]="['/campaignsettings']" href="javascript:void(0)"  class="createaudience_link" style="float:left;"> &#9668; Campaign Settings </a>
+          <a href="javascript:void(0)"  class="createaudience_link">Creatives &#9658;</a>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>
+
+
+
+
+<!--modal using angular 2-->
+
+
+<div *ngIf="isbrowserModalShown" (onHidden)="onHidden(1)" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  (click)="staticModal.hide()">&times;</button>
+        <h4 class="modal-title">Please Confirm</h4>
+      </div>
+      <div class="modal-body text-center signupeamilbody">
+        <img src="../../assets/images/geoai_logo.jpg" alt="logo">
+        <p><span>Are you sure you want to remove Browsers from the campaign?</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="staticModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deletebrowsers()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div *ngIf="isdaypartModalShown" (onHidden)="onHidden(2)" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  (click)="staticModal.hide()">&times;</button>
+        <h4 class="modal-title">Please Confirm</h4>
+      </div>
+      <div class="modal-body text-center signupeamilbody">
+        <img src="../../assets/images/geoai_logo.jpg" alt="logo">
+        <p><span>Are you sure you want to remove Daypart from the campaign?</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="staticModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deletedaypart()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="isdealModalShown" (onHidden)="onHidden(3)" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  (click)="staticModal.hide()">&times;</button>
+        <h4 class="modal-title">Please Confirm</h4>
+      </div>
+      <div class="modal-body text-center signupeamilbody">
+        <img src="../../assets/images/geoai_logo.jpg" alt="logo">
+        <p><span>Are you sure you want to remove Deals from the campaign?</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="staticModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deletedeals()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isdeviceModalShown" (onHidden)="onHidden(4)" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  (click)="staticModal.hide()">&times;</button>
+        <h4 class="modal-title">Please Confirm</h4>
+      </div>
+      <div class="modal-body text-center signupeamilbody">
+        <img src="../../assets/images/geoai_logo.jpg" alt="logo">
+        <p><span>Are you sure you want to remove Devices from the campaign?</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="staticModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deletedevice()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isosModalShown" (onHidden)="onHidden(6)" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  (click)="staticModal.hide()">&times;</button>
+        <h4 class="modal-title">Please Confirm</h4>
+      </div>
+      <div class="modal-body text-center signupeamilbody">
+        <img src="../../assets/images/geoai_logo.jpg" alt="logo">
+        <p><span>Are you sure you want to remove Operating Systems from the campaign?</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="staticModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deleteos()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="ispaceModalShown" (onHidden)="onHidden(7)" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  (click)="staticModal.hide()">&times;</button>
+        <h4 class="modal-title">Please Confirm</h4>
+      </div>
+      <div class="modal-body text-center signupeamilbody">
+        <img src="../../assets/images/geoai_logo.jpg" alt="logo">
+        <p><span>Are you sure you want to remove Pacing from the campaign?</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="staticModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deletepace()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isviewModalShown" (onHidden)="onHidden(9)" bsModal #staticModal="bs-modal" [config]="{ show: true}"  class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  (click)="staticModal.hide()">&times;</button>
+        <h4 class="modal-title">Please Confirm</h4>
+      </div>
+      <div class="modal-body text-center signupeamilbody">
+        <img src="../../assets/images/geoai_logo.jpg" alt="logo">
+        <p><span>Are you sure you want to remove Viewability from the campaign?</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="staticModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="deleteview(view)">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>

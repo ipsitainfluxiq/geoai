@@ -1,0 +1,208 @@
+<!------HEADER SECTION--->
+
+<header class="headerdiv">
+  <div class="headerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+  </div>
+<!--  <div class="container-fluid menublock">
+    <div class="menudiv">
+      <nav class="navbar navbar-default">
+        &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
+        <div class="navbar-header">
+          <span class="responsivemenu">MENU</span>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <div class="clearfix"></div>
+        </div>
+        &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Mission control</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Default Rules</a></li>
+            <li class="active"><a [routerLink]="['/']">$Money</a></li>
+
+          </ul>
+        </div>
+        &lt;!&ndash; /.navbar-collapse &ndash;&gt;
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </div>-->
+</header>
+
+<!------end Header SECTION--->
+
+
+
+<!------Body SECTION--->
+
+<div class="adminmainwarpper signupwarpper">
+  <div class="formblock2">
+    <form role="form" class="form form-inline" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+
+      <div class="col-md-6 col-sm-12 signupwarpperleftblock">
+        <div class="personalinfoblock signup">
+          <h2>Personal info</h2>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <input type="text" class="form-control" id="firstname" placeholder="First name" [formControl]="dataForm.controls['firstname']">
+              <span *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid" class="has-error">First Name field can not be blank!</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <input type="text" class="form-control" id="lastname" placeholder="Last name" [formControl]="dataForm.controls['lastname']">
+              <span *ngIf="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid" class="has-error">Last Name field can not be blank!</span>
+            </div>
+          </div>
+        </div>
+        <div class="contactinfblock signup">
+          <h2>Contact info</h2>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <input type="text" class="form-control" id="emailaddress" placeholder="E-mail Address" [formControl]="dataForm.controls['email']">
+              <span class="has-error" *ngIf ="dataForm.controls['email'].touched && getemail('blank')==true">Email is Required !</span>
+              <span class="has-error" *ngIf ="dataForm.controls['email'].touched && getemail('invalid')==true">Email is not valid!</span>
+            </div>
+          </div>
+
+
+
+
+
+
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+            <input type="password" name="password" class="form-control" placeholder="Password" [formControl]="dataForm.controls['password']">
+              <span class="has-error" *ngIf ="dataForm.controls['password'].touched && !dataForm.controls['password'].valid && getpassword('invalid')==true ">Password must contain at least 8 characters,one lower case character , one upper case character , one number, one special character</span>
+
+
+          </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+            <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm Password" [formControl]="dataForm.controls['confirmpassword']">
+            <span class="has-error" *ngIf ="dataForm.controls['confirmpassword'].touched && !dataForm.controls['confirmpassword'].valid">Please fill in the required field.</span>
+            <div class="has-error" *ngIf ="dataForm.hasError('mismatchedPasswords') && dataForm.controls['confirmpassword'].valid "><span>Passwords must match</span>
+            </div>
+          </div>
+          </div>
+
+
+
+
+
+
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <input type="text" class="form-control" id="companyname" placeholder="Company Name" [formControl]="dataForm.controls['companyname']">
+              <span *ngIf ="dataForm.controls['companyname'].touched && !dataForm.controls['companyname'].valid" class="has-error">Company Name field can not be blank!</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+            <!--  <select class="classic">
+                <option selected>Country</option>
+                <option>INDIA</option>
+                <option>USA</option>
+              </select>-->
+              <input type="text" class="form-control" id="country" placeholder="Country" [formControl]="dataForm.controls['country']">
+              <span *ngIf ="dataForm.controls['country'].touched && !dataForm.controls['country'].valid" class="has-error">Country field can not be blank!</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <input type="text" class="form-control" id="companywebsite" placeholder="Company Website" [formControl]="dataForm.controls['companywebsite']">
+              <span *ngIf ="dataForm.controls['companywebsite'].touched && !dataForm.controls['companywebsite'].valid" class="has-error">Company Website field can not be blank!</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <input type="text" class="form-control" id="cityname" placeholder="City" [formControl]="dataForm.controls['city']">
+              <span *ngIf ="dataForm.controls['city'].touched && !dataForm.controls['city'].valid" class="has-error">City can not be blank!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 signupwarpperrightblock">
+        <div class="yourrequestblock signup">
+          <h2>Your request</h2>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <input type="text" class="form-control hide" [formControl]="dataForm.controls['request']">
+              <span class="buttonlists">
+                <button type="button" class="btnblueround"  [ngClass]="reqval ==1 ? 'active' : ''" (click)="addreqval(1)">User Acquisition</button>
+                <button type="button" class="btnblueround"  [ngClass]="reqval ==2 ? 'active' : ''" (click)="addreqval(2)">Monetization</button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <input type="text" class="form-control" id="yourapp" placeholder="Your app" [formControl]="dataForm.controls['app']">
+              <span *ngIf ="dataForm.controls['app'].touched && !dataForm.controls['app'].valid" class="has-error">This field can not be blank!</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control hide" [formControl]="dataForm.controls['marketingbudget']">
+            <div class="col-xs-12 txtfield">
+              <h3>Your marketing budget</h3>
+              <span class="outlinebuttonlists">
+                  <button type="button" class="btnoulineround"  [ngClass]="marketingbudgetval ==1 ? 'active' : ''" (click)="addval(1)">$30-50k</button>
+                  <button type="button" class="btnoulineround" [ngClass]="marketingbudgetval ==2 ? 'active' : ''" (click)="addval(2)">$50-100k</button>
+                  <button type="button" class="btnoulineround" [ngClass]="marketingbudgetval ==3 ? 'active' : ''" (click)="addval(3)">$100-250k</button>
+                  <button type="button" class="btnoulineround"  [ngClass]="marketingbudgetval ==4 ? 'active' : ''" (click)="addval(4)">$250-500k</button>
+                  <button type="button" class="btnoulineround"  [ngClass]="marketingbudgetval ==5 ? 'active' : ''" (click)="addval(5)">$500k-1m</button>
+                </span>
+              <span *ngIf ="dataForm.controls['marketingbudget'].touched && !dataForm.controls['marketingbudget'].valid" class="has-error">This field can not be blank!</span>
+            </div>
+          </div>
+        </div>
+        <div class="leavemsgblock signup">
+          <h2>Leave your message here</h2>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <span class="buttonlists">
+                <button type="button" class="btnblueround"  [ngClass]="msgnoval ==1 ? 'active' : ''" (click)="messagenoval(1)">User Acquisition</button>
+                <button type="button" class="btnblueround" [ngClass]="msgnoval ==2 ? 'active' : ''"  (click)="messagenoval(2)">Monetization</button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12 txtfield">
+              <textarea class="form-control" rows="5" id="message" placeholder="Message" [formControl]="dataForm.controls['message']"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" [formControl]="dataForm.controls['terms']">
+          <label class="form-check-label" for="exampleCheck1">By checking this box, I confirm that I have read, understand and agree to the <a href="javascript void(0)">Terms of Agreement</a> and <a href="javascript void(0)">Privacy Policy</a>.</label>
+        </div>
+        <span *ngIf="errorterms" class="has-error">Please accept terms & conditions.</span>
+        <span class="has-error" *ngIf="is_error">{{is_error}}</span>
+        <div class="form-group btnformdivcls">
+          <button type="submit" class="btnblue">GET STARTED</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!------end Body SECTION--->
+
+
+<!------Footer SECTION--->
+<app-footernew></app-footernew>
+<!--<footer class="footerdiv">
+  <div class="footerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+    <div class="footercopyright text-center">
+      <p>Copyright 2017 GeoAI Technologies, LLC. All Rights Reserved | <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">T & C</a></p>
+    </div>
+  </div>
+</footer>-->
+
+<!------End Footer SECTION--->

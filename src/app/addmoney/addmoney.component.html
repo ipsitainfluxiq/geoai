@@ -1,0 +1,127 @@
+<app-headernew></app-headernew>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+  <div class="dashboard_right_wrapper">
+    <div class="dashboard1_div1 ">
+      <h4> Add Money</h4>
+      <div class="dashboard1form">
+
+        <form role="form" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-12 col-md-12">
+                <label>Name on Card</label>
+                <input type="text" class="form-control" placeholder="Name" [formControl]="dataForm.controls['name']">
+                <span class="has-error" *ngIf ="dataForm.controls['name'].touched && !dataForm.controls['name'].valid">Name is Required !</span>
+              </div>
+              <div class="col-lg-12 col-md-12">
+                <label>Amount</label>
+                <input type="text" class="form-control" placeholder="Amount" appOnlyNumber="true" [formControl]="dataForm.controls['amount']">
+                <span class="has-error" *ngIf ="dataForm.controls['amount'].touched && !dataForm.controls['amount'].valid">Amount is Required !</span>
+              </div>
+              <div class="col-lg-12 col-md-12">
+                <label>Card Number</label>
+                <input type="text" class="form-control" placeholder="Card Number" [formControl]="dataForm.controls['cardno']">
+                <span class="has-error" *ngIf ="dataForm.controls['cardno'].touched && !dataForm.controls['cardno'].valid">Card Number is Required !</span>
+
+              </div>
+              <div class="col-lg-12 col-md-12">
+              <label>Expiry Date</label>
+              </div>
+
+              <div class="col-lg-6 col-md-6">
+
+                <select [formControl]="dataForm.controls['mm']">
+                  <option value="" selected disabled>Select Month</option>
+                  <option value="01">Jan</option>
+                  <option value="02">Feb</option>
+                  <option value="03">Mar</option>
+                  <option value="04">Apr</option>
+                  <option value="05">May</option>
+                  <option value="06">Jun</option>
+                  <option value="07">Jul</option>
+                  <option value="08">Aug</option>
+                  <option value="09">Sep</option>
+                  <option value="10">Oct</option>
+                  <option value="11">Nov</option>
+                  <option value="12">Dec</option>
+                </select>
+                <span class="has-error" *ngIf ="dataForm.controls['mm'].touched && !dataForm.controls['mm'].valid">This is Required !</span>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <select [formControl]="dataForm.controls['yyyy']">
+                  <option value="" selected disabled>Select Year</option>
+                  <option value="2018">2018</option>
+                  <option value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+                  <option value="2029">2029</option>
+                  <option value="2030">2030</option>
+                  <option value="2031">2031</option>
+                  <option value="2032">2032</option>
+                  <option value="2033">2033</option>
+                  <option value="2034">2034</option>
+                  <option value="2035">2035</option>
+                </select>
+                <span class="has-error" *ngIf ="dataForm.controls['yyyy'].touched && !dataForm.controls['yyyy'].valid">This is Required !</span>
+
+
+              </div>
+              <div class="col-lg-12 col-md-12">
+                <span class="has-error" *ngIf ="expirydateerror">{{expirydateerror}}</span>
+              </div>
+              <div class="col-lg-12 col-md-12">
+                <label>Cvv</label>
+                <input type="password" class="form-control formcontrolcvv" style="width: 90%; float: left;" placeholder="Cvv" [formControl]="dataForm.controls['cvv']">
+                <span class="has-error" *ngIf ="dataForm.controls['cvv'].touched && !dataForm.controls['cvv'].valid">Cvv length should be 3 or 4 digits!</span>
+
+                  <tooltip-content #myTooltip [animation]="true" placement="left">
+                      <img src="../../assets/images/cvvtooltip.png" />
+                  </tooltip-content>
+                  <a href="javascript:void(0)" [tooltip]="myTooltip" class="tooltipicon">?</a>
+
+                  <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+         <!-- <input type="text" class="form-control" placeholder="MM" appOnlyNumber="true" [formControl]="dataForm.controls['mm']">-->
+
+
+         <!-- <input type="text" class="form-control" placeholder="YYYY" appOnlyNumber="true" [formControl]="dataForm.controls['yyyy']">-->
+
+
+
+<!--
+
+          <a href="#" class="tooltip">
+            bgfgfh
+            <span>
+              <img src="http://www.menucool.com/tooltip/cssttp/css3-tooltip-image.png" style="float:right;" />
+              Pure CSS popup tooltips with clean semantic XHTML.
+            </span>
+          </a>-->
+
+          <br><input type="submit" value="Save" class="loginbtn2">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="footerinnerbody">
+<app-footernew></app-footernew>
+</div>

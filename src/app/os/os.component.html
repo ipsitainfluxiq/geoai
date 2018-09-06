@@ -1,0 +1,50 @@
+<app-header></app-header>
+
+<div class="newpageborder"></div>
+<div class=" geo_body_wrapper">
+    <div class=" geo_new_wrapper">
+        <div class="geo_new_heading"><span><strong>CREATE AN</strong> Audience</span></div>
+        <div class="geo_new_menublock">
+            <ul>
+
+                <li><a [routerLink]="['/viewability']" href="javascript:void(0)" class="nmenu2"> Viewability</a></li>
+                <li><a [routerLink]="['/locations']" href="javascript:void(0)" class="nmenu1">Geo Targets</a></li>
+                <li><a [routerLink]="['/browser']" href="javascript:void(0)" class="nmenu3"> Browser</a></li>
+                <li class="active"><a [routerLink]="['/os']" href="javascript:void(0)" class="nmenu4">Operating Systems</a></li>
+                <li><a [routerLink]="['/devicetypes']" href="javascript:void(0)" class="nmenu5">Device Types </a></li>
+                <li><a [routerLink]="['/deals']" href="javascript:void(0)" class="nmenu6">Deals</a></li>
+                <li><a [routerLink]="['/pacing']" href="javascript:void(0)" class="nmenu7">Pacing</a></li>
+                <li><a [routerLink]="['/dayparting']" href="javascript:void(0)" class="nmenu8">Dayparting</a></li>
+                <div class="clearfix"></div>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class=" geo_new_block1">
+            <img src="assets/images/osnewbigicon.png"  alt="#"/>
+            <h2>Operating Systems</h2>
+            <h3>Lorem Ipsum is simply dummy
+                text of the printing and typesetting industry.</h3>
+        </div>
+        <h6 class="h6locationtext">Operating Systems</h6>
+        <div class=" geo_new_block2">
+
+            <div class="browserwrapper">
+                <span *ngFor="let item of allos; let i=index">
+                    <!-- <input type="checkbox" id="{{item.id}}" [(ngModel)]="alloslist[item.id]"  /><label for="{{item.id}}">{{item.name}}</label>-->
+                    <input type="checkbox" id="{{item}}" [(ngModel)]="alloslist[item]"/><label for="{{item}}">{{item}}</label>
+
+                </span>
+                <input type="button" value="OK" (click)="updateos()" class="browsertabbtn">
+
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+
+        <div class="footerbtndiv">
+            <input type="button" value="Back" [routerLink]="['/browser']">
+            <input type="button" value="Next"  [routerLink]="['/devicetypes']">
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

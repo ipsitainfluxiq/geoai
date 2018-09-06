@@ -1,0 +1,46 @@
+<app-header></app-header>
+
+<div class="newpageborder"></div>
+<div class=" geo_body_wrapper">
+  <div class=" geo_new_wrapper">
+    <div class="geo_new_heading"><span><strong>CREATE AN</strong> Audience</span></div>
+    <div class="geo_new_menublock">
+      <ul>
+
+        <li><a [routerLink]="['/viewability']" href="javascript:void(0)" class="nmenu2"> Viewability</a></li>
+        <li><a [routerLink]="['/locations']" href="javascript:void(0)" class="nmenu1">Geo Targets</a></li>
+        <li><a [routerLink]="['/browser']" href="javascript:void(0)" class="nmenu3"> Browser</a></li>
+        <li><a [routerLink]="['/os']" href="javascript:void(0)" class="nmenu4">Operating Systems</a></li>
+        <li class="active"><a [routerLink]="['/devicetypes']" href="javascript:void(0)" class="nmenu5">Device Types </a></li>
+        <li><a [routerLink]="['/deals']" href="javascript:void(0)" class="nmenu6">Deals</a></li>
+        <li><a [routerLink]="['/pacing']" href="javascript:void(0)" class="nmenu7">Pacing</a></li>
+        <li><a [routerLink]="['/dayparting']" href="javascript:void(0)" class="nmenu8">Dayparting</a></li>
+        <div class="clearfix"></div>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div class=" geo_new_block1">
+      <img src="assets/images/devicebigicon.png"  alt="#"/>
+      <h2>Device Types</h2>
+      <h3>Lorem Ipsum is simply dummy
+        text of the printing and typesetting industry.</h3>
+    </div>
+    <h6 class="h6locationtext">Device Types</h6>
+    <div class=" geo_new_block2">
+      <div class="browserwrapper">
+        <span><img src="assets/images/b_smicon1.png" alt="#"> <input type="checkbox" [(ngModel)]="Mobile"/><b>Mobile</b></span>
+        <span><img src="assets/images/b_smicon2.png" alt="#"> <input type="checkbox" [(ngModel)]="Desktops"/><b>Desktops And Laptops</b></span>
+        <span><img src="assets/images/b_smicon3.png" alt="#"> <input type="checkbox" [(ngModel)]="Tablets"/><b>Tablets</b></span>
+        <span><img src="assets/images/b_smicon4.png" alt="#">  <input type="checkbox" [(ngModel)]="TV"/><b>Connected TV</b></span>
+        <input type="button" value="OK" (click)="updatedevices()" class="browsertabbtn">
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="footerbtndiv">
+      <input type="button" value="Back" [routerLink]="['/os']">
+      <input type="button" value="Next" [routerLink]="['/deals']">
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

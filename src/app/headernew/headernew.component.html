@@ -1,0 +1,46 @@
+<header class="headerdiv">
+  <div class="headerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+    <div class="headerbtndiv">
+      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/helpdesklist']" *ngIf="cookiedetailsforalldetails_type==1">Manage Helpdesk</a>
+      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/searchnew']">Add Audience</a>
+      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/userinformation']">account Information</a>
+    <!--  <a href="javascript:void(0)" class="btnblue" [routerLink]="['/accountdetails']">account Information</a>-->
+      <a href="javascript:void(0)" class="btnblue" (click)="logout()">Logout</a>
+    </div>
+  </div>
+  <div class="container-fluid menublock">
+    <div class="menudiv">
+      <nav class="navbar navbar-default">
+        <div class="navbar-header">
+          <span class="responsivemenu">MENU</span>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <div class="clearfix"></div>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="ssd lidiv0"><a href="javascript:void(0)" [routerLink]="['/campaignlists']">Mission control</a></li>
+            <li class="ssd lidiv1"><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
+            <li class="ssd lidiv2"><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Default Rules</a></li>
+            <li class="ssd lidiv3" *ngIf="cookiedetailsforalldetails_type==0"><a [routerLink]="['/wallet']">$Money</a></li>
+            <li class="ssd lidiv4" *ngIf="cookiedetailsforalldetails_type==1 || cookiedetailsforalldetails_type==2"><a [routerLink]="['/allwalletlist']">Manage Wallet</a></li>
+
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</header>
+
+
+
+<!--
+<li class="ssd lidiv0 active"><a class="dropdown-toggle" [routerLink]="['']"> home </a></li>
+<li class="ssd lidiv1 "> <a class="dropdown-toggle" [routerLink]="['/aboutaudiodeadline']" > About Audio Deadline </a></li>
+<li class="ssd lidiv2 "><a class="dropdown-toggle" [routerLink]="['/community']" > Community </a></li>
+<li class="ssd lidiv3 "><a class="dropdown-toggle" [routerLink]="['/affiliate']" > Affiliate </a></li>
+<li class="ssd lidiv4 "><a class="dropdown-toggle" [routerLink]="['/contactus']" > Contact Us </a></li>
+<li class="ssd lidiv5 "><a class="dropdown-toggle" [routerLink]="['/signup']" > RSVP for Tickets</a></li>-->

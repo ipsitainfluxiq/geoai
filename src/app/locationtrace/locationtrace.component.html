@@ -1,0 +1,28 @@
+
+<!--<div *ngIf="patharr.length>0">-->
+<div>
+  <agm-map style="height: 800px" *ngIf="mapval" [latitude]="lat" [longitude]="lng" [fitBounds]="bounds" (mapClick)="mapClicked($event)">
+    <!-- <div *ngFor="let lineval of paths">-->
+    <agm-marker *ngFor="let lineval2 of ad1" [latitude]="lineval2[0].lat" [longitude]="lineval2[0].lng"></agm-marker>
+    <!--</div>-->
+
+    <agm-polygon *ngFor="let lineval of paths" [paths]="lineval" [clickable]="true" [polyDraggable]="true" [draggable]="true" [editable]="true" strokeColor="#E9BE79" fillColor="#EBD8B7" fillOpacity="1" >
+    </agm-polygon>
+
+    <!--  <agm-polyline [clickable]="true" [draggable]="true" [editable]="true">
+    <div *ngFor="let lineval of paths">
+    <agm-polyline-point *ngFor="let lineval1 of lineval" [latitude]="lineval1.lat" [longitude]="lineval1.lng">
+    </agm-polyline-point>
+    </div>
+  </agm-polyline>-->
+  </agm-map>
+</div>
+<!--<div *ngFor="let lineval of paths">
+<div *ngFor="let lineval1 of lineval">
+
+  <p>hiiiiii {{lineval1.lat}}</p></div></div>-->
+<!--<div *ngFor="let lineval of paths" style="background: white;color: black" >-->
+<!--<span>{{lineval.lat}}</span>-->
+<!--</div>-->
+<!--
+</div>-->

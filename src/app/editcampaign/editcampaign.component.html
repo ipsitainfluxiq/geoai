@@ -1,0 +1,244 @@
+<!------HEADER SECTION--->
+
+<!--<header class="headerdiv">
+  <div class="headerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+  </div>
+  <div class="container-fluid menublock">
+    <div class="menudiv">
+      <nav class="navbar navbar-default">
+        &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
+        <div class="navbar-header">
+          <span class="responsivemenu">MENU</span>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <div class="clearfix"></div>
+        </div>
+        &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Mission control</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Default Rules</a></li>
+            <li class="active"><a [routerLink]="['/']">$Money</a></li>
+
+          </ul>
+        </div>
+        &lt;!&ndash; /.navbar-collapse &ndash;&gt;
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</header>-->
+<app-headernew></app-headernew>
+<!------end Header SECTION--->
+
+
+
+
+<!------Body SECTION--->
+
+<div class="adminmainwarpper addcampaignwarpper">
+  <div class="formblock">
+    <form role="form" class="form form-inline" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+
+      <div class="form-group">
+        <label for="campaignname" class="col-xs-12 lblform">Campaign Name</label>
+        <div class="col-xs-12 txtfield">
+          <input type="text" class="form-control" id="campaignname" placeholder="" [formControl]="dataForm.controls['campaignname']">
+        </div>
+        <span class="has-error" *ngIf ="dataForm.controls['campaignname'].touched && !dataForm.controls['campaignname'].valid">Campaign Name is Required !</span>
+      </div>
+
+   <!--   <div class="form-group">
+        <label for="campaignstatus" class="col-xs-12 lblform">Campaign status</label>
+        <div class="col-xs-12 txtfield">
+          <select class="classic" id="campaignstatus" [formControl]="dataForm.controls['status']">
+            <option value="" disabled>Select</option>
+            <option value="0">Paused</option>
+            <option value="1">Play</option>
+          </select>
+        </div>
+        <span class="has-error" *ngIf ="dataForm.controls['status'].touched && !dataForm.controls['status'].valid">Status is Required !</span>
+      </div>-->
+
+      <div class="form-group">
+        <label for="totalcampaignspend" class="col-xs-12 lblform">Total Campaign spend</label>
+        <div class="col-xs-12 txtfield">
+          <input type="text" class="form-control" id="totalcampaignspend" placeholder="" [formControl]="dataForm.controls['totalcampaignspend']">
+        </div>
+        <span class="has-error" *ngIf ="dataForm.controls['totalcampaignspend'].touched && !dataForm.controls['totalcampaignspend'].valid">This field is Required !</span>
+      </div>
+
+      <div class="form-group">
+        <label for="totalcampaignspend" class="col-xs-12 lblform">CPA</label>
+        <div class="col-xs-12 txtfield">
+          <input type="text" class="form-control" id="cpa" placeholder="" [formControl]="dataForm.controls['cpa']">
+        </div>
+        <span class="has-error" *ngIf ="dataForm.controls['cpa'].touched && !dataForm.controls['cpa'].valid">Cpa is Required !</span>
+      </div>
+
+      <div class="form-group">
+        <label for="totalcampaignspend" class="col-xs-12 lblform">EPC</label>
+        <div class="col-xs-12 txtfield">
+          <input type="text" class="form-control" id="epc" placeholder="" [formControl]="dataForm.controls['epc']">
+        </div>
+        <span class="has-error" *ngIf ="dataForm.controls['epc'].touched && !dataForm.controls['epc'].valid">Epc is Required !</span>
+      </div>
+
+      <div class="form-group">
+        <label for="dailybudget" class="col-xs-12 lblform">Daily Budget</label>
+        <div class="col-xs-12 txtfield">
+          <input type="text" class="form-control" id="dailybudget" placeholder="" [formControl]="dataForm.controls['dailybudget']">
+        </div>
+        <span class="has-error" *ngIf ="dataForm.controls['dailybudget'].touched && !dataForm.controls['dailybudget'].valid">Daily Budget is Required !</span>
+      </div>
+      <!--  <div class="form-group">
+          <label class="col-xs-12 lblform">Campaign Type</label>
+          <div class="col-xs-12 txtfield">
+            <div class="col-sm-3 col-xs-6 txtfield">
+              <select class="classic" [formControl]="dataForm.controls['campaigntype']">
+                <option value="cpm">CPM</option>
+                <option value="cpc">CPC</option>
+              </select>
+            </div>
+            <div class="col-sm-3 col-xs-6 txtfield">
+              <select class="classic">
+                <option>EPC</option>
+                <option>EPC</option>
+              </select>
+            </div>
+            <div class="col-sm-3 col-xs-6 txtfield">
+              <select class="classic">
+                <option>EPCM</option>
+                <option>EPCM</option>
+              </select>
+            </div>
+            <div class="col-sm-3 col-xs-6 txtfield">
+              <select class="classic">
+                <option>CPA</option>
+                <option>CPA</option>
+              </select>
+            </div>
+          </div>
+        </div>-->
+      <!-- <div class="form-group">
+         <label for="remainingbudget" class="col-xs-12 lblform">Remaining budget</label>
+         <div class="col-xs-12 txtfield">
+           <input type="text" class="form-control" id="remainingbudget" placeholder="">
+         </div>
+       </div>-->
+
+
+      <div class="form-group">
+        <label for="startingbid" class="col-xs-12 lblform">Starting Bid</label>
+        <div class="col-xs-12 txtfield">
+          <input type="text" class="form-control" id="startingbid" placeholder="" [formControl]="dataForm.controls['startingbid']">
+        </div>
+        <span class="has-error" *ngIf ="dataForm.controls['startingbid'].touched && !dataForm.controls['startingbid'].valid">Starting Bid is Required !</span>
+      </div>
+
+      <div class="form-group">
+        <div class="col-xs-12 divinner">
+          <label for="conversionvalue" class="col-xs-12 lblform">Conversion Value</label>
+          <div class="col-sm-8 col-xs-12 txtfield">
+            <input type="text" class="form-control" id="conversionvalue" placeholder="" [formControl]="dataForm.controls['conversionvalue']">
+          </div>
+          <div class="col-sm-4 col-xs-12 txtfield"><span>based on (CPA)</span></div>
+        </div>
+        <span class="has-error" *ngIf ="dataForm.controls['conversionvalue'].touched && !dataForm.controls['conversionvalue'].valid">Conversion Value is Required !</span>
+      </div>
+
+      <div class="form-group dtrangecls">
+        <label for="startingbid" class="col-xs-12 lblform">Date Range</label>
+        <div class="col-xs-6 col-sm-6 col-lg-6 divinner ">
+          <!-- <div class="col-xs-6 divinner">
+             <div class="radio-inline-wrapper">
+               <label class="radio-inline"><input type="radio" name="optradio">Start</label>
+               <label class="radio-inline"><input type="radio" name="optradio">Now</label>
+             </div>
+           </div>-->
+          <div class="col-xs-6 divinner divinner2">
+            <div class="datefieldcontainer ">
+              <!--    <input class="datefieldcls" type="text" name="selected_date" [formControl]="dataForm.controls['startdate']"/>-->
+              <input type="text"
+                     placeholder="Start Date"
+                     class="form-control"
+                     bsDatepicker
+                     [formControl]="dataForm.controls['startdate']"
+                     [minDate] = "isdate"
+              >
+              <!--  <span class="openbuttoncls">
+                    <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                  </span>-->
+            </div>
+            <span class="has-error" *ngIf ="dataForm.controls['startdate'].touched && !dataForm.controls['startdate'].valid">Start Date is Required !</span>
+          </div>
+
+        </div>
+        <div class="col-xs-6 col-sm-6 col-lg-6 divinner ">
+          <!-- <div class="col-xs-6 divinner">
+             <div class="radio-inline-wrapper2">
+               <label class="radio-inline"><input type="radio" name="optradio">End</label>
+               <label class="radio-inline"><input type="radio" name="optradio">None</label>
+             </div>
+           </div>-->
+          <div class="col-xs-6 divinner divinner2">
+            <div class="datefieldcontainer">
+              <!-- <input class="datefieldcls" type="date" name="selected_date" [formControl]="dataForm.controls['enddate']"/>
+               <span class="openbuttoncls">
+                   <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                 </span>-->
+              <input type="text"
+                     placeholder="End Date"
+                     class="form-control"
+                     bsDatepicker
+                     [formControl]="dataForm.controls['enddate']"
+                     [minDate] = "isdate"
+              >
+            </div>
+            <span class="has-error" *ngIf ="dataForm.controls['enddate'].touched && !dataForm.controls['enddate'].valid">End Date is Required !</span>
+          </div>
+        </div>
+
+        <span class="has-error" *ngIf ="daterangeerror">{{daterangeerror}}</span>
+      </div>
+
+      <div class="form-group">
+        <label for="frequencycap" class="col-xs-12 lblform">Frequency Cap</label>
+        <div class="col-xs-12 divinner">
+          <div class="col-sm-8 col-xs-12 txtfield">
+            <input type="text" class="form-control" id="frequencycap" placeholder="" [formControl]="dataForm.controls['fcap']">
+          </div>
+          <div class="col-sm-4 col-xs-12 txtfield"><span>per instance</span></div>
+          <span class="has-error" *ngIf ="dataForm.controls['fcap'].touched && !dataForm.controls['fcap'].valid">Frequency Cap is Required !</span>
+        </div>
+      </div>
+      <div class="form-group btnformdivcls">
+        <button type="submit" class="btnbluedeep">Update</button>
+        <button type="button" class="btnblue" [routerLink]="['/campaignlists']">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!------end Body SECTION--->
+
+
+<!------Footer SECTION--->
+<app-footernew></app-footernew>
+<!--<footer class="footerdiv">
+  <div class="footerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+    <div class="footercopyright text-center">
+      <p>Copyright 2017 GeoAI Technologies, LLC. All Rights Reserved | <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">T & C</a></p>
+    </div>
+  </div>
+</footer>-->
+
+<!------End Footer SECTION--->
+

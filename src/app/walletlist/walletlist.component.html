@@ -1,0 +1,177 @@
+<!------HEADER SECTION--->
+
+<!--<header class="headerdiv">
+  <div class="headerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+  </div>
+  <div class="container-fluid menublock">
+    <div class="menudiv">
+      <nav class="navbar navbar-default">
+        &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
+        <div class="navbar-header">
+          <span class="responsivemenu">MENU</span>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <div class="clearfix"></div>
+        </div>
+        &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Mission control</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Default Rules</a></li>
+            <li class="active"><a [routerLink]="['/']">$Money</a></li>
+
+          </ul>
+        </div>
+        &lt;!&ndash; /.navbar-collapse &ndash;&gt;
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</header>-->
+<app-headernew></app-headernew>
+<!------end Header SECTION--->
+
+
+<!------Body SECTION--->
+
+
+
+
+<div class="adminmainwarpper">
+    <input type="text" placeholder="Search..." [(ngModel)]="filterval" #listFilter (keyup)="0" class="hide">
+    <div class="bodytopsearchlistwrapper">
+        <div class="bodytopactiondiv">
+           <!-- <div class="formblock topsearchlist">
+                <form class="form form-inline" role="form">
+                    <div class="form-group">
+                        <div class="col-xs-12 txtfield">
+                            <input type="text" placeholder="Search..." #listFilter (keyup)="0">
+                        </div>
+                    </div>
+                <div class="form-group dtrangecls">
+                    <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+                        <div class="col-xs-12 divinner">
+                            <div class="datefieldcontainer">
+                                <input class="datefieldcls" type="date" name="selected_date" />
+                                <span class="openbuttoncls">
+                  <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+                        <div class="col-xs-12 divinner">
+                            <div class="datefieldcontainer">
+                                <input class="datefieldcls" type="date" name="selected_date" />
+                                <span class="openbuttoncls">
+                  <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btnblack">Go</button>
+                    </div>
+                </form>
+            </div>-->
+            <div class="formblock topsearchlist">
+              <!--  <form class="form form-inline" role="form">-->
+                    <div class="form-grounewp">
+                        <div class="col-xs-12 txtfield">
+                            <input type="text" placeholder="Search..." [(ngModel)]="filterval1" (keyup)="searchbyval()">
+                        </div>
+                    </div>
+                <div class="form-grounewp">
+                    <div class="col-xs-12 txtfield">
+                        <select class="classic" (change)="searchbyval()" [(ngModel)]="filterval4">
+                            <option value="" selected>Filter By Type</option>
+                            <option value="wire">WIre Transfer</option>
+                            <option value="card">Card</option>
+                        </select>
+                    </div>
+                </div>
+                    <div class="form-grounewp dtrangecls hide">
+                        <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+                            <div class="col-xs-12 divinner">
+                                <div class="datefieldcontainer">
+                                    <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval2"/>
+                                    <span class="openbuttoncls">
+                  <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+                            <div class="col-xs-12 divinner">
+                                <div class="datefieldcontainer">
+                                    <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval3" />
+                                    <span class="openbuttoncls">
+                  <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  <!--  <div class="form-grounewp">
+                        <button type="submit" class="btnblack" (click)="searchbyval()">Go</button>
+                    </div>-->
+
+                <div class="clearfix"></div>
+             <!--   </form>-->
+            </div>
+        </div>
+    </div>
+
+  <div class="container-fluid bodymaindiv">
+    <div id="no-more-tables">
+      <table class="col-md-12 table-bordered table-striped table-condensed cf">
+        <thead class="cf">
+        <tr>
+          <th class="numeric text-center">#</th>
+          <th class="numeric text-center">Transaction Type</th>
+          <th class="numeric text-center">Transaction Amount</th>
+          <th class="numeric text-center">Transaction Id</th>
+          <th class="numeric text-center">Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let item of datalist| orderBy:'date'| usersearch:listFilter.value; let i=index">
+          <td data-title="campaign name" class=" text-center">{{i+1}}</td>
+          <td data-title="campaign name" class=" text-center">{{item.type}}</td>
+          <td data-title="Rem.Budget" class="numeric text-center">${{item.amount}}</td>
+          <td data-title="The CPM" class="numeric text-center">{{item.transaction_id}}</td>
+          <td data-title="The EPC" class="numeric text-center">{{showdate(item.date)}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!------End Body SECTION--->
+
+
+
+<!------Footer SECTION--->
+<app-footernew></app-footernew>
+<!--<footer class="footerdiv">
+  <div class="footerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+    <div class="footercopyright text-center">
+      <p>Copyright 2017 GeoAI Technologies, LLC. All Rights Reserved | <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">T & C</a></p>
+    </div>
+  </div>
+</footer>-->
+
+<!------End Footer SECTION--->

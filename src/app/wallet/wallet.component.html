@@ -1,0 +1,178 @@
+<!------HEADER SECTION--->
+
+<!--<header class="headerdiv">
+  <div class="headerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+    <div class="headerbtndiv">
+      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/accountdetails']">account Information</a>
+      <a href="javascript:void(0)" class="btnblue" (click)="logout()">Logout</a>
+    </div>
+  </div>
+  <div class="container-fluid menublock">
+    <div class="menudiv">
+      <nav class="navbar navbar-default">
+        &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
+        <div class="navbar-header">
+          <span class="responsivemenu">MENU</span>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <div class="clearfix"></div>
+        </div>
+        &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Mission control</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Default Rules</a></li>
+            <li class="active"><a [routerLink]="['/wallet']">$Money</a></li>
+
+          </ul>
+        </div>
+        &lt;!&ndash; /.navbar-collapse &ndash;&gt;
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</header>-->
+<app-headernew></app-headernew>
+<!------end Header SECTION--->
+
+
+<!------Body SECTION--->
+
+<div class="adminmainwarpper walletwrapper">
+  <div class="walletblock1">
+      <div class="container">
+        <div class="row walletwrapperprofile">
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 walletwrapperprofileleft">
+            <div class="walletprofileimgwrapper">
+              <img src="../../assets/images/walletprofileimg-default.jpg">
+            </div>
+          </div>
+          <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 walletwrapperprofileright">
+              <h1 *ngIf="userdetails">{{userdetails.firstname}} {{userdetails.lastname}}</h1>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="walletblock2wrapper">
+    <div class="container">
+      <div class="row walletblock2">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 walletblock2top">
+          <h2>Availale Balance</h2>
+          <h3 *ngIf="totalamt==0">$ 0</h3>
+          <h3 *ngIf="totalamt>0">$ {{totalamt}}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 walletblock2btn">
+          <a type="button" class="btnblue" [routerLink]="['/addmoney']">Add money</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="walletblock3wrapper">
+    <div class="container">
+      <h2>Wallet Activity</h2>
+      <div class="row walletblock3">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 walletblock3top">
+          <div class="generictable">
+            <table class="col-md-12 table-striped table-condensed cf">
+              <tbody *ngFor="let item of datalist| orderBy:'date':'reverse'; let i=index">
+                <tr *ngIf="i<5">
+                  <td class="text-center">
+                    <div class="iconwalletwrapper">
+                     <img src="../../assets/images/icon-card.png" *ngIf="item.type=='card'">
+                      <img src="../../assets/images/icon-waretransfer.png" *ngIf="item.type=='wire'">
+                    </div>
+                  </td>
+                  <td class="text-left">
+                    <span *ngIf="item.type=='card'">Money Added by Card<label>Txn ID : <span>{{item.transaction_id}}</span></label></span>
+                    <span *ngIf="item.type=='wire'">Money Added by Wire Transfer<label>Txn ID : <span>{{item.transaction_id}}</span></label></span>
+                  </td>
+                  <td class="numeric text-right"><span class="pricetxt">${{item.amount}}</span></td>
+                </tr>
+
+               <!-- <tr>
+                  <td class="text-center">
+                    <div class="iconwalletwrapper">
+                      <img src="../../assets/images/iconwallet.png">
+                    </div>
+                  </td>
+                  <td class="text-left"><span>Money Added <label>Txn ID : <span>218218021</span></label></span></td>
+                  <td class="numeric text-right"><span class="pricetxt">$20.00</span></td>
+                </tr>
+
+                <tr>
+                  <td class="text-center">
+                    <div class="iconwalletwrapper">
+                      <img src="../../assets/images/iconwallet.png">
+                    </div>
+                  </td>
+                  <td class="text-left"><span>Money Added <label>Txn ID : <span>218218021</span></label></span></td>
+                  <td class="numeric text-right"><span class="pricetxt">$20.00</span></td>
+                </tr>
+
+                <tr>
+                  <td class="text-center">
+                    <div class="iconwalletwrapper">
+                      <img src="../../assets/images/iconwallet.png">
+                    </div>
+                  </td>
+                  <td class="text-left"><span>Money Added <label>Txn ID : <span>218218021</span></label></span></td>
+                  <td class="numeric text-right"><span class="pricetxt">$20.00</span></td>
+                </tr>
+
+                <tr>
+                  <td class="text-center">
+                    <div class="iconwalletwrapper">
+                      <img src="../../assets/images/iconwallet.png">
+                    </div>
+                  </td>
+                  <td class="text-left"><span>Money Added <label>Txn ID : <span>218218021</span></label></span></td>
+                  <td class="numeric text-right"><span class="pricetxt">$20.00</span></td>
+                </tr>-->
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row walletblock3bottomwrapper text-center" *ngIf="datalist?.length>5">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 walletblock3bottom">
+          <div class="" >
+            <img src="../../assets/images/listdownarrow.png" [routerLink]="['/walletlist']">
+          </div>
+          <h3 >View More</h3>
+          <a type="button" class="btnbluedeep" [routerLink]="['/addmoney']">Add money</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!------End Body SECTION--->
+
+
+<!------Footer SECTION--->
+
+<!--<footer class="footerdiv">
+  <div class="footerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+    <div class="footercopyright text-center">
+      <p>Copyright 2017 GeoAI Technologies, LLC. All Rights Reserved | <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">T & C</a></p>
+    </div>
+  </div>
+</footer>-->
+<div class="footerinnerbody">
+  <app-footernew></app-footernew>
+</div>
+<!------End Footer SECTION--->

@@ -1,0 +1,149 @@
+<!------HEADER SECTION--->
+
+<!--<header class="headerdiv">
+  <div class="headerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+  </div>
+  <div class="container-fluid menublock">
+    <div class="menudiv">
+      <nav class="navbar navbar-default">
+        &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
+        <div class="navbar-header">
+          <span class="responsivemenu">MENU</span>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <div class="clearfix"></div>
+        </div>
+        &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Mission control</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
+            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Default Rules</a></li>
+            <li class="active"><a [routerLink]="['/']">$Money</a></li>
+
+          </ul>
+        </div>
+        &lt;!&ndash; /.navbar-collapse &ndash;&gt;
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</header>-->
+<app-headernew></app-headernew>
+<!------end Header SECTION--->
+
+
+
+<!------Body SECTION--->
+
+<div class="adminmainwarpper userinfowarpper">
+  <div class="formblock2">
+    <form class="form form-inline" role="form" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+      <div class="col-md-12 col-sm-12 userinfowarpperblock">
+        <div class="userinfoblock signup">
+          <h2>User Info</h2>
+          <div class="form-group">
+              <div class="col-md-5 col-sm-12 txtfield"><label>First Name</label></div>
+              <div class="col-md-7 col-sm-12 txtfield">
+                <input type="text" [formControl]="dataForm.controls['firstname']">
+                <span class="has-error" *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid">First Name is Required !</span>
+              </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-5 col-sm-12 txtfield"><label>Last Name</label></div>
+            <div class="col-md-7 col-sm-12 txtfield">
+              <input type="text" [formControl]="dataForm.controls['lastname']">
+              <span class="has-error" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid">Last Name is Required !</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-5 col-sm-12 txtfield"><label>Password:</label></div>
+            <div class="col-md-7 col-sm-12 txtfield">
+              <input type="password" class="form-control" [formControl]="dataForm.controls['password']"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-5 col-sm-12 txtfield"><label>Confirm  Password:</label></div>
+            <div class="col-md-7 col-sm-12 txtfield">
+              <input type="password" class="form-control" [formControl]="dataForm.controls['confpassword']"/>
+              <span class="has-error" *ngIf="passerror">{{passerror}}</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-5 col-sm-12 txtfield"><label>E-mail Address</label></div>
+            <div class="col-md-7 col-sm-12 txtfield">
+              <input type="text" [formControl]="dataForm.controls['email']" readonly>
+            </div>
+          </div>
+          <div *ngIf="cookiedetailsforalldetails_type==0">
+          <div class="form-group">
+            <div class="col-md-5 col-sm-12 txtfield"><label>Company Name</label></div>
+            <div class="col-md-7 col-sm-12 txtfield">
+              <input type="text" [formControl]="dataForm.controls['companyname']">
+              <span class="has-error" *ngIf ="dataForm.controls['companyname'].touched && !dataForm.controls['companyname'].valid">Company Name is Required !</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-5 col-sm-12 txtfield"><label>Country</label></div>
+            <div class="col-md-7 col-sm-12 txtfield">
+              <input type="text" [formControl]="dataForm.controls['country']">
+              <span class="has-error" *ngIf ="dataForm.controls['country'].touched && !dataForm.controls['country'].valid">Country is Required !</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-5 col-sm-12 txtfield"><label>Company Website</label></div>
+            <div class="col-md-7 col-sm-12 txtfield"><input type="text" [formControl]="dataForm.controls['companywebsite']">
+              <span class="has-error" *ngIf ="dataForm.controls['companywebsite'].touched && !dataForm.controls['companywebsite'].valid">Company Website is Required !</span></div>
+          </div>
+          <div class="form-group">
+              <div class="col-md-5 col-sm-12 txtfield"><label>City</label></div>
+              <div class="col-md-7 col-sm-12 txtfield"> <input type="text" [formControl]="dataForm.controls['city']">
+                <span class="has-error" *ngIf ="dataForm.controls['city'].touched && !dataForm.controls['city'].valid">City is Required !</span></div>
+          </div>
+          <div class="form-group">
+              <div class="col-md-5 col-sm-12 txtfield"><label>Your marketing budget</label></div>
+              <div class="col-md-7 col-sm-12 txtfield">
+                <!--<input type="text" [formControl]="dataForm.controls['marketingbudget']">-->
+                <select class="classic" [formControl]="dataForm.controls['marketingbudget']">
+                  <option value="1">$30-50k</option>
+                  <option value="2">$50-100k</option>
+                  <option value="3">$100-250k</option>
+                  <option value="4">$250-500k</option>
+                  <option value="5">$500k-1m</option>
+                </select>
+
+                <span class="has-error" *ngIf ="dataForm.controls['marketingbudget'].touched && !dataForm.controls['marketingbudget'].valid">Marketing Budget is Required !</span></div>
+            </div>
+        </div>
+        </div>
+        <div class="form-group btnformdivcls">
+          <button type="button" class="btnbluedeep" (click)="callcancel()">Cancel</button>
+          <button type="submit" class="btnblue">Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+<!------Footer SECTION--->
+<app-footernew></app-footernew>
+<!--<footer class="footerdiv">
+  <div class="footerlogodiv">
+    <div class="logowrapper">
+      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+    </div>
+    <div class="footercopyright text-center">
+      <p>Copyright 2017 GeoAI Technologies, LLC. All Rights Reserved | <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">T & C</a></p>
+    </div>
+  </div>
+</footer>-->
+
+<!------End Footer SECTION--->
