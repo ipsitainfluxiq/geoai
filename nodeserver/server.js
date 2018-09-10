@@ -438,7 +438,7 @@ app.get('/csvuploads',function (req,resp) {
     var csvData=[];
     var fs = require('fs'),
         path = require('path');
-    //  var filepath = '../src/assets/uploads/'+req.body.filenameis; //local
+  //  var filepath = '../src/assets/uploads/'+req.body.filenameis; //local
     var filepath = '../assets/uploads/'+req.body.filenameis; //server
     fs.createReadStream(filepath)
         .pipe(parse({delimiter: ','}))
@@ -605,7 +605,7 @@ app.get('/calluploads',function (req,resp) {
 
 app.get('/userlist',function (req,resp) {
 
-    var collection = db.collection('signupnew');
+    var collection = db.collection('ulist');
 
     collection.find().toArray(function(err, items) {
 
@@ -1888,7 +1888,7 @@ app.get('/getaudiencelist',function (req,resp) {
 
 app.get('/tokensave',function (req,resp) {
     var link = 'http://geofencedsp.com/assets/php/dataapi.php';
-    //   var link = 'http://simplyfi.influxiq.com/dataapi.php';
+ //   var link = 'http://simplyfi.influxiq.com/dataapi.php';
     request(link, function(error2, response, html2){
         if(!error2) {
             // console.log(JSON.parse(html2));
@@ -2593,9 +2593,9 @@ app.get('/login', function (req, resp) {
     var collection = db.collection('signupnew');
     collection.find({ email:req.body.email }).toArray(function(err, items){
         console.log('items'); //admin_login details shown here
-        console.log(items); //admin_login details shown here
-        //  console.log(items[0].password);
-        // console.log(hash);
+         console.log(items); //admin_login details shown here
+      //  console.log(items[0].password);
+       // console.log(hash);
         if(items.length==0){
             console.log('1');
             resp.send(JSON.stringify({'status':'error','msg':'Username invalid...'}));

@@ -1,9 +1,10 @@
 <header class="headerdiv">
   <div class="headerlogodiv">
     <div class="logowrapper">
-      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+      <a [routerLink]="['/campaignlists']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
     </div>
     <div class="headerbtndiv">
+      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/userlist']" *ngIf="cookiedetailsforalldetails_type==1">User List</a>
       <a href="javascript:void(0)" class="btnblue" [routerLink]="['/helpdesklist']" *ngIf="cookiedetailsforalldetails_type==1">Manage Helpdesk</a>
       <a href="javascript:void(0)" class="btnblue" [routerLink]="['/searchnew']">Add Audience</a>
       <a href="javascript:void(0)" class="btnblue" [routerLink]="['/userinformation']">account Information</a>

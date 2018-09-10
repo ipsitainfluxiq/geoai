@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CookieService, cookieServiceFactory} from 'angular2-cookie/core';
+import {CookieService} from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import {Commonservices} from '../app.commonservices' ;
@@ -19,16 +19,18 @@ export class HeaderComponent implements OnInit {
     public usernamedetail;
     public alldetailcookie: CookieService;
     public cookiedetailsforalldetails;
+    public cookiedetailsforalldetails_type;
 
     constructor(addcookie: CookieService, private _http: HttpClient, private router: Router, emailcookie: CookieService, private _commonservices: Commonservices, alldetailcookie: CookieService) {
         this.addcookie = addcookie ;
-        this.cookiedetails = this.addcookie.getObject('cookiedetails');
+        this.cookiedetails = this.addcookie.get('cookiedetails');
         this.emailcookie = emailcookie;
-        this.mailcookiedetails = this.emailcookie.getObject('mailcookiedetails');
+        this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
         console.log('from header --------> ' + this.mailcookiedetails);
         console.log('from header cookiedetails --------> ' + this.cookiedetails);
         this.alldetailcookie = alldetailcookie ;
-        this.cookiedetailsforalldetails = this.alldetailcookie.getObject('cookiedetailsforalldetails');
+        this.cookiedetailsforalldetails = this.alldetailcookie.get('cookiedetailsforalldetails');
+        this.cookiedetailsforalldetails_type = this.alldetailcookie.get('type');
 
         this.serverurl = _commonservices.url;
 
@@ -77,11 +79,11 @@ export class HeaderComponent implements OnInit {
         console.log('create new campaign');
         console.log('reset cookie');
 
-        this.cookiedetails = this.addcookie.getObject('cookiedetails');
-        this.mailcookiedetails = this.emailcookie.getObject('mailcookiedetails');
+        this.cookiedetails = this.addcookie.get('cookiedetails');
+        this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
 
-        this.addcookie.remove('cookiedetails');
-        this.cookiedetails = this.addcookie.getObject('cookiedetails'); // after remove you have to call the cookie again to update the value
+        this.addcookie.deleteAll('cookiedetails');
+        this.cookiedetails = this.addcookie.get('cookiedetails'); // after remove you have to call the cookie again to update the value
 
         this.router.navigateByUrl('/campaignsettings');
     }
@@ -90,11 +92,11 @@ export class HeaderComponent implements OnInit {
         console.log('create new campaign');
         console.log('reset cookie');
 
-        this.cookiedetails = this.addcookie.getObject('cookiedetails');
-        this.mailcookiedetails = this.emailcookie.getObject('mailcookiedetails');
+        this.cookiedetails = this.addcookie.get('cookiedetails');
+        this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
 
-        this.addcookie.remove('cookiedetails');
-        this.cookiedetails = this.addcookie.getObject('cookiedetails'); // after remove you have to call the cookie again to update the value
+        this.addcookie.deleteAll('cookiedetails');
+        this.cookiedetails = this.addcookie.get('cookiedetails'); // after remove you have to call the cookie again to update the value
         console.log('After remove '+this.cookiedetails);
         this.router.navigateByUrl('/viewability');
     }
@@ -104,19 +106,19 @@ export class HeaderComponent implements OnInit {
         console.log('create new campaign');
         console.log('reset cookie');
 
-        this.cookiedetails = this.addcookie.getObject('cookiedetails');
-        this.mailcookiedetails = this.emailcookie.getObject('mailcookiedetails');
+        this.cookiedetails = this.addcookie.get('cookiedetails');
+        this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
 
-        this.addcookie.remove('cookiedetails');
-        this.cookiedetails = this.addcookie.getObject('cookiedetails'); // after remove you have to call the cookie again to update the value
+        this.addcookie.deleteAll('cookiedetails');
+        this.cookiedetails = this.addcookie.get('cookiedetails'); // after remove you have to call the cookie again to update the value
         console.log('After remove '+this.cookiedetails);
         this.router.navigateByUrl('/campaignadd');
     }
 
 
     logout() {
-        this.mailcookiedetails = this.emailcookie.getObject('mailcookiedetails');
-        this.emailcookie.removeAll();
+        this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
+        this.emailcookie.deleteAll();
         this.router.navigateByUrl('');
     }
 

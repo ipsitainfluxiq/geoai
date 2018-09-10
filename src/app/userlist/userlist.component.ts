@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import {CookieService} from 'angular2-cookie/core';
+import {CookieService} from 'ngx-cookie-service';
 import {Commonservices} from '../app.commonservices' ;
 
 @Component({
@@ -26,7 +26,7 @@ export class UserlistComponent implements OnInit {
 
     constructor(private _http: HttpClient, private router: Router, private route: ActivatedRoute, addcookie: CookieService, private _commonservices: Commonservices) {
         this.addcookie = addcookie ;
-        this.cookiedetails = this.addcookie.getObject('cookiedetails');
+        this.cookiedetails = this.addcookie.get('cookiedetails');
         this.showrows = 5;
         this.pageno = 1;
         this.pagestart = 0;

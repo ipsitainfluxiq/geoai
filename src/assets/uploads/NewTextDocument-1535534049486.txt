@@ -1,0 +1,21 @@
+db.users.find( {firstname:'Iron'} )
+npm run ng build --prod
+npm run ng g component mastergroupadd
+ng build --base-href /
+--------------------------------------------------------------------------------------------------------------------------
+login as: developers
+developers@influxiq.com's password:
+Last login: Fri Aug  3 04:30:53 2018 from 103.66.8.195
+developers@ip-104-238-98-227 [~]# sudo su
+root@ip-104-238-98-227 [/home/developers]# cd ..
+root@ip-104-238-98-227 [/home]# cd /home/influxiq
+root@ip-104-238-98-227 [/home/influxiq]# cd nexhealthcarenode/nodeserver        root@ip-104-238-98-227 [/home/influxiq/nexhealthcarenode/nodeserver]# forever stop server.js
+^[[Ainfo:    Forever stopped process:
+    uid  command             script                                                forever pid  id logfile                 uptime
+[0] _oAG /usr/local/bin/node /home/influxiq/nexhealthcarenode/nodeserver/server.js 5269    5280    /root/.forever/_oAG.log 0:0:41:0.490
+root@ip-104-238-98-227 [/home/influxiq/nexhealthcarenode/nodeserver]# forever start --minUptime 10 --spinSleepTime 10 /home/influxiq/nexhealthcarenode/nodeserver/server.js
+info:    Forever processing file: /home/influxiq/nexhealthcarenode/nodeserver/server.js
+root@ip-104-238-98-227 [/home/influxiq/nexhealthcarenode/nodeserver]#
+
+
+--------------------------------------------------------------------

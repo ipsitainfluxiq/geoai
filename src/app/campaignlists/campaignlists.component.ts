@@ -45,6 +45,7 @@ export class CampaignlistsComponent implements OnInit {
         console.log(this.cookiedetailsforalldetails);
         this.enddate = moment().format('MM-DD-YYYY');
         this.startdate = moment().subtract(1, 'months').format('MM-DD-YYYY');
+        console.log( this.startdate);
         if(this.cookiedetailsforalldetails_type == 1 || this.cookiedetailsforalldetails_type == 2){ //admin
         this.getcampaignlist();
         }

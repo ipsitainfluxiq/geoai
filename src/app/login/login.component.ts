@@ -33,7 +33,9 @@ export class LoginComponent implements OnInit {
        /* if (this.mailcookiedetails != null || this.mailcookiedetails != '') {
             console.log('login mailcookiedetails----------------------');
             this.router.navigateByUrl('/campaignlists');
-
+        }*/
+      /*  if (this.mailcookiedetails != null) {
+            this.router.navigateByUrl('/campaignlists');
         }*/
     }
 
