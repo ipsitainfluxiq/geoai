@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {Commonservices} from '../app.commonservices' ;
 import {CookieService} from 'ngx-cookie-service';
 import {DomSanitizer} from '@angular/platform-browser';
+import { FormGroup, Validators, FormControl, FormBuilder} from '@angular/forms';
 declare var google: any;
 declare  var $;
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -26,6 +27,14 @@ export class SearchnewComponent implements OnInit {
     public tabopen: any = 1;
     public topmenu1: boolean = true;
     public statesubmenu: boolean = false;
+    public agesubmenu: boolean = false;
+    public incomesubmenu: boolean = false;
+    public homevaluesubmenu: boolean = false;
+    public residencevaluesubmenu: boolean = false;
+    public medianincomesubmenu: boolean = false;
+    public medianhomesubmenu: boolean = false;
+    public maritalsubmenu: boolean = false;
+    public networthsubmenu: boolean = false;
     public topmenu2: boolean = false;
     public consumer_value: any;
     public  geodiv: any = 0;
@@ -66,6 +75,12 @@ export class SearchnewComponent implements OnInit {
     public addresssubmenu: boolean = false;
     public addressval: any;
     public addressdiv: any = 0;
+    public agediv: any = 0;
+    public incomediv: any = 0;
+    public medianhomevaluediv: any = 0;
+    public medianhomeincomediv: any = 0;
+    public genderdiv: any = 0;
+    public individualhouseholddiv: any = 0;
     public radiusdiv: any = 0;
     public errorvalgeomiles: any;
     public geomiles: any;
@@ -77,6 +92,7 @@ export class SearchnewComponent implements OnInit {
     public geomilesorshapeslength: any;
     public radiussubmenu: boolean = false;
     public modalmapShown: boolean = false;
+    public Modal_submit_search_div: boolean = false;
     map: any;
     drawingManager: any;
     static totalshapes = [];
@@ -90,7 +106,7 @@ export class SearchnewComponent implements OnInit {
     static sw_lng;
     static poly_arr = [];
     static poly_arr1 = [];
-    public searchresult: any;
+    public searchresult: any = null;
     public ModalShownforsearch: boolean = false;
     public ModalShownforbusinesssearch: boolean = false;
     public totalshapeslength: any;
@@ -113,9 +129,53 @@ export class SearchnewComponent implements OnInit {
     public pi: any;
     public r_earth: any;
     public myLatLng: any;
+    public age_list: any = [];
+    public selected_agev: any = [];
+    public selected_age: any = [];
+    public Ind_Age_Codearr: any;
+    public Ind_Gender_Code: any = '';
+    public headofhouseholdonly: any;
+    /*#######################################*/
+    public incomelist: any = [];
+    public selected_income: any = [];
+    public selected_incomev: any = [];
+    public selected_incomearr: any;
+    public homevaluediv: any = 0;
+    public networthdiv: any = 0;
+    public maritaliv: any = 0;
+    public residencediv: any = 0;
+    public selected_homevalue: any = [];
+    public selected_homevaluev: any = [];
+    public selected_homevaluearr: any;
+    public selected_medianincome: any = [];
+    public selected_medianincomev: any = [];
+    public selected_medianincomearr: any;
+    public selected_medianhome: any = [];
+    public selected_medianhomev: any = [];
+    public selected_medianhomearr: any;
+    public median_income_list: any = [];
+    public home_value_list: any = [];
+    public median_home_value_list: any = [];
+    public marital_list: any = [];
+    public residence_list: any = [];
+    public networth_list: any = [];
+    public selected_residence: any = [];
+    public selected_residencev: any = [];
+    public selected_residencearr: any;
+    public selected_marital: any = [];
+    public selected_maritalv: any = [];
+    public selected_maritalarr: any;
+    public selected_networth: any = [];
+    public selected_networthv: any = [];
+    public selected_networtharr: any;
+    public dataForm: FormGroup;
+    public fb;
+    public a;
+    public count_loop;
+    public i;
 
-
-    constructor(addcookie: CookieService, emailcookie: CookieService,  private _http: HttpClient, private router: Router, private route: ActivatedRoute, private _commonservices: Commonservices, public _sanitizer: DomSanitizer) {
+    constructor(addcookie: CookieService, emailcookie: CookieService,  private _http: HttpClient, private router: Router, private route: ActivatedRoute, private _commonservices: Commonservices, public _sanitizer: DomSanitizer, fb: FormBuilder) {
+        this.fb = fb;
         this.addcookie = addcookie;
         this.cookiedetails = this.addcookie.get('cookiedetails');
         this.emailcookie = emailcookie;
@@ -132,6 +192,148 @@ export class SearchnewComponent implements OnInit {
         this.r_earth = 6378;
         this.csverroris = null;
         this.myLatLng = { lat: 40.785091, lng: -73.968285 };
+        this.age_list = [
+            {'code': 'A', 'value': 'Between 18 to 25'},
+            {'code': 'B', 'value': 'Between 26 to 39'},
+            {'code': 'C', 'value': 'Between 40 to 49'},
+            {'code': 'D', 'value': 'Between 50 to 64'},
+            {'code': 'E', 'value': 'Between 65 to 70'},
+            {'code': 'F', 'value': 'Between 71 to 74'},
+            {'code': 'G', 'value': 'Over 75'},
+            {'code': 'U', 'value': 'Unknown'}
+        ];
+        /*###################################################################################*/
+        this.incomelist = [
+            {'code': '1', 'value': 'Up to $10,000'},
+            {'code': '2', 'value': '$10,000 to $14,999'},
+            {'code': '3', 'value': '$15,000 to $19,999'},
+            {'code': '4', 'value': '$20,000 to $24,999'},
+            {'code': '5', 'value': '$25,000 to $29,999'},
+            {'code': '6', 'value': '$30,000 to $34,999'},
+            {'code': '7', 'value': '$35,000 to $39,999'},
+            {'code': '8', 'value': '$40,000 to $44,999'},
+            {'code': '9', 'value': '$45,000 to $49,999'},
+            {'code': 'A', 'value': '$50,000 to $54,999'},
+            {'code': 'B', 'value': '$55,000 to $59,999'},
+            {'code': 'C', 'value': '$60,000 to $64,999'},
+            {'code': 'D', 'value': '$65,000 to $74,999'},
+            {'code': 'E', 'value': '$75,000 to $99,999'},
+            {'code': 'F', 'value': '$100,000 to $149,999'},
+            {'code': 'G', 'value': '$150,000 to $174,999'},
+            {'code': 'H', 'value': '$175,000 to $199,999'},
+            {'code': 'I', 'value': '$200,000 to $249,999'},
+            {'code': 'J', 'value': '$250,000 to $499,999'},
+            {'code': 'K', 'value': '$500,000 to $999,999'},
+            {'code': 'L', 'value': '$1,000,000 to $1,999,999'},
+            {'code': 'M', 'value': '$2,000,000 to $4,999,999'},
+            {'code': 'N', 'value': 'Over $5,000,000'},
+        ];
+
+        this.median_income_list = [
+            {'code': '1', 'value': 'Up to $10,000'},
+            {'code': '2', 'value': '$10,000 to $14,999'},
+            {'code': '3', 'value': '$15,000 to $19,999'},
+            {'code': '4', 'value': '$20,000 to $24,999'},
+            {'code': '5', 'value': '$25,000 to $29,999'},
+            {'code': '6', 'value': '$30,000 to $34,999'},
+            {'code': '7', 'value': '$35,000 to $39,999'},
+            {'code': '8', 'value': '$40,000 to $44,999'},
+            {'code': '9', 'value': '$45,000 to $49,999'},
+            {'code': 'A', 'value': '$50,000 to $54,999'},
+            {'code': 'B', 'value': '$55,000 to $59,999'},
+            {'code': 'C', 'value': '$60,000 to $64,999'},
+            {'code': 'D', 'value': '$65,000 to $74,999'},
+            {'code': 'E', 'value': '$75,000 to $99,999'},
+            {'code': 'F', 'value': '$100,000 to $149,999'},
+            {'code': 'G', 'value': '$150,000 to $174,999'},
+            {'code': 'H', 'value': '$175,000 to $199,999'},
+            {'code': 'I', 'value': '$200,000 to $249,999'},
+            {'code': 'J', 'value': '$250,000 or More'}
+        ];
+
+        this.networth_list = [
+            {'code': 'A', 'value': 'Up to $30,000'},
+            {'code': 'B', 'value': '$30,001 to $100,000'},
+            {'code': 'C', 'value': '$100,001 to $500,000'},
+            {'code': 'D', 'value': '$500,001 to $1,500,000'},
+            {'code': 'E', 'value': 'Over $1,500,000'}
+        ];
+
+        this.home_value_list = [
+            {'code': 'A', 'value': 'Up to $24,999'},
+            {'code': 'B', 'value': '$25,000 to $49,999'},
+            {'code': 'C', 'value': '$50,000 to $74,999'},
+            {'code': 'D', 'value': '$75,000 to $99,999'},
+            {'code': 'E', 'value': '$100,000  to $124,999'},
+            {'code': 'F', 'value': '$125,000 to $149,999'},
+            {'code': 'G', 'value': '$150,000 to $174,999'},
+            {'code': 'H', 'value': '$$175,000 to $199,999'},
+            {'code': 'I', 'value': '$200,000 to $224,999'},
+            {'code': 'J', 'value': '$225,000 to $249,999'},
+            {'code': 'K', 'value': '$250,000 to $274,999'},
+            {'code': 'L', 'value': '$275,000 to $299,999'},
+            {'code': 'M', 'value': '$300,000 to $349,999'},
+            {'code': 'N', 'value': '$350,000 to $399,999'},
+            {'code': 'O', 'value': '$400,000 to $449,999'},
+            {'code': 'P', 'value': '$450,000 to $449,999'},
+            {'code': 'Q', 'value': '$500,000 to $749,999'},
+            {'code': 'R', 'value': '$750,000 to $999,999'},
+            {'code': 'S', 'value': '$1,000,000 to $1,499,999'},
+            {'code': 'T', 'value': '$1,500,000 to $2,499,999'},
+            {'code': 'U', 'value': '$2,500,000 to $4,999,999'},
+            {'code': 'V', 'value': '$5,000,000 to $9,999,999'},
+            {'code': 'W', 'value': 'Over $10,000,000'}
+        ];
+        this.median_home_value_list = [
+            {'code': '1', 'value': 'Up to $10,000'},
+            {'code': '2', 'value': '$10,000 to $24,999'},
+            {'code': '3', 'value': '$25,000 to $49,999'},
+            {'code': '4', 'value': '$50,000 to $74,999'},
+            {'code': '5', 'value': '$75,000 to $99,999'},
+            {'code': '6', 'value': '$100,000  to $124,999'},
+            {'code': '7', 'value': '$125,000 to $149,999'},
+            {'code': '8', 'value': '$150,000 to $174,999'},
+            {'code': '9', 'value': '$$175,000 to $199,999'},
+            {'code': 'A', 'value': '$200,000 to $224,999'},
+            {'code': 'B', 'value': '$225,000 to $249,999'},
+            {'code': 'C', 'value': '$250,000 to $274,999'},
+            {'code': 'D', 'value': '$275,000 to $299,999'},
+            {'code': 'E', 'value': '$300,000 to $349,999'},
+            {'code': 'F', 'value': '$350,000 to $399,999'},
+            {'code': 'G', 'value': '$400,000 to $449,999'},
+            {'code': 'H', 'value': '$450,000 to $449,999'},
+            {'code': 'I', 'value': '$500,000 to $749,999'},
+            {'code': 'J', 'value': '$750,000 to $999,999'},
+            {'code': 'K', 'value': '$1,000,000 or More'}
+        ];
+        this.marital_list = [
+            {'code': 'A', 'value': 'Inferred Married'},
+            {'code': 'B', 'value': 'Inferred Single'},
+            {'code': 'M', 'value': 'Married'},
+            {'code': 'S', 'value': 'Single'}
+        ];
+
+        this.age_list = [
+            {'code': 'A', 'value': 'Between 18 to 25'},
+            {'code': 'B', 'value': 'Between 26 to 39'},
+            {'code': 'C', 'value': 'Between 40 to 49'},
+            {'code': 'D', 'value': 'Between 50 to 64'},
+            {'code': 'E', 'value': 'Between 65 to 70'},
+            {'code': 'F', 'value': 'Between 71 to 74'},
+            {'code': 'G', 'value': 'Over 75'},
+            {'code': 'U', 'value': 'Unknown'}
+        ];
+
+        this.residence_list = [
+            {'code': 'A', 'value': 'Up to 1 Year'},
+            {'code': 'B', 'value': '1 to 2 Years'},
+            {'code': 'C', 'value': '3 to 5 Years'},
+            {'code': 'D', 'value': '6 to 9 Years'},
+            {'code': 'E', 'value': '10 to 14 Years'},
+            {'code': 'F', 'value': '15 Years or more'},
+            {'code': 'U', 'value': 'Unknown'}
+        ];
+
     }
     ngOnInit() {
         /*this.map = new google.maps.Map(document.getElementById('map'), {
@@ -143,6 +345,10 @@ export class SearchnewComponent implements OnInit {
             filterExtensions: false,
             allowedExtensions: ['jpg', 'png', 'jpeg']
         };
+        this.dataForm = this.fb.group({
+            audiencename: ['', Validators.required],
+            audiencedescription: ['', Validators.required]
+        });
     }
     onUploadOutput(output: UploadOutput): void {
         if (output.type === 'allAddedToQueue') {
@@ -354,6 +560,7 @@ export class SearchnewComponent implements OnInit {
                         }
                         totalshapearr.push(obj);
                     }
+                    console.log('this.callpolygon(totalshapearr11111111);');
                     this.callpolygon(totalshapearr);
                 }
                 SearchnewComponent.totalshapes=[];
@@ -408,6 +615,14 @@ export class SearchnewComponent implements OnInit {
         this.addressdiv = 0;
         this.radiusdiv = 0;
         this.statesubmenu = false;
+        this.agesubmenu = false;
+        this.incomesubmenu = false;
+        this.homevaluesubmenu = false;
+        this.residencevaluesubmenu = false;
+        this.medianincomesubmenu = false;
+        this.medianhomesubmenu = false;
+        this.maritalsubmenu = false;
+        this.networthsubmenu = false;
         this.citysubmenu = false;
         this.countrysubmenu = false;
         this.zipsubmenu = false;
@@ -436,6 +651,19 @@ export class SearchnewComponent implements OnInit {
         SearchnewComponent.totalshapesnew=[];
         SearchnewComponent.totalshapes=[];
         this.totalshapesnew = null;
+        this.Ind_Gender_Code = '';
+        this.headofhouseholdonly = null;
+        this.selected_age = [];
+        this.selected_income = [];
+        this.selected_homevalue = [];
+        this.selected_medianincome = [];
+        this.selected_medianhome = [];
+        this.selected_residence = [];
+        this.selected_marital = [];
+        this.selected_networth = [];
+        this.geomiles = null;
+        this.geoaddress = null;
+        this.geozip = null;
         /*for(let i in this.usstates) {
         $('#state_' +this.usstates[i].attr_id).removeClass('selectedclass');
         }*/
@@ -527,7 +755,84 @@ export class SearchnewComponent implements OnInit {
         this.countrydiv = 0;
         this.addressdiv = 0;
     }
-
+    openagediv() {
+        this.agediv = 1;
+        this.genderdiv = 0;
+        this.individualhouseholddiv = 0;
+    }
+    opengenderdiv() {
+        this.genderdiv = 1;
+        this.agediv = 0;
+        this.individualhouseholddiv = 0;
+    }
+    openindhouseholddiv() {
+        this.individualhouseholddiv = 1;
+        this.genderdiv = 0;
+        this.agediv = 0;
+    }
+    openincomediv() {
+        this.incomediv = 1;
+        this.homevaluediv = 0;
+        this.medianhomeincomediv = 0;
+        this.medianhomevaluediv = 0;
+        this.residencediv = 0;
+        this.maritaliv = 0;
+        this.networthdiv = 0;
+    }
+    openhomevaluediv() {
+        this.homevaluediv = 1;
+        this.incomediv = 0;
+        this.medianhomeincomediv = 0;
+        this.medianhomevaluediv = 0;
+        this.residencediv = 0;
+        this.maritaliv = 0;
+        this.networthdiv = 0;
+    }
+    openmedianhomeincomediv() {
+        this.medianhomeincomediv = 1;
+        this.incomediv = 0;
+        this.homevaluediv = 0;
+        this.medianhomevaluediv = 0;
+        this.residencediv = 0;
+        this.maritaliv = 0;
+        this.networthdiv = 0;
+    }
+    openmedianhomevaluediv() {
+        this.medianhomevaluediv = 1;
+        this.incomediv = 0;
+        this.homevaluediv = 0;
+        this.medianhomeincomediv = 0;
+        this.residencediv = 0;
+        this.maritaliv = 0;
+        this.networthdiv = 0;
+    }
+    openresidencediv() {
+        this.residencediv = 1;
+        this.medianhomevaluediv = 0;
+        this.incomediv = 0;
+        this.homevaluediv = 0;
+        this.medianhomeincomediv = 0;
+        this.maritaliv = 0;
+        this.networthdiv = 0;
+    }
+    openmaritaldiv() {
+        this.maritaliv = 1;
+        this.residencediv = 0;
+        this.medianhomevaluediv = 0;
+        this.incomediv = 0;
+        this.homevaluediv = 0;
+        this.medianhomeincomediv = 0;
+        this.networthdiv = 0;
+    }
+    opennetworthdiv() {
+        this.networthdiv = 1;
+        this.maritaliv = 0;
+        this.residencediv = 0;
+        this.medianhomevaluediv = 0;
+        this.incomediv = 0;
+        this.homevaluediv = 0;
+        this.medianhomeincomediv = 0;
+    }
     getusstates() {
         let link = this.serverurl + 'getusastates';
         this._http.get(link)
@@ -562,6 +867,247 @@ export class SearchnewComponent implements OnInit {
                 console.log('Oooops!');
             });
     }
+    /*genderaddnumber(){
+        ind_Gender_Code
+    }*/
+
+    addtoagelist(id, name , item) {
+        console.log('before');
+        console.log(this.selected_age);
+        let tempvar= id;
+        let indexval: any = this.selected_agev.indexOf(tempvar);
+        console.log(' indexval is ' + indexval);
+        if (indexval == -1) {
+            this.selected_age.push({attr_id: id, attr_name: name});
+            this.selected_agev.push( id);
+        }
+        if(this.selected_age.length>0){
+            this.agesubmenu = true;
+        }
+       /* else {
+            this.selected_age.splice(indexval, 1);
+            this.selected_agev.splice(indexval, 1);
+        }
+        $('#age_' + id).toggleClass('selectedclass');*/
+        console.log('after');
+        console.log(this.selected_age);
+    }
+    removefromagelist(id, name , item){
+        let tempvar= id;
+        let indexval: any = this.selected_agev.indexOf(tempvar);
+        this.selected_age.splice(indexval, 1);
+        this.selected_agev.splice(indexval, 1);
+        if(this.selected_age.length==0){
+            this.agesubmenu = false;
+        }
+    }
+    addtoincomelist(id, name, item) {
+        console.log('before');
+        console.log(this.selected_income);
+        let tempvar= id;
+        let indexval: any = this.selected_incomev.indexOf(tempvar);
+        console.log(' indexval is ' + indexval);
+        if (indexval == -1) {
+            this.selected_income.push({attr_id: id, attr_name: name});
+            this.selected_incomev.push( id);
+        }
+        /*else {
+            this.selected_income.splice(indexval, 1);
+            this.selected_incomev.splice(indexval, 1);
+        }*/
+      //  $('#income_' + id).toggleClass('selectedclass');
+       // console.log('after');
+       // console.log(this.selected_income);
+        if(this.selected_income.length>0){
+            this.incomesubmenu = true;
+        }
+    }
+    removefromincomelist(id, name , item){
+        let tempvar= id;
+        let indexval: any = this.selected_incomev.indexOf(tempvar);
+        this.selected_income.splice(indexval, 1);
+        this.selected_incomev.splice(indexval, 1);
+        if(this.selected_income.length==0){
+            this.incomesubmenu = false;
+        }
+    }
+    addtohomevaluelist(id, name, item) {
+        console.log('before');
+        console.log(this.selected_homevalue);
+        let tempvar= id;
+        let indexval: any = this.selected_homevaluev.indexOf(tempvar);
+        console.log(' indexval is ' + indexval);
+        if (indexval == -1) {
+            this.selected_homevalue.push({attr_id: id, attr_name: name});
+            this.selected_homevaluev.push( id);
+        }
+        if(this.selected_homevalue.length>0){
+            this.homevaluesubmenu = true;
+        }
+        /* else {
+            this.selected_homevalue.splice(indexval, 1);
+            this.selected_homevaluev.splice(indexval, 1);
+        }
+        $('#homevalue_' + id).toggleClass('selectedclass');
+        console.log('after');
+        console.log(this.selected_income);*/
+    }
+    removefromhomevaluelist(id, name , item){
+        let tempvar= id;
+        let indexval: any = this.selected_homevaluev.indexOf(tempvar);
+        this.selected_homevalue.splice(indexval, 1);
+        this.selected_homevaluev.splice(indexval, 1);
+        if(this.selected_homevalue.length==0){
+            this.homevaluesubmenu = false;
+        }
+    }
+
+    addtoresidence_list(id, name, item) {
+        console.log(this.selected_residence);
+        let tempvar= id;
+        let indexval: any = this.selected_residencev.indexOf(tempvar);
+        if (indexval == -1) {
+            this.selected_residence.push({attr_id: id, attr_name: name});
+            this.selected_residencev.push( id);
+        }
+        if(this.selected_residence.length>0){
+            this.residencevaluesubmenu = true;
+        }
+       /* else {
+            this.selected_residence.splice(indexval, 1);
+            this.selected_residencev.splice(indexval, 1);
+        }
+        $('#residence_' + id).toggleClass('selectedclass');
+        console.log('after');
+        console.log(this.selected_residence);*/
+    }
+
+    removefromresidence_list(id, name , item){
+
+        let tempvar= id;
+        let indexval: any = this.selected_residencev.indexOf(tempvar);
+        this.selected_residence.splice(indexval, 1);
+        this.selected_residencev.splice(indexval, 1);
+        if(this.selected_residence.length==0){
+            this.residencevaluesubmenu = false;
+        }
+    }
+
+    addtomedianincome_list(id, name, item) {
+    //    console.log(this.selected_medianincome);
+        let tempvar= id;
+        let indexval: any = this.selected_medianincome.indexOf(tempvar);
+      //  console.log(' indexval is ' + indexval);
+        if (indexval == -1) {
+            this.selected_medianincome.push({attr_id: id, attr_name: name});
+            this.selected_medianincomev.push( id);
+        }
+       /* else {
+            this.selected_medianincome.splice(indexval, 1);
+            this.selected_medianincomev.splice(indexval, 1);
+        }
+        $('#medianincomevalue_' + id).toggleClass('selectedclass');
+        console.log('after');
+        console.log(this.selected_medianincome);*/
+        if(this.selected_medianincome.length>0){
+            this.medianincomesubmenu = true;
+        }
+    }
+    removefrommedianincome_list(id, name , item){
+        let tempvar= id;
+        let indexval: any = this.selected_medianincomev.indexOf(tempvar);
+        this.selected_medianincome.splice(indexval, 1);
+        this.selected_medianincomev.splice(indexval, 1);
+        if(this.selected_medianincome.length==0){
+            this.medianincomesubmenu = false;
+        }
+    }
+
+    addtomedianhome_list(id, name, item) {
+        let tempvar= id;
+        let indexval: any = this.selected_medianhomev.indexOf(tempvar);
+        console.log(' indexval is ' + indexval);
+        if (indexval == -1) {
+            this.selected_medianhome.push({attr_id: id, attr_name: name});
+            this.selected_medianhomev.push( id);
+        }
+      /*  else {
+            this.selected_medianhome.splice(indexval, 1);
+            this.selected_medianhomev.splice(indexval, 1);
+        }
+        $('#medianhomevalue_' + id).toggleClass('selectedclass');
+        console.log('after');
+        console.log(this.selected_medianhome);*/
+        if(this.selected_medianhome.length>0){
+            this.medianhomesubmenu = true;
+        }
+    }
+    removefrommedianhome_list(id, name , item){
+        let tempvar= id;
+        let indexval: any = this.selected_medianhomev.indexOf(tempvar);
+        this.selected_medianhome.splice(indexval, 1);
+        this.selected_medianhomev.splice(indexval, 1);
+        if(this.selected_medianhome.length==0){
+            this.medianhomesubmenu = false;
+        }
+    }
+    addtomarital_list(id, name, item) {
+        console.log(this.selected_marital);
+        let tempvar= id;
+        let indexval: any = this.selected_maritalv.indexOf(tempvar);
+        console.log(' indexval is ' + indexval);
+        if (indexval == -1) {
+            this.selected_marital.push({attr_id: id, attr_name: name});
+            this.selected_maritalv.push( id);
+        }
+        if(this.selected_marital.length>0){
+            this.maritalsubmenu = true;
+        }
+       /* else {
+            this.selected_marital.splice(indexval, 1);
+            this.selected_maritalv.splice(indexval, 1);
+        }
+        $('#marital_' + id).toggleClass('selectedclass');
+        console.log('after');
+        console.log(this.selected_marital);*/
+    }
+    removefrommarital_list(id, name , item){
+        let tempvar= id;
+        let indexval: any = this.selected_maritalv.indexOf(tempvar);
+        this.selected_marital.splice(indexval, 1);
+        this.selected_maritalv.splice(indexval, 1);
+        if(this.selected_marital.length==0){
+            this.maritalsubmenu = false;
+        }
+    }
+    addtonetworth_list(id, name, item) {
+        let tempvar= id;
+        let indexval: any = this.selected_networthv.indexOf(tempvar);
+        console.log(' indexval is ' + indexval);
+        if (indexval == -1) {
+            this.selected_networth.push({attr_id: id, attr_name: name});
+            this.selected_networthv.push( id);
+        }
+       /* else {
+            this.selected_networth.splice(indexval, 1);
+            this.selected_networthv.splice(indexval, 1);
+        }
+        $('#networth_' + id).toggleClass('selectedclass');
+        console.log('after');
+        console.log(this.selected_networth);*/
+        if(this.selected_networth.length>0){
+            this.networthsubmenu = true;
+        }
+    }
+    removefromnetworth_list(id, name , item){
+        let tempvar= id;
+        let indexval: any = this.selected_networthv.indexOf(tempvar);
+        this.selected_networth.splice(indexval, 1);
+        this.selected_networthv.splice(indexval, 1);
+        if(this.selected_networth.length==0){
+            this.networthsubmenu = false;
+        }
+    }
     callforsearch() {
         this.selected_geoshapes = null;
         this.zipsubmenu = false;
@@ -574,6 +1120,15 @@ export class SearchnewComponent implements OnInit {
         this.selected_ziparr = null;
         this.geomilesorshapeslength = null;
         this.totalshapeslength = 0;
+        this.Ind_Age_Codearr = null;
+        this.selected_incomearr = null;
+        this.selected_homevaluearr = null;
+        this.selected_medianincomearr = null;
+        this.selected_medianhomearr = null;
+        this.selected_residencearr = null;
+        this.selected_maritalarr = null;
+        this.selected_networtharr = null;
+
         var flag = 0;
         console.log('SearchnewComponent.totalshapes just before search');
         console.log(SearchnewComponent.totalshapes);
@@ -629,6 +1184,46 @@ export class SearchnewComponent implements OnInit {
         for (let i in this.selected_zip) {
             this.selected_ziparr = this.selected_ziparr + ',' + this.selected_zip[i];
         }
+        if (this.selected_age != null) {
+            for (let i in this.selected_age) {
+                this.Ind_Age_Codearr = this.Ind_Age_Codearr + ',' + this.selected_age[i].attr_id;
+            }
+        }
+        if (this.selected_income != null) {
+            for (let i in this.selected_income) {
+                this.selected_incomearr = this.selected_incomearr + ',' + this.selected_income[i].attr_id;
+            }
+        }
+        if (this.selected_homevalue != null) {
+            for (let i in this.selected_homevalue) {
+                this.selected_homevaluearr = this.selected_homevaluearr + ',' + this.selected_homevalue[i].attr_id;
+            }
+        }
+        if (this.selected_medianincome != null) {
+            for (let i in this.selected_medianincome) {
+                this.selected_medianincomearr = this.selected_medianincomearr + ',' + this.selected_medianincome[i].attr_id;
+            }
+        }
+        if (this.selected_medianhome != null) {
+            for (let i in this.selected_medianhome) {
+                this.selected_medianhomearr = this.selected_medianhomearr + ',' + this.selected_medianhome[i].attr_id;
+            }
+        }
+        if (this.selected_residence != null) {
+            for (let i in this.selected_residence) {
+                this.selected_residencearr = this.selected_residencearr + ',' + this.selected_residence[i].attr_id;
+            }
+        }
+        if (this.selected_marital != null) {
+            for (let i in this.selected_marital) {
+                this.selected_maritalarr = this.selected_maritalarr + ',' + this.selected_marital[i].attr_id;
+            }
+        }
+        if (this.addtonetworth_list != null) {
+            for (let i in this.selected_networth) {
+                this.selected_networtharr = this.selected_networtharr + ',' + this.selected_networth[i].attr_id;
+            }
+        }
         if (((this.geomiles == null || this.geomiles == '') && (this.geoaddress == null || this.geoaddress == '') && (this.geozip == null  || this.geozip == '')) || (this.geomiles != null && this.geoaddress != null && this.geozip != null && this.geomiles != '' && this.geozip != '' && this.geoaddress != '')) {
             this.geoerror = null;
             console.log('geoerror should be null- ' + this.geoerror);
@@ -664,12 +1259,13 @@ export class SearchnewComponent implements OnInit {
         else {
             this.geoerror = 'Please GIve all values';
         }
+        var link;
         if(this.tabopen == 1){
-            var link;
-             link = 'http://geofencedsp.com/assets/php/businesscall.php?token=' + this.tokenid;
+
+             link = 'https://geofencedsp.com/assets/php/businesscall.php?token=' + this.tokenid;
         }
         else{
-             link = 'http://geofencedsp.com/assets/php/callconsumer.php?token=' + this.tokenid;
+             link = 'https://geofencedsp.com/assets/php/callconsumer.php?token=' + this.tokenid;
         }
         this.searchresult = null;
         let data = {
@@ -679,6 +1275,16 @@ export class SearchnewComponent implements OnInit {
             Physical_Zip: this.selected_ziparr,
             Physical_Address: this.addressval,
             proximity: this.selected_geoshapes,
+            Ind_Age_Code: this.Ind_Age_Codearr, // done
+            Ind_Gender_Code: this.Ind_Gender_Code, // done
+            Ind_Household_Rank_Code: this.headofhouseholdonly,
+            Income_Code: this.selected_incomearr, // done
+            Home_Market_Value: this.selected_homevaluearr, // done
+            Median_HseHld_Income_Code: this.selected_medianincomearr, // done
+            Median_Home_Value_Code: this.selected_medianhomearr, // done
+            Length_Of_Residence_Code: this.selected_residencearr, // done
+            Marital_Status_Code: this.selected_maritalarr, // done
+            NetWorth_Code: this.selected_networtharr
         };
         console.log(data);
 
@@ -717,22 +1323,33 @@ export class SearchnewComponent implements OnInit {
             this.selected_locations.push({attr_id: id, attr_name: name});
             this.selected_locationsv.push( id);
         }
-        else {
+       /* else {
             this.selected_locations.splice(indexval, 1);
             this.selected_locationsv.splice(indexval, 1);
         }
-        $('#state_' + id).toggleClass('selectedclass');
+        $('#state_' + id).toggleClass('selectedclass');*/
         if(this.selected_locations.length>0){
             this.statesubmenu = true;
         }
     }
-
+    removefromstatelist(id ,name,  item) {
+        let tempvar= id;
+        let indexval: any = this.selected_locationsv.indexOf(tempvar);
+        this.selected_locations.splice(indexval, 1);
+        this.selected_locationsv.splice(indexval, 1);
+        if(this.selected_locations.length==0){
+            this.statesubmenu = false;
+        }
+    }
 
                                                 /*For City*/
 
     show_cities(id) { // here id is abbreviation
+        console.log('call?');
+        console.log(this.uscities);
         this.show_state_cities=[];
         for (let i in this.uscities) {
+            console.log(this.uscities[i]);
             if (this.uscities[i].short_state == id) {
                 this.show_state_cities.push(this.uscities[i]);
             }
@@ -904,6 +1521,7 @@ export class SearchnewComponent implements OnInit {
                         }
                         totalshapearr.push(obj);
                     }
+                    console.log('this.callpolygon(totalshapearr11111111);');
                     this.callpolygon(totalshapearr);
                   }
             }
@@ -939,6 +1557,7 @@ export class SearchnewComponent implements OnInit {
         console.log('failed??');*/
     }
     callpolygon(path) {
+        console.log('ji------------');
         var PolyCoords = [];
         for (let j in path) {
             PolyCoords.push({
@@ -963,16 +1582,17 @@ export class SearchnewComponent implements OnInit {
         this.modalmapShown = false;
         this.ModalShownforsearch = false;
         this.ModalShownforbusinesssearch = false;
+        this.Modal_submit_search_div = false;
     }
     viewallsearch() {
         this.openloader = true;
         let timestampis = new Date().getTime();
         var link;
         if(this.tabopen==1){
-             link = 'http://geofencedsp.com/assets/php/businesssearchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+             link = 'https://geofencedsp.com/assets/php/businesssearchresults.php?token=' + this.tokenid + '&v=' + timestampis;
         }
         else{
-             link = 'http://geofencedsp.com/assets/php/searchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+             link = 'https://geofencedsp.com/assets/php/searchresults.php?token=' + this.tokenid + '&v=' + timestampis;
         }
         this._http.get(link)
             .subscribe(res => {
@@ -990,6 +1610,102 @@ export class SearchnewComponent implements OnInit {
                         this.ModalShownforbusinesssearch = false;
                     }
 
+                }
+            }, error => {
+                console.log('Oooops!');
+            });
+    }zz
+    open_submit_audience_div(){
+        this.Modal_submit_search_div = true;
+    }
+    submit_audience_search_details(formval){
+        let x: any;
+        for (x in this.dataForm.controls) {
+            this.dataForm.controls[x].markAsTouched();
+        }
+        if (this.dataForm.valid){
+            let timestampis = new Date().getTime();
+            let link;
+            if(this.tabopen==1){
+                link = 'https://geofencedsp.com/assets/php/businesssearchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+            }
+            else{
+                link = 'https://geofencedsp.com/assets/php/searchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+            }
+            this.openloader = true;
+            this._http.get(link)
+                .subscribe(res => {
+                    this.count_loop=0;
+                    this.searchresult = res;
+                    this.openloader = false;
+                    this.call_to_save_data_to_audience(formval);
+
+                }, error => {
+                    console.log('Oooops!');
+                });
+        }
+        else{
+            console.log('validation error');
+        }
+    }
+    call_to_save_data_to_audience(formval){
+        let link = this.serverurl + 'audienceadd';
+        let data = {
+            audiencename: formval.audiencename,
+            audiencedescription: formval.audiencedescription,
+            searchcount: this.consumer_value.count.SearchCount,
+            // audiencedata: this.a,
+            added_by: this.mailcookiedetails,
+        };
+        this._http.post(link, data)
+            .subscribe(res => {
+                let result: any;
+                result = res;
+                console.log(result.id);
+                // this.a ='';
+                //  this.router.navigate(['/adbannerlist']);
+                this.call_to_save_search_result(formval,result.id);
+            }, error => {
+                console.log('Oooops!');
+            });
+
+    }
+    call_to_save_search_result(formval,id){
+        if(this.searchresult!=null){
+            if(this.searchresult.length%20==0){
+                this.count_loop = this.searchresult.length/20;
+            }
+            else{
+                this.count_loop = (this.searchresult.length/20)+1;
+            }
+            let j = 0;
+            let k = 20;
+            this.i = 1;
+            for(this.i=1;this.i<=this.count_loop;this.i++){
+                this.a ='';
+                for(j;j<k;j++){
+                    this.a = this.a + JSON.stringify(this.searchresult[this.i]);
+                    //break;
+                }
+                j=k;
+                k=k+20;
+                this.call_to_server(formval,id);
+            }
+        }
+    }
+
+    call_to_server(formval,id){
+        let link = this.serverurl + 'audiencedataadd';
+        let data = {
+            audiencedata: this.a,
+            audience_id: id,
+        };
+        // console.log(data);
+        this._http.post(link, data)
+            .subscribe(res => {
+                this.a ='';
+                if(this.i > this.count_loop){
+                    this.router.navigate(['/audiencelist']);
                 }
             }, error => {
                 console.log('Oooops!');

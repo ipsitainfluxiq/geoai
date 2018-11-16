@@ -2887,3 +2887,34 @@ app.get('/helpdesklist',function (req,resp) {
         }
     });
 });
+
+app.get('/getbidrequest',function (req,resp) {
+    var link = 'https://geofencedsp.com/assets/php/demo.php';
+    request(link, function(error2, response, html2){
+        if(!error2) {
+            // console.log(JSON.parse(html2));
+            //  var a= JSON.parse(html2);
+            console.log(html2);
+            var collection = db.collection('bidrequest');
+            collection.insert([{
+                    added_time: Date.now(),
+                    request: html2
+                }],
+                function (err, result) {
+                    if (err) {
+                        console.log('err');
+                        resp.send(JSON.stringify({'status':'error'}));
+                    }
+                    else {
+                        console.log('success');
+                        resp.send(JSON.stringify({'status':'success'}));
+                    }
+                });
+        }
+        else {
+            console.log("error in php");
+            resp.send('error');
+        }
+    });
+
+});

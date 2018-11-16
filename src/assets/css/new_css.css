@@ -92,7 +92,7 @@ url('../fonts/Roboto-Black.svg#Roboto-Black') format('svg');font-weight:900;font
 .geo_new_block2_con .geo_new_block2_textwrapper ul li{background:#eaeaea url(../images/new_location_img5.png) no-repeat 20px center;margin-bottom:1px;padding:5px 5px 5px 50px;text-align:left;font-size:15px;color:#4f5467;font-family:'open_sansregular';}
 .pacing_textcontain{width:400px;}
 .pacing_textcontain .form-control{width:360px;height:35px;border:solid 1px #d6d6d6;padding:0 5px;font-family:'open_sansregular';font-size:14px;color:#333;display:block;float:left;}
-.pacing_textcontain span{display:block;width:40px;font-family:'open_sansregular';font-size:14px;color:#fff;background:#4f5467;float:right;height:35px;text-align:center;line-height:35px;}
+.pacing_textcontain span{display:block; font-family:'open_sansregular';font-size:14px;color:#fff;}
 .footerbtndiv{width:100%;padding-top:30px;}
 .footerbtndiv input{background-color:#008cba;border-radius:0;color:#fff;cursor:pointer;display:inline-block;font-family:"Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;font-size:16px;font-weight:normal;line-height:normal;border:none;margin:6px 0!important;padding:11px 10px 8px 10px!important;position:relative;text-align:center;text-decoration:none;transition:background-color 300ms ease-out 0s;border-bottom:solid 2px #007095;width:80px;float:left;}
 .footerbtndiv input:last-of-type{float:right;}

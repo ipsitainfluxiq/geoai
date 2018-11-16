@@ -14,6 +14,7 @@ declare  let $;
 })
 export class CampaignlistsComponent implements OnInit {
     public campaignlist;
+    public bannerlist;
     public serverurl;
     public startdate;
     public showstartdate;
@@ -33,7 +34,13 @@ export class CampaignlistsComponent implements OnInit {
     public p: number = 1;
     public totalamt: any;
     public datalist;
+    public audiencelist;
     public isdate;
+    public audienceid;
+    public bannerid;
+    public campaignid;
+    public isModalShown: boolean = false;
+    public isModalShown1: boolean = false;
 
     constructor(private _http: HttpClient, private router: Router, private route: ActivatedRoute, private _commonservices: Commonservices,  emailcookie: CookieService, alldetailcookie: CookieService) {
         this.serverurl = _commonservices.url;
@@ -42,52 +49,66 @@ export class CampaignlistsComponent implements OnInit {
         this.alldetailcookie = alldetailcookie ;
         this.cookiedetailsforalldetails = this.alldetailcookie.get('cookiedetailsforalldetails');
         this.cookiedetailsforalldetails_type = this.alldetailcookie.get('type');
+        console.log('=================================');
         console.log(this.cookiedetailsforalldetails);
-        this.enddate = moment().format('MM-DD-YYYY');
-        this.startdate = moment().subtract(1, 'months').format('MM-DD-YYYY');
-        console.log( this.startdate);
-        if(this.cookiedetailsforalldetails_type == 1 || this.cookiedetailsforalldetails_type == 2){ //admin
+        console.log(this.cookiedetailsforalldetails_type);
+        this.enddate = moment().format('YYYY-MM-DD');
+        this.startdate = moment().subtract(1, 'months').format('YYYY-MM-DD');
+        if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk'){ //admin
         this.getcampaignlist();
         }
         else{
             this.getcampaignlistunderthisid();
             this.getwalletlistofthisid();
+            this.getAudienceListbyemail();
         }
-
-       /* date.setDate(date.getDate()-1);
-
-        $('#date').bsDatepicker({
-            startDate: date
-        });*/
         console.log('campaignlists call-----------------------');
+        if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk'){
+            this.getbanners();
+        }
+        else{
+            this.getbannersbyemail();
+        }
     }
 
     ngOnInit() {
         this.isdate = new Date();
     }
 
+    getAudienceListbyemail() {
+        let link = this.serverurl + 'getaudiencelist';
+        let data = {
+            emailid: this.mailcookiedetails
+        }
+        this._http.post(link,data)
+            .subscribe(res => {
+                let result: any;
+                result = res;
+                console.log('getaudiencelist');
+                console.log(result.items);
+                this.audiencelist = result.items;
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
     getcampaignlist() {
         console.log(this.startdate);
         this.campaignlistarr=[];
-        this.showstartdate = parseInt((new Date(this.startdate).getTime() / 1000).toFixed(0));
-        this.showenddate = parseInt((new Date(this.enddate).getTime() / 1000).toFixed(0));
-       // this.showstartdate = moment(this.startdate, "MM-DD-YYYY").format('x');
-       // this.showenddate = moment(this.enddate, "MM-DD-YYYY").format('x');
+        this.showstartdate =  moment(new Date()).subtract(1, 'months').format('YYYY-MM-DD');
+        this.showenddate =  moment(new Date()).format('YYYY-MM-DD');
         let link = this.serverurl + 'campaignlists';
         this._http.get(link)
             .subscribe(res => {
                 let result: any;
                  result = res;
                 this.campaignlist = result.res;
-              /*  console.log('===================');
-                if((new Date(this.campaignlist[39].startdate).getTime() / 1000).toFixed(0)>=this.showstartdate && this.campaignlist[39].enddate<=this.showenddate){
-                    console.log('yes');
-                }*/
+                console.log(' campaignlist');
+                console.log(this.campaignlist);
+              console.log(this.startdate);
+              console.log(this.enddate);
                 for(let i in this.campaignlist)
                 {
-                  //  console.log((new Date(this.campaignlist[39].startdate).getTime() / 1000).toFixed(0));
-
-                    if (this.campaignlist[i].startdate>=this.showstartdate && this.campaignlist[i].enddate<=this.showenddate ){
+                        if (this.campaignlist[i].startdate>=this.showstartdate && this.campaignlist[i].enddate<=this.showenddate ){
                         this.campaignlistarr.push(this.campaignlist[i]);
                     }
                 }
@@ -99,23 +120,12 @@ export class CampaignlistsComponent implements OnInit {
     }
 
     showresult() {
-       // this.showstartdate = moment(this.startdate, "MM-DD-YYYY").format('x');
-       // this.showenddate = moment(this.enddate, "MM-DD-YYYY").format('x');
-      //  var day = 60 * 60 * 24 * 1000;
-      //  console.log(this.startdate);
-       // console.log(((new Date(this.startdate).getDate() + 1)));
-      //  console.log(this.enddate);
-        this.showstartdate = parseInt((new Date(this.startdate).getTime() / 1000).toFixed(0));
-        this.showenddate = parseInt((new Date(this.enddate).getTime() / 1000).toFixed(0));
+        this.showstartdate =  moment(this.startdate).subtract(1, 'months').format('YYYY-MM-DD');
+        this.showenddate =  moment(this.enddate).format('YYYY-MM-DD');
         this.campaignlistarr = [];
         if(this.filterval1==2) {
             for (let i in this.campaignlist) {
-                //  console.log('from db '+this.campaignlist[i].enddate);
-                //  console.log('search end date '+this.enddate);
-                //  console.log('==============');
                 if (this.campaignlist[i].startdate >= this.showstartdate && this.campaignlist[i].enddate <= this.showenddate) {
-                    //  console.log('?');
-                    // console.log(this.campaignlist[i]);
                     this.campaignlistarr.push(this.campaignlist[i]);
                 }
             }
@@ -136,24 +146,18 @@ export class CampaignlistsComponent implements OnInit {
             }
         }
         }
-       /* this.startdate = this.showstartdate;
-        this.enddate = this.showenddate;*/
        console.log('this.campaignlistarr');
        console.log(this.campaignlistarr);
 }
     showproperdateformat(dt){
-        return  moment(new Date(dt*1000)).format('MM-DD-YYYY');
+        return  moment(dt).format('YYYY-MM-DD');
     }
 
     showcampaignlists(type) {
         console.log('this.campaignlist');
         console.log(this.campaignlist);
-        this.showstartdate = parseInt((new Date(this.startdate).getTime() / 1000).toFixed(0));
-        this.showenddate = parseInt((new Date(this.enddate).getTime() / 1000).toFixed(0));
-
-       // this.showstartdate = moment(this.startdate, "MM-DD-YYYY").format('x');
-       // this.showenddate = moment(this.enddate, "MM-DD-YYYY").format('x');
-
+        this.showstartdate =  moment(this.startdate).subtract(1, 'months').format('YYYY-MM-DD');
+        this.showenddate =  moment(this.enddate).format('YYYY-MM-DD');
         this.campaignlistarr = [];
         if(type==1){ //active
             console.log('type 1');
@@ -322,11 +326,9 @@ export class CampaignlistsComponent implements OnInit {
     getcampaignlistunderthisid() {
         console.log('this.startdate');
         console.log(this.startdate);
-       // this.showstartdate = moment(this.startdate, "MM-DD-YYYY").format('x');
-      //  this.showenddate = moment(this.enddate, "MM-DD-YYYY").format('x');
         this.campaignlistarr=[];
-        this.showstartdate = parseInt((new Date(this.startdate).getTime() / 1000).toFixed(0));
-        this.showenddate = parseInt((new Date(this.enddate).getTime() / 1000).toFixed(0));
+        this.showstartdate =  moment(this.startdate).subtract(1, 'months').format('YYYY-MM-DD');
+        this.showenddate =  moment(this.enddate).format('YYYY-MM-DD');
         let link = this.serverurl + 'getcampaignlistunderthisid';
         var data={
             email:this.mailcookiedetails
@@ -344,6 +346,134 @@ export class CampaignlistsComponent implements OnInit {
                 }
                 console.log('campaigns under this user');
                 console.log(this.campaignlistarr);
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
+    openaudiencelist(itemid){
+        this.audienceid = null;
+        this.isModalShown = true;
+        this.campaignid = itemid;
+      //  this.get_audience_of_campaign();
+        for(let i in this.campaignlist){
+            if(this.campaignlist[i]._id == itemid){
+                if(this.campaignlist[i].audienceid != null){
+                    console.log(this.campaignlist[i]);
+                    console.log('2');
+                    this.audienceid = this.campaignlist[i].audienceid;
+                }
+            }
+        }
+    }
+    onHidden() {
+        this.isModalShown = false;
+        this.isModalShown1 = false;
+    }
+    showdate(dd){
+        return moment(dd).format('MM-DD-YY');
+    }
+  /*  audienceitem(id){
+        this.audienceid = id;
+    }*/
+    add_audience_to_campaign(){
+        let link = this.serverurl + 'addaudienceidtocampaign';
+        var data={
+            audienceid: this.audienceid,
+            campaignid: this.campaignid
+        };
+        this._http.post(link,data)
+            .subscribe(res => {
+                let result: any;
+                result = res;
+                console.log(result);
+                this.isModalShown = false;
+                if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk'){ //admin
+                    this.getcampaignlist();
+                }
+                else{
+                    this.getcampaignlistunderthisid();
+                }
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
+    get_audience_of_campaign(){
+        let link = this.serverurl + 'addaudienceidtocampaign';
+        var data={
+            audienceid: this.audienceid,
+            campaignid: this.campaignid
+        };
+        this._http.post(link,data)
+            .subscribe(res => {
+                let result: any;
+                result = res;
+                console.log(result);
+                this.isModalShown = false;
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
+
+    openbannerlist(itemid){
+        this.bannerid = null;
+        this.isModalShown1 = true;
+        this.campaignid = itemid;
+        console.log('1');
+        for(let i in this.campaignlist){
+            if(this.campaignlist[i]._id == itemid){
+                if(this.campaignlist[i].bannerid != null){
+                    console.log(this.campaignlist[i]);
+                    console.log('2');
+                    this.bannerid = this.campaignlist[i].bannerid;
+                }
+            }
+        }
+    }
+    getbannersbyemail(){
+        let link = this.serverurl + 'getbannersbyemail';
+        let data = {
+            email: this.mailcookiedetails,
+            page: 'campaignlists'
+        };
+        this._http.post(link, data)
+            .subscribe(res => {
+                this.bannerlist = res;
+                console.log(this.bannerlist);
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
+    getbanners(){
+        let link = this.serverurl + 'getbanners';
+        let data = {
+            page: 'campaignlists'
+        }
+        this._http.post(link,data)
+            .subscribe(res => {
+                this.bannerlist = res;
+                console.log(this.bannerlist);
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
+    add_banner_to_campaign(){
+        let link = this.serverurl + 'addbanneridtocampaign';
+        var data={
+            bannerid: this.bannerid,
+            campaignid: this.campaignid
+        };
+        this._http.post(link,data)
+            .subscribe(res => {
+                let result: any;
+                result = res;
+                console.log(result);
+                this.isModalShown1 = false;
+                if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk'){
+                    this.getcampaignlist();
+                }
+                else{
+                    this.getcampaignlistunderthisid();
+                }
             }, error => {
                 console.log('Oooops!');
             });

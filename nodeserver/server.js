@@ -27,14 +27,16 @@ var filename='';
 var filename1='';
 var imgwidth1;
 var imgheight1;
-
+let dateis = Date.now();
+let arr=[];
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function (req, file, cb) {
         cb(null, '../assets/uploads/');
         //  cb(null, '../src/assets/uploads/');
     },
     filename: function (req, file, cb) {
-        //console.log(cb);
+        console.log('.................');
+        console.log(cb);
 
         console.log('file.originalname'+file.originalname);
         filename=file.originalname.split('.')[0].replace(/ /g,'') + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1];
@@ -87,37 +89,31 @@ app.use(function(req, res, next) { //allow cross origin requests
 });
 
 
-app.post('/uploads', function(req, res) {
+app.get('/uploads', function(req, res) {
     datetimestamp = Date.now();
     upload(req,res,function(err){
-        /*console.log(1);
-         console.log(err);
-         console.log(filename);*/
-
+        console.log(1);
+        console.log(err);
+        console.log(filename);
         if(err){
             res.json({error_code:1,err_desc:err});
             return;
         }
-
         res.json(filename);
-
-
     });
 });
 
-app.post('/imguploads', function(req, res) {
+app.get('/imguploads', function(req, res) {
     console.log('imguploads call');
     datetimestamp = Date.now();
     upload1(req,res,function(err){
         /*console.log(1);
          console.log(err);
          console.log(filename);*/
-
         if(err){
             res.json({error_code:1,err_desc:err});
             return;
         }
-
         setTimeout(function () {
             console.log('call res.json');
             console.log({filename:filename1,imgheight:imgheight1,imgwidth:imgwidth1});
@@ -372,7 +368,7 @@ app.get('/forgetpassword', function (req, resp) {
                 accesscode: generatedcode,
             }
             collection.update({ email:req.body.email}, {$set: data}, true, true);
-            var smtpTransport = mailer.createTransport("SMTP", {
+            var smtpTransport = mailer.createTransport({
                 service: "Gmail",
                 auth: {
                     user: "itplcc40@gmail.com",
@@ -438,8 +434,8 @@ app.get('/csvuploads',function (req,resp) {
     var csvData=[];
     var fs = require('fs'),
         path = require('path');
-  //  var filepath = '../src/assets/uploads/'+req.body.filenameis; //local
-    var filepath = '../assets/uploads/'+req.body.filenameis; //server
+    //  var filepath = '../src/assets/uploads/'+req.body.filenameis; //local
+    var filepath = '../assets/uploads/'+req.body.filenameis.generatedName; //server
     fs.createReadStream(filepath)
         .pipe(parse({delimiter: ','}))
         .on('data', function(csvrow) {
@@ -462,44 +458,44 @@ app.get('/csvuploads',function (req,resp) {
 });
 /*-------------------------------------------------FORGET_PASSWORD_end-----------------------------------------------*/
 
-app.get('/signup' , function (req,resp) {
-    req.body=req.query;
-    var collection = db.collection('signup');
-    console.log('99999999');
-    console.log(req.body.agency_name);
-    var crypto = require('crypto');
-    var secret = req.body.password;
-    var hash = crypto.createHmac('sha256', secret)
-        .update('password')
-        .digest('hex');
-    collection.insert([{
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            companyname: req.body.companyname,
-            email: req.body.email,
-            password: hash,
-            agencyval: req.body.agencyval,
-            agency_name: req.body.agency_name,
-            // month: req.body.month,
-            //  day: req.body.day,
-            //  year: req.body.year,
-            phone: req.body.phone,
-            about_us: req.body.about_us,
-            type:0,
-            // location: req.body.location,
-            // state: req.body.state,
-        }],
-        function(err, result) {
-            if (err){
-                console.log('err');
-                resp.send(JSON.stringify({'id':0, 'status':'Some error occured..!'}));
-            }
-            else{
-                console.log(result);
-                resp.send(JSON.stringify({'id':result.ops[0]._id, 'status':'success'}));
-            }
-        });
-});
+/*app.get('/signup' , function (req,resp) {
+ req.body=req.query;
+ var collection = db.collection('signup');
+ console.log('99999999');
+ console.log(req.body.agency_name);
+ var crypto = require('crypto');
+ var secret = req.body.password;
+ var hash = crypto.createHmac('sha256', secret)
+ .update('password')
+ .digest('hex');
+ collection.insert([{
+ firstname: req.body.firstname,
+ lastname: req.body.lastname,
+ companyname: req.body.companyname,
+ email: req.body.email,
+ password: hash,
+ agencyval: req.body.agencyval,
+ agency_name: req.body.agency_name,
+ // month: req.body.month,
+ //  day: req.body.day,
+ //  year: req.body.year,
+ phone: req.body.phone,
+ about_us: req.body.about_us,
+ type:0,
+ // location: req.body.location,
+ // state: req.body.state,
+ }],
+ function(err, result) {
+ if (err){
+ console.log('err');
+ resp.send(JSON.stringify({'id':0, 'status':'Some error occured..!'}));
+ }
+ else{
+ console.log(result);
+ resp.send(JSON.stringify({'id':result.ops[0]._id, 'status':'success'}));
+ }
+ });
+ });*/
 
 app.get('/changepassword', function (req, resp) {
     req.body=req.query;
@@ -602,6 +598,7 @@ app.get('/calluploads',function (req,resp) {
         }
     });
 });
+
 
 app.get('/userlist',function (req,resp) {
 
@@ -720,7 +717,7 @@ app.get('/confirmation', function (req,resp) {
         html+='</div></div> ';
         html+='</div> <!--[if (gte mso 9)|(IE)]> </td> </tr> </table> <![endif]--> </td> </tr> </table>';
 
-        var smtpTransport = mailer.createTransport("SMTP", {
+        var smtpTransport = mailer.createTransport({
             service: "Gmail",
             auth: {
                 user: "itplcc40@gmail.com",
@@ -773,7 +770,7 @@ app.get('/viewlogindetails', function (req, resp) {
 });
 app.get('/getdetails11', function (req,resp) {
 
-    var smtpTransport = mailer.createTransport("SMTP", {
+    var smtpTransport = mailer.createTransport({
         service: "Gmail",
         auth: {
             user: "itplcc40@gmail.com",
@@ -818,7 +815,6 @@ app.get('/addcreative',function(req,resp){
             }
         });
 });
-
 
 app.get('/creativelist',function (req,resp) {
     req.body=req.query;
@@ -933,7 +929,7 @@ app.get('/addadmin',function(req,resp){
          state: req.body.state,
          zip: req.body.zip,
          phone: req.body.phone,*/
-        type:1,
+        type:'admin',
     }], function (err, result) {
         if (err) {
             console.log('error'+err);
@@ -947,7 +943,7 @@ app.get('/addadmin',function(req,resp){
 
 app.get('/adminlist',function (req,resp) {
     var collection = db.collection('signupnew');
-    collection.find({type:1}).toArray(function(err, items) {
+    collection.find({type:'admin'}).toArray(function(err, items) {
         if (err) {
             console.log(err);
             resp.send(JSON.stringify({'res':[]}));
@@ -1888,7 +1884,7 @@ app.get('/getaudiencelist',function (req,resp) {
 
 app.get('/tokensave',function (req,resp) {
     var link = 'http://geofencedsp.com/assets/php/dataapi.php';
- //   var link = 'http://simplyfi.influxiq.com/dataapi.php';
+    //   var link = 'http://simplyfi.influxiq.com/dataapi.php';
     request(link, function(error2, response, html2){
         if(!error2) {
             // console.log(JSON.parse(html2));
@@ -1905,7 +1901,7 @@ app.get('/tokensave',function (req,resp) {
                         resp.send(JSON.stringify({'status':'error'}));
                     }
                     else {
-                        console.log('success');
+                        // console.log('success');
                         resp.send(JSON.stringify({'status':'success'}));
                     }
                 });
@@ -2374,32 +2370,67 @@ app.get('/getalltransactionsofthisemail',function (req,resp) {
 app.get('/addcampaign',function(req,resp){
     req.body=req.query;
     var collection = db.collection('addcampaign');
-    var stdate = parseInt((new Date(req.body.startdate).getTime() / 1000).toFixed(0));
-    var enddate = parseInt((new Date(req.body.enddate).getTime() / 1000).toFixed(0));
-    collection.insert([{
-        campaignname: req.body.campaignname,
-        status: req.body.status,
-        totalcampaignspend: req.body.totalcampaignspend,
-        cpa: req.body.cpa,
-        epc: req.body.epc,
-        dailybudget: req.body.dailybudget,
-        startingbid: req.body.startingbid,
-        conversionvalue: req.body.conversionvalue,
-        /*  startdate: req.body.startdate,
-         enddate: req.body.enddate,*/
-        startdate: stdate,
-        enddate: enddate,
-        fcap: req.body.fcap,
-        added_by: req.body.added_by
-    }], function (err, result) {
-        if (err) {
-            console.log('error'+err);
-            resp.send(JSON.stringify({'status':'error','id':0}));
-        } else {
-            console.log(result);
-            resp.send(JSON.stringify({'status':'success','id':result.ops[0]._id}));
-        }
-    });
+    // two calls are going, that's why null check
+    if(req.body.campaignname!=null){
+        let campaign_added_by_name ;
+        collection.insert([{
+            campaignname: req.body.campaignname,
+            status: req.body.status,
+            totalcampaignspend: req.body.totalcampaignspend,
+            cpa: req.body.cpa,
+            epc: req.body.epc,
+            dailybudget: req.body.dailybudget,
+            startingbid: req.body.startingbid,
+            conversionvalue: req.body.conversionvalue,
+            startdate: req.body.startdate,
+            enddate: req.body.enddate,
+            fcap: req.body.fcap,
+            added_by: req.body.added_by,
+            added_on: Date.now()
+        }], function (err, result) {
+            if (err) {
+                console.log('error'+err);
+                resp.send(JSON.stringify({'status':'error','id':0}));
+            } else {
+                // get the name who added the campaign
+                var collection1 = db.collection('signupnew');
+                collection1.find({email:req.body.added_by}).toArray(function(err1, items1) {
+                    if (err1) {
+                    } else {
+                        campaign_added_by_name = items1[0].firstname + ' ' + items1[0].lastname;
+                        //go for mail
+                        let arr = [];
+                        arr =  getall_admin_helpdesk_emailids();
+                        var smtpTransport = mailer.createTransport({
+                            service: "Gmail",
+                            auth: {
+                                user: "itplcc40@gmail.com",
+                                pass: "DevelP7@"
+                            }
+                        });
+                        var mail = {
+                            from: "Admin <geoai@yopmail.com>",
+                            to: arr,
+                            subject: 'New campaign added',
+                            html: campaign_added_by_name + ' has added a new campaign and the details are as follows:<br/>Campaign Name: '+ req.body.campaignname+'<br/>Total Campaign Spend: '+ req.body.totalcampaignspend+'<br/>CPA: '+ req.body.cpa+'<br/>EPC: '+ req.body.epc+'<br/>Daily Budget: '+ req.body.dailybudget+'<br/>Starting Bid: '+ req.body.startingbid+'<br/>Conversion Value: '+ req.body.conversionvalue+'<br/>Date Range: '+ req.body.startdate+' - '+ req.body.enddate+'<br/>Frequency Cap: '+ req.body.fcap+'<br/>Campaign Added By: '+ campaign_added_by_name+'<br/><br/>Click on the link below to make this campaign Active/Inactive -<br/><br/><br/>Link: <a href=https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1>https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1</a>'
+
+                            /*  html: 'Go to this campaign details page and make them active/inactive. To go to the page please click on the link below: <a href=https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1>https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1</a><br/>Campaign Name:'+ req.body.campaignname+'<br/>Total Campaign Spend:'+ req.body.totalcampaignspend+'<br/>CPA:'+ req.body.cpa+'<br/>EPC:'+ req.body.epc+'<br/>Daily Budget:'+ req.body.dailybudget+'<br/>Starting Bid:'+ req.body.startingbid+'<br/>Conversion Value:'+ req.body.conversionvalue+'<br/>Date Range:'+ req.body.startdate+' - '+ req.body.enddate+'<br/>Frequency Cap:'+ req.body.fcap+'<br/>Campaign Added By:'+ req.body.added_by*/
+                        }
+                        smtpTransport.sendMail(mail, function (error, response) {
+                            console.log('send');
+                            smtpTransport.close();
+                        });
+
+                        resp.send(JSON.stringify({'status':'success','id':result.ops[0]._id}));
+                    }
+                });
+
+            }
+        });
+    }
+    else{
+        resp.send(JSON.stringify({'status':'error','id':-1}));
+    }
 });
 
 
@@ -2448,6 +2479,8 @@ app.get('/campaigndetailsnew',function(req,resp){
 app.get('/editcampaign',function(req,resp){
     req.body=req.query;
     var collection = db.collection('addcampaign');
+    // var stdate = parseInt((new Date(req.body.startdate).getTime() / 1000).toFixed(0));
+    // var enddate = parseInt((new Date(req.body.enddate).getTime() / 1000).toFixed(0));
     var data = {
         campaignname: req.body.campaignname,
         //  status: req.body.status,
@@ -2457,6 +2490,8 @@ app.get('/editcampaign',function(req,resp){
         dailybudget: req.body.dailybudget,
         startingbid: req.body.startingbid,
         conversionvalue: req.body.conversionvalue,
+        /*startdate: stdate,
+         enddate: enddate,*/
         startdate: req.body.startdate,
         enddate: req.body.enddate,
         fcap: req.body.fcap
@@ -2483,6 +2518,7 @@ app.get('/changeallcampaignstatus',function(req,resp){
 });
 
 app.get('/signupnew' , function (req,resp) {
+    datetimestamp = Date.now();
     req.body=req.query;
     var collection = db.collection('signupnew');
     var crypto = require('crypto');
@@ -2509,7 +2545,10 @@ app.get('/signupnew' , function (req,resp) {
                     marketingbudget: req.body.marketingbudget,
                     request: req.body.request,
                     messageno: req.body.messageno,
-                    type: 0
+                    type: 'user',
+                    nooflogin:1,
+                    logintime:datetimestamp,
+                    status:1,
                 }],
                 function (err, result) {
                     if (err) {
@@ -2583,6 +2622,7 @@ app.get('/usserinfoedit',function(req,resp){
 });
 
 app.get('/login', function (req, resp) {
+    datetimestamp = Date.now();
     req.body=req.query;
     var crypto = require('crypto');
     var secret = req.body.password;
@@ -2593,9 +2633,9 @@ app.get('/login', function (req, resp) {
     var collection = db.collection('signupnew');
     collection.find({ email:req.body.email }).toArray(function(err, items){
         console.log('items'); //admin_login details shown here
-         console.log(items); //admin_login details shown here
-      //  console.log(items[0].password);
-       // console.log(hash);
+        console.log(items); //admin_login details shown here
+        //  console.log(items[0].password);
+        // console.log(hash);
         if(items.length==0){
             console.log('1');
             resp.send(JSON.stringify({'status':'error','msg':'Username invalid...'}));
@@ -2606,15 +2646,39 @@ app.get('/login', function (req, resp) {
             resp.send(JSON.stringify({'status':'error','msg':'Password Doesnot match'}));
             return;
         }
+        if(items.length>0 && items[0].status!=1){
+            console.log('3');
+            resp.send(JSON.stringify({'status':'error','msg':'Your account is not active, please contact to Site Administrator for further access'}));
+            return;
+        }
         /* if(items.length>0 && items[0].status!=1){
          resp.send(JSON.stringify({'status':'error','msg':'You are Blocked..'}));
          return;
          }*/
-        if(items.length>0 && items[0].password==hash){
-            console.log('3');
+        if(items.length>0 && items[0].password==hash && items[0].status==1){
+            console.log('4');
+            var data={
+                logintime: datetimestamp,
+            }
             // resp.send(JSON.stringify({'status':'success','msg':items[0].email}));
-            resp.send(JSON.stringify({'status':'success','msg':items[0]}));
-            return;
+            collection.update(
+                {email: req.body.email},
+                {
+                    $set: data,
+                    $inc: { "nooflogin": 1 }
+                },
+                function (err, results) {
+                    if (err) {
+                        resp.send(JSON.stringify({'status': 'error', 'id': err}));
+                        throw err;
+                    }
+                    else {
+                        resp.send(JSON.stringify({'status':'success','msg':items[0]}));
+                    }
+
+                });
+            //  resp.send(JSON.stringify({'status':'success','msg':items[0]}));
+            //  return;
         }
     });
 });
@@ -2646,14 +2710,14 @@ app.get('/addhelpdisk',function(req,resp){
         lastname: req.body.lastname,
         email: req.body.email,
         password: hash,
-        type:2,
+        type:'helpdesk',
     }], function (err, result) {
         if (err) {
             console.log('error'+err);
             resp.send(JSON.stringify({'status':'error','id':0}));
         } else {
             console.log(result);
-            var smtpTransport = mailer.createTransport("SMTP", {
+            var smtpTransport = mailer.createTransport({
                 service: "Gmail",
                 auth: {
                     user: "itplcc40@gmail.com",
@@ -2678,7 +2742,7 @@ app.get('/addhelpdisk',function(req,resp){
 
 app.get('/helpdesklist',function (req,resp) {
     var collection = db.collection('signupnew');
-    collection.find({type:2}).toArray(function(err, items) {
+    collection.find({type:'helpdesk'}).toArray(function(err, items) {
         if (err) {
             console.log(err);
             resp.send(JSON.stringify({'res':[]}));
@@ -2687,3 +2751,433 @@ app.get('/helpdesklist',function (req,resp) {
         }
     });
 });
+
+app.get('/getbidrequest_old',function (req,resp) {
+    var link = 'https://geofencedsp.com/assets/php/demo.php';
+    request(link, function(error2, response, html2){
+        if(!error2) {
+            // console.log(JSON.parse(html2));
+            //  var a= JSON.parse(html2);
+            //   console.log(html2);
+            var collection = db.collection('bidrequest');
+            collection.insert([{
+                    added_time: Date.now(),
+                    request: html2
+                }],
+                function (err, result) {
+                    if (err) {
+                        console.log('err');
+                        resp.send(JSON.stringify({'status':'error'}));
+                    }
+                    else {
+                        console.log('success');
+                        resp.send(JSON.stringify({'status':'success'}));
+                    }
+                });
+        }
+        else {
+            console.log("error in php");
+            resp.send('error');
+        }
+    });
+
+});
+app.post('/getbidrequest_oldd',function (req,resp) {
+    var collection = db.collection('bidrequest');
+    console.log(typeof(req.body));
+    collection.insert([{
+            added_time: Date.now(),
+            request: req.body
+        }],
+        function (err, result) {
+            if (err) {
+                console.log('err');
+                resp.send(JSON.stringify({'status':'error'}));
+            }
+            else {
+                console.log('success');
+                resp.send(JSON.stringify({'status':'success'}));
+            }
+        });
+});
+
+app.get('/getbidrequest',function (req,resp) {
+    req.query = req.body;
+    var collection = db.collection('bidrequest');
+    // console.log(JSON.stringify(req.body));
+    var url ;
+    if(req.query.id==1){
+        var url = 'https://geofencedsp.com/assets/php/bidimage.php';
+    }
+    if(req.query.id==2){
+        var url = 'https://geofencedsp.com/assets/php/bidvideo.php';
+    }
+    if(req.query.id==3){
+        var url = 'https://geofencedsp.com/assets/php/bidnative.php';
+    }
+    collection.insert([{
+            added_time: Date.now(),
+            request: JSON.stringify(req.body),
+            requesturl: url,
+        }],
+        function (err, result) {
+            if (err) {
+                console.log('err');
+                resp.send(JSON.stringify({'status':'error'}));
+            }
+            else {
+                console.log('success-');
+                resp.send(JSON.stringify({'status':'success'}));
+            }
+        });
+});
+
+app.get('/statuschange', function (req,resp) {
+    req.body = req.query;
+    var collection = db.collection('signupnew');
+    var data = {
+        status: req.body.status
+    }
+    var o_id = new mongodb.ObjectID(req.body._id);
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    var transporter = mailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: "itplcc40@gmail.com",
+            pass: "DevelP7@"
+        }
+    });
+    var mailOptions;
+    if(req.body.status==0){
+        mailOptions = {
+            from: "GEOAI Admin <support@geoai.com>",
+            to: req.body.email,
+            subject: 'Your account has been deactivated',
+            text: req.body.note ,
+        };
+    }
+
+    if(req.body.status==1){
+        mailOptions = {
+            from: "GEOAI Admin <support@geoai.com>",
+            to: req.body.email,
+            subject: 'Your account is now activated',
+            text: req.body.note ,
+        };
+    }
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('send');
+            transporter.close();
+        }
+    });
+    var collection = db.collection('notes');
+    collection.insert([{
+        email: req.body.email,
+        note: req.body.note,
+        addedby: req.body.addedby,
+        added_time: Date.now(),
+    }], function (err, result) {
+        if (err) {
+            console.log('error'+err);
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            console.log(result);
+            resp.send(JSON.stringify({'status':'success'}));
+        }
+    });
+});
+
+app.get('/getnotedetails',function (req,resp) {
+    var collection = db.collection('notelist');
+    req.body = req.query;
+    collection.find({email: req.body.email}).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'res':[]}));
+        } else {
+            resp.send(JSON.stringify(items));
+        }
+    });
+});
+
+app.get('/updaterole', function (req, resp) {
+    req.body=req.query;
+    var collection = db.collection('role');
+    var o_id = new mongodb.ObjectID('5ba08dcdc2da31239d7808a1');
+    var data = {
+        role_mark_up: req.body.role_mark_up,
+        smatoo_mark_up: req.body.smatoo_mark_up
+    }
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status': 'success'}));
+});
+
+app.get('/roledetails',function(req,resp){
+    req.body=req.query;
+    var resitem = {};
+    var collection = db.collection('role');
+    var o_id = new mongodb.ObjectID(req.body._id);
+    collection.find({_id:o_id}).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            console.log(items);
+            resitem = items[0];
+            resp.send(JSON.stringify({'status':'success','item':resitem}));
+        }
+    });
+});
+
+app.get('/addbanner',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('banners');
+    if(req.body.banner_title!=null){
+        collection.insert([{
+                banner_type: req.body.banner_type,
+                banner_title: req.body.banner_title,
+                editablearea_1: req.body.editablearea_1,
+                editablearea_2: req.body.editablearea_2,
+                editablearea_3: req.body.editablearea_3,
+                editablearea_4: req.body.editablearea_4,
+                editablearea_5: req.body.editablearea_5,
+                added_by: req.body.added_by,
+                status: req.body.status,
+                added_on: Date.now()
+            }],
+            function(err, result) {
+                if (err){
+                    console.log('err');
+                    resp.send(JSON.stringify({'id':0, 'status':'Some error occured..!'}));
+                }
+                else{
+                    let arr = [];
+                    arr =  getall_admin_helpdesk_emailids();
+                    var smtpTransport = mailer.createTransport({
+                        service: "Gmail",
+                        auth: {
+                            user: "itplcc40@gmail.com",
+                            pass: "DevelP7@"
+                        }
+                    });
+                    var d = new Date();
+                    var month = d .getMonth() + 1;
+                    var day = d .getDate();
+                    var year = d .getFullYear();
+                    var dateinproperformat = month + "/" + day + "/" + year;
+
+                    var mail = {
+                        from: "Admin <geoai@yopmail.com>",
+                        to: arr,
+                        subject: 'New banner added.',
+                        html: 'A new banner is added by <b>'+req.body.added_by_fname +' '+req.body.added_by_lname + '</b> on ' + dateinproperformat
+                    }
+                    smtpTransport.sendMail(mail, function (error, response) {
+                        console.log('send');
+                        smtpTransport.close();
+                    });
+                    resp.send(JSON.stringify({'id':result.ops[0]._id, 'status':'success'}));
+                }
+            });
+    }
+    else{
+        resp.send(JSON.stringify({'id':1, 'status':'error'}));
+    }
+});
+
+app.get('/getbannersbyemail', function (req,resp) {
+    var collection= db.collection('banners');
+    collection.find({added_by:req.query.email}).toArray(function(err, items) {
+        resp.send(JSON.stringify(items));
+    });
+});
+
+
+app.get('/getbanners', function (req,resp) {
+    var collection= db.collection('banners');
+    collection.find().toArray(function(err, items) {
+        resp.send(JSON.stringify(items));
+    });
+});
+
+
+app.get('/deletebanner', function (req, resp) {
+    req.body=req.query;
+    var o_id = new mongodb.ObjectID(req.body.id);
+    var collection = db.collection('banners');
+    collection.deleteOne({_id: o_id}, function(err, results) {
+        if (err){
+            resp.send(JSON.stringify({'id':0, 'status':'failed'}));
+            throw err;
+        }
+        else {
+            resp.send(JSON.stringify({'id':1, 'status':'success'}));
+        }
+    });
+});
+
+app.get('/getbannerdetails',function(req,resp){
+    req.body=req.query;
+    var resitem = {};
+    var collection = db.collection('banners');
+    var o_id = new mongodb.ObjectID(req.body.id);
+    collection.find({_id:o_id}).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            console.log(items);
+            resitem = items[0];
+            resp.send(JSON.stringify({'status':'success','item':resitem}));
+        }
+    });
+});
+
+
+app.get('/updatesbanner',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('banners');
+    var data = {
+        banner_title: req.body.banner_title,
+        editablearea_1: req.body.editablearea_1,
+        editablearea_2: req.body.editablearea_2,
+        editablearea_3: req.body.editablearea_3,
+        editablearea_4: req.body.editablearea_4,
+        editablearea_5: req.body.editablearea_5
+    }
+    var o_id = new mongodb.ObjectID(req.body.id);
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status':'success'}));
+});
+
+
+app.get('/adddate',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('adddate');
+    collection.insert([{
+            startdate: req.body.startdate
+        }],
+        function(err, result) {
+            if (err){
+                console.log('err');
+                resp.send(JSON.stringify({'id':0, 'status':'Some error occured..!'}));
+            }
+            else{
+                console.log(result);
+                resp.send(JSON.stringify({'id':result.ops[0]._id, 'status':'success'}));
+            }
+        });
+});
+
+app.get('/datelist',function (req,resp) {
+    var collection = db.collection('adddate');
+    collection.find().toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'res':[]}));
+        } else {
+            let a = items.length;
+            resp.send(JSON.stringify({'res':items[a-1]}));
+        }
+    });
+});
+
+
+app.get('/changeallmybannersstatus',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('banners');
+    var data = {
+        status: req.body.statusid
+    }
+    var arr = Object.keys(req.body.arrid).map(function (key) { return req.body.arrid[key]; });
+    var i = 0;
+    for(i in arr){
+        var o_id = new mongodb.ObjectID(arr[i]);
+        collection.update({_id:o_id}, {$set: data}, true, true);
+    }
+    resp.send(JSON.stringify({'status':'success'}));
+});
+
+app.get('/statuschangecampaign', function (req,resp) {
+    req.body = req.query;
+    var collection = db.collection('addcampaign');
+    var data = {
+        status: req.body.status
+    }
+    var o_id = new mongodb.ObjectID(req.body._id);
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    var transporter = mailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: "itplcc40@gmail.com",
+            pass: "DevelP7@"
+        }
+    });
+    var mailOptions;
+    if(req.body.status==0){
+        mailOptions = {
+            from: "GEOAI Admin <support@geoai.com>",
+            to: req.body.email,
+            subject: 'Your Campaign ' + req.body.campaignname + ' is deactivated',
+            text: req.body.campaignname + ' has been deactivated.<br/>Notes Added: '+req.body.note ,
+        };
+    }
+
+    if(req.body.status==1){
+        mailOptions = {
+            from: "GEOAI Admin <support@geoai.com>",
+            to: req.body.email,
+            subject: 'Your Campaign ' + req.body.campaignname + ' is activated',
+            text: req.body.campaignname + 'has been activated.<br/>Notes Added: '+req.body.note ,
+        };
+    }
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('send');
+            transporter.close();
+        }
+    });
+    var collection = db.collection('campaignnotes');
+    collection.insert([{
+        email: req.body.email,
+        note: req.body.note,
+        addedby: req.body.addedby,
+        added_time: Date.now(),
+    }], function (err, result) {
+        if (err) {
+            console.log('error'+err);
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            console.log(result);
+            resp.send(JSON.stringify({'status':'success'}));
+        }
+    });
+});
+
+
+function getall_admin_helpdesk_emailids(){
+    arr=[];
+    var collection = db.collection('signupnew');
+    cond = {
+        $or : [
+            {type : 'admin'},
+            { type: 'helpdesk' }
+        ]
+    };
+    collection.find(cond).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            for (let i in items){
+                arr.push(items[i].email);
+            }
+        }
+    });
+    return arr;
+}
+

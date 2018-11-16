@@ -41,7 +41,6 @@ export class AddcampaignComponent implements OnInit {
         });
         this.dataForm = this.fb.group({
             campaignname: ['', Validators.required],
-         /*   status: ['', Validators.required],*/
             totalcampaignspend: ['', Validators.required],
             cpa: ['', Validators.required],
             epc: ['', Validators.required],
@@ -65,9 +64,9 @@ export class AddcampaignComponent implements OnInit {
         console.log('new Date(formval.enddate)');
         console.log('this.dataForm.valid');
         console.log(this.dataForm.valid);
-        var today= moment();
-        var startdate = moment(formval.startdate).format('MM-DD-YYYY');
-        var enddate = moment(formval.enddate).format('MM-DD-YYYY');
+        var startdate = moment(formval.startdate).format('YYYY-MM-DD');
+        var enddate = moment(formval.enddate).format('YYYY-MM-DD');
+
         if(formval.startdate>=formval.enddate ){
             this.daterangeerror = 'Give Start date and End date properly';
             console.log('inside error');
@@ -88,7 +87,6 @@ export class AddcampaignComponent implements OnInit {
                 fcap: formval.fcap,
                 added_by: this.mailcookiedetails,
             };
-            console.log(data);
             this._http.post(link, data)
                 .subscribe(res => {
                     this.router.navigate(['/campaignlists']);
@@ -109,17 +107,17 @@ export class AddcampaignComponent implements OnInit {
                 console.log(result.status);
                 if (result.status == 'success' && typeof(result.item) != 'undefined') {
                     let userdet = result.item;
+                    userdet.campaignname = 'Copy of '+userdet.campaignname;
                     this.dataForm = this.fb.group({
                         campaignname: [userdet.campaignname, Validators.required],
-                      /*  status: [userdet.status, Validators.required],*/
                         totalcampaignspend: [userdet.totalcampaignspend, Validators.required],
                         cpa: [userdet.cpa, Validators.required],
                         epc: [userdet.epc, Validators.required],
                         dailybudget: [userdet.dailybudget, Validators.required],
                         startingbid: [userdet.startingbid, Validators.required],
                         conversionvalue: [userdet.conversionvalue, Validators.required],
-                        startdate: [moment(userdet.startdate*1000).format('MM-DD-YYYY'), Validators.required],
-                        enddate: [moment(userdet.enddate*1000).format('MM-DD-YYYY'), Validators.required],
+                        startdate: [userdet.startdate, Validators.required],
+                        enddate: [userdet.enddate, Validators.required],
                         fcap: [userdet.fcap, Validators.required],
                     });
                 }else {

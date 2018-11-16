@@ -1,0 +1,42 @@
+
+<app-headernew></app-headernew>
+<div class="bodymaindiv">
+    <div class="adminmainwarpper addcampaignwarpper">
+        <div class="formblock" style="display: inline;">
+            <form role="form" class="form form-inline" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+
+                <div class="form-group">
+                    <div class="col-xs-12 divinner">
+                    <label class="col-xs-3 lblform">Add Role Mark Up</label>
+                    <div class="col-xs-4 txtfield">
+                        <input type="text" class="form-control" [formControl]="dataForm.controls['role_mark_up']">
+                    </div>
+                        <div class="col-sm-1 col-xs-1 txtfield"><span class="fontpercentage">%</span></div>
+                    <div class="col-sm-4 col-xs-4 txtfield"></div>
+                    </div>
+                    <span class="has-error" *ngIf ="dataForm.controls['role_mark_up'].touched && !dataForm.controls['role_mark_up'].valid">This is Required !</span>
+                    <span class="has-error" *ngIf ="role_mark_up_error">{{role_mark_up_error}}</span>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-12 divinner">
+                        <label class="col-xs-4 lblform">Add Smatoo Mark Up</label>
+                        <div class="col-sm-4 col-xs-4 txtfield">
+                            <input type="text" class="form-control" [formControl]="dataForm.controls['smatoo_mark_up']">
+                        </div>
+                        <div class="col-sm-1 col-xs-1 txtfield"><span class="fontpercentage">%</span></div>
+                        <div class="col-sm-3 col-xs-4 txtfield"></div>
+                    </div>
+                    <span class="has-error" *ngIf ="dataForm.controls['smatoo_mark_up'].touched && !dataForm.controls['smatoo_mark_up'].valid">This is Required !</span>
+                    <span class="has-error" *ngIf ="smatoo_mark_up_error">{{smatoo_mark_up_error}}</span>
+                </div>
+
+                <div class="form-group1 btnformdivcls" style="text-align: right">
+                    <button type="submit" class="btnbluedeep">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<app-footernew></app-footernew>
+

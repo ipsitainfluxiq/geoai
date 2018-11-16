@@ -88,7 +88,7 @@ body{margin:0!important;padding:0 0 0px 0!important;background:#1d70a3 url(/asse
 .audience-list input{margin-bottom:0;margin-left:1em}
 .audience-list .thumb{margin:0px 0 0 -10px;font-size:0px;width:20px;height:20px;display:block;float:left;position:inherit;}
 .audience-list li div{margin:0px 0 0 -10px;font-size:0px;width:20px;height:20px;display:block;float:left;position:inherit;}
-.collapsed{background:url(/assets/images/accordion_right.png) no-repeat left 4px;background-size:15px!important;padding:0 0 0 10px!important;}
+/*.collapsed{background:url(/assets/images/accordion_right.png) no-repeat left 4px;background-size:15px!important;padding:0 0 0 10px!important;}*/
 .expanded{background:url(/assets/images/accordion_bottom.png) no-repeat left 4px !important;background-size:15px!important;padding:0 0 0 10px!important;}
 .audience-list input{margin-bottom:0!important;margin-left:0!important;}
 .showerror{font-size:12px;color:#ff0000;display:block;padding:5px 0;}
@@ -116,7 +116,7 @@ body{margin:0!important;padding:0 0 0px 0!important;background:#1d70a3 url(/asse
 .addlocationtablewrapper{width:100% !important;}
 .location_tablewrapper{width:47%;font-family:Calibri;}
 .location_tablewrapper table{width:100%;}
-.location_tablewrapper td{width:48.5%;vertical-align:top;text-align:left;border:solid 1px #d7d7d7;padding:2px;}
+.location_tablewrapper td{width:48.5%;vertical-align:top;text-align:left;border:solid 1px #d7d7d7;padding:2px; background: #fff!important;}
 .location_tablewrapper td:nth-child(2){width:1%;padding:0px;}
 .location_tablewrapper h6{margin:0;padding:15px 0;font-family:Calibri;color:#222;font-weight:bold;font-size:18px;}
 .locationconboxwrapper{background:#f7f7f7;border:solid 1px #d7d7d7;padding:10px;}
@@ -124,7 +124,7 @@ body{margin:0!important;padding:0 0 0px 0!important;background:#1d70a3 url(/asse
 .location_tablewrapper .location_heading h2{margin:0;padding:6px 0 6px 6px;font-weight:normal;font-size:16px;color:#000;font-family:Calibri;display:inline-block;float:left;}
 .location_tablewrapper .location_heading h2 a{color:#000!important;text-decoration:none!important;}
 .nolocation{display:block;width:100%;text-align:center;padding:20px 6px;font-family:Calibri;color:#333;font-size:14px;}
-.location_contain{padding:0 6px;height:300px;overflow-y:scroll;}
+.location_contain{padding:0 6px;height:300px;overflow-y:scroll; overflow-x:hidden;}
 .location_contain ul{margin:0;padding:0;}
 .location_contain ul li{list-style:none;margin:0;padding:6px 10px 6px 6px!important;width:100%!important;display:block!important;}
 .location_contain ul li label{margin:0!important;padding:0!important;font-weight:normal!important;font-family:Calibri!important;color:#333!important;font-size:16px!important;width:auto!important;display:inline-block!important;float:none!important;}
@@ -313,7 +313,7 @@ body{margin:0!important;padding:0 0 0px 0!important;background:#1d70a3 url(/asse
     .newforminput2{width:280px;}
 }
 .givecolor{color:yellow;}
-.loder_body{width:100%;height:100vh;position:fixed;left:0;top:0;background-color:rgba(0, 0, 0, 0.5);z-index:99;}
+.loder_body{width:100%;height:100vh;position:fixed;left:0;top:0;background-color:rgba(0, 0, 0, 0.5); z-index:99999999;}
 .loder_wrapper{width:300vh;height:100vh;display:table-cell;text-align:center;vertical-align:middle;}
 .loader{border:16px solid #f3f3f3;border-top:16px solid #008cba;border-radius:50%;width:120px;height:120px;animation:spin 2s linear infinite;margin:0 auto;}
 @keyframes spin{0%{transform:rotate(0deg);}
@@ -442,7 +442,7 @@ agm-map{height:500px;}
 .nopadding{margin-top:0px !important;}
 .selectedclass{background-color:#1b6d85;}
 .active a{color:red;}
-.paddingadd{padding-left:12% !important;margin-bottom:3%;}
+.paddingadd{ margin: 0 auto; margin-top: 20px; margin-bottom:3%;}
 .addmarginbottom{margin-bottom:3%;}
 .addborder{border:1px solid black;margin-top:2%;margin-right:12%;padding-bottom:25px;}
 .searchbuttons1{color:#008cba !important;cursor:pointer;line-height:normal;padding:0px 10px 5px 10px!important;}

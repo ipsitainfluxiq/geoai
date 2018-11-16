@@ -268,3 +268,18 @@ h2{color:#34ca78;}
 .dashboard1_div1 .budget_formdiv_left{width:45%;float:left;}
 .dashboard1_div1 .budget_formdiv_right{width:45%;float:right;}
 .dashboard1_div1 .dashboard1form input[type="text"]{margin-bottom:20px;}
+.tosearchlist{background-color: #FFFFFF !important;  }
+.bodytopactiondiv .formblock select{
+    background-color: #FFFFFF !important;
+}
+.bodymaindiv .btnblue{font-size: 12px!important;padding: 6px 7px!important;}
+.buttonblock{
+    display: inline-block!important;
+}
+
+.bodymaindiv td:nth-child(8){width:13%!important;}
+.textcolor{
+    text-decoration: underline;
+    color: #1A81BE;
+    cursor: pointer;
+}

@@ -76,6 +76,7 @@ import {SearchnewComponent} from "./../src/app/searchnew/searchnew.component";
 import {BannerlistComponent} from "./../src/app/bannerlist/bannerlist.component";
 import {HelpdesklistComponent} from "../src/app/helpdesklist/helpdesklist.component";
 import {HelpdeskaddComponent} from "../src/app/helpdeskadd/helpdeskadd.component";
+import {RolesettingsComponent} from "../src/app/rolesettings/rolesettings.component";
 
 const appRoutes: Routes = [
 
@@ -93,6 +94,8 @@ const appRoutes: Routes = [
     { path: 'test', component: TestComponent},
     { path: 'signup', component: SignupComponent},
     { path: '', component: LoginComponent},
+    { path: 'login/:id', component: LoginComponent},
+   // { path: ':type', component: LoginComponent},
     { path: 'userlist', component: UserlistComponent},
     { path: 'accountdetails', component: AccountdetailsComponent},
     { path: 'updateprofile', component: UpdateprofileComponent},
@@ -141,12 +144,15 @@ const appRoutes: Routes = [
     { path: 'addcampaign', component: AddcampaignComponent},
     { path: 'addcampaign/:id', component: AddcampaignComponent},
     { path: 'editcampaign/:id', component: EditcampaignComponent},
+    { path: 'editcampaign/:id/:type', component: EditcampaignComponent},
     { path: 'signupnew', component: SignupnewComponent},
     { path: 'userinformation', component: UserinformationComponent},
     { path: 'searchnew', component: SearchnewComponent},
     { path: 'bannerlist', component: BannerlistComponent},
+    { path: 'bannerlist/:id', component: BannerlistComponent},
     { path: 'helpdesklist', component: HelpdesklistComponent},
     { path: 'helpdeskadd', component: HelpdeskaddComponent},
+    { path: 'rolesettings', component: RolesettingsComponent},
 
 
 ];

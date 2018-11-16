@@ -71,8 +71,9 @@
                          class="form-control"
                          bsDatepicker
                          [(ngModel)]="startdate"
-                         [minDate] = "isdate"
+                         [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
                   >
+                  <!-- [minDate] = "isdate"-->
                   <span class="openbuttoncls">
                   <button type="button"><img src="../../assets/images/icon-calender.png"></button>
                 </span>
@@ -88,7 +89,7 @@
                          class="form-control"
                          bsDatepicker
                          [(ngModel)]="enddate"
-                         [minDate] = "isdate"
+                         [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
 
                   >
                   <span class="openbuttoncls">
@@ -105,22 +106,21 @@
       </div>
       </div>
     </div>
-    <div class="rightbtndiv" *ngIf="cookiedetailsforalldetails_type!=1 && cookiedetailsforalldetails_type!=2">
+    <div class="rightbtndiv" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
         <div class="rightbtndiv">
             <a href="javascript:void(0)" class="btnblue" [routerLink]="['/addcampaign']">Add Campaign</a>
         </div>
       <h3>Remaining Budget <span *ngIf="totalamt==0">$ 0</span>
           <span *ngIf="totalamt>0">$ {{totalamt}}</span></h3>
-
     </div>
-
   </div>
+
   <div class="bodytopactiondivbg">
     <div class="bodytopactiondiv">
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 bodytopactiondivbgleft" [routerLink]="['/addcampaign']">
-            <span>New Campaign</span>
+            <span *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">New Campaign</span>
           </div>
           <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 bodytopactiondivbgright">
             <div class="bodytopactiondlist1">
@@ -151,9 +151,9 @@
         <ul class="list-inline">
           <li (click)="resumecampaigns(1)"><a><img src="../../assets/images/geoaiadmin_iconresume.png" > Resume</a></li>
           <li (click)="resumecampaigns(0)"><a><img src="../../assets/images/geoaiadmin_iconpause.png"> Pause</a></li>
-          <li (click)="resumecampaigns(0)"><a><!--<img src="../../assets/images/geoaiadmin_iconactive.png">--><span class="iconactive"></span> Active</a></li>
-          <li (click)="resumecampaigns(0)"><a><!--<img src="../../assets/images/geoaiadmin_iconinactive.png">--><span class="iconinactive"></span> Inactive</a></li>
-          <li (click)="resumecampaigns(0)"><a><!--<img src="../../assets/images/geoaiadmin_iconpending.png">--><span class="iconpending"></span> Pending</a></li>
+          <li><a><!--<img src="../../assets/images/geoaiadmin_iconactive.png">--><span class="iconactive"></span> Active</a></li>
+          <li><a><!--<img src="../../assets/images/geoaiadmin_iconinactive.png">--><span class="iconinactive"></span> Inactive</a></li>
+          <li><a><!--<img src="../../assets/images/geoaiadmin_iconpending.png">--><span class="iconpending"></span> Pending</a></li>
          <!-- <li><a><img src="../../assets/images/geoaiadmin_iconcancelrunreport.png"> Cancel Run Report</a></li>-->
         </ul>
       </div>
@@ -164,45 +164,77 @@
       <table class="col-md-12 table-bordered table-striped table-condensed cf">
         <thead class="cf">
         <tr>
-          <th class="numeric text-center">Status</th>
+          <th class="numeric text-center">Status
+            <span tooltip="content 1" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
           <th class="numeric text-center"></th>
-          <th class="numeric text-center">campaign name</th>
-          <th class="numeric text-center">Rem.Budget</th>
-          <th class="numeric text-center">Daily limit<br> spend(60%)($12/$20)</th>
-          <th class="numeric text-center">Win to bid<br> percentages/40%(20/8)</th>
-          <th class="numeric text-center">Total Campaign<br> spend(10%)($100/$1000)</th>
-          <th class="numeric text-center">Top bid<br> amount<br> per impression</th>
-          <th class="numeric text-center">The CPM</th>
-          <th class="numeric text-center">The EPC</th>
-          <th class="numeric text-center">The EPCM</th>
-          <th class="numeric text-center">The CPA</th>
-          <th class="numeric text-center">Total spend in<br> comparative<br> to what the<br> CPA amount is </th>
-          <th class="numeric text-center">Manage audience</th>
-          <th class="numeric text-center">Manage creative</th>
-          <th class="numeric text-center">Date Range <br>(Start - End)</th>
+          <th class="numeric text-center">campaign name
+            <span tooltip="content 2" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">Rem.Budget
+            <span tooltip="content 3" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">Daily limit<br> spend(60%)($12/$20)
+            <span tooltip="content 4" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">Win to bid<br> percentages/40%(20/8)
+            <span tooltip="content 5" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">Total Campaign<br> spend(10%)($100/$1000)
+            <span tooltip="content 6" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">Top bid<br> amount<br> per impression
+            <span tooltip="content 7" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">The CPM
+            <span tooltip="content 8" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">The EPC
+            <span tooltip="content 9" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">The EPCM
+            <span tooltip="content 10" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">The CPA
+            <span tooltip="content 11" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">Total spend in<br> comparative<br> to what the<br> CPA amount is
+            <span tooltip="content 12" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">Manage audience
+            <span tooltip="content 13" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">Manage creative
+            <span tooltip="content 14" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
+          <th class="numeric text-center">Date Range <br>(Start - End)
+            <span tooltip="content 15" [tooltipAnimation]="true" class="tooltipicon1">?</span>
+          </th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of campaignlistarr | paginate: { itemsPerPage: 5, currentPage: p }; let i=index" [ngClass]="addtdclass(item.status)">
+        <tr *ngFor="let item of campaignlistarr  | orderBy:'added_on': 'desc' | paginate: { itemsPerPage: 5, currentPage: p }; let i=index" [ngClass]="addtdclass(item.status)">
           <td data-title="Status" class="text-center statustd"  >
             <ul class="list-inline statusicon" id="column1">
               <!-- <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>-->
               <!--<li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>-->
-              <li *ngIf="item.status==3"><input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i])" [(ngModel)]="checkboxvalue[i]"  *ngIf="cookiedetailsforalldetails_type==1"></li>
+              <li *ngIf="item.status==3"><input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i])" [(ngModel)]="checkboxvalue[i]"  *ngIf="cookiedetailsforalldetails_type=='admin'"></li>
               <li *ngIf="item.status!=3"><input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i])" [(ngModel)]="checkboxvalue[i]"></li>
               <!--  <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>-->
-              <li><a [routerLink]="['/editcampaign',item._id]"><img src="../../assets/images/geoaiadmin_statusicon4.png"></a></li>
+              <li *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk' "><a [routerLink]="['/editcampaign',item._id]"><img src="../../assets/images/edit.png" tooltip="Edit the Campaign" style="height: 14px;"></a></li><!--geoaiadmin_statusicon4.png-->
               <!--<li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>-->
-              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
-              <li><a [routerLink]="['/addcampaign',item._id]"><img src="../../assets/images/geoaiadmin_statusicon7.png"></a></li>
-              <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon8.png"></a></li>
+              <li class="hide"><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon6.png"></a></li>
+              <li *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'"><a [routerLink]="['/addcampaign',item._id]"><img src="../../assets/images/duplicate.png" tooltip="Copy the Campaign" style="height: 14px;"></a></li> <!--geoaiadmin_statusicon7.png-->
+              <li *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'"><a (click)="openaudiencelist(item._id)"><img src="../../assets/images/geoaiadmin_statusicon8.png" tooltip="Add Audience"></a></li>
+
+              <li *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'"><a (click)="openbannerlist(item._id)"><img src="../../assets/images/creative.png" tooltip="Add Creative" style="height: 14px;"></a></li>
             </ul>
           </td>
           <td data-title="Active Status" class="borderdiv text-center">
             <ul class="list-inline statusiconsub">
               <li (click)="changestatus(item)"><a *ngIf="item.status==1"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
               <li (click)="changestatus(item)"><a *ngIf="item.status==0"><img src="../../assets/images/geoaiadmin_iconpause.png"></a></li>
-              <li><a *ngIf="item.status==3 && cookiedetailsforalldetails_type!=1"><img src="../../assets/images/pending_icon.png"></a></li>
+              <li><a *ngIf="item.status==3"><img src="../../assets/images/pending_icon.png"></a></li>
             </ul>
           </td>
           <td data-title="campaign name" class=" text-center">{{item.campaignname}}</td>
@@ -211,10 +243,10 @@
           <td data-title="Win to bid percentages/40%(20/8)" class="numeric text-center">228,918</td>
           <td data-title="Total Campaign spend(10%)($100/$1000)" class="numeric text-center">e,306</td>
           <td data-title="Top bid amount per impression" class="numeric text-center">1.01%</td>
-          <td data-title="The CPM" class="numeric text-center">120</td>
-          <td data-title="The EPC" class="numeric text-center">{{item.epc}}</td>
+          <td data-title="The CPM" class="numeric text-center">$120</td>
+          <td data-title="The EPC" class="numeric text-center">${{item.epc}}</td>
           <td data-title="The EPCM" class="numeric text-center">$0.51</td>
-          <td data-title="The CPA" class="numeric text-center">{{item.cpa}}</td>
+          <td data-title="The CPA" class="numeric text-center">${{item.cpa}}</td>
           <td data-title="Total spend in comparative to what the CPA amount is" class="numeric text-center">$65.23</td>
           <td data-title="Manage audience" class="numeric text-center">$65.23</td>
           <td data-title="Manage creative" class="numeric text-center"><span class="greentxt">+47</span></td>
@@ -633,3 +665,341 @@
 </div>
 
 <!--END Modal -->
+
+<div *ngIf="isModalShown" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add an Audience to this Campaign</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="audiencewrapperoutertable">
+            <div class="row audiencewrapperouterrow">
+              <div *ngFor="let item of audiencelist; let i=index" class="audiencewrapperouter">
+                <div class="audiencewrapper">
+                  <h2>
+                    <input type="radio" name="audienceradio" value="{{item._id}}" [(ngModel)] = "audienceid"> <!--(click)="audienceitem(item._id)"-->
+                    <span>Audience Name - {{item.audiencename}}</span>
+                  </h2>
+                  <div class="audiencedesc">
+                    <span>Audience Description - {{item.audiencedescription}}</span><br/>
+                    <span>Audience Result - {{item.searchcount}}</span><br/>
+                    <span>Audience Added on - {{showdate(item.added_on)}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="add_audience_to_campaign()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div *ngIf="isModalShown1" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add a Creative to this Campaign</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+              <div *ngFor="let item of bannerlist|  orderBy:'added_on':'desc'; let i=index" class="row bannerlistblocksingle" [ngClass]="addtdclass(item.status)">
+                    <input type="radio" name="audienceradio" value="{{item._id}}" [(ngModel)] = "bannerid">
+                    <!--BLOCK 1-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==0">
+                      <div class="bannermainblock0 newimghiidecls" >
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock0img" *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock0img" *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <a href="javascript:void(0)" class="bannermainblock0btn" *ngIf="item.editablearea_2==null || item.editablearea_2==''">View More</a>
+                        <a href="javascript:void(0)" class="bannermainblock0btn" *ngIf="item.editablearea_2!=null && item.editablearea_2!=''">{{item.editablearea_2}}</a>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==0">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 1</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+
+                    <!--BLOCK 2-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==1">
+                      <div class="bannermainblock1 newimghiidecls" >
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock1img" *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock1img" *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <a href="javascript:void(0)" class="bannermainblock1btn" *ngIf="item.editablearea_2==null || item.editablearea_2==''">View More</a>
+                        <a href="javascript:void(0)" class="bannermainblock1btn" *ngIf="item.editablearea_2!=null && item.editablearea_2!=''">{{item.editablearea_2}}</a>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==1">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 2</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+                    <!--BLOCK 3-->
+
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==2">
+                      <div class="bannermainblock2 newimghiidecls" style="background-image: url('../../assets/images/300-50_bg1.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock2img" *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock2img" *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span  class="bannermainblock2txt" *ngIf="item.editablearea_1==null || item.editablearea_1==''">INDUSTRY-BASED<br/>
+                        MARKETING</span>
+                        <span  class="bannermainblock2txt" *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}}</span>
+                        <a href="javascript:void(0)" class="bannermainblock2btn"><span *ngIf="item.editablearea_2==null || item.editablearea_2==''">View More</span><span *ngIf="item.editablearea_2!=null || item.editablearea_2!=''">{{item.editablearea_2}}</span></a>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==2">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 3</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+                    <!--BLOCK 4-->
+
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==3">
+                      <div class="bannermainblock3 newimghiidecls">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock3img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock3img"  *ngIf="item.editablearea_3!=null || item.editablearea_3!=''">
+                        <span class="bannermainblock3txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''">DIRECT<br> CONNECTIONS </span>
+                        <span class="bannermainblock3txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                        <a href="javascript:void(0)" class="bannermainblock3btn"><span *ngIf="item.editablearea_2==null || item.editablearea_2==''">View More</span><span *ngIf="item.editablearea_2!=null && item.editablearea_2!=''">{{item.editablearea_2}}</span></a>
+                        <img src="../../assets/images/300_50_img1.jpg" class="bannermainblock3img2" *ngIf="item.editablearea_4==null || item.editablearea_4==''">
+                        <img src="../../assets/uploads/{{item.editablearea_4}}" class="bannermainblock3img2" *ngIf="item.editablearea_4!=null && item.editablearea_4!=''">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==3">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 4</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+                    <!--BLOCK 5-->
+
+
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==4">
+                      <div class="bannermainblock4 newimghiidecls" style="background-image: url('../../assets/images/300-50_bg7.jpg'); background-size: cover; background-repeat: no-repeat;border: solid 2px #b4e20d;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock4img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock4img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock4txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''">DIRECT<br> CONNECTIONS </span>
+                        <span class="bannermainblock4txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                        <a href="javascript:void(0)" class="bannermainblock4btn"><span *ngIf="item.editablearea_2==null || item.editablearea_2==''">View More</span><span *ngIf="item.editablearea_2!=null && item.editablearea_2!=''">{{item.editablearea_2}}</span></a>
+                        <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock4img2" *ngIf="item.editablearea_4==null || item.editablearea_4==''">
+                        <img src="../../assets/uploads/{{item.editablearea_4}}" class="bannermainblock4img2" *ngIf="item.editablearea_4!=null && item.editablearea_4!=''">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==4">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 5</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+                    <!--BLOCK 6-->
+
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage"  *ngIf="item.banner_type==5">
+                      <div class="bannermainblock5 newimghiidecls">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock5img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock5img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock5txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''">DIRECT<br> CONNECTIONS </span>
+                        <span class="bannermainblock5txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                        <span class="bannermainblock5txt2"  *ngIf="item.editablearea_5==null || item.editablearea_1==''">INDUSTRY-BASED</span>
+                        <span class="bannermainblock5txt2"  *ngIf="item.editablearea_5!=null && item.editablearea_5!=''">{{item.editablearea_5}} </span>
+                        <a href="javascript:void(0)" class="bannermainblock5btn"><span *ngIf="item.editablearea_2==null || item.editablearea_2==''">View More</span><span *ngIf="item.editablearea_2!=null && item.editablearea_2!=''">{{item.editablearea_2}}</span></a>
+
+                        <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock5img2"  *ngIf="item.editablearea_4==null || item.editablearea_4==''">
+                        <img src="../../assets/uploads/{{item.editablearea_4}}" class="bannermainblock5img2"  *ngIf="item.editablearea_4!=null && item.editablearea_4!=''">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"  *ngIf="item.banner_type==5">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 6</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+                    <!--BLOCK 7-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage"  *ngIf="item.banner_type==6">
+                      <div class="bannermainblock6 newimghiidecls">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock6img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock6img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock6txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''">DIRECT  CONNECTIONS </span>
+                        <span class="bannermainblock6txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                        <a href="javascript:void(0)" class="bannermainblock6btn"><span *ngIf="item.editablearea_2==null || item.editablearea_2==''">View More</span><span *ngIf="item.editablearea_2!=null && item.editablearea_2!=''">{{item.editablearea_2}}</span></a>
+                        <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock6img2"  *ngIf="item.editablearea_4==null || item.editablearea_4==''">
+                        <img src="../../assets/uploads/{{item.editablearea_4}}" class="bannermainblock6img2"  *ngIf="item.editablearea_4!=null && item.editablearea_4!=''">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==6" >
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 7</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+                    <!--BLOCK 8-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage"  *ngIf="item.banner_type==7">
+                      <div class="bannermainblock7 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg1.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock7img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock7img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock7txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''">GEO AI<br/>TECHNOLOGIES</span>
+                        <span class="bannermainblock7txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"  *ngIf="item.banner_type==7">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 8</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+
+                    <!--BLOCK 9-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage"   *ngIf="item.banner_type==8">
+                      <div class="bannermainblock8 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg2.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock8img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock8img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock8txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''">GEO AI<br/>TECHNOLOGIES</span>
+                        <span class="bannermainblock8txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"   *ngIf="item.banner_type==8">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 9</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+
+                    <!--BLOCK 10-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==9">
+                      <div class="bannermainblock9 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg3.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock9img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock9img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock9txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                        <span class="bannermainblock9txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==9">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 10</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+
+                    <!--BLOCK 11-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==10">
+                      <div class="bannermainblock10 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg4.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock10img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock10img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock10txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                        <span class="bannermainblock10txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                        <a href="javascript:void(0)" class="bannermainblock10btn"><span *ngIf="item.editablearea_2==null || item.editablearea_2==''">View More</span><span *ngIf="item.editablearea_2!=null && item.editablearea_2!=''">{{item.editablearea_2}}</span></a>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==10">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 11</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+
+                    <!--BLOCK 12-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==11">
+                      <div class="bannermainblock11" style="background-image: url('../../assets/images/320-50_bg5.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock11img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock11img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock11txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                        <span class="bannermainblock11txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                        <a href="javascript:void(0)" class="bannermainblock11btn"><span *ngIf="item.editablearea_2==null || item.editablearea_2==''">View More</span><span *ngIf="item.editablearea_2!=null && item.editablearea_2!=''">{{item.editablearea_2}}</span></a>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==11">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 12</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+
+
+                    <!--BLOCK 13-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==12">
+                      <div class="bannermainblock12 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg6.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock12img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock12img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock12txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                        <span class="bannermainblock12txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==12">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 13</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+                    <!--BLOCK 14-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==13">
+                      <div class="bannermainblock13 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg7.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock13img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock13img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock13txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                        <span class="bannermainblock13txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==13">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 14</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+
+                    <!--BLOCK 15-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==14">
+                      <div class="bannermainblock14 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg8.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock14img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock14img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock14txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                        <span class="bannermainblock14txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==14">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 15</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+
+                    <!--BLOCK 16-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==15">
+                      <div class="bannermainblock15 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg9.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock15img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock15img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock15txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                        <span class="bannermainblock15txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                        <a href="javascript:void(0)" class="bannermainblock15btn"><span *ngIf="item.editablearea_2==null || item.editablearea_2==''">View More</span><span *ngIf="item.editablearea_2!=null && item.editablearea_2!=''">{{item.editablearea_2}}</span></a>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==15">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 16</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+
+
+                    <!--BLOCK 17-->
+                    <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==16">
+                      <div class="bannermainblock16 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg10.jpg'); background-repeat: no-repeat;">
+                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock16img"  *ngIf="item.editablearea_3==null || item.editablearea_3==''">
+                        <img src="../../assets/uploads/{{item.editablearea_3}}" class="bannermainblock16img"  *ngIf="item.editablearea_3!=null && item.editablearea_3!=''">
+                        <span class="bannermainblock16txt"  *ngIf="item.editablearea_1==null || item.editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                        <span class="bannermainblock16txt"  *ngIf="item.editablearea_1!=null && item.editablearea_1!=''">{{item.editablearea_1}} </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==16">
+                      <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 17</h2>
+                      <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                    </div>
+
+              </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="add_banner_to_campaign()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

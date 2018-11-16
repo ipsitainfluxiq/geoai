@@ -15,11 +15,11 @@
 }
 @media only screen and (max-width:1199px){.bodytopsearchlistwrapper{margin-top:0px !important;}
     #no-more-tables .table-bordered>tbody>tr>td{font-size:14px;}
-    .addcampaignwarpper .form-group{width:49% !important;padding-right:5px !important;padding-left:5px !important;}
+    /*.addcampaignwarpper .form-group{width:49% !important;padding-right:5px !important;padding-left:5px !important;}
     .addcampaignwarpper .form-group:nth-child(odd){padding-left:0px !important;padding-right:5px !important;}
     .addcampaignwarpper .form-group:nth-child(even){padding-right:0px !important;padding-left:5px !important;}
     .addcampaignwarpper .checkbox-inline+.checkbox-inline,
-    .addcampaignwarpper .radio-inline+.radio-inline{margin-top:0;margin-left:0px;}
+    .addcampaignwarpper .radio-inline+.radio-inline{margin-top:0;margin-left:0px;}*/
     .formblock label{font-size:14px;}
     #no-more-tables .table-bordered>thead>tr>th:last-child{border-right:0px solid #018ac7!important;}
     #no-more-tables .table-bordered>thead>tr>th:first-child{border-left:0px solid #018ac7!important;}
@@ -68,6 +68,10 @@
 @media only screen and (max-width:800px){.headerlogodiv{background-position:left -400% top, right -300% top;}
 }
 @media only screen and (max-width:767px){.bannerlistsingleimage{min-height:auto;}
+
+    .addcampaignwarpper .form-group.dtrangecls {
+        width: 98% !important;
+    }
     .bannerlistblocksingle{width:100%;}
     .submenuformblock .form-group:nth-child(1){width:100%;padding-left:0px !important;}
     .submenuformblock .form-group:nth-child(2){width:100%;padding-left:0px !important;}
@@ -81,10 +85,10 @@
     .formblock.topsearchlist .form-group{width:100% !important;margin-bottom:10px !important;display:inline-block;}
     .formblock.topsearchlist .form-group:nth-child(odd){padding-left:0px !important;padding-right:0px !important;}
     .formblock.topsearchlist .form-group:nth-child(even){padding-right:0px !important;padding-left:0px !important;}
-    .addcampaignwarpper .form-group{width:100% !important;display:inline-block;}
+    .addcampaignwarpper .form-group{width:98% !important;display:inline-block;}
     .formblock .radio-inline-wrapper2{margin-left:0px;}
-    .addcampaignwarpper .form-group:nth-child(odd){padding-left:0px !important;padding-right:0px !important;}
-    .addcampaignwarpper .form-group:nth-child(even){padding-right:0px !important;padding-left:0px !important;}
+    /*.addcampaignwarpper .form-group:nth-child(odd){padding-left:0px !important;padding-right:0px !important;}
+    .addcampaignwarpper .form-group:nth-child(even){padding-right:0px !important;padding-left:0px !important;}*/
     .adminmainwarpper.addcampaignwarpper{width:92% !important;padding:10px;}
     .walletwrapper{width:90% !important;}
     .bodytopsearchlist{display:inline-block;width:100%;}

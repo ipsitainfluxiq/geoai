@@ -382,23 +382,14 @@
 
                     <!-- <input type="text" [(ngModel)]="searchaddress">
                       <input type="button" value="Search" (click)="searchlatlng()">-->
-
-
                     <div class="GeoJSON_block"><span >Upload GeoJSON</span></div>
-
                    <!-- <div class="GeoJSON_block"><span (click)="getjson()">Upload GeoJSON</span></div>
                     <div *ngIf="uploadjson">
                       <input type="file"  ngFileSelect [options]="basicOptions" (onUpload)="handleUpload($event)">
                       <input type="button"  value="Upload" (click)="callupload()"/>
                       <input type="button"  value="Cancel" />
                     </div>-->
-
-
-
-
-
                     <div class="mapblickwrapper">
-
                       <div class="map_menuwrapper">
                         <input  type="text" class="map_input" placeholder="address" [(ngModel)]="searchaddress" (keyup)="searchlatlng($event)"/>
                         <!--<input type="button" value="Search" (click)="searchlatlng()">-->
@@ -408,12 +399,8 @@
                         <a href="javascript:void(0)" class="maplink1" (click)="createsh(2)"><img src="../../assets/images/map_icon4.jpg"  alt="#"/></a>
 
                         <a href="javascript:void(0)" class="maplink2"><img src="../../assets/images/map_icon5.jpg"  alt="#"/></a>
-
                         <div class="clearfix"></div>
-
-
                       </div>
-
                       <agm-map *ngIf="mapval" [latitude]="lat" [longitude]="lng" [fitBounds]="bounds" (mapClick)="mapClicked($event)">
                         <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
                         <agm-polygon *ngFor="let pathsvals of patharr" [paths]="pathsvals" [clickable]="true" [polyDraggable]="true" [draggable]="true" [editable]="true" strokeColor="#E9BE79" fillColor="#EBD8B7" fillOpacity="1" >
@@ -425,37 +412,23 @@
 
                         </agm-polyline>
                       </agm-map>
-
-
                     </div>
-
-
-
                     <div class="map_menuwrapper menuwrapper_buttom">
                       <select class="map_select" [(ngModel)]="polydelete" (click)="mapdelete()">
                         <option>Actions</option>
                         <option value="removeselected">Remove Selected</option>
                         <option value="removeall">Remove All</option>
                       </select>
-
                       <input  type="text" class="map_input" placeholder="address" [(ngModel)]="searchaddress" (keyup)="searchlatlng($event)"/>
                       <!--<input type="button" value="Search" (click)="searchlatlng()">-->
-
                       <div class="clearfix"></div>
-
-
                     </div>
-
                     <div class="new_table_wrapper">
                       <div class="GeoJSON_block2"> <a href="javascript:void(0)">Download GeoJSON</a> </div>
-
-
                       <table>
-
                         <tr>
                           <th><input type="checkbox" (click)="allcheck()" [(ngModel)]="checkuncheck"></th>
                           <th>Name</th>
-
                           <th>Geo Type</th>
                           <th>&nbsp;</th>
                         </tr>
@@ -466,7 +439,6 @@
                           <td>Conversion	</td>
                           <td><div class="table_closebtn"><a href="javascript:void(0)" (click)="deletepolyshape(item)"><img src="../../assets/images/tab_new_icon3.png"  alt="#" /></a></div></td>
                         </tr>
-
                         <!--<tr>
                             <td><input type="checkbox"></td>
                             <td><img src="../../assets/images/tab_new_icon5.png"  alt="#" /><input type="text"> <div class="clearfix"></div></td>
@@ -479,26 +451,16 @@
                             <td>Conversion	</td>
                             <td><div class="table_closebtn"><a href="javascript:void(0)"><img src="../../assets/images/tab_new_icon3.png"  alt="#" /></a></div></td>
                           </tr>-->
-
-
                       </table>
-
                       <div class="clearfix"></div>
-
                       <div class="budget_formdiv_btn">
                         <input type="button"  value="Save" (click)="savepolygon()"/>
                         <input type="button"  value="Cancel"/>
                       </div>
                     </div>
-
-
-
-
                   </tab>
-
                 </tabset>
               </div>
-
               <div class="budget_wrapper budget_wrapper_new">
                 <div class="budget_formdiv_left settingblock">
                   <h1>CPA Settings <img src="../../assets/images/budget_formicon.png" alt="#" /></h1>

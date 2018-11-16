@@ -46,7 +46,7 @@
       <div class="form-group">
         <label for="campaignname" class="col-xs-12 lblform">Campaign Name</label>
         <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="campaignname" placeholder="" [formControl]="dataForm.controls['campaignname']">
+          <input type="text" class="form-control" id="campaignname" placeholder="" [formControl]="dataForm.controls['campaignname']" [attr.disabled]="type==1 ? '' : null"  >
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['campaignname'].touched && !dataForm.controls['campaignname'].valid">Campaign Name is Required !</span>
       </div>
@@ -66,7 +66,7 @@
       <div class="form-group">
         <label for="totalcampaignspend" class="col-xs-12 lblform">Total Campaign spend</label>
         <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="totalcampaignspend" placeholder="" [formControl]="dataForm.controls['totalcampaignspend']">
+          <input type="text" class="form-control" id="totalcampaignspend" placeholder="" [formControl]="dataForm.controls['totalcampaignspend']" [attr.disabled]="type==1 ? '' : null">
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['totalcampaignspend'].touched && !dataForm.controls['totalcampaignspend'].valid">This field is Required !</span>
       </div>
@@ -74,7 +74,7 @@
       <div class="form-group">
         <label for="totalcampaignspend" class="col-xs-12 lblform">CPA</label>
         <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="cpa" placeholder="" [formControl]="dataForm.controls['cpa']">
+          <input type="text" class="form-control" id="cpa" placeholder="" [formControl]="dataForm.controls['cpa']" [attr.disabled]="type==1 ? '' : null">
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['cpa'].touched && !dataForm.controls['cpa'].valid">Cpa is Required !</span>
       </div>
@@ -82,7 +82,7 @@
       <div class="form-group">
         <label for="totalcampaignspend" class="col-xs-12 lblform">EPC</label>
         <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="epc" placeholder="" [formControl]="dataForm.controls['epc']">
+          <input type="text" class="form-control" id="epc" placeholder="" [formControl]="dataForm.controls['epc']" [attr.disabled]="type==1 ? '' : null">
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['epc'].touched && !dataForm.controls['epc'].valid">Epc is Required !</span>
       </div>
@@ -90,7 +90,7 @@
       <div class="form-group">
         <label for="dailybudget" class="col-xs-12 lblform">Daily Budget</label>
         <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="dailybudget" placeholder="" [formControl]="dataForm.controls['dailybudget']">
+          <input type="text" class="form-control" id="dailybudget" placeholder="" [formControl]="dataForm.controls['dailybudget']" [attr.disabled]="type==1 ? '' : null">
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['dailybudget'].touched && !dataForm.controls['dailybudget'].valid">Daily Budget is Required !</span>
       </div>
@@ -134,7 +134,7 @@
       <div class="form-group">
         <label for="startingbid" class="col-xs-12 lblform">Starting Bid</label>
         <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="startingbid" placeholder="" [formControl]="dataForm.controls['startingbid']">
+          <input type="text" class="form-control" id="startingbid" placeholder="" [formControl]="dataForm.controls['startingbid']" [attr.disabled]="type==1 ? '' : null">
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['startingbid'].touched && !dataForm.controls['startingbid'].valid">Starting Bid is Required !</span>
       </div>
@@ -143,7 +143,7 @@
         <div class="col-xs-12 divinner">
           <label for="conversionvalue" class="col-xs-12 lblform">Conversion Value</label>
           <div class="col-sm-8 col-xs-12 txtfield">
-            <input type="text" class="form-control" id="conversionvalue" placeholder="" [formControl]="dataForm.controls['conversionvalue']">
+            <input type="text" class="form-control" id="conversionvalue" placeholder="" [formControl]="dataForm.controls['conversionvalue']" [attr.disabled]="type==1 ? '' : null">
           </div>
           <div class="col-sm-4 col-xs-12 txtfield"><span>based on (CPA)</span></div>
         </div>
@@ -168,6 +168,8 @@
                      bsDatepicker
                      [formControl]="dataForm.controls['startdate']"
                      [minDate] = "isdate"
+                     [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
+                     [attr.disabled]="type==1 ? '' : null"
               >
               <!--  <span class="openbuttoncls">
                     <button type="button"><img src="../../assets/images/icon-calender.png"></button>
@@ -196,6 +198,9 @@
                      bsDatepicker
                      [formControl]="dataForm.controls['enddate']"
                      [minDate] = "isdate"
+                     [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
+                     [attr.disabled]="type==1 ? '' : null"
+
               >
             </div>
             <span class="has-error" *ngIf ="dataForm.controls['enddate'].touched && !dataForm.controls['enddate'].valid">End Date is Required !</span>
@@ -209,22 +214,38 @@
         <label for="frequencycap" class="col-xs-12 lblform">Frequency Cap</label>
         <div class="col-xs-12 divinner">
           <div class="col-sm-8 col-xs-12 txtfield">
-            <input type="text" class="form-control" id="frequencycap" placeholder="" [formControl]="dataForm.controls['fcap']">
+            <input type="text" class="form-control" id="frequencycap" placeholder="" [formControl]="dataForm.controls['fcap']" [attr.disabled]="type==1 ? '' : null">
           </div>
           <div class="col-sm-4 col-xs-12 txtfield"><span>per instance</span></div>
           <span class="has-error" *ngIf ="dataForm.controls['fcap'].touched && !dataForm.controls['fcap'].valid">Frequency Cap is Required !</span>
         </div>
       </div>
-      <div class="form-group btnformdivcls">
+
+      <!--when admin/helpdesk click the link from mail they cant see update cancel button that is why type!=1-->
+      <div class="form-group btnformdivcls" *ngIf="type!=1">
         <button type="submit" class="btnbluedeep">Update</button>
-        <button type="button" class="btnblue" [routerLink]="['/campaignlists']">Cancel</button>
+        <button type="button" class="btnbluedeep" [routerLink]="['/campaignlists']">Cancel</button>
       </div>
     </form>
   </div>
+
+  <div *ngIf="type==1 && alldetailcookie.get('type')=='admin' || alldetailcookie.get('type')=='helpdesk' ">
+    <div class="headingstatuswrapper">
+      <h4 class="headingstatus">Campaign Status:</h4>
+      <b>Pending</b>
+    </div>
+    <input type="radio" [(ngModel)]="notestatus" name="stts" value="1"> Make this campaign Active
+    <input type="radio" [(ngModel)]="notestatus" name="stts" value="0"> Make this campaign Inactive
+    <p  class="wpcf7-not-valid-tip" *ngIf="notestatuserror">{{notestatuserror}}</p>
+    <h4>Add Note</h4>
+    <textarea class="formblock form-control" [(ngModel)]="note" rows="3"></textarea>
+    <p  class="wpcf7-not-valid-tip" *ngIf="noteblankerror">{{noteblankerror}}</p>
+    <div class="form-group btnformdivcls">
+      <button type="button" class="btnbluedeep" (click)="statuschange()">Yes</button>
+      <button type="submit" class="btnbluedeep" [routerLink]="['/campaignlists']">No</button>
+    </div>
+  </div>
 </div>
-
-
-<!------end Body SECTION--->
 
 
 <!------Footer SECTION--->

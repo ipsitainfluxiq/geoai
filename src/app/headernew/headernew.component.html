@@ -3,12 +3,15 @@
     <div class="logowrapper">
       <a [routerLink]="['/campaignlists']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
     </div>
-    <div class="headerbtndiv">
-      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/userlist']" *ngIf="cookiedetailsforalldetails_type==1">User List</a>
-      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/helpdesklist']" *ngIf="cookiedetailsforalldetails_type==1">Manage Helpdesk</a>
+    <div class="headerbtndiv headerbtndiv1 ">
+      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/audiencelist']" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">Audience List</a>
+      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/bannerlist']">Banner List</a>
+      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/userlist']" *ngIf="cookiedetailsforalldetails_type=='admin'">User List</a>
+      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/helpdesklist']" *ngIf="cookiedetailsforalldetails_type=='admin'">Manage Helpdesk</a>
       <a href="javascript:void(0)" class="btnblue" [routerLink]="['/searchnew']">Add Audience</a>
       <a href="javascript:void(0)" class="btnblue" [routerLink]="['/userinformation']">account Information</a>
     <!--  <a href="javascript:void(0)" class="btnblue" [routerLink]="['/accountdetails']">account Information</a>-->
+      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/rolesettings']" *ngIf="cookiedetailsforalldetails_type=='admin'">Settings</a>
       <a href="javascript:void(0)" class="btnblue" (click)="logout()">Logout</a>
     </div>
   </div>
@@ -25,8 +28,8 @@
             <li class="ssd lidiv0"><a href="javascript:void(0)" [routerLink]="['/campaignlists']">Mission control</a></li>
             <li class="ssd lidiv1"><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
             <li class="ssd lidiv2"><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Default Rules</a></li>
-            <li class="ssd lidiv3" *ngIf="cookiedetailsforalldetails_type==0"><a [routerLink]="['/wallet']">$Money</a></li>
-            <li class="ssd lidiv4" *ngIf="cookiedetailsforalldetails_type==1 || cookiedetailsforalldetails_type==2"><a [routerLink]="['/allwalletlist']">Manage Wallet</a></li>
+            <li class="ssd lidiv3" *ngIf="cookiedetailsforalldetails_type=='user'"><a [routerLink]="['/wallet']">$Money</a></li>
+            <li class="ssd lidiv4" *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'"><a [routerLink]="['/allwalletlist']">Manage Wallet</a></li>
 
           </ul>
         </div>

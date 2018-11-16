@@ -32,14 +32,14 @@ export class AllwalletlistComponent implements OnInit {
         this.getwalletlist();
         this.emailcookie = emailcookie ;
         this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
-        console.log(this.mailcookiedetails);
+       // console.log(this.mailcookiedetails);
         if(this.mailcookiedetails != null){
             this.getuserdetails();
         }
     }
     searchbyval() {
-        console.log(this.filterval5);
-        console.log('searchbyval');
+       // console.log(this.filterval5);
+       // console.log('searchbyval');
         this.filterval = '';
         if (this.filterval1 != '' && this.filterval1 != null) {
             this.filterval = this.filterval1 + '|';
@@ -63,7 +63,7 @@ export class AllwalletlistComponent implements OnInit {
         return data.name;
     }
     valueChanged(data: any): string {
-        console.log(data);
+      //  console.log(data);
         return data;
     }
     ngOnInit() {
@@ -92,15 +92,7 @@ export class AllwalletlistComponent implements OnInit {
                  result = res;
                 this.datalist = result.res;
                 console.log('this.datalist--walletlist');
-               /* for(let i in this.datalist){
-                    let j=i+1;
-                    for(let j in this.datalist){
-                    if(this.datalist[i].added_by==this.datalist[j].added_by){
-                        this.totalamount =
-                        this.newarr.push(this.datalist[j]);
-                    }
-                }
-                }*/
+                console.log(this.datalist);
             }, error => {
                 console.log('Oooops!');
             });

@@ -1,41 +1,5 @@
-<!------HEADER SECTION--->
-
-<!--<header class="headerdiv">
-  <div class="headerlogodiv">
-    <div class="logowrapper">
-      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
-    </div>
-  </div>
-  <div class="container-fluid menublock">
-    <div class="menudiv">
-      <nav class="navbar navbar-default">
-        &lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
-        <div class="navbar-header">
-          <span class="responsivemenu">MENU</span>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-          <div class="clearfix"></div>
-        </div>
-        &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Mission control</a></li>
-            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
-            <li><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Default Rules</a></li>
-            <li class="active"><a [routerLink]="['/']">$Money</a></li>
-
-          </ul>
-        </div>
-        &lt;!&ndash; /.navbar-collapse &ndash;&gt;
-      </nav>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-</header>-->
 <app-headernew></app-headernew>
 <!------end Header SECTION--->
-
-
-
 
 <!------Body SECTION--->
 <div class="bodymaindiv">
@@ -50,19 +14,6 @@
                     </div>
                     <span class="has-error" *ngIf ="dataForm.controls['campaignname'].touched && !dataForm.controls['campaignname'].valid">Campaign Name is Required !</span>
                 </div>
-
-              <!--  <div class="form-group">
-                    <label for="campaignstatus" class="col-xs-12 lblform">Campaign status</label>
-                    <div class="col-xs-12 txtfield">
-                        <select class="classic" id="campaignstatus" [formControl]="dataForm.controls['status']">
-                            <option value="" disabled>Select</option>
-                            <option value="1">Play</option>
-                            <option value="0">Paused</option>
-                        </select>
-                    </div>
-                    <span class="has-error" *ngIf ="dataForm.controls['status'].touched && !dataForm.controls['status'].valid">Status is Required !</span>
-                </div>-->
-
                 <div class="form-group">
                     <label for="totalcampaignspend" class="col-xs-12 lblform">Total Campaign spend</label>
                     <div class="col-xs-12 txtfield">
@@ -70,6 +21,8 @@
                     </div>
                     <span class="has-error" *ngIf ="dataForm.controls['totalcampaignspend'].touched && !dataForm.controls['totalcampaignspend'].valid">This field is Required !</span>
                 </div>
+
+                <div class="clearfix"></div>
 
                 <div class="form-group">
                     <label for="totalcampaignspend" class="col-xs-12 lblform">CPA</label>
@@ -94,6 +47,8 @@
                     </div>
                     <span class="has-error" *ngIf ="dataForm.controls['dailybudget'].touched && !dataForm.controls['dailybudget'].valid">Daily Budget is Required !</span>
                 </div>
+
+                <div class="clearfix"></div>
                 <!--  <div class="form-group">
                     <label class="col-xs-12 lblform">Campaign Type</label>
                     <div class="col-xs-12 txtfield">
@@ -168,6 +123,7 @@
                                        bsDatepicker
                                        [formControl]="dataForm.controls['startdate']"
                                        [minDate] = "isdate"
+                                       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
                                 >
                                 <span class="openbuttoncls">
                   <button type="button"><img src="../../assets/images/icon-calender.png"></button>
@@ -196,6 +152,7 @@
                                        bsDatepicker
                                        [formControl]="dataForm.controls['enddate']"
                                        [minDate] = "isdate"
+                                       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
                                 >
                                 <span class="openbuttoncls">
                   <button type="button"><img src="../../assets/images/icon-calender.png"></button>
@@ -218,32 +175,17 @@
                         <span class="has-error" *ngIf ="dataForm.controls['fcap'].touched && !dataForm.controls['fcap'].valid">Frequency Cap is Required !</span>
                     </div>
                 </div>
+
+                <div class="clearfix"></div>
                 <div class="form-group btnformdivcls">
                     <button type="submit" class="btnbluedeep">Continue</button>
-                    <button type="button" class="btnblue" [routerLink]="['/campaignlists']">Cancel</button>
+                    <button type="button" class="btnbluedeep" [routerLink]="['/campaignlists']">Cancel</button>
                 </div>
+                <div class="clearfix"></div>
             </form>
         </div>
     </div>
 </div>
 
-
-
-<!------end Body SECTION--->
-
-
-<!------Footer SECTION--->
 <app-footernew></app-footernew>
-<!--<footer class="footerdiv">
-  <div class="footerlogodiv">
-    <div class="logowrapper">
-      <a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
-    </div>
-    <div class="footercopyright text-center">
-      <p>Copyright 2017 GeoAI Technologies, LLC. All Rights Reserved | <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">T & C</a></p>
-    </div>
-  </div>
-</footer>-->
-
-<!------End Footer SECTION--->
 

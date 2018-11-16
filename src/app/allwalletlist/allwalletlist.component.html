@@ -161,8 +161,8 @@
         <tbody>
         <tr *ngFor="let item of datalist| usersearch:listFilter.value; let i=index">
           <td data-title="campaign name" class=" text-center">{{i+1}}</td>
-          <td data-title="campaign name" class=" text-center" >{{item.Signupdata[0].firstname}}</td>
-          <td data-title="Rem.Budget" class="numeric text-center">{{item.Signupdata[0].lastname}}</td>
+          <td data-title="campaign name" class=" text-center" ><span *ngIf="item.Signupdata?.length>0">{{item.Signupdata[0].firstname}}</span></td>
+          <td data-title="Rem.Budget" class="numeric text-center"><span *ngIf="item.Signupdata?.length>0">{{item.Signupdata[0].lastname}}</span></td>
           <td data-title="The CPM" class="numeric text-center">{{item._id}}</td>
           <td data-title="The CPM" class="numeric text-center">{{item.Total}}</td>
           <td data-title="The CPM" class="numeric text-center" [routerLink]="['/adminwalletlist',item._id]" style="cursor: pointer">VIew All Transactions</td>

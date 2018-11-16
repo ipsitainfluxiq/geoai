@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams  } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 // import {CookieService} from 'angular2-cookie/core';
 import {Commonservices} from '../app.commonservices' ;
@@ -20,8 +20,9 @@ export class LoginComponent implements OnInit {
     public cookiedetailsforalldetails;
     public emailcookie: CookieService;
     public mailcookiedetails;
+    public id;
 
-    constructor(fb: FormBuilder, emailcookie: CookieService, alldetailcookie: CookieService, private _http: HttpClient, private router: Router,  private _commonservices: Commonservices) {
+    constructor(fb: FormBuilder, emailcookie: CookieService, alldetailcookie: CookieService, private _http: HttpClient, private router: Router,  private _commonservices: Commonservices, private route: ActivatedRoute) {
         this.serverurl = _commonservices.url;
         this.fb = fb;
         this.emailcookie = emailcookie ;
@@ -43,6 +44,10 @@ export class LoginComponent implements OnInit {
         this.dataForm = this.fb.group({
             email: ["", Validators.required],
             password: ["", Validators.required]});
+        this.route.params.subscribe(params => {
+            this.id = params['id'];
+            console.log('id is: '+this.id);
+        });
     }
 
     dosubmit(formval) {
@@ -77,7 +82,14 @@ export class LoginComponent implements OnInit {
                         console.log('after putobject all details' + this.cookiedetailsforalldetails);
                         console.log(this.alldetailcookie.get('fname'));
                         console.log(this.alldetailcookie.get('type'));
-                        this.router.navigate(['/campaignlists']);
+                        console.log('this.id'+this.id);
+                        if(this.id==null){
+                            console.log('campaignlllllll');
+                            this.router.navigate(['/campaignlists']);
+                        }else{
+                            console.log('edittttttcampaignlllllll');
+                            this.router.navigate(['/editcampaign',this.id,1]);
+                        }
                        // window.location.reload();
                     }
                     else {

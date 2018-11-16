@@ -23,7 +23,7 @@
     </div>
     <div class="geo_new_block2 geo_new_block2_new">
       <h4 *ngIf="consumer_value?.count!=null">Your Current Audience Size: {{consumer_value.count.SearchCount}}</h4>
-      <div *ngIf="consumer_value?.count!=null" style="text-align: center">
+      <div *ngIf="consumer_value?.count!=null" style="text-align: center" class="hide">
         <button (click)="viewallsearch()" class="mapbtn3">View All</button>
       </div>
       <div class="search_column" *ngIf="topmenu1">
@@ -33,7 +33,7 @@
         <input type="button" class="searchnewbuttons" value="Geography" (click)="opengeodiv(2)">
         <input type="button" class="searchnewbuttons" value="Individual Information" (click)="openinfodiv()">
         <input type="button" class="searchnewbuttons" value="Household Information" (click)="openhouseholddiv()">
-        <input type="button" class="searchnewbuttons" value="Interests / Hobbies / Lifestyles" (click)="openinterestsdiv()">
+        <input type="button" class="searchnewbuttons hide" value="Interests / Hobbies / Lifestyles" (click)="openinterestsdiv()">
       </div>
       <div class="clearfix"></div>
       <div class="submenuwrapper" *ngIf="geodiv">
@@ -63,24 +63,452 @@
             <span class="submenulistselectoption" *ngIf="totalshapeslength">{{totalshapeslength}}</span>
           </p>
         </div>
-      </div>
-      <div class="submenuwrapper" *ngIf="infodiv">
-        <div class="submenulist">
-          <p (click)="openagediv()" class="submenuu">Age</p>
-          <p (click)="opengenderdiv()"  class="submenuu">Gender</p>
-          <p (click)="openindhouseholddiv()"  class="submenuu">Head of Household</p>
+        <div *ngIf="selected_locations?.length>0" class="selectedcitycls">
+          <h2>Selected States</h2>
+          <div *ngFor="let item of selected_locations; let i=index" class="adddivp">
+            <div class="showcitiesclass" >{{item.attr_name}}<span (click)="removefromstatelist(item.attr_id,item.attr_name,item)"></span></div>
+          </div>
+        </div>
+        <div *ngIf="selected_locationscity?.length>0" class="selectedcitycls">
+          <h2>Selected Cities</h2>
+          <div *ngFor="let item of selected_locationscity; let i=index" class="adddivp">
+            <div class="showcitiesclass" >{{item.city}}<span (click)="removefromcitylist(item.city,item)"></span></div>
+          </div>
+        </div>
+        <div *ngIf="selected_locationscountry?.length>0" class="selectedcitycls">
+          <h2>Selected Counties:</h2>
+          <div *ngFor="let item of selected_locationscountry; let i=index" class="adddivp">
+            <div class="showcitiesclass">{{item.country}}<span (click)="removefromcountrylist(item.country,item)"></span></div>
+          </div>
+        </div>
+
+        <div *ngIf="statediv" class="submenuwrapper">
+          <div class="submenulist">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Select State(s)</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of usstates; let i=index">
+                      <li id="state_{{item.attr_id}}" ><label (click)="addtolist(item.attr_id,item.attr_name,item)">{{item.attr_name}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div *ngIf="citydiv"  class="submenuwrapper">
+          <div class="submenulist">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Select State(s)</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of usstates; let i=index">
+                      <li id="showcity_{{item.attr_id}}" ><label (click)="show_cities(item.attr_id)">{{item.attr_name}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                  <div class="location_heading" *ngIf="show_state_cities?.length>0">
+                    <h2>Select City(ies)</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain" *ngIf="show_state_cities?.length>0">
+                    <ul *ngFor="let item of show_state_cities; let i=index">
+                      <li id="city_{{item.city}}" ><label (click)="addtocitylist(item.city,item)">{{item.city}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div *ngIf="countrydiv" class="submenuwrapper">
+          <div class="submenulist">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Select State(s)</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of usstates; let i=index">
+                      <li><label (click)="show_countries(item.attr_id)">{{item.attr_name}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                  <div class="location_heading" *ngIf="show_state_countries?.length>0">
+                    <h2>Select County(ies)</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain" *ngIf="show_state_countries?.length>0">
+                    <ul *ngFor="let item of show_state_countries; let i=index">
+                      <li><label (click)="addtocountrylist(item.country,item)">{{item.country}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table></div>
+        </div>
+
+        <div *ngIf="zipdiv" class="submenuwrapper submenuformblock">
+          <div class="formblock">
+            <div class="form-inline">
+              <div class="form-group form-group-fullwidth">
+                <h3>Enter 3 or 5-digit ZIP Codes in boxes below.</h3>
+                <div class="row">
+                  <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval" (blur)="zipvalidate(zipval)"></div>
+                  <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval1" (blur)="zipvalidate(zipval1)"></div>
+                  <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval2" (blur)="zipvalidate(zipval2)"></div>
+                  <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval3" (blur)="zipvalidate(zipval3)"></div>
+                  <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval4" (blur)="zipvalidate(zipval4)"></div>
+                  <br> <!--<span class="has-error" *ngIf="ziperror">{{ziperror}}</span>-->
+                  <span class="has-error" *ngIf ="getzip('invalid')==true">Enter a valid 3 or 5 ZIP code(s).</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="addressdiv" class="submenuwrapper submenuformblock">
+          <div class="formblock">
+            <div class="form-inline">
+              <div class="form-group form-group-fullwidth">
+                <!-- <h2>Address</h2>-->
+                <input type="text" class="form-control" [(ngModel)]="addressval">
+                <div class="clearfix"></div>
+                <small>e.g. 123 Main St</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="radiusdiv" class="submenuwrapper submenuformblock">
+          <div class="formblock">
+            <div class="form-inline">
+              <div class="form-group">
+                <h3>Number of Miles</h3>
+                <input type="text" class="form-control" [(ngModel)]="geomiles">
+                <div class="clearfix"></div>
+                <small>e.g. 3.5 (range of .1 to 150 miles)</small>
+
+                <span class="errorclass">{{geoerror}}</span>
+              </div>
+              <div class="form-group">
+                <h3>Address</h3>
+                <div class="pacing_textcontain formblock">
+                  <input type="text" class="form-control" [(ngModel)]="geoaddress">
+                  <div class="clearfix"></div>
+                  <small>e.g. 123 Main St</small>
+                  <span class="errorclass">{{errorvalgeomiles}}</span>
+                </div>
+              </div>
+              <div class="form-group form-group-fullwidth">
+                <h3>ZIP</h3>
+
+                <input type="text" class="form-control" [(ngModel)]="geozip">
+                <div class="clearfix"></div>
+                <small>e.g. 68137</small>
+                <span class="errorclass">{{errorvalgeozip}}</span>
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
+
+
+      <div class="submenuwrapper" *ngIf="infodiv">
+
+        <div class="submenulist">
+          <p (click)="openagediv()" class="submenuu" [ngClass]="agesubmenu ? 'active' : ''">Age
+            <span class="submenulistselectoption" *ngIf="selected_age?.length">{{selected_age.length}}</span>
+          </p>
+          <p (click)="opengenderdiv()"  class="submenuu" [ngClass]="Ind_Gender_Code=='' ? '' : 'active'">Gender
+            <span class="submenulistselectoption" *ngIf="Ind_Gender_Code!=''">1</span>
+          </p>
+          <p (click)="openindhouseholddiv()"  class="submenuu" [ngClass]="headofhouseholdonly==null ? '' : 'active'">Head of Household
+            <span class="submenulistselectoption" *ngIf="headofhouseholdonly!=null">1</span>
+          </p>
+        </div>
+        <div *ngIf="selected_age?.length>0" class="selectedcitycls">
+          <h2>Selected Ages:</h2>
+          <div *ngFor="let item of selected_age; let i=index" class="adddivp">
+            <div class="showcitiesclass">{{item.attr_name}}<span (click)="removefromagelist(item.attr_id,item.attr_name,item)"></span></div>
+          </div>
+        </div>
+        <div *ngIf="agediv">
+          <div class="location_tablewrapper paddingadd">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Select Age(s)</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of age_list; let i=index">
+                      <li id="age_{{item.code}}" ><label (click)="addtoagelist(item.code,item.value,item)">{{item.value}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table></div>
+        </div>
+
+        <div *ngIf="genderdiv">
+          <div class="location_tablewrapper paddingadd">
+            <h2 class="h2foroption">Select Gender</h2>
+            <div class="clearfix"></div>
+            <select name="your-gender" class="chkselect_input selectclass" [(ngModel)]="Ind_Gender_Code">
+              <option value="" selected="selected">Select Gender</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+              <option value="U">Unknown</option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngIf="individualhouseholddiv">
+          <div class="location_tablewrapper paddingadd">
+            <h2 class="h2foroption">Head of Household</h2>
+            <input type="radio" name="headofhousehold" value="1"  [(ngModel)]="headofhouseholdonly">Select head of the household only<br>
+            <input type="radio" name="headofhousehold" value="0, 1, 2, 3, 4, 5, 6, 7, 8, 9" [(ngModel)]="headofhouseholdonly"> Select all members of the household<br>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+
       <div class="submenuwrapper" *ngIf="householddiv">
         <div class="submenulist">
-          <p (click)="openincomediv()" class="submenuu">Estimated Household Income</p>
-          <p (click)="openhomevaluediv()" class="submenuu">Home Market Value</p>
-          <p (click)="openmedianhomeincomediv()" class="submenuu">Median Home Income in 2010 Census</p>
-          <p (click)="openmedianhomevaluediv()" class="submenuu">Median Home Value in 2010 Census</p>
-          <p (click)="openresidencediv()" class="submenuu">Length of Residence</p>
-          <p (click)="openmaritaldiv()" class="submenuu"> Marital Status</p>
-          <p (click)="opennetworthdiv()" class="submenuu">Net Worth</p>
+          <p (click)="openincomediv()" class="submenuu" [ngClass]="incomesubmenu ? 'active' : ''">Estimated Household Income
+            <span class="submenulistselectoption" *ngIf="selected_income?.length">{{selected_income.length}}</span>
+          </p>
+          <p (click)="openhomevaluediv()" class="submenuu" [ngClass]="homevaluesubmenu ? 'active' : ''">Home Market Value
+            <span class="submenulistselectoption" *ngIf="selected_homevalue?.length">{{selected_homevalue.length}}</span>
+          </p>
+          <p (click)="openmedianhomeincomediv()" class="submenuu" [ngClass]="medianincomesubmenu ? 'active' : ''">Median Home Income in 2010 Census
+            <span class="submenulistselectoption" *ngIf="selected_medianincome?.length">{{selected_medianincome.length}}</span>
+          </p>
+          <p (click)="openmedianhomevaluediv()" class="submenuu" [ngClass]="medianhomesubmenu ? 'active' : ''">Median Home Value in 2010 Census
+            <span class="submenulistselectoption" *ngIf="selected_medianhome?.length">{{selected_medianhome.length}}</span>
+          </p>
+          <p (click)="openresidencediv()" class="submenuu" [ngClass]="residencevaluesubmenu ? 'active' : ''">Length of Residence
+            <span class="submenulistselectoption" *ngIf="selected_residence?.length">{{selected_residence.length}}</span>
+          </p>
+          <p (click)="openmaritaldiv()" class="submenuu" [ngClass]="maritalsubmenu ? 'active' : ''"> Marital Status
+            <span class="submenulistselectoption" *ngIf="selected_marital?.length">{{selected_marital.length}}</span>
+          </p>
+          <p (click)="opennetworthdiv()" class="submenuu" [ngClass]="networthsubmenu ? 'active' : ''">Net Worth
+            <span class="submenulistselectoption" *ngIf="selected_networth?.length">{{selected_networth.length}}</span>
+          </p>
+        </div>
+        <div *ngIf="selected_income?.length>0" class="selectedcitycls">
+          <h2>Selected Incomes:</h2>
+          <div *ngFor="let item of selected_income; let i=index" class="adddivp">
+            <div class="showcitiesclass">{{item.attr_name}}<span (click)="removefromincomelist(item.attr_id,item.attr_name,item)"></span></div>
+          </div>
+        </div>
+        <div *ngIf="selected_homevalue?.length>0" class="selectedcitycls">
+          <h2>Selected Home Values:</h2>
+          <div *ngFor="let item of selected_homevalue; let i=index" class="adddivp">
+            <div class="showcitiesclass">{{item.attr_name}}<span (click)="removefromhomevaluelist(item.attr_id,item.attr_name,item)"></span></div>
+          </div>
+        </div>
+        <div *ngIf="selected_residence?.length>0" class="selectedcitycls">
+          <h2>Selected Residences:</h2>
+          <div *ngFor="let item of selected_residence; let i=index" class="adddivp">
+            <div class="showcitiesclass">{{item.attr_name}}<span (click)="removefromresidence_list(item.attr_id,item.attr_name,item)"></span></div>
+          </div>
+        </div>
+  <div *ngIf="selected_medianincome?.length>0" class="selectedcitycls">
+          <h2>Selected Median Incomes:</h2>
+          <div *ngFor="let item of selected_medianincome; let i=index" class="adddivp">
+            <div class="showcitiesclass">{{item.attr_name}}<span (click)="removefrommedianincome_list(item.attr_id,item.attr_name,item)"></span></div>
+          </div>
+        </div>
+  <div *ngIf="selected_medianhome?.length>0" class="selectedcitycls">
+          <h2>Selected Median Home Values:</h2>
+          <div *ngFor="let item of selected_medianhome; let i=index" class="adddivp">
+            <div class="showcitiesclass">{{item.attr_name}}<span (click)="removefrommedianhome_list(item.attr_id,item.attr_name,item)"></span></div>
+          </div>
+        </div>
+  <div *ngIf="selected_marital?.length>0" class="selectedcitycls">
+          <h2>Selected Marital Statuses:</h2>
+          <div *ngFor="let item of selected_marital; let i=index" class="adddivp">
+            <div class="showcitiesclass">{{item.attr_name}}<span (click)="removefrommarital_list(item.attr_id,item.attr_name,item)"></span></div>
+          </div>
+        </div>
+<div *ngIf="selected_networth?.length>0" class="selectedcitycls">
+          <h2>Selected Net Worths:</h2>
+          <div *ngFor="let item of selected_networth; let i=index" class="adddivp">
+            <div class="showcitiesclass">{{item.attr_name}}<span (click)="removefromnetworth_list(item.attr_id,item.attr_name,item)"></span></div>
+          </div>
+        </div>
+
+        <div *ngIf="incomediv">
+          <div class="location_tablewrapper paddingadd">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Select one or more Estimated Household Income Range(s) below</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of incomelist; let i=index">
+                      <li id="income_{{item.code}}" ><label (click)="addtoincomelist(item.code,item.value,item)">{{item.value}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table></div>
+        </div>
+
+        <div *ngIf="homevaluediv">
+          <div class="location_tablewrapper paddingadd">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Select one or more Home Market Value Range(s) below</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of home_value_list; let i=index">
+                      <li id="homevalue_{{item.code}}" ><label (click)="addtohomevaluelist(item.code,item.value,item)">{{item.value}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table></div>
+        </div>
+
+        <div *ngIf="residencediv">
+          <div class="location_tablewrapper paddingadd">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Select one or more Length of Residence Value ranges below</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of residence_list; let i=index">
+                      <li id="residence_{{item.code}}" ><label (click)="addtoresidence_list(item.code,item.value,item)">{{item.value}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table></div>
+        </div>
+
+        <div *ngIf="maritaliv">
+          <div class="location_tablewrapper paddingadd">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Marital Status</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of marital_list; let i=index">
+                      <li id="marital_{{item.code}}" ><label (click)="addtomarital_list(item.code,item.value,item)">{{item.value}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table></div>
+        </div>
+
+        <div *ngIf="medianhomevaluediv">
+          <div class="location_tablewrapper paddingadd">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Select one or more Length of Residence Value ranges below</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of median_home_value_list; let i=index">
+                      <li id="medianhomevalue_{{item.code}}" ><label (click)="addtomedianhome_list(item.code,item.value,item)">{{item.value}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table></div>
+        </div>
+
+        <div *ngIf="medianhomeincomediv">
+          <div class="location_tablewrapper paddingadd">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Select one or more Median Income ranges below.</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of median_income_list; let i=index">
+                      <li id="medianincomevalue_{{item.code}}" ><label (click)="addtomedianincome_list(item.code,item.value,item)">{{item.value}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table></div>
+        </div>
+
+        <div *ngIf="networthdiv">
+          <div class="location_tablewrapper paddingadd">
+            <table>
+              <tr>
+                <td>
+                  <div class="location_heading">
+                    <h2>Select one or more Net Worth Value ranges below.</h2>
+                    <span></span>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="location_contain">
+                    <ul *ngFor="let item of networth_list; let i=index">
+                      <li id="networth_{{item.code}}" ><label (click)="addtonetworth_list(item.code,item.value,item)">{{item.value}}</label></li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </table></div>
         </div>
       </div>
 
@@ -89,170 +517,10 @@
           <p class="submenuu">Interests / Hobbies / Lifestyles</p>
         </div>
       </div>
-      <div *ngIf="selected_locationscity?.length>0" class="selectedcitycls">
-        <h2>Selected Cities</h2>
-        <div *ngFor="let item of selected_locationscity; let i=index" class="adddivp">
-          <div class="showcitiesclass" >{{item.city}}<span (click)="removefromcitylist(item.city,item)"></span></div>
-        </div>
-      </div>
-      <div *ngIf="selected_locationscountry?.length>0" class="selectedcitycls">
-        <h2>Selected Counties:</h2>
-        <div *ngFor="let item of selected_locationscountry; let i=index" class="adddivp">
-          <div class="showcitiesclass">{{item.country}}<span (click)="removefromcountrylist(item.country,item)"></span></div>
-        </div>
-      </div>
-        <div *ngIf="statediv" class="submenuwrapper">
-            <div class="submenulist">
-                <table>
-                    <tr>
-                        <td>
-                            <div class="location_heading">
-                                <h2>Select State(s)</h2>
-                                <span></span>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="location_contain">
-                                <ul *ngFor="let item of usstates; let i=index">
-                                    <li id="state_{{item.attr_id}}" ><label (click)="addtolist(item.attr_id,item.attr_name,item)">{{item.attr_name}}</label></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
 
-      <div *ngIf="citydiv"  class="submenuwrapper">
-        <div class="submenulist">
-          <table>
-            <tr>
-              <td>
-                <div class="location_heading">
-                  <h2>Select State(s)</h2>
-                  <span></span>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="location_contain">
-                  <ul *ngFor="let item of usstates; let i=index">
-                    <li id="showcity_{{item.attr_id}}" ><label (click)="show_cities(item.attr_id)">{{item.attr_name}}</label></li>
-                  </ul>
-                </div>
-              </td>
-              <td>&nbsp;</td>
-              <td>
-                <div class="location_heading" *ngIf="show_state_cities?.length>0">
-                  <h2>Select City(ies)</h2>
-                  <span></span>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="location_contain" *ngIf="show_state_cities?.length>0">
-                  <ul *ngFor="let item of show_state_cities; let i=index">
-                    <li id="city_{{item.city}}" ><label (click)="addtocitylist(item.city,item)">{{item.city}}</label></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
 
-      <div *ngIf="countrydiv" class="submenuwrapper">
-        <div class="submenulist">
-          <table>
-            <tr>
-              <td>
-                <div class="location_heading">
-                  <h2>Select State(s)</h2>
-                  <span></span>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="location_contain">
-                  <ul *ngFor="let item of usstates; let i=index">
-                    <li><label (click)="show_countries(item.attr_id)">{{item.attr_name}}</label></li>
-                  </ul>
-                </div>
-              </td>
-              <td>&nbsp;</td>
-              <td>
-                <div class="location_heading" *ngIf="show_state_countries?.length>0">
-                  <h2>Select County(ies)</h2>
-                  <span></span>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="location_contain" *ngIf="show_state_countries?.length>0">
-                  <ul *ngFor="let item of show_state_countries; let i=index">
-                    <li><label (click)="addtocountrylist(item.country,item)">{{item.country}}</label></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-          </table></div>
-      </div>
 
-      <div *ngIf="zipdiv" class="submenuwrapper submenuformblock">
-        <div class="formblock">
-          <div class="form-inline">
-            <div class="form-group form-group-fullwidth">
-              <h3>Enter 3 or 5-digit ZIP Codes in boxes below.</h3>
-              <div class="row">
-                <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval" (blur)="zipvalidate(zipval)"></div>
-                <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval1" (blur)="zipvalidate(zipval1)"></div>
-                <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval2" (blur)="zipvalidate(zipval2)"></div>
-                <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval3" (blur)="zipvalidate(zipval3)"></div>
-                <div class="col-lg-2 fivediv"><input type="text" class="form-control" [(ngModel)]="zipval4" (blur)="zipvalidate(zipval4)"></div>
-                <br> <!--<span class="has-error" *ngIf="ziperror">{{ziperror}}</span>-->
-                <span class="has-error" *ngIf ="getzip('invalid')==true">Enter a valid 3 or 5 ZIP code(s).</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div *ngIf="addressdiv" class="submenuwrapper submenuformblock">
-        <div class="formblock">
-          <div class="form-inline">
-           <div class="form-group form-group-fullwidth">
-          <!-- <h2>Address</h2>-->
-            <input type="text" class="form-control" [(ngModel)]="addressval">
-            <div class="clearfix"></div>
-            <small>e.g. 123 Main St</small>
-           </div>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="radiusdiv" class="submenuwrapper submenuformblock">
-        <div class="formblock">
-          <div class="form-inline">
-            <div class="form-group">
-              <h3>Number of Miles</h3>
-                <input type="text" class="form-control" [(ngModel)]="geomiles">
-                <div class="clearfix"></div>
-                <small>e.g. 3.5 (range of .1 to 150 miles)</small>
-
-              <span class="errorclass">{{geoerror}}</span>
-            </div>
-            <div class="form-group">
-              <h3>Address</h3>
-              <div class="pacing_textcontain formblock">
-                <input type="text" class="form-control" [(ngModel)]="geoaddress">
-                <div class="clearfix"></div>
-                <small>e.g. 123 Main St</small>
-                <span class="errorclass">{{errorvalgeomiles}}</span>
-              </div>
-            </div>
-            <div class="form-group form-group-fullwidth">
-              <h3>ZIP</h3>
-
-                <input type="text" class="form-control" [(ngModel)]="geozip">
-                <div class="clearfix"></div>
-                <small>e.g. 68137</small>
-                <span class="errorclass">{{errorvalgeozip}}</span>
-
-            </div>
-          </div>
-        </div>
-      </div>
 
      <!-- <div class="twodiv hide">
         &lt;!&ndash;Left alligned div&ndash;&gt;
@@ -643,6 +911,7 @@
     </div>
     <div class="mapbtn1wrapper">
     <button (click)="callforsearch()" class="mapbtn1" *ngIf="this.tabopen!=null">Search</button>
+    <button (click)="open_submit_audience_div()" class="mapbtn1" *ngIf="this.tabopen!=null">Submit Result</button>
     </div>
   </div>
 </div>
@@ -830,6 +1099,36 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="Modal_submit_search_div" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form role="form" novalidate [formGroup]="dataForm" (ngSubmit)="submit_audience_search_details(dataForm.value)">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Save the Audience</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="searchform">
+        <label class="formblock">Audience Name</label>
+        <input type="text" class="form-control" placeholder="Audience Name" [formControl]="dataForm.controls['audiencename']">
+          <span class="has-error" *ngIf ="dataForm.controls['audiencename'].touched && !dataForm.controls['audiencename'].valid">Audience Name is Required !</span>
+        <label class="formblock">Description</label>
+          <textarea class=" form-control" [formControl]="dataForm.controls['audiencedescription']" rows="3"></textarea>
+          <span class="has-error" *ngIf ="dataForm.controls['audiencedescription'].touched && !dataForm.controls['audiencedescription'].valid">Audience Description is Required !</span>
+      </div>
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal">Save</button>
+      </div>
+      </form>
     </div>
   </div>
 </div>

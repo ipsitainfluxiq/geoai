@@ -94,6 +94,7 @@ import {TooltipModule} from "ngx-tooltip";
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { NgxUploaderModule } from 'ngx-uploader';
+import { RolesettingsComponent } from './rolesettings/rolesettings.component';
 
 @NgModule({
   declarations: [
@@ -166,7 +167,8 @@ import { NgxUploaderModule } from 'ngx-uploader';
       SearchnewComponent,
       BannerlistComponent,
       HelpdeskaddComponent,
-      HelpdesklistComponent
+      HelpdesklistComponent,
+      RolesettingsComponent
   ],
     imports: [
         BrowserModule,

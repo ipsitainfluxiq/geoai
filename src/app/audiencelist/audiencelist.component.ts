@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, EventEmitter } from '@angular/core';
+import {Commonservices} from '../app.commonservices' ;
+import {CookieService} from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import {CookieService} from 'angular2-cookie/core';
-import {Commonservices} from '../app.commonservices' ;
-
+declare var moment: any;
 @Component({
   selector: 'app-audiencelist',
   templateUrl: './audiencelist.component.html',
@@ -13,11 +13,10 @@ import {Commonservices} from '../app.commonservices' ;
 export class AudiencelistComponent implements OnInit {
     public serverurl: any;
     public datalist: any;
-    public datalist_length: any;
-    public addcookie: CookieService;
-    public cookiedetails;
     public emailcookie: CookieService;
+    public alldetailcookie: CookieService;
     public mailcookiedetails;
+    public cookiedetailsforalldetails_type;
     public orderbyquery: any;
     public orderbytype: any;
     public id:any;
@@ -27,105 +26,35 @@ export class AudiencelistComponent implements OnInit {
     public totalpage;
     public showrows;
     public isModalShown: boolean = false;
+    public p: number = 1;
+    public filterval='';
 
-    constructor(addcookie: CookieService, emailcookie: CookieService, private _http: HttpClient, private _commonservices: Commonservices, private router: Router, private route: ActivatedRoute, ) {
-        console.log('constructir');
-        this.addcookie = addcookie;
-        this.cookiedetails = this.addcookie.getObject('cookiedetails');
-        console.log('cookiedetails');
-        console.log('get id from saved cookie ->  ' + this.cookiedetails);
-        this.emailcookie = emailcookie;
-        this.mailcookiedetails = this.emailcookie.getObject('mailcookiedetails');
+    constructor(private _commonservices: Commonservices, emailcookie: CookieService, private _http: HttpClient, private router: Router, alldetailcookie: CookieService) {
+        console.log('constructor');
+        this.emailcookie = emailcookie ;
+        this.alldetailcookie = alldetailcookie ;
+        this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
+        this.cookiedetailsforalldetails_type = this.alldetailcookie.get('type');
         this.serverurl = _commonservices.url;
-        this.showrows = 5;
-        this.pageno = 1;
-        this.pagestart = 0;
-        this.pageinitation = 5;
-        this.orderbyquery = 'dateofcreation';
-        this.orderbytype = 1;
     }
 
   ngOnInit() {
-      this.getAudienceList();
+      this.getAudienceListbyemail();
   }
-    getAudienceList() {
+    getAudienceListbyemail() {
         let link = this.serverurl + 'getaudiencelist';
-        this._http.get(link)
+        let data = {
+            emailid: this.mailcookiedetails
+        }
+        this._http.post(link,data)
             .subscribe(res => {
                 let result: any;
                  result = res;
-                console.log(result);
-                this.datalist = result;
-                this.datalist_length = result.length;
-                this.totalpage = this.datalist_length / this.showrows ;
-
+                console.log(result.items);
+                this.datalist = result.items;
             }, error => {
                 console.log('Oooops!');
             });
-    }
-    getSortClass(value: any) {
-        if (this.orderbyquery == value && this.orderbytype == -1) {
-            return 'caret-up';
-        }
-
-        if (this.orderbyquery == value && this.orderbytype == 1) {
-            // console.log('caret-up');
-            return 'caret-down';
-        }
-        return 'caret-up-down';
-    }
-
-    manageSorting(value: any) {
-        if (this.orderbyquery == value && this.orderbytype == -1) {
-            this.orderbytype = 1;
-            return;
-        }
-        if (this.orderbyquery == value && this.orderbytype == 1) {
-            this.orderbytype = -1;
-            return;
-        }
-        this.orderbyquery = value;
-        this.orderbytype = 1;
-    }
-
-    pageval(type) {
-
-        if (type == 1 ) {       // for prev page
-            if ((this.pagestart - this.showrows) >= 0) {
-                this.pageno--;
-                this.pagestart = (this.pageno - 1) * this.showrows;
-            }
-        }
-
-        if ( type == 2 ) {      // for next page
-            if (this.datalist_length - this.showrows - 1 >= this.pagestart) {
-                this.pagestart = this.pageno * this.showrows;
-                this.pageno++;
-            }
-        }
-
-        if ( type == 3 ) {    // for goto input type
-            if ( (this.pageno >0) && (this.pageno <= this.totalpage) ) {
-                this.pagestart = (this.pageno - 1) * this.showrows;
-            } else {
-                this.pageno = 1;
-                this.pagestart = 0;
-            }
-        }
-
-        this.pageinitation = parseInt(this.pagestart) + parseInt(this.showrows);
-    }
-    chagevalues() {
-        //   setTimeout(() => {
-        this.totalpage = this.datalist_length / this.showrows ;
-        if (this.datalist_length % this.showrows != 0) {
-            this.totalpage = this.totalpage + 1;
-        }
-        this.pageno = 1;
-        this.pagestart = 0;
-        this.pageinitation = parseInt(this.pagestart) + parseInt(this.showrows);
-
-        //  }, 700);
     }
 
     delConfirm(id) {
@@ -135,6 +64,7 @@ export class AudiencelistComponent implements OnInit {
     onHidden() {
         this.isModalShown = false;
     }
+
     audiencedel() {
         console.log('admindel');
         this.isModalShown = false;
@@ -146,18 +76,15 @@ export class AudiencelistComponent implements OnInit {
                 let result = res;
                 console.log(result);
                 console.log('Data Deleted');
-                this.getAudienceList();
+                this.getAudienceListbyemail();
             }, error => {
                 console.log('Oooops!');
             });
         setTimeout(() => {
-            this.getAudienceList();
+            this.getAudienceListbyemail();
         }, 300);
     }
-    calledit(id) {
-        this.addcookie.putObject('cookiedetails', id);
-        this.cookiedetails = this.addcookie.getObject('cookiedetails');
-        console.log('after putobject ' + this.cookiedetails);
-        this.router.navigate(['/viewability']);
+    showdate(dd){
+        return moment(dd).format('Do MMM YYYY');
     }
 }
