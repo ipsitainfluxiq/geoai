@@ -858,7 +858,7 @@ app.get('/creativelist',function (req,resp) {
 app.get('/deletecreative', function (req, resp) {
     req.body=req.query;
     var o_id = new mongodb.ObjectID(req.body.id);
-    var collection = db.collection('creatives')
+    var collection = db.collection('creatives');
     collection.deleteOne({_id: o_id}, function(err, results) {
         if (err){
             resp.send("failed");

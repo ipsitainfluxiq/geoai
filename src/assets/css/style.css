@@ -143,7 +143,7 @@ to(#0a7011));border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15
 .logowrapper{text-align:center;}
 .logowrapper img{margin-top:11px;height:64px;}
 .menublock{background:#01baff;margin:0 auto;display:block;text-align:center;float:none;padding:0px;border-top:3px solid #01baff;border-bottom:4px solid #027baf;}
-.menudiv{display:block;width:622px;margin:0 auto;float:none;padding:0px;text-align:center;}
+.menudiv{display:block;width:680px;margin:0 auto;float:none;padding:0px;text-align:center; /*622px*/}
 .menudiv .navbar{background:#01baff;border:none;border-radius:0px;margin:0;padding:0;font-family:'OpenSansSemibold';text-transform:capitalize;box-shadow:none;}
 .menudiv .navbar-collapse{margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important;}
 .menudiv .navbar li{padding:0px 1px;margin:0;border:0px;position:relative;}
