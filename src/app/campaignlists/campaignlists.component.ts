@@ -23,6 +23,7 @@ export class CampaignlistsComponent implements OnInit {
     public statusid;
     public checkboxvalue = [];
     public checkboxarr = [];
+    public checkboxfullarr = [];
     public campaignlistarr = [];
     public emailcookie: CookieService;
     public mailcookiedetails;
@@ -41,6 +42,10 @@ export class CampaignlistsComponent implements OnInit {
     public campaignid;
     public isModalShown: boolean = false;
     public isModalShown1: boolean = false;
+    public note_for_campaign_status;
+    public note_for_campaign_status_blank_error;
+    public modalchangestatus: boolean = false;
+    public modalchangestatusvalue;
 
     constructor(private _http: HttpClient, private router: Router, private route: ActivatedRoute, private _commonservices: Commonservices,  emailcookie: CookieService, alldetailcookie: CookieService) {
         this.serverurl = _commonservices.url;
@@ -212,7 +217,7 @@ export class CampaignlistsComponent implements OnInit {
             return '';
         }
     }
-    checkboxid(i,itemid,checkboxvalue){
+    checkboxid(i,itemid,checkboxvalue,item){
         console.log('===========');
         console.log(i);
         console.log(itemid);
@@ -220,40 +225,56 @@ export class CampaignlistsComponent implements OnInit {
         console.log(this.checkboxvalue);
         if(checkboxvalue==true){
             this.checkboxarr.push(itemid);
+            this.checkboxfullarr.push(item);
         }
         if(checkboxvalue==false){
             let indexval: any = this.checkboxarr.indexOf(itemid);
             console.log('-----------------');
             console.log(indexval);
             this.checkboxarr.splice(indexval, 1);
+            this.checkboxfullarr.splice(indexval, 1);
 
         }
         console.log('this.checkboxarr+++++++++++');
         console.log(this.checkboxarr);
     }
-
-    resumecampaigns(value){
+    modal_campaign_status(value){
+        this.modalchangestatus = true;
+        this.modalchangestatusvalue = value;
+        this.note_for_campaign_status = null;
+    }
+    resumecampaigns(){
         console.log('resumecampaigns');
         // 1 - resume i .e. status = 1
         // 0 - pause i .e. status = 0
         let link = this.serverurl+'changeallcampaignstatus';
         var data;
-        if(value==1){
-            data = {arrid:this.checkboxarr , statusid: 1};
+        if (this.note_for_campaign_status != null && this.note_for_campaign_status != ''){
+            this.note_for_campaign_status_blank_error = null;
+        }
+        else {
+            this.note_for_campaign_status_blank_error = 'Give a proper note';
+        }
+
+        if(this.modalchangestatusvalue==1){
+            data = {arrid:this.checkboxarr , statusid: 1, fullarr:this.checkboxfullarr, note:this.note_for_campaign_status};
         }
         else{
-           data = {arrid:this.checkboxarr , statusid: 0};
+           data = {arrid:this.checkboxarr , statusid: 0, fullarr:this.checkboxfullarr, note:this.note_for_campaign_status};
         }
+        if(this.note_for_campaign_status_blank_error==null) {
         this._http.post(link, data)
             .subscribe(res => {
                 let result: any;
                  result = res;
                 if(result.status=='success'){
+                    this.modalchangestatus = false;
                     this.getcampaignlist();
                 }
             }, error => {
                 console.log('Oooops!');
             });
+    }
     }
 
     changestatus(item){
@@ -285,6 +306,7 @@ export class CampaignlistsComponent implements OnInit {
                     this.checkboxvalue[i] = false;
                 }
                 this.checkboxarr=[];
+                this.checkboxfullarr=[];
             }
             if (this.selectallcampaign == true) {
                 console.log($('.icheck').length);
@@ -295,6 +317,7 @@ export class CampaignlistsComponent implements OnInit {
                 }
                 for(let i in this.campaignlistarr){
                     this.checkboxarr.push(this.campaignlistarr[i]._id);
+                    this.checkboxfullarr.push(this.campaignlistarr[i]);
                 }
 
             }
@@ -368,6 +391,7 @@ export class CampaignlistsComponent implements OnInit {
     onHidden() {
         this.isModalShown = false;
         this.isModalShown1 = false;
+        this.modalchangestatus = false;
     }
     showdate(dd){
         return moment(dd).format('MM-DD-YY');
@@ -444,7 +468,7 @@ export class CampaignlistsComponent implements OnInit {
             });
     }
     getbanners(){
-        let link = this.serverurl + 'getbanners';
+        let link = this.serverurl + 'getbannerss';
         let data = {
             page: 'campaignlists'
         }
@@ -456,6 +480,7 @@ export class CampaignlistsComponent implements OnInit {
                 console.log('Oooops!');
             });
     }
+
     add_banner_to_campaign(){
         let link = this.serverurl + 'addbanneridtocampaign';
         var data={

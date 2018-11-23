@@ -9,11 +9,13 @@ import 'rxjs/add/operator/map';
 export class Commonservices {
     items: Array<any>;
     url: any;
+    imageurl: any;
 
 
    // constructor(private http: Http) {
     constructor(private http: HttpClient) {
         this.url = 'https://geofencedsp.com/server.php?q=';
+        this.imageurl = 'https://geofencedsp.com/assets/';
         /*  if (window.location.hostname == 'localhost') {
            this.url = 'http://localhost:3000/';
         } else {

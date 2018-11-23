@@ -160,12 +160,6 @@ app.get('/readcsv',function (req,resp) {
     });
 
 });
-
-
-
-
-
-
 app.get('/addresslist',function (req,resp) {
 
     var collection = db.collection('address');
@@ -858,7 +852,7 @@ app.get('/creativelist',function (req,resp) {
 app.get('/deletecreative', function (req, resp) {
     req.body=req.query;
     var o_id = new mongodb.ObjectID(req.body.id);
-    var collection = db.collection('creatives');
+    var collection = db.collection('creatives')
     collection.deleteOne({_id: o_id}, function(err, results) {
         if (err){
             resp.send("failed");
@@ -1867,19 +1861,6 @@ app.get('/dayparts' , function (req,resp) {
     resp.send(JSON.stringify({'status':'success'}));
 });
 
-app.get('/getaudiencelist',function (req,resp) {
-    var collection = db.collection('campaigninfo');
-    collection.find().toArray(function(err, items) {
-        if (err) {
-            console.log(err);
-            resp.send(JSON.stringify({'res':[]}));
-        } else {
-            resp.send(JSON.stringify(items));
-        }
-
-    });
-
-});
 
 
 app.get('/tokensave',function (req,resp) {
@@ -2386,7 +2367,9 @@ app.get('/addcampaign',function(req,resp){
             enddate: req.body.enddate,
             fcap: req.body.fcap,
             added_by: req.body.added_by,
-            added_on: Date.now()
+            added_on: Date.now(),
+            audienceid:null,
+            bannerid:null
         }], function (err, result) {
             if (err) {
                 console.log('error'+err);
@@ -2502,17 +2485,93 @@ app.get('/editcampaign',function(req,resp){
     resp.send(JSON.stringify({'status':'success'}));
 });
 
-app.get('/changeallcampaignstatus',function(req,resp){
+app.get('/changeallmybannersstatus',function(req,resp){
     req.body=req.query;
-    var collection = db.collection('addcampaign');
-    var data = {
-        status: req.body.statusid
-    }
+    var collection = db.collection('banners');
+
+    if(req.body.statusid==0){ textchange=' has been deactivated.';}
+    if(req.body.statusid==1){textchange=' has been activated.';}
+
+    let arrayfullinfo =[];
     var arr = Object.keys(req.body.arrid).map(function (key) { return req.body.arrid[key]; });
+    arrayfullinfo['addedby']= Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].added_by; });
+    arrayfullinfo['banner_title']= Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].banner_title; });
+    // var arraddedby = Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].added_by; });
+
+    //update
     var i = 0;
+    var data = {status: req.body.statusid};
     for(i in arr){
         var o_id = new mongodb.ObjectID(arr[i]);
         collection.update({_id:o_id}, {$set: data}, true, true);
+    }
+
+    //send mail
+    var transporter = mailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: "itplcc40@gmail.com",
+            pass: "DevelP7@"
+        }
+    });
+    var mailOptions;
+    var textchange;
+    for(let i in arrayfullinfo['addedby']){
+        mailOptions = {
+            from: "GEOAI Admin <support@geoai.com>",
+            to: arrayfullinfo['addedby'][i],
+            subject: 'Your banner ' + arrayfullinfo['banner_title'][i] + textchange,
+            //   text: req.body.note ,
+            text: 'Your banner ' + arrayfullinfo['banner_title'][i] + textchange+'<br/>Notes Added: '+req.body.note ,
+        };
+        transporter.sendMail(mailOptions, function (error, response) {
+            console.log('send');
+            transporter.close();
+        });
+    }
+    resp.send(JSON.stringify({'status':'success'}));
+});
+
+app.get('/changeallcampaignstatus',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('addcampaign');
+    if(req.body.statusid==0){ textchange=' has been deactivated.';}
+    if(req.body.statusid==1){textchange=' has been activated.';}
+
+    let arrayfullinfo =[];
+    var arr = Object.keys(req.body.arrid).map(function (key) { return req.body.arrid[key]; });
+    arrayfullinfo['addedby']= Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].added_by; });
+    arrayfullinfo['campaignname']= Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].campaignname; });
+
+    //update
+    var i = 0;
+    var data = {status: req.body.statusid};
+    for(i in arr){
+        var o_id = new mongodb.ObjectID(arr[i]);
+        collection.update({_id:o_id}, {$set: data}, true, true);
+    }
+    //send mail
+    var transporter = mailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: "itplcc40@gmail.com",
+            pass: "DevelP7@"
+        }
+    });
+    var mailOptions;
+    var textchange;
+    for(let i in arrayfullinfo['addedby']){
+        mailOptions = {
+            from: "GEOAI Admin <support@geoai.com>",
+            to: arrayfullinfo['addedby'][i],
+            subject: 'Your campaign ' + arrayfullinfo['campaignname'][i] + textchange,
+            text: 'Your campaign ' + arrayfullinfo['campaignname'][i] + textchange+'<br/>Notes Added: '+req.body.note ,
+            // text: req.body.note ,
+        };
+        transporter.sendMail(mailOptions, function (error, response) {
+            console.log('send');
+            transporter.close();
+        });
     }
     resp.send(JSON.stringify({'status':'success'}));
 });
@@ -2946,7 +3005,7 @@ app.get('/addbanner',function(req,resp){
                 editablearea_5: req.body.editablearea_5,
                 added_by: req.body.added_by,
                 status: req.body.status,
-                added_on: Date.now()
+                added_on: moment().unix() //Date.now()
             }],
             function(err, result) {
                 if (err){
@@ -2990,17 +3049,118 @@ app.get('/addbanner',function(req,resp){
 
 app.get('/getbannersbyemail', function (req,resp) {
     var collection= db.collection('banners');
-    collection.find({added_by:req.query.email}).toArray(function(err, items) {
-        resp.send(JSON.stringify(items));
-    });
+    if(req.query.page!=null){
+        if(req.query.page=='bannerlist'){
+            collection.find({added_by:req.query.email}).toArray(function(err, items) {
+                resp.send(JSON.stringify(items));
+            });
+        }
+        if(req.query.page=='campaignlists'){
+            cond = {
+                $and : [
+                    {added_by : req.query.email},
+                    {status : '1'}
+                ]
+            };
+            collection.find(cond).toArray(function(err, items) {
+                resp.send(JSON.stringify(items));
+            });
+        }
+    }
+    else{
+        resp.send(JSON.stringify({'id':-1}));
+    }
+});
+/*
+ var collection = db.collection('ulist');
+ var searchquery={};
+ if(typeof(req.body.type)!='undefined' && req.body.type!='') {
+ searchquery['type']=req.body.type;
+ }
+ if(typeof(req.body.parent)!='undefined' && req.body.parent!='' ) {
+ searchquery['addedby']={$regex : ".*"+req.body.parent+".*"};
+ }
+ if(typeof(req.body.username)!='undefined' && req.body.username!='') {
+ searchquery["addedby"]=req.body.username.toString();
+ }
+ console.log('searchquery');
+ //resp.send(JSON.stringify(searchquery));
+ //resp.send(req.body);
+ //return;
+ //if(req.body.username!='') {
+ collection.find(searchquery).limit(parseInt(req.body.limitval)).toArray(function (err, items) {
+ //collection.find({addedby:req.body.username.toString()}).limit(parseInt(req.body.limitval)).toArray(function (err, items) {
+ if (err) {
+ console.log(err);
+ resp.send(JSON.stringify({'status': 'error', 'id': []}));
+ } else {
+ resp.send(JSON.stringify({'status': 'success', 'id': items ,'idcount': items.length}));
+ }
+ });
+ * */
+
+app.get('/getbanners1', function (req,resp) {
+    //  var collection= db.collection('banners');
+    var collection= db.collection('bannerlistview');
+    if(req.query.page!=null) {
+        if (req.query.page == 'bannerlist') {
+            var searchquery={};
+            if(typeof(req.query.parent)!='undefined' && req.query.parent!='' ) {
+                searchquery['addedby']={$regex : ".*"+req.query.parent+".*"};
+            }
+
+            /*collection.find().toArray(function (err, items) {
+             resp.send(JSON.stringify(items));
+             });*/
+            collection.find(searchquery).toArray(function (err, items) {
+                if (err) {
+                    console.log(err);
+                    resp.send(JSON.stringify({'status': 'error'}));
+                } else {
+                    resp.send(JSON.stringify(items));
+                }
+            });
+        }
+        if (req.query.page == 'campaignlists') {
+            collection.find({status: '1'}).toArray(function (err, items) {
+                resp.send(JSON.stringify(items));
+            });
+        }
+    }
+    else{
+        resp.send(JSON.stringify({'id':-1}));
+    }
 });
 
-
 app.get('/getbanners', function (req,resp) {
-    var collection= db.collection('banners');
-    collection.find().toArray(function(err, items) {
-        resp.send(JSON.stringify(items));
-    });
+    req.body=req.query;
+    //  var collection= db.collection('banners');
+    var collection= db.collection('bannerlistview');
+    if(req.query.page!=null) {
+        var searchquery={};
+        if(req.query.page == 'campaignlists') {
+            searchquery['status']='1';
+        }
+        if(typeof(req.query.parent)!='undefined' && req.query.parent!='' ) {
+            searchquery['added_by']={$regex : ".*"+req.query.parent+".*"};
+            //  searchquery['Namedetails[0].firstname']={$regex : ".*"+req.query.parent+".*"};
+            //   searchquery['Namedetails[0].firstname']='Admin';
+        }
+        /*collection.find().toArray(function (err, items) {
+         resp.send(JSON.stringify(items));
+         });*/
+        collection.find(searchquery).toArray(function (err, items) {
+            if (err) {
+                console.log(err);
+                resp.send(JSON.stringify({'status': 'error'}));
+            } else {
+                resp.send(JSON.stringify(items));
+            }
+        });
+    }
+    else{
+        resp.send(JSON.stringify({'id':-1}));
+    }
 });
 
 
@@ -3088,14 +3248,45 @@ app.get('/datelist',function (req,resp) {
 app.get('/changeallmybannersstatus',function(req,resp){
     req.body=req.query;
     var collection = db.collection('banners');
-    var data = {
-        status: req.body.statusid
-    }
+
+    if(req.body.statusid==0){ textchange=' has been deactivated';}
+    if(req.body.statusid==1){textchange=' has been activated';}
+
+    let arrayfullinfo =[];
     var arr = Object.keys(req.body.arrid).map(function (key) { return req.body.arrid[key]; });
+    arrayfullinfo['addedby']= Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].added_by; });
+    arrayfullinfo['banner_title']= Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].banner_title; });
+    // var arraddedby = Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].added_by; });
+
+    //update
     var i = 0;
+    var data = {status: req.body.statusid};
     for(i in arr){
         var o_id = new mongodb.ObjectID(arr[i]);
         collection.update({_id:o_id}, {$set: data}, true, true);
+    }
+
+    //send mail
+    var transporter = mailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: "itplcc40@gmail.com",
+            pass: "DevelP7@"
+        }
+    });
+    var mailOptions;
+    var textchange;
+    for(let i in arrayfullinfo['addedby']){
+        mailOptions = {
+            from: "GEOAI Admin <support@geoai.com>",
+            to: arrayfullinfo['addedby'][i],
+            subject: 'Your banner ' + arrayfullinfo['banner_title'][i] + textchange,
+            text: req.body.note ,
+        };
+        transporter.sendMail(mailOptions, function (error, response) {
+            console.log('send');
+            transporter.close();
+        });
     }
     resp.send(JSON.stringify({'status':'success'}));
 });
@@ -3159,6 +3350,182 @@ app.get('/statuschangecampaign', function (req,resp) {
     });
 });
 
+app.get('/audienceadd',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('audience');
+    if(req.body.audiencename!=null){
+        collection.insert([{
+            audiencename: req.body.audiencename,
+            audiencedescription: req.body.audiencedescription,
+            searchcount: req.body.searchcount,
+            // audiencedata: req.body.audiencedata,
+            added_by: req.body.added_by,
+            added_on: Date.now()
+        }], function (err, result) {
+            if (err) {
+                console.log('error'+err);
+                resp.send(JSON.stringify({'status':'error','id':0}));
+            } else {
+                // console.log(result);
+                resp.send(JSON.stringify({'status':'success','id':result.ops[0]._id}));
+            }
+        });
+    }
+    else{
+        resp.send(JSON.stringify({'status':'error','id':-1}));
+    }
+});
+
+app.get('/audiencedataadd',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('audiencedata');
+    var o_id = new mongodb.ObjectID(req.body.audience_id);
+    if(req.body.audiencedata!=null){
+        collection.insert([{
+            audience_id: o_id,
+            audiencedata: req.body.audiencedata
+        }], function (err, result) {
+            if (err) {
+                console.log('error'+err);
+                resp.send(JSON.stringify({'status':'error','id':0}));
+            } else {
+                // console.log(result);
+                resp.send(JSON.stringify({'status':'success','id':result.ops[0]._id}));
+            }
+        });
+    }
+    else{
+        resp.send(JSON.stringify({'status':'error','id':-1}));
+    }
+});
+
+app.get('/getaudiencelist',function (req,resp) {
+    req.body=req.query;
+    // var collection = db.collection('all_audience_list');
+    var collection = db.collection('audience');
+    console.log(req.body.emailid);
+    collection.find({added_by:req.body.emailid}).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'status':'error','items':null}));
+        } else {
+            console.log(items);
+            resp.send(JSON.stringify({'status':'success','items':items}));
+        }
+
+    });
+
+});
+
+app.get('/addaudienceidtocampaign',function (req,resp) {
+    req.body=req.query;
+    var collection = db.collection('addcampaign');
+    var o_audienceid = new mongodb.ObjectID(req.body.audienceid);
+    var o_campaignid = new mongodb.ObjectID(req.body.campaignid);
+    var data = {audienceid : o_audienceid};
+    collection.update({_id:o_campaignid}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status':'success'}));
+});
+
+app.get('/addbanneridtocampaign',function (req,resp) {
+    req.body=req.query;
+    var collection = db.collection('addcampaign');
+    console.log('req.body.bannerid');
+    console.log(req.body.bannerid);
+    var o_bannerid = new mongodb.ObjectID(req.body.bannerid);
+    var o_campaignid = new mongodb.ObjectID(req.body.campaignid);
+    var data = {bannerid : o_bannerid};
+    collection.update({_id:o_campaignid}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status':'success'}));
+});
+
+
+app.get('/getusers',function (req,resp) {
+    req.body=req.query;
+    var collection = db.collection('signupnew');
+    collection.find({type:req.body.type}).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'res':[]}));
+        } else {
+            resp.send(JSON.stringify(items));
+        }
+    });
+});
+
+
+app.get('/getbannerss',function (req,resp) {
+    var collection = db.collection('bannerlistview');
+    var searchquery={};
+    if(typeof(req.query.values)!='undefined' ) {
+        searchquery['added_by'] = {$in: req.query.values};
+    }
+    if(req.query.searchbystatus!='' ) {
+        searchquery['status'] = req.query.searchbystatus;
+    }
+    if(typeof(req.query.startdate)!='undefined' && typeof(req.query.enddate)!='undefined') {
+        searchquery['added_on'] = {$gte: (parseInt(req.query.startdate)), $lte: (parseInt(req.query.enddate))};
+    }
+    if(req.query.page=='campaignlists' ) {
+        searchquery['status'] = '1';
+    }
+    collection.aggregate([
+        {
+            $match: {
+                $and: [
+
+                    searchquery
+                ]
+            }
+        }
+    ]).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'res':[]}));
+        } else {
+            resp.send(JSON.stringify(items));
+        }
+    });
+    //resp.send(searchquery);
+});
+/*app.get('/getbannerss',function (req,resp) {
+ var collection = db.collection('bannerlistview');
+
+ var searchquery={};
+ if(typeof(req.query.values)!='undefined' ) {
+ /!* searchquery = {
+ $or : [
+ {added_by : 'pop@yopmail.com'},
+ { added_by: 'tapabrata.influxiq@gmail.com' }
+ ]
+ }; *!/
+ // searchquery['added_by']= req.query.values;
+ searchquery['added_by']= 'pop@yopmail.com','tapabrata.influxiq@gmail.com';
+ }
+ if(req.query.page=='campaignlists'){
+ searchquery['status']='1';
+ }
+ resp.send(searchquery);
+ /!* collection.find(searchquery).toArray(function(err, items) {
+ if (err) {
+ console.log(err);
+ resp.send(JSON.stringify({'res':[]}));
+ } else {
+ resp.send(JSON.stringify(items));
+ }
+ });*!/
+ db.test.aggregate([
+ {
+ $match: {
+ $and: [
+ {added_by: {$in: req.query.values}},
+ {type: {$nin: ["BARBIE"]}},
+ {time: {$lt:ISODate("2013-12-09T00:00:00Z")}}
+ ]
+ }
+ }
+ ])
+ });*/
 
 function getall_admin_helpdesk_emailids(){
     arr=[];

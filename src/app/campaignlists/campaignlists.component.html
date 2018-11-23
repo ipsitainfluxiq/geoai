@@ -149,8 +149,12 @@
         <input type="checkbox" [(ngModel)]="selectallcampaign" (click)="allcheck()">
         <span>Select All : </span>
         <ul class="list-inline">
-          <li (click)="resumecampaigns(1)"><a><img src="../../assets/images/geoaiadmin_iconresume.png" > Resume</a></li>
-          <li (click)="resumecampaigns(0)"><a><img src="../../assets/images/geoaiadmin_iconpause.png"> Pause</a></li>
+        <!--  <li (click)="resumecampaigns(1)"><a><img src="../../assets/images/geoaiadmin_iconresume.png" > Resume</a></li>
+          <li (click)="resumecampaigns(0)"><a><img src="../../assets/images/geoaiadmin_iconpause.png"> Pause</a></li>-->
+
+          <li (click)="modal_campaign_status(1)" *ngIf="checkboxarr?.length>0"><a><img src="../../assets/images/checked.png" class="activated">Activate</a></li>
+          <li (click)="modal_campaign_status(0)" *ngIf="checkboxarr?.length>0"><a><img src="../../assets/images/cancel.png" class="deactivated">Deactivate</a></li>
+
           <li><a><!--<img src="../../assets/images/geoaiadmin_iconactive.png">--><span class="iconactive"></span> Active</a></li>
           <li><a><!--<img src="../../assets/images/geoaiadmin_iconinactive.png">--><span class="iconinactive"></span> Inactive</a></li>
           <li><a><!--<img src="../../assets/images/geoaiadmin_iconpending.png">--><span class="iconpending"></span> Pending</a></li>
@@ -218,8 +222,8 @@
             <ul class="list-inline statusicon" id="column1">
               <!-- <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon1.png"></a></li>-->
               <!--<li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon2.png"></a></li>-->
-              <li *ngIf="item.status==3"><input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i])" [(ngModel)]="checkboxvalue[i]"  *ngIf="cookiedetailsforalldetails_type=='admin'"></li>
-              <li *ngIf="item.status!=3"><input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i])" [(ngModel)]="checkboxvalue[i]"></li>
+              <li *ngIf="item.status==3"><input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i],item)" [(ngModel)]="checkboxvalue[i]"  *ngIf="cookiedetailsforalldetails_type=='admin'"></li>
+              <li *ngIf="item.status!=3"><input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i],item)" [(ngModel)]="checkboxvalue[i]"></li>
               <!--  <li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon3.png"></a></li>-->
               <li *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk' "><a [routerLink]="['/editcampaign',item._id]"><img src="../../assets/images/edit.png" tooltip="Edit the Campaign" style="height: 14px;"></a></li><!--geoaiadmin_statusicon4.png-->
               <!--<li><a [routerLink]="['/']"><img src="../../assets/images/geoaiadmin_statusicon5.png"></a></li>-->
@@ -232,8 +236,8 @@
           </td>
           <td data-title="Active Status" class="borderdiv text-center">
             <ul class="list-inline statusiconsub">
-              <li (click)="changestatus(item)"><a *ngIf="item.status==1"><img src="../../assets/images/geoaiadmin_iconresume.png"></a></li>
-              <li (click)="changestatus(item)"><a *ngIf="item.status==0"><img src="../../assets/images/geoaiadmin_iconpause.png"></a></li>
+              <li (click)="changestatus(item)"><a *ngIf="item.status==1"><img src="../../assets/images/checked.png"></a><!--geoaiadmin_iconresume--></li>
+              <li (click)="changestatus(item)"><a *ngIf="item.status==0"><img src="../../assets/images/cancel.png"></a><!--geoaiadmin_iconpause--></li>
               <li><a *ngIf="item.status==3"><img src="../../assets/images/pending_icon.png"></a></li>
             </ul>
           </td>
@@ -1002,4 +1006,31 @@
     </div>
   </div>
 </div>
+</div>
+
+
+<div *ngIf="modalchangestatus" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left" *ngIf="modalchangestatusvalue==0">Make campaign(s) Inactive</h4>
+        <h4 class="modal-title pull-left" *ngIf="modalchangestatusvalue==1">Make campaign(s) Active</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="formblock">Add Note</label>
+        <textarea class="formblock form-control" [(ngModel)]="note_for_campaign_status" rows="3"></textarea>
+        <p  class="wpcf7-not-valid-tip" *ngIf="note_for_campaign_status_blank_error">{{note_for_campaign_status_blank_error}}</p>
+        <!-- <p *ngIf="modalchangestatusvalue==0" style="font-size: 16px" class="text-center">Make banner(s) inactive?</p>
+         <p *ngIf="modalchangestatusvalue==1" style="font-size: 16px" class="text-center">Make banner(s) active?</p>-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="resumecampaigns()">Yes</button>
+      </div>
+    </div>
+  </div>
 </div>

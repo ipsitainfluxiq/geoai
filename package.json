@@ -23,6 +23,7 @@
     "@angular/router": "^6.1.0",
     "angular-moment": "^1.2.0",
     "angular-route": "^1.7.2",
+    "angular-text-input-autocomplete": "^0.3.0",
     "angular2-cookie": "^1.2.6",
     "angular2-ui-switch": "^1.2.0",
     "core-js": "^2.5.4",

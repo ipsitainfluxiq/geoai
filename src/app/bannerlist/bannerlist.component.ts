@@ -6,6 +6,8 @@ import {CookieService} from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+declare var moment: any;
+
 @Component({
     selector: 'app-bannerlist',
     templateUrl: './bannerlist.component.html',
@@ -14,10 +16,15 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 
 export class BannerlistComponent implements OnInit {
+    public startdate;
+    public enddate;
     public modalmapShown: boolean = false;
     public modaldeletedbanner: boolean = false;
     public modalconfirmdeletedbanner: boolean = false;
+    public modalchangestatus: boolean = false;
+    public modalchangestatusvalue;
     public divnumber;
+    public filterval_by_addedby: any = '';
     public ad_text;
     public ad_text1;
     public ad_bannertext;
@@ -47,11 +54,23 @@ export class BannerlistComponent implements OnInit {
     public cookiedetailsforalldetails_type;
     public checkboxvalue = [];
     public checkboxarr = [];
+    public checkboxfullarr = [];
     public selectallmybanners = false;
     public p: number = 1;
+    public imageurl;
+    public users;
+    public note_for_banner_status;
+    public note_for_banner_status_blank_error;
+    public formControlValue = '';
+    public searchbystatus = '';
+    static usernames = [];
+    static autovalues = [];
+    static namesearchvalues = [];
+   // public selarr = [];
 
     constructor(private _commonservices: Commonservices, emailcookie: CookieService, private _http: HttpClient, private router: Router, alldetailcookie: CookieService) {
         this.serverurl = _commonservices.url;
+        this.imageurl = _commonservices.imageurl;
         this.files = []; // local uploading files array
         this.files1 = [];
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
@@ -60,15 +79,106 @@ export class BannerlistComponent implements OnInit {
         this.alldetailcookie = alldetailcookie ;
         this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
         this.cookiedetailsforalldetails_type = this.alldetailcookie.get('type');
+        this.getusers();
         if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk'){
             this.getbanners();
         }
         else{
-        this.getbannersbyemail();
+            this.getbannersbyemail();
         }
+     //   this.startdate = this.enddate = moment().format('YYYY-MM-DD');
     }
 
     ngOnInit() {
+
+    }
+    getusers(){
+        BannerlistComponent.usernames = [];
+        let link = this.serverurl + 'getusers';
+        let data = {type: 'user'};
+        this._http.post(link, data)
+            .subscribe(res => {
+                this.users = res;
+                console.log(this.users);
+                for(let i in this.users){
+                    BannerlistComponent.usernames.push(this.users[i]);
+                }
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
+
+    findChoices(searchText: string) {
+        let a= [];
+        BannerlistComponent.namesearchvalues=[];
+        a= BannerlistComponent.usernames
+            .filter(item => item.firstname.toLowerCase().includes(searchText.toLowerCase())
+            );
+        for(let i in a){
+            BannerlistComponent.namesearchvalues.push({val:a[i].email,label:a[i].firstname + ' '+ a[i].lastname+"("+a[i].email+")"});
+        }
+        return BannerlistComponent.namesearchvalues;
+    }
+    getfavl(){
+        return BannerlistComponent.autovalues;
+    }
+    getlengthfval(){
+        return BannerlistComponent.autovalues.length;
+    }
+    removeuser(item){
+        let indexval = BannerlistComponent.autovalues.indexOf(item);
+        BannerlistComponent.autovalues.splice(indexval, 1);
+    }
+    getChoiceLabel(choice: any) {
+        console.log('choice-----------------');
+        console.log(choice);
+        /*let choice1 = choice.split(" ");
+        for(let j in BannerlistComponent.allsearchvalues){
+            if(BannerlistComponent.allsearchvalues[j].firstname==choice1[0] && BannerlistComponent.allsearchvalues[j].lastname==choice1[1]){
+                BannerlistComponent.autovalues.push(BannerlistComponent.allsearchvalues[j].email+'99');
+            }
+        }*/
+        BannerlistComponent.autovalues.push(choice.val);
+        //this.selarr.push(choice);
+      //  console.log(this.selarr);
+      //  return `${choice.label} | `;
+        return ``;
+    }
+
+   /* autofilkeyup(ev:any){
+       // console.log(ev);
+       // console.log(ev.keyCode);
+      //  console.log(this.formControlValue);
+        if(ev.keyCode==8){
+            let tempval:any=this.formControlValue;
+            tempval=tempval.split('|');
+          //  console.log(tempval);
+            tempval=tempval.splice(tempval.length,1);
+            BannerlistComponent.autovalues=BannerlistComponent.autovalues.splice(BannerlistComponent.autovalues.length,1);
+          //  console.log(tempval);
+            // /this.formControlValue=tempval.join(' | ');
+        }
+    }*/
+    callbanners(){
+        let startdate1;
+        let enddate1;
+        let link = this.serverurl + 'getbannerss';
+        if(typeof(this.startdate)!='undefined' && typeof(this.enddate)!='undefined'){
+             startdate1 = moment(this.startdate).unix();
+             enddate1 = moment(this.enddate).unix();
+        }
+        else{
+            startdate1=this.startdate;
+            enddate1=this.enddate;
+        }
+        let data = {values: BannerlistComponent.autovalues,searchbystatus:this.searchbystatus,startdate:startdate1,enddate:enddate1};
+        this._http.post(link, data)
+            .subscribe(res => {
+                this.mybanners = res;
+                console.log(this.mybanners);
+            }, error => {
+                console.log('Oooops!');
+            });
     }
 
     getbannersbyemail(){
@@ -85,8 +195,8 @@ export class BannerlistComponent implements OnInit {
                 console.log('Oooops!');
             });
     }
-    getbanners(){
-        let link = this.serverurl + 'getbanners';
+   /* getbanners1(){
+        let link = this.serverurl + 'getbannerss';
         let data = {
             page: 'bannerlist'
         }
@@ -94,6 +204,20 @@ export class BannerlistComponent implements OnInit {
             .subscribe(res => {
                 this.mybanners = res;
                 console.log(this.mybanners);
+            }, error => {
+                console.log('Oooops!');
+            });
+    }*/
+    getbanners() {
+        let link = this.serverurl + 'getbannerss';
+        let data = {searchbystatus:this.searchbystatus};
+        this._http.post(link, data)
+       // this._http.get(link)
+            .subscribe(res => {
+                let result = res;
+                this.mybanners = res;
+                console.log(this.mybanners);
+
             }, error => {
                 console.log('Oooops!');
             });
@@ -161,38 +285,38 @@ export class BannerlistComponent implements OnInit {
         $('#showbannersinmodal'+i).append($('#bannermainblock'+type).html());
         $('#showhtmlsinmodal'+i).append($('#bannerlistsingleinfo'+type).html());
         setTimeout(() => {
-        /*replace the structure elements with saved database values*/
-        if(item.editablearea_1!=null && item.editablearea_1 !=''){
-            $('#showbannersinmodal'+i+' .bannermainblock'+type+'txt').empty();
-            $('#showbannersinmodal'+i+' .bannermainblock'+type+'txt').append(item.editablearea_1);
-        }
-        if(item.editablearea_2!=null && item.editablearea_2 !=''){
-            console.log('----------------------------start-----------------------------');
-            console.log($('#showbannersinmodal2 .bannermainblock2btn').text());
-            $('#showbannersinmodal'+i+' .bannermainblock'+type+'btn').empty();
-            $('#showbannersinmodal'+i+' .bannermainblock'+type+'btn').append(item.editablearea_2);
-            console.log($('#showbannersinmodal'+i+' .bannermainblock'+type+'btn').text());
-            console.log('---------------------end----------------');
-        }
-        if(item.editablearea_3!=null && item.editablearea_3 !=''){
-            var imgpath = '../../assets/uploads/' + item.editablearea_3;
-            var imgclass  = 'bannermainblock' + type + 'img';
-            $('#showbannersinmodal'+i+' .bannermainblock'+type+'img').remove();
-            $('#showbannersinmodal'+i+' .bannermainblock'+type).append("<img src="+imgpath+" class="+imgclass+">");
-        }
-        if(item.editablearea_4!=null && item.editablearea_4 !=''){
-            var imgpath1 = '../../assets/uploads/' + item.editablearea_4;
-            var imgclass1  = 'bannermainblock' + type + 'img2';
-            $('#showbannersinmodal'+i+' .bannermainblock'+type+'img2').remove();
-            $('#showbannersinmodal'+i+' .bannermainblock'+type).append("<img src="+imgpath1+" class="+imgclass1+">");
-        }
-        if(item.editablearea_5!=null && item.editablearea_5 !=''){
-            $('#showbannersinmodal'+i+' .bannermainblock'+type+'txt2').empty();
-            $('#showbannersinmodal'+i+' .bannermainblock'+type+'txt2').append(item.editablearea_5);
-        }
-        $('#showhtmlsinmodal'+i).empty();
-        $('#showhtmlsinmodal'+i).append(item.banner_title);
-    },500);
+            /*replace the structure elements with saved database values*/
+            if(item.editablearea_1!=null && item.editablearea_1 !=''){
+                $('#showbannersinmodal'+i+' .bannermainblock'+type+'txt').empty();
+                $('#showbannersinmodal'+i+' .bannermainblock'+type+'txt').append(item.editablearea_1);
+            }
+            if(item.editablearea_2!=null && item.editablearea_2 !=''){
+                console.log('----------------------------start-----------------------------');
+                console.log($('#showbannersinmodal2 .bannermainblock2btn').text());
+                $('#showbannersinmodal'+i+' .bannermainblock'+type+'btn').empty();
+                $('#showbannersinmodal'+i+' .bannermainblock'+type+'btn').append(item.editablearea_2);
+                console.log($('#showbannersinmodal'+i+' .bannermainblock'+type+'btn').text());
+                console.log('---------------------end----------------');
+            }
+            if(item.editablearea_3!=null && item.editablearea_3 !=''){
+                var imgpath = '../../assets/uploads/' + item.editablearea_3;
+                var imgclass  = 'bannermainblock' + type + 'img';
+                $('#showbannersinmodal'+i+' .bannermainblock'+type+'img').remove();
+                $('#showbannersinmodal'+i+' .bannermainblock'+type).append("<img src="+imgpath+" class="+imgclass+">");
+            }
+            if(item.editablearea_4!=null && item.editablearea_4 !=''){
+                var imgpath1 = '../../assets/uploads/' + item.editablearea_4;
+                var imgclass1  = 'bannermainblock' + type + 'img2';
+                $('#showbannersinmodal'+i+' .bannermainblock'+type+'img2').remove();
+                $('#showbannersinmodal'+i+' .bannermainblock'+type).append("<img src="+imgpath1+" class="+imgclass1+">");
+            }
+            if(item.editablearea_5!=null && item.editablearea_5 !=''){
+                $('#showbannersinmodal'+i+' .bannermainblock'+type+'txt2').empty();
+                $('#showbannersinmodal'+i+' .bannermainblock'+type+'txt2').append(item.editablearea_5);
+            }
+            $('#showhtmlsinmodal'+i).empty();
+            $('#showhtmlsinmodal'+i).append(item.banner_title);
+        },500);
     }
 
     onUploadOutput(type,output: UploadOutput): void {
@@ -252,7 +376,7 @@ export class BannerlistComponent implements OnInit {
         this.ad_text_main = this.ad_text;
         this.ad_btn_main = this.ad_btn;
         this.ad_text1_main = this.ad_text1;
-console.log(type);
+        console.log(type);
         if(type==1){
             $('#showbannerinmodal .bannermainblock'+this.divnumber+'txt').empty();
             $('#showbannerinmodal .bannermainblock'+this.divnumber+'txt').append(this.ad_text);
@@ -294,6 +418,7 @@ console.log(type);
         this.modalmapShown = false;
         this.modalconfirmdeletedbanner = false;
         this.modaldeletedbanner = false;
+        this.modalchangestatus = false;
         this.files = [];
         this.editflag = 0;
     }
@@ -318,7 +443,7 @@ console.log(type);
     }
     savebanner(){
         if(this.ad_text==null){
-          //  this.ad_text_main = $('#showbannerinmodal .bannermainblock'+this.divnumber+'txt').text();
+            //  this.ad_text_main = $('#showbannerinmodal .bannermainblock'+this.divnumber+'txt').text();
             this.ad_text_main = $('#showbannerinmodal .bannermainblock'+this.divnumber+'txt').text();
         }
         if(this.ad_btn==null){
@@ -367,7 +492,7 @@ console.log(type);
         this._http.post(link, data)
             .subscribe(res => {
                 console.log('kkkkkkkk');
-               // this.router.navigate(['/bannerlist',random]);
+                // this.router.navigate(['/bannerlist',random]);
                 console.log(this.modalmapShown);
                 this.modalmapShown = false;
                 console.log(this.modalmapShown);
@@ -601,6 +726,7 @@ console.log(type);
                     this.checkboxvalue[i] = false;
                 }
                 this.checkboxarr=[];
+                this.checkboxfullarr=[];
             }
             if (this.selectallmybanners == true) {
                 console.log($('.icheck').length);
@@ -611,11 +737,12 @@ console.log(type);
                 }
                 for(let i in this.mybanners){
                     this.checkboxarr.push(this.mybanners[i]._id);
+                    this.checkboxfullarr.push(this.mybanners[i]);
                 }
             }
         }, 100);
     }
-    checkboxid(i,itemid,checkboxvalue){
+    checkboxid(i,itemid,checkboxvalue,item){
         console.log('===========');
         console.log(i);
         console.log(itemid);
@@ -623,43 +750,64 @@ console.log(type);
         console.log(this.checkboxvalue);
         if(checkboxvalue==true){
             this.checkboxarr.push(itemid);
+            this.checkboxfullarr.push(item);
         }
         if(checkboxvalue==false){
             let indexval: any = this.checkboxarr.indexOf(itemid);
             console.log('-----------------');
             console.log(indexval);
             this.checkboxarr.splice(indexval, 1);
+            this.checkboxfullarr.splice(indexval, 1);
 
         }
         console.log('this.checkboxarr+++++++++++');
         console.log(this.checkboxarr);
+        console.log(this.checkboxfullarr);
     }
-    resumebanners(value){
-        console.log('resumemybanners');
+    modal_banner_status(value){
+        this.modalchangestatus = true;
+        this.modalchangestatusvalue = value;
+        this.note_for_banner_status = null;
+    }
+    resumebanners(){
         // 1 - resume i .e. status = 1
         // 0 - pause i .e. status = 0
         let link = this.serverurl+'changeallmybannersstatus';
         var data;
-        if(value==1){
-            data = {arrid:this.checkboxarr , statusid: 1};
+
+        if (this.note_for_banner_status != null && this.note_for_banner_status != ''){
+            this.note_for_banner_status_blank_error = null;
+        }
+        else {
+            this.note_for_banner_status_blank_error = 'Give a proper note';
+        }
+
+        if(this.modalchangestatusvalue==1){
+            data = {arrid:this.checkboxarr , statusid: 1, fullarr:this.checkboxfullarr, note:this.note_for_banner_status};
         }
         else{
-            data = {arrid:this.checkboxarr , statusid: 0};
+            data = {arrid:this.checkboxarr , statusid: 0, fullarr:this.checkboxfullarr, note:this.note_for_banner_status};
         }
-        this._http.post(link, data)
-            .subscribe(res => {
-                let result: any;
-                result = res;
-                if(result.status=='success'){
-                    if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk'){
-                        this.getbanners();
+        if(this.note_for_banner_status_blank_error==null) {
+            this._http.post(link, data)
+                .subscribe(res => {
+                    let result: any;
+                    result = res;
+                    if (result.status == 'success') {
+                        if (this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk') {
+                            this.getbanners();
+                        }
+                        else {
+                            this.getbannersbyemail();
+                        }
+                        this.modalchangestatus = false;
                     }
-                    else{
-                        this.getbannersbyemail();
-                    }
-                }
-            }, error => {
-                console.log('Oooops!');
-            });
+                }, error => {
+                    console.log('Oooops!');
+                });
+        }
+    }
+    showdate(dd){
+        return moment(dd* 1000).format('Do MMM YYYY');
     }
 }

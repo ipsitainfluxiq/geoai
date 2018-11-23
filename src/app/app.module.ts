@@ -95,6 +95,8 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { NgxUploaderModule } from 'ngx-uploader';
 import { RolesettingsComponent } from './rolesettings/rolesettings.component';
+import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
+//import { NgxDateRangePickerModule } from 'ngx-daterangepicker';
 
 @NgModule({
   declarations: [
@@ -195,6 +197,8 @@ import { RolesettingsComponent } from './rolesettings/rolesettings.component';
             apiKey: 'AIzaSyC7rd1BpaO2BEgfQMD7ekZ4dQ9gFsKIod4'
         }),
       NgxUploaderModule,
+      TextInputAutocompleteModule,
+     // NgxDateRangePickerModule
     ],
     providers: [CookieService, CircleManager, AgmCircle,  GoogleMapsAPIWrapper],
     bootstrap: [AppComponent]
