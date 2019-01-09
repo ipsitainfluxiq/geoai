@@ -16,15 +16,28 @@ export class HelpdeskaddComponent implements OnInit {
     public fb;
     public passmatchvalidate;
     public serverurl;
+    public list_length;
+    public agencylist;
+    public agencyerror=null;
     static invalidemail;
     static blankemail;
     static invalidpassword;
+    public cookiedetailsforalldetails_type;
+    public alldetailcookie: CookieService;
 
-    constructor(fb: FormBuilder, addcookie: CookieService, private _http: HttpClient, private router: Router, private _commonservices: Commonservices) {
+    constructor(fb: FormBuilder, addcookie: CookieService, private _http: HttpClient, private router: Router, private _commonservices: Commonservices,  alldetailcookie: CookieService) {
         this.fb = fb;
         this.serverurl = _commonservices.url;
         HelpdeskaddComponent.blankemail = false;
         HelpdeskaddComponent.invalidemail = false;
+        this.alldetailcookie = alldetailcookie ;
+        this.cookiedetailsforalldetails_type = this.alldetailcookie.get('type');
+        if(this.cookiedetailsforalldetails_type == 'admin'){
+           console.log('this is admin');
+           this.getagencylist();
+        }else{
+                console.log('this is not admin');
+        }
     }
 
     ngOnInit() {
@@ -36,6 +49,7 @@ export class HelpdeskaddComponent implements OnInit {
           //  password: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
             password: ['', Validators.compose([Validators.required, HelpdeskaddComponent.validatePassword])],
             confpassword: ['', Validators.required],
+            agencyid: [''],
         }, {validator: this.matchingPasswords('password', 'confpassword') });
     }
 
@@ -90,6 +104,20 @@ export class HelpdeskaddComponent implements OnInit {
             }
         };
     }
+
+    getagencylist()
+    {
+        let link = this.serverurl + 'agencylist';
+        this._http.get(link)
+            .subscribe(res => {
+                let result: any;
+                result = res;
+                this.agencylist = result.res;
+                console.log(this.agencylist);
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
     getpassword(type: any) {
         if (type == 'invalid') {
             return HelpdeskaddComponent.invalidpassword;
@@ -97,6 +125,7 @@ export class HelpdeskaddComponent implements OnInit {
     }
 
     dosubmit(formval) {
+        this.agencyerror = null;
         let x: any;
         for (x in this.dataForm.controls) {
             this.dataForm.controls[x].markAsTouched();
@@ -104,20 +133,43 @@ export class HelpdeskaddComponent implements OnInit {
         console.log('inside submit');
         if (this.dataForm.valid && this.passmatchvalidate && (HelpdeskaddComponent.invalidemail == false || HelpdeskaddComponent.blankemail == false) && HelpdeskaddComponent.invalidpassword == false) {
             let link = this.serverurl + 'addhelpdisk';
-            let data = {
-                firstname: formval.firstname,
-                lastname: formval.lastname,
-                email: formval.email,
-                password: formval.password,
-            };
-            this._http.post(link, data)
-                .subscribe(res => {
-                    this.router.navigate(['/helpdesklist']);
-                }, error => {
-                    console.log('Oooops!');
-                });
+            let data;
+            if(this.cookiedetailsforalldetails_type == 'admin'){
+                if(formval.agencyid!=''){
+                data = {
+                    firstname: formval.firstname,
+                    lastname: formval.lastname,
+                    email: formval.email,
+                    password: formval.password,
+                    agencyid: formval.agencyid
+                };
+                this._http.post(link, data)
+                    .subscribe(res => {
+                        this.router.navigate(['/helpdesklist']);
+                    }, error => {
+                        console.log('Oooops!');
+                    });
+                }else {
+                    this.agencyerror = 'Select an agency!';
+                }
+            }
+            else{
+                data = {
+                    firstname: formval.firstname,
+                    lastname: formval.lastname,
+                    email: formval.email,
+                    password: formval.password
+                };
+                this._http.post(link, data)
+                    .subscribe(res => {
+                        this.router.navigate(['/helpdesklist']);
+                    }, error => {
+                        console.log('Oooops!');
+                    });
+            }
         }
     }
+
 cancelit(){
     this.router.navigate(['/helpdesklist']);
 }

@@ -40,104 +40,50 @@
 
 
 
-<div class="adminmainwarpper">
+<div class="adminmainwarpper audiencelistwrapper topsearchlistwapper topsearchlistwappernew">
   <input type="text" placeholder="Search..." [(ngModel)]="filterval" #listFilter (keyup)="0" class="hide">
   <div class="bodytopsearchlistwrapper">
     <div class="bodytopactiondiv">
-      <!-- <div class="formblock topsearchlist">
-           <form class="form form-inline" role="form">
-               <div class="form-group">
-                   <div class="col-xs-12 txtfield">
-                       <input type="text" placeholder="Search..." #listFilter (keyup)="0">
-                   </div>
-               </div>
-           <div class="form-group dtrangecls">
-               <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
-                   <div class="col-xs-12 divinner">
-                       <div class="datefieldcontainer">
-                           <input class="datefieldcls" type="date" name="selected_date" />
-                           <span class="openbuttoncls">
-             <button type="button"><img src="../../assets/images/icon-calender.png"></button>
-           </span>
-                       </div>
-                   </div>
-               </div>
-               <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
-                   <div class="col-xs-12 divinner">
-                       <div class="datefieldcontainer">
-                           <input class="datefieldcls" type="date" name="selected_date" />
-                           <span class="openbuttoncls">
-             <button type="button"><img src="../../assets/images/icon-calender.png"></button>
-           </span>
-                       </div>
-                   </div>
-               </div>
-           </div>
-
-               <div class="form-group">
-                   <button type="submit" class="btnblack">Go</button>
-               </div>
-           </form>
-       </div>-->
-      <div class="formblock topsearchlist">
-        <!--  <form class="form form-inline" role="form">-->
+      <div class="formblock tosearchlist">
         <div class="form-grounewp">
-          <div class="col-xs-12 txtfield">
-            <input type="text" placeholder="Search..." [(ngModel)]="filterval1" (keyup)="searchbyval()">
+          <div class="txtfield">
+            <label>Search</label>
+            <input type="text" [(ngModel)]="filterval1" (keyup)="searchbyval()">
           </div>
-        </div>
-        <div class="form-grounewp">
-          <div class="col-xs-12 txtfield">
+          <div class="txtfield">
+            <label>Filter By Type</label>
             <select class="classic" (change)="searchbyval()" [(ngModel)]="filterval4">
-              <option value="" selected>Filter By Type</option>
+              <option value="" selected>Select All</option>
               <option value="wire">WIre Transfer</option>
               <option value="card">Card</option>
             </select>
           </div>
-        </div>
-       <!-- <div class="form-grounewp">
-          <div class="col-xs-12 txtfield">
-               <input class="newinputtext" placeholder="Search by Name:" ng2-auto-complete
-                                                         [source]="datalist"
-                                                         [(ngModel)]="filterval5"
-                                                         [list-formatter]="autocompleListFormatter"
-                                                         value-property-name="name"
-                                                         display-property-name="name"
-                                                         (valueChanged)="valueChanged(filterval5)"
-                                                     (change)="searchbyval()"
-
-
-            />
-          </div>
-        </div>-->
-        <div class="form-grounewp dtrangecls hide">
-          <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
-            <div class="col-xs-12 divinner">
-              <div class="datefieldcontainer">
-                <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval2"/>
-                <span class="openbuttoncls">
+          <div class="txtfield hide">
+            <div class="dtrangecls">
+              <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+                <div class="col-xs-12 divinner">
+                  <div class="datefieldcontainer">
+                    <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval2"/>
+                    <span class="openbuttoncls">
                   <button type="button"><img src="../../assets/images/icon-calender.png"></button>
                 </span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
-            <div class="col-xs-12 divinner">
-              <div class="datefieldcontainer">
-                <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval3" />
-                <span class="openbuttoncls">
+              <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+                <div class="col-xs-12 divinner">
+                  <div class="datefieldcontainer">
+                    <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval3" />
+                    <span class="openbuttoncls">
                   <button type="button"><img src="../../assets/images/icon-calender.png"></button>
                 </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <!--  <div class="form-grounewp">
-              <button type="submit" class="btnblack" (click)="searchbyval()">Go</button>
-          </div>-->
-
         <div class="clearfix"></div>
-        <!--   </form>-->
       </div>
     </div>
   </div>
@@ -158,12 +104,12 @@
 
         <tbody>
         <tr *ngFor="let item of datalist| orderBy:'date'| usersearch:listFilter.value; let i=index">
-          <td data-title="campaign name" class=" text-center">{{i+1}}</td>
-          <td data-title="campaign name" class=" text-center">{{item.type}}</td>
-          <td data-title="campaign name" class=" text-center" >{{item.name}}</td>
-          <td data-title="Rem.Budget" class="numeric text-center">${{item.amount}}</td>
-          <td data-title="The CPM" class="numeric text-center">{{item.transaction_id}}</td>
-          <td data-title="The EPC" class="numeric text-center">{{showdate(item.date)}}</td>
+          <td data-title="#" class=" text-center">{{i+1}}</td>
+          <td data-title="Transaction Type" class=" text-center">{{item.type}}</td>
+          <td data-title="Transaction Done By" class=" text-center" >{{item.name}}</td>
+          <td data-title="Transaction Amount" class="numeric text-center">${{item.amount}}</td>
+          <td data-title="Transaction Id" class="numeric text-center">{{item.transaction_id}}</td>
+          <td data-title="Date" class="numeric text-center">{{showdate(item.date)}}</td>
         </tr>
         </tbody>
       </table>

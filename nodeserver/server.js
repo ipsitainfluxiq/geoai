@@ -1,3 +1,4 @@
+
 /**
  * Created by debasis on 14/9/16.
  */
@@ -29,6 +30,8 @@ var imgwidth1;
 var imgheight1;
 let dateis = Date.now();
 let arr=[];
+var moment = require('moment');
+
 var storage = multer.diskStorage({ //multers disk storage settings
     destination: function (req, file, cb) {
         cb(null, '../assets/uploads/');
@@ -93,8 +96,8 @@ app.get('/uploads', function(req, res) {
     datetimestamp = Date.now();
     upload(req,res,function(err){
         console.log(1);
-        console.log(err);
-        console.log(filename);
+         console.log(err);
+         console.log(filename);
         if(err){
             res.json({error_code:1,err_desc:err});
             return;
@@ -160,10 +163,9 @@ app.get('/readcsv',function (req,resp) {
     });
 
 });
+
 app.get('/addresslist',function (req,resp) {
-
     var collection = db.collection('address');
-
     collection.find().limit(700).toArray(function(err, items) {
         if (err) {
             console.log(err);
@@ -171,9 +173,7 @@ app.get('/addresslist',function (req,resp) {
         } else {
             resp.send(JSON.stringify({'res':items}));
         }
-
     });
-
 });
 
 /*app.post('/insertshapes', function (req, resp) {
@@ -339,11 +339,13 @@ app.get('/deleteaudience', function (req, resp) {
     var collection = db.collection('campaigninfo');
     collection.deleteOne({_id: o_id}, function(err, results) {
         if (err){
-            resp.send("failed");
+          //  resp.send("failed");
+            resp.send(JSON.stringify({'status':'failed'}));
             throw err;
         }
         else {
-            resp.send("success");
+          //  resp.send("success");
+            resp.send(JSON.stringify({'status':'success'}));
         }
     });
 });
@@ -389,7 +391,6 @@ app.get('/forgetpassword', function (req, resp) {
     });
 });
 
-
 app.get('/accesscodecheck', function (req, resp) {
     req.body=req.query;
     var collection = db.collection('signupnew');
@@ -422,13 +423,12 @@ app.get('/newpassword', function (req, resp) {
 
 var parse = require('csv-parse');
 
-
 app.get('/csvuploads',function (req,resp) {
     req.body=req.query;
     var csvData=[];
     var fs = require('fs'),
         path = require('path');
-    //  var filepath = '../src/assets/uploads/'+req.body.filenameis; //local
+  //  var filepath = '../src/assets/uploads/'+req.body.filenameis; //local
     var filepath = '../assets/uploads/'+req.body.filenameis.generatedName; //server
     fs.createReadStream(filepath)
         .pipe(parse({delimiter: ','}))
@@ -453,43 +453,43 @@ app.get('/csvuploads',function (req,resp) {
 /*-------------------------------------------------FORGET_PASSWORD_end-----------------------------------------------*/
 
 /*app.get('/signup' , function (req,resp) {
- req.body=req.query;
- var collection = db.collection('signup');
- console.log('99999999');
- console.log(req.body.agency_name);
- var crypto = require('crypto');
- var secret = req.body.password;
- var hash = crypto.createHmac('sha256', secret)
- .update('password')
- .digest('hex');
- collection.insert([{
- firstname: req.body.firstname,
- lastname: req.body.lastname,
- companyname: req.body.companyname,
- email: req.body.email,
- password: hash,
- agencyval: req.body.agencyval,
- agency_name: req.body.agency_name,
- // month: req.body.month,
- //  day: req.body.day,
- //  year: req.body.year,
- phone: req.body.phone,
- about_us: req.body.about_us,
- type:0,
- // location: req.body.location,
- // state: req.body.state,
- }],
- function(err, result) {
- if (err){
- console.log('err');
- resp.send(JSON.stringify({'id':0, 'status':'Some error occured..!'}));
- }
- else{
- console.log(result);
- resp.send(JSON.stringify({'id':result.ops[0]._id, 'status':'success'}));
- }
- });
- });*/
+    req.body=req.query;
+    var collection = db.collection('signup');
+    console.log('99999999');
+    console.log(req.body.agency_name);
+    var crypto = require('crypto');
+    var secret = req.body.password;
+    var hash = crypto.createHmac('sha256', secret)
+        .update('password')
+        .digest('hex');
+    collection.insert([{
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            companyname: req.body.companyname,
+            email: req.body.email,
+            password: hash,
+            agencyval: req.body.agencyval,
+            agency_name: req.body.agency_name,
+            // month: req.body.month,
+            //  day: req.body.day,
+            //  year: req.body.year,
+            phone: req.body.phone,
+            about_us: req.body.about_us,
+            type:0,
+            // location: req.body.location,
+            // state: req.body.state,
+        }],
+        function(err, result) {
+            if (err){
+                console.log('err');
+                resp.send(JSON.stringify({'id':0, 'status':'Some error occured..!'}));
+            }
+            else{
+                console.log(result);
+                resp.send(JSON.stringify({'id':result.ops[0]._id, 'status':'success'}));
+            }
+        });
+});*/
 
 app.get('/changepassword', function (req, resp) {
     req.body=req.query;
@@ -499,8 +499,6 @@ app.get('/changepassword', function (req, resp) {
     var hashold = cryptoold.createHmac('sha256', secretold)
         .update('password')
         .digest('hex');
-
-
     var cryptonew = require('crypto');
     var secretnew = req.body.password;
     var hashnew = cryptonew.createHmac('sha256', secretnew)
@@ -509,12 +507,9 @@ app.get('/changepassword', function (req, resp) {
     var data = {
         password: hashnew
     }
-
     var collection = db.collection('signupnew');
     var mail = req.body.email;
-
     collection.find({email: mail, password: hashold}).toArray(function (err, items) {
-
         if(items.length==0) {
             resp.send(JSON.stringify({'status': 'error', 'msg': 'Old password doesnot match'}));
             return;
@@ -557,7 +552,6 @@ app.get('/accountdetails',function(req,resp){        // this is for editadmin pa
     var resitem = {};
     var collection = db.collection('signupnew');
     var mail = req.body.emailid;
-
     collection.find({email:mail}).toArray(function(err, items) {
         if (err) {
             resp.send(JSON.stringify({'status':'error','id':0}));
@@ -574,9 +568,7 @@ app.get('/calluploads',function (req,resp) {
     req.body=req.query;
     console.log(req.body.filenameis);
     console.log(req.body.srcfile);
-
     // var filepath = '../src/assets/uploads/'+req.body.filenameis;   // this is same path as uploads file has at the top of this page (localhost)
-
     var filepath = '../assets/uploads/'+req.body.filenameis;    // (server)
     console.log('filepath');
     console.log(filepath);
@@ -596,19 +588,23 @@ app.get('/calluploads',function (req,resp) {
 
 app.get('/userlist',function (req,resp) {
 
+    /*console.log(req.body.idis);
+    console.log(req.body.typeis);*/
+    req.body=req.query;
+    var query={};
+    if(req.query.type =='agency' ||req.query.type=='helpdesk'  ){
+        if(req.query.type=='agency') query={'agencyid':new mongodb.ObjectID(req.query.userid)}
+        if(req.query.type=='helpdesk') query={'helpdeskid':new mongodb.ObjectID(req.query.userid)}
+    }
     var collection = db.collection('ulist');
-
-    collection.find().toArray(function(err, items) {
-
+    collection.find(query).toArray(function(err, items) {
         if (err) {
             console.log(err);
             resp.send(JSON.stringify({'res':[]}));
         } else {
             resp.send(JSON.stringify(items));
         }
-
     });
-
 });
 
 
@@ -688,29 +684,20 @@ app.get('/confirmation', function (req,resp) {
             var i1;
             if(items[0][i].length>1 || items[0][i]==true){
                 html+=' <div style="width: 44%;overflow: hidden;display: inline-block;vertical-align: top;padding: 0% 1% 0% 1%;"> <div style="text-transform:capitalize; font-size:16px; font-weight: normal; color:#1b1b1b; line-height:18px; vertical-align: middle; text-align: left; margin: 0; padding: 10px 0 10px 0 !important;text-decoration: none;display: block;">'+i.replace("_", " ")+':</div> </div> <div style="width: 50%;display: inline-block;vertical-align: top;padding: 0% 2% 0% 1%;"> <div style="text-transform:none; font-size:16px; font-weight: normal; color:#1b1b1b; line-height:18px; vertical-align: middle; text-align: left; margin: 0; padding: 10px 0 10px 20px !important;text-decoration: none;display: block;">'+items[0][i]+'</div> </div><div class="clearfix"></div>';
-
             }
-
         }
-
-
-
         //for(i in items[0]){
         //console.log(i);
         //console.log(items[0]);
         var i1;
-
         for(i1 in items[0].Userlogindata) {
             if (items[0].Userlogindata[i1].length > 1) {
                 html += ' <div style="width: 44%;overflow: hidden;display: inline-block;vertical-align: top;padding: 0% 1% 0% 1%;"> <div style="text-transform:capitalize; font-size:16px; font-weight: normal; color:#1b1b1b; line-height:18px; vertical-align: middle; text-align: left; margin: 0; padding: 10px 0 10px 0 !important;text-decoration: none;display: block;">' + i1.replace("_", " ") + ':</div> </div> <div style="width: 50%;display: inline-block;vertical-align: top;padding: 0% 2% 0% 1%;"> <div style="text-transform:none; font-size:16px; font-weight: normal; color:#1b1b1b; line-height:18px; vertical-align: middle; text-align: left; margin: 0; padding: 10px 0 10px 20px !important;text-decoration: none;display: block;">' + JSON.stringify(items[0].Userlogindata[i1]) + '</div> </div><div class="clearfix"></div>';
-
             }
         }
         // }
-
         html+='</div></div> ';
         html+='</div> <!--[if (gte mso 9)|(IE)]> </td> </tr> </table> <![endif]--> </td> </tr> </table>';
-
         var smtpTransport = mailer.createTransport({
             service: "Gmail",
             auth: {
@@ -718,7 +705,6 @@ app.get('/confirmation', function (req,resp) {
                 pass: "DevelP7@"
             }
         });
-
         var mail = {
             from: "Admin <ipsitaghosal1@gmail.com>",
             // to: req.body.email,
@@ -726,14 +712,11 @@ app.get('/confirmation', function (req,resp) {
             subject: 'Welcome to Admin Management System',
             html:html,
         }
-
         smtpTransport.sendMail(mail, function (error, response) {
             console.log('send');
             smtpTransport.close();
         });
-
     });
-
     resp.send(JSON.stringify({'status': 'success'}));
 });
 
@@ -741,7 +724,6 @@ app.get('/confirmation', function (req,resp) {
 app.get('/viewlogindetails', function (req, resp) {
     var collection1 = db.collection('users');
     var collection = db.collection('users').aggregate([
-
         { "$match": { "type": 3 } },
         {
             $lookup: {
@@ -754,16 +736,13 @@ app.get('/viewlogindetails', function (req, resp) {
         /*{$match:{"Userlogindata._id":new mongodb.ObjectID('591d68b3957b8c55328d5cc3')}},*/
         { "$unwind": "$Userlogindata" },
         {$match:{"Userlogindata.type":0}},
-
-
     ]);
     collection.toArray(function (err, items) {
         resp.send(JSON.stringify(items));
-
     });
 });
-app.get('/getdetails11', function (req,resp) {
 
+app.get('/getdetails11', function (req,resp) {
     var smtpTransport = mailer.createTransport({
         service: "Gmail",
         auth: {
@@ -771,7 +750,6 @@ app.get('/getdetails11', function (req,resp) {
             pass: "DevelP7@"
         }
     });
-
     var mail = {
         from: "Admin <ipsitaghosal1@gmail.com>",
         // to: req.body.email,
@@ -780,7 +758,6 @@ app.get('/getdetails11', function (req,resp) {
         //  html: '<p> '+senddetails+' </p>'
         html: '<p>HIIIIIIIIIIIIIIIII </p>'
     }
-
     smtpTransport.sendMail(mail, function (error, response) {
         console.log('send');
         smtpTransport.close();
@@ -855,11 +832,13 @@ app.get('/deletecreative', function (req, resp) {
     var collection = db.collection('creatives')
     collection.deleteOne({_id: o_id}, function(err, results) {
         if (err){
-            resp.send("failed");
+            //resp.send("failed");
+            resp.send(JSON.stringify({'status':'failed'}));
             throw err;
         }
         else {
-            resp.send("success");
+           // resp.send("success");
+            resp.send(JSON.stringify({'status':'success'}));
         }
     });
 });
@@ -954,7 +933,6 @@ app.get('/details',function(req,resp){
     var resitem = {};
     var collection = db.collection('signupnew');
     var o_id = new mongodb.ObjectID(req.body._id);
-
     collection.find({_id:o_id}).toArray(function(err, items) {
         if (err) {
             resp.send(JSON.stringify({'status':'error','id':0}));
@@ -963,6 +941,7 @@ app.get('/details',function(req,resp){
             resp.send(JSON.stringify({'status':'success','item':resitem}));
         }
     });
+
 });
 
 
@@ -980,9 +959,22 @@ app.get('/editadmin',function(req,resp){
     }
     var o_id = new mongodb.ObjectID(req.body.id);
     collection.update({_id:o_id}, {$set: data}, true, true);
-
     resp.send(JSON.stringify({'status':'success'}));
 });
+
+app.get('/editagency',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('signupnew');
+    var data = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+
+    }
+    var o_id = new mongodb.ObjectID(req.body.id);
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status':'success'}));
+});
+
 
 app.get('/deleteadmin', function (req, resp) {
     req.body=req.query;
@@ -990,21 +982,39 @@ app.get('/deleteadmin', function (req, resp) {
     var collection = db.collection('signupnew');
     collection.deleteOne({_id: o_id}, function(err, results) {
         if (err){
-            resp.send("failed");
+          //  resp.send("failed");
+            resp.send(JSON.stringify({'status':'failed'}));
             throw err;
         }
         else {
-            resp.send("success");
+          //  resp.send("success");
+            resp.send(JSON.stringify({'status':'success'}));
         }
     });
 });
 
-/*-----------------------------------------------------------------(end_for_geoai)
- --------------------------------------------------------------------------*/
 
 
+app.get('/deleteagency', function (req, resp) {
+    req.body=req.query;
+    var o_id = new mongodb.ObjectID(req.body.id);
+    var collection = db.collection('signupnew');
+    collection.deleteOne({_id: o_id}, function(err, results) {
+        if (err){
+            //  resp.send("failed");
+            resp.send(JSON.stringify({'status':'failed'}));
+            throw err;
+        }
+        else {
+            //  resp.send("success");
+            resp.send(JSON.stringify({'status':'success'}));
+        }
+    });
+});
+/*------------------------------------(end_for_geoai)-----------------------------------*/
 
-/*-----------------------------------------------------------------(start)----------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------(start---------------------------------------------------------*/
 app.get('/getdetails', function (req,resp) {
     var collection= db.collection('details');
     collection.find().toArray(function(err, items) {
@@ -1050,9 +1060,9 @@ function calltodelete(items){
     });
 }
 
-/*-------------------------------------------------------------(end)---------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------(end)--------------------------------------------------*/
 
-/*--------------------------------------------------------START 1-------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------START 1----------------------------------------------------*/
 
 /*var urlstartcounters=0;
  app.get('/autos',function (req,resp) {
@@ -1094,13 +1104,11 @@ app.get('/autourlupdates',function(req,resp){
         //console.log("inside autourlupdate");
         //if(urlstartcounter<300)geturllist(curl);
     },1000);
-
     resp.send(JSON.stringify({'status': 'success', 'msg': ''}));
 });
 
 
 function geturllists(url){
-
     request(url, function(error2, response, html2){
         if(!error2) {
             var $ = cheerio.load(html2);
@@ -1173,9 +1181,7 @@ function geturllists(url){
 }
 
 function getdetailss(url,id){
-
     request(url, function(error2, response, html2){
-
         if(!error2) {
             var $ = cheerio.load(html2);
             var dealerinfo;
@@ -1188,18 +1194,14 @@ function getdetailss(url,id){
             }
             console.log($('#j_id_2q').html());
             $('.atcui-title').each(function(){
-
                 if($(this).text()=='Facebook Feed'){
-
                     console.log('got fb url');
                     console.log($(this).next().attr('href'));
                 }
-
             });
             //console.log("hi");
             console.log(data);
             collection.update({_id: id}, {$set: data}, true, true);
-
             // });
         }
         else {
@@ -1207,11 +1209,7 @@ function getdetailss(url,id){
             console.log('in error  :'+error2);
         }
     });
-
-
-
 }
-
 /*--------------START-------------------------------------------*/
 
 /*var urlstartcounter=50;
@@ -1245,8 +1243,6 @@ function getdetailss(url,id){
  resp.send("success");
  });*/
 
-
-
 app.get('/autourlupdate',function(req,resp){
     var url = 'https://www.autotrader.com/car-dealers/Dallas+TX-75207?filterName=pagination&firstRecord='+req.query.counter+'&numRecords=10&searchRadius=500&sortBy=distanceASC';
 
@@ -1254,9 +1250,6 @@ app.get('/autourlupdate',function(req,resp){
         console.log("inside autourlupdate");
         geturllist(url);
     },500)
-
-
-
     setInterval(function () {
         //urlstartcounter+=10;
         var curl = 'https://www.autotrader.com/car-dealers/Dallas+TX-75207?filterName=zip&firstRecord='+urlstartcounter+'&numRecords=10&searchRadius=500&sortBy=distanceASC';
@@ -1265,7 +1258,6 @@ app.get('/autourlupdate',function(req,resp){
         //console.log("inside autourlupdate");
         //if(urlstartcounter<300)geturllist(curl);
     },1000);
-
     resp.send(JSON.stringify({'status': 'success', 'msg': ''}));
 });
 
@@ -1315,17 +1307,13 @@ function geturllist(url){
                     function (err2, result2) {
                         if (err2) {
                             //console.log('error'+err);
-
                         } else {
                             //response.send(JSON.stringify({'id':result2.ops[0]._id}));
                             //console.log(result2.ops[0]._id);
                             //console.log('https://www.autotrader.com'+result2.ops[0].url,result2.ops[0]._id);
                             getdetails('https://www.autotrader.com'+result2.ops[0].url,result2.ops[0]._id);
-
                             setTimeout(function () {
-
                                 $('.pagination-button').each(function () {
-
                                     if($(this).hasClass('active')){
                                         console.log('pageination text');
                                         //$(this).next().click();
@@ -1337,7 +1325,6 @@ function geturllist(url){
                     });
             });
             // },12000);
-
             /*setTimeout(function () {
 
              },500);*/
@@ -1350,9 +1337,7 @@ function geturllist(url){
 }
 
 function getdetails(url,id){
-
     request(url, function(error2, response, html2){
-
         if(!error2) {
             var $ = cheerio.load(html2);
             var dealerinfo;
@@ -1365,18 +1350,14 @@ function getdetails(url,id){
             }
             console.log($('#j_id_2q').html());
             $('.atcui-title').each(function(){
-
                 if($(this).text()=='Facebook Feed'){
-
                     console.log('got fb url');
                     console.log($(this).next().attr('href'));
                 }
-
             });
             //console.log("hi");
             console.log(data);
             collection.update({_id: id}, {$set: data}, true, true);
-
             // });
             dealerfb=$('.lfloat').each(function () {
                 var collection = db.collection('dealers');
@@ -1386,22 +1367,16 @@ function getdetails(url,id){
                 console.log("hi");
                 console.log(data1);
                 collection.update({_id: id}, {$set: data1}, true, true);
-
             });
-
         }
         else {
             console.log("inside getdetailserror");
             console.log('in error  :'+error2);
         }
     });
-
-
-
 }
 
-/*------------------------------------------------------END---------------------------------------------------------------------------------------------*/
-
+/*------------------------------------------------------END------------------------------------------------*/
 
 app.get('/ipaddress', function (req, resp) {
     var collection = db.collection('dealerss');
@@ -1415,7 +1390,6 @@ app.get('/ipaddress', function (req, resp) {
         }
     });
 });
-
 
 /*
  app.get('/addpeople',function(req,resp){
@@ -1443,8 +1417,6 @@ app.get('/dealerslist', function (req, resp) {
 
 
 app.get('/getusastates',function (req,resp) {
-
-
     var usastates=[
         {
             "name": "Alabama",
@@ -1683,15 +1655,12 @@ app.get('/getusastates',function (req,resp) {
             "abbreviation": "WY"
         }
     ];
-
     resp.send(usastates);
-
 });
 
 
 
 var server = app.listen(port, function () {
-
     var host = server.address().address
     var port = server.address().port
 })
@@ -1865,7 +1834,7 @@ app.get('/dayparts' , function (req,resp) {
 
 app.get('/tokensave',function (req,resp) {
     var link = 'http://geofencedsp.com/assets/php/dataapi.php';
-    //   var link = 'http://simplyfi.influxiq.com/dataapi.php';
+ //   var link = 'http://simplyfi.influxiq.com/dataapi.php';
     request(link, function(error2, response, html2){
         if(!error2) {
             // console.log(JSON.parse(html2));
@@ -1882,7 +1851,7 @@ app.get('/tokensave',function (req,resp) {
                         resp.send(JSON.stringify({'status':'error'}));
                     }
                     else {
-                        // console.log('success');
+                       // console.log('success');
                         resp.send(JSON.stringify({'status':'success'}));
                     }
                 });
@@ -1974,11 +1943,13 @@ app.get('/deleteadbanner', function (req, resp) {
     var collection = db.collection('adbanner');
     collection.deleteOne({_id: o_id}, function(err, results) {
         if (err){
-            resp.send("failed");
+           // resp.send("failed");
+            resp.send(JSON.stringify({'status':'failed'}));
             throw err;
         }
         else {
-            resp.send("success");
+           // resp.send("success");
+            resp.send(JSON.stringify({'status':'success'}));
         }
     });
 });
@@ -2055,6 +2026,7 @@ app.get('/campaignlist',function (req,resp) {
             console.log(err);
             resp.send(JSON.stringify({'res':[]}));
         } else {
+            updateusercommisionvalues();
             resp.send(JSON.stringify({'res':items}));
         }
     });
@@ -2107,11 +2079,13 @@ app.get('/deletecampaign', function (req, resp) {
     var collection = db.collection('campaignadd')
     collection.deleteOne({_id: o_id}, function(err, results) {
         if (err){
-            resp.send("failed");
+            //resp.send("failed");
+            resp.send(JSON.stringify({'status':'failed'}));
             throw err;
         }
         else {
-            resp.send("success");
+            //resp.send("success");
+            resp.send(JSON.stringify({'status':'success'}));
         }
     });
 });
@@ -2354,62 +2328,64 @@ app.get('/addcampaign',function(req,resp){
     // two calls are going, that's why null check
     if(req.body.campaignname!=null){
         let campaign_added_by_name ;
-        collection.insert([{
-            campaignname: req.body.campaignname,
-            status: req.body.status,
-            totalcampaignspend: req.body.totalcampaignspend,
-            cpa: req.body.cpa,
-            epc: req.body.epc,
-            dailybudget: req.body.dailybudget,
-            startingbid: req.body.startingbid,
-            conversionvalue: req.body.conversionvalue,
-            startdate: req.body.startdate,
-            enddate: req.body.enddate,
-            fcap: req.body.fcap,
-            added_by: req.body.added_by,
-            added_on: Date.now(),
-            audienceid:null,
-            bannerid:null
-        }], function (err, result) {
-            if (err) {
-                console.log('error'+err);
-                resp.send(JSON.stringify({'status':'error','id':0}));
-            } else {
-                // get the name who added the campaign
-                var collection1 = db.collection('signupnew');
-                collection1.find({email:req.body.added_by}).toArray(function(err1, items1) {
-                    if (err1) {
-                    } else {
-                        campaign_added_by_name = items1[0].firstname + ' ' + items1[0].lastname;
-                        //go for mail
-                        let arr = [];
-                        arr =  getall_admin_helpdesk_emailids();
-                        var smtpTransport = mailer.createTransport({
-                            service: "Gmail",
-                            auth: {
-                                user: "itplcc40@gmail.com",
-                                pass: "DevelP7@"
-                            }
-                        });
-                        var mail = {
-                            from: "Admin <geoai@yopmail.com>",
-                            to: arr,
-                            subject: 'New campaign added',
-                            html: campaign_added_by_name + ' has added a new campaign and the details are as follows:<br/>Campaign Name: '+ req.body.campaignname+'<br/>Total Campaign Spend: '+ req.body.totalcampaignspend+'<br/>CPA: '+ req.body.cpa+'<br/>EPC: '+ req.body.epc+'<br/>Daily Budget: '+ req.body.dailybudget+'<br/>Starting Bid: '+ req.body.startingbid+'<br/>Conversion Value: '+ req.body.conversionvalue+'<br/>Date Range: '+ req.body.startdate+' - '+ req.body.enddate+'<br/>Frequency Cap: '+ req.body.fcap+'<br/>Campaign Added By: '+ campaign_added_by_name+'<br/><br/>Click on the link below to make this campaign Active/Inactive -<br/><br/><br/>Link: <a href=https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1>https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1</a>'
-
-                            /*  html: 'Go to this campaign details page and make them active/inactive. To go to the page please click on the link below: <a href=https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1>https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1</a><br/>Campaign Name:'+ req.body.campaignname+'<br/>Total Campaign Spend:'+ req.body.totalcampaignspend+'<br/>CPA:'+ req.body.cpa+'<br/>EPC:'+ req.body.epc+'<br/>Daily Budget:'+ req.body.dailybudget+'<br/>Starting Bid:'+ req.body.startingbid+'<br/>Conversion Value:'+ req.body.conversionvalue+'<br/>Date Range:'+ req.body.startdate+' - '+ req.body.enddate+'<br/>Frequency Cap:'+ req.body.fcap+'<br/>Campaign Added By:'+ req.body.added_by*/
+    collection.insert([{
+        campaignname: req.body.campaignname,
+        status: req.body.status,
+        totalbudget: req.body.totalbudget,
+        cpa: req.body.cpa,
+        epc: req.body.epc,
+        dailybudget: req.body.dailybudget,
+        startingbid: req.body.startingbid,
+        conversionvalue: req.body.conversionvalue,
+          startdate: req.body.startdate,
+         enddate: req.body.enddate,
+        fcap: req.body.fcap,
+        added_by: req.body.added_by,
+        role_mark_up: parseInt(req.body.role_mark_up),
+        smatoo_mark_up: parseInt(req.body.smatoo_mark_up),
+        added_on: Date.now(),
+        audienceid:null,
+        bannerid:null
+    }], function (err, result) {
+        if (err) {
+            console.log('error'+err);
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            // get the name who added the campaign
+            var collection1 = db.collection('signupnew');
+            collection1.find({email:req.body.added_by}).toArray(function(err1, items1) {
+                if (err1) {
+                } else {
+                    campaign_added_by_name = items1[0].firstname + ' ' + items1[0].lastname;
+                    //go for mail
+                    let arr = [];
+                    arr =  getall_admin_helpdesk_emailids();
+                    var smtpTransport = mailer.createTransport({
+                        service: "Gmail",
+                        auth: {
+                            user: "itplcc40@gmail.com",
+                            pass: "DevelP7@"
                         }
-                        smtpTransport.sendMail(mail, function (error, response) {
-                            console.log('send');
-                            smtpTransport.close();
-                        });
+                    });
+                    var mail = {
+                        from: "Admin <geoai@yopmail.com>",
+                        to: arr,
+                        subject: 'New campaign added',
+                        html: campaign_added_by_name + ' has added a new campaign and the details are as follows:<br/>Campaign Name: '+ req.body.campaignname+'<br/>Total Campaign Spend: '+ req.body.totalbudget+'<br/>CPA: '+ req.body.cpa+'<br/>EPC: '+ req.body.epc+'<br/>Daily Budget: '+ req.body.dailybudget+'<br/>Starting Bid: '+ req.body.startingbid+'<br/>Conversion Value: '+ req.body.conversionvalue+'<br/>Date Range: '+ req.body.startdate+' - '+ req.body.enddate+'<br/>Frequency Cap: '+ req.body.fcap+'<br/>Campaign Added By: '+ campaign_added_by_name+'<br/><br/>Click on the link below to make this campaign Active/Inactive -<br/><br/><br/>Link: <a href=https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1>https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1</a>'
 
-                        resp.send(JSON.stringify({'status':'success','id':result.ops[0]._id}));
+                        /*  html: 'Go to this campaign details page and make them active/inactive. To go to the page please click on the link below: <a href=https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1>https://geofencedsp.com/#/editcampaign/'+result.ops[0]._id+'/1</a><br/>Campaign Name:'+ req.body.campaignname+'<br/>Total Campaign Spend:'+ req.body.totalcampaignspend+'<br/>CPA:'+ req.body.cpa+'<br/>EPC:'+ req.body.epc+'<br/>Daily Budget:'+ req.body.dailybudget+'<br/>Starting Bid:'+ req.body.startingbid+'<br/>Conversion Value:'+ req.body.conversionvalue+'<br/>Date Range:'+ req.body.startdate+' - '+ req.body.enddate+'<br/>Frequency Cap:'+ req.body.fcap+'<br/>Campaign Added By:'+ req.body.added_by*/
                     }
-                });
+                    smtpTransport.sendMail(mail, function (error, response) {
+                        console.log('send');
+                        smtpTransport.close();
+                    });
 
-            }
-        });
+                    resp.send(JSON.stringify({'status':'success','id':result.ops[0]._id}));
+                }
+            });
+
+        }
+    });
     }
     else{
         resp.send(JSON.stringify({'status':'error','id':-1}));
@@ -2443,14 +2419,35 @@ app.get('/changecampaignstatus',function(req,resp){
 });
 
 
+app.get('/updatemarkupvalue',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('addcampaign');
+    var data;
+    if(req.body.type==1){
+         data = {
+            role_mark_up: parseInt(req.body.update_markup_value),
+        }
+    }
+    if(req.body.type==2){
+         data = {
+             smatoo_mark_up: parseInt(req.body.update_markup_value),
+        }
+    }
+    var o_id = new mongodb.ObjectID(req.body._id);
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status':'success'}));
+});
+
+
 app.get('/campaigndetailsnew',function(req,resp){
     req.body=req.query;
     var resitem = {};
-    var collection = db.collection('addcampaign');
+  //  var collection = db.collection('addcampaign');
+    var collection = db.collection('campaignlist_audience_creative_view');
     var o_id = new mongodb.ObjectID(req.body._id);
 
     collection.find({_id:o_id}).toArray(function(err, items) {
-        if (err) {
+        if (err) {  
             resp.send(JSON.stringify({'status':'error','id':0}));
         } else {
             resitem = items[0];
@@ -2462,19 +2459,19 @@ app.get('/campaigndetailsnew',function(req,resp){
 app.get('/editcampaign',function(req,resp){
     req.body=req.query;
     var collection = db.collection('addcampaign');
-    // var stdate = parseInt((new Date(req.body.startdate).getTime() / 1000).toFixed(0));
-    // var enddate = parseInt((new Date(req.body.enddate).getTime() / 1000).toFixed(0));
+   // var stdate = parseInt((new Date(req.body.startdate).getTime() / 1000).toFixed(0));
+   // var enddate = parseInt((new Date(req.body.enddate).getTime() / 1000).toFixed(0));
     var data = {
         campaignname: req.body.campaignname,
         //  status: req.body.status,
-        totalcampaignspend: req.body.totalcampaignspend,
+        totalbudget: req.body.totalbudget,
         cpa: req.body.cpa,
         epc: req.body.epc,
         dailybudget: req.body.dailybudget,
         startingbid: req.body.startingbid,
         conversionvalue: req.body.conversionvalue,
         /*startdate: stdate,
-         enddate: enddate,*/
+        enddate: enddate,*/
         startdate: req.body.startdate,
         enddate: req.body.enddate,
         fcap: req.body.fcap
@@ -2521,7 +2518,7 @@ app.get('/changeallmybannersstatus',function(req,resp){
             from: "GEOAI Admin <support@geoai.com>",
             to: arrayfullinfo['addedby'][i],
             subject: 'Your banner ' + arrayfullinfo['banner_title'][i] + textchange,
-            //   text: req.body.note ,
+         //   text: req.body.note ,
             text: 'Your banner ' + arrayfullinfo['banner_title'][i] + textchange+'<br/>Notes Added: '+req.body.note ,
         };
         transporter.sendMail(mailOptions, function (error, response) {
@@ -2566,7 +2563,7 @@ app.get('/changeallcampaignstatus',function(req,resp){
             to: arrayfullinfo['addedby'][i],
             subject: 'Your campaign ' + arrayfullinfo['campaignname'][i] + textchange,
             text: 'Your campaign ' + arrayfullinfo['campaignname'][i] + textchange+'<br/>Notes Added: '+req.body.note ,
-            // text: req.body.note ,
+           // text: req.body.note ,
         };
         transporter.sendMail(mailOptions, function (error, response) {
             console.log('send');
@@ -2608,6 +2605,7 @@ app.get('/signupnew' , function (req,resp) {
                     nooflogin:1,
                     logintime:datetimestamp,
                     status:1,
+                    added_on: datetimestamp
                 }],
                 function (err, result) {
                     if (err) {
@@ -2692,9 +2690,9 @@ app.get('/login', function (req, resp) {
     var collection = db.collection('signupnew');
     collection.find({ email:req.body.email }).toArray(function(err, items){
         console.log('items'); //admin_login details shown here
-        console.log(items); //admin_login details shown here
-        //  console.log(items[0].password);
-        // console.log(hash);
+         console.log(items); //admin_login details shown here
+      //  console.log(items[0].password);
+       // console.log(hash);
         if(items.length==0){
             console.log('1');
             resp.send(JSON.stringify({'status':'error','msg':'Username invalid...'}));
@@ -2736,8 +2734,8 @@ app.get('/login', function (req, resp) {
                     }
 
                 });
-            //  resp.send(JSON.stringify({'status':'success','msg':items[0]}));
-            //  return;
+          //  resp.send(JSON.stringify({'status':'success','msg':items[0]}));
+          //  return;
         }
     });
 });
@@ -2750,11 +2748,33 @@ app.get('/getcampaignlistunderthisid',function (req,resp) {
             console.log(err);
             resp.send(JSON.stringify({'res':[]}));
         } else {
+            updateusercommisionvalues();
             resp.send(JSON.stringify({'res':items}));
         }
     });
 });
 
+function updateusercommisionvalues() {
+
+
+    var collection1 = db.collection('role');
+    collection1.find().toArray(function(err, items1) {
+        var collection = db.collection('signupnew');
+        //$exists: false ,
+        collection.find({smatoo_mark_up: {$exists: false , $nin: [ 26, 60 ]}}).sort({_id: 1}).forEach(function (doc) {
+
+            collection.update({_id: doc._id}, {$set: {smatoo_mark_up: items1[0].smatoo_mark_up}}, true, true);
+
+        });
+
+        collection.find({role_mark_up: {$exists: false , $nin: [ 26, 60 ]}}).sort({_id: 1}).forEach(function (doc) {
+
+            collection.update({_id: doc._id}, {$set: {role_mark_up: items1[0].role_mark_up}}, true, true);
+
+        });
+    });
+    
+}
 
 app.get('/addhelpdisk',function(req,resp){
     req.body=req.query;
@@ -2764,13 +2784,30 @@ app.get('/addhelpdisk',function(req,resp){
     var hash = crypto.createHmac('sha256', secret)
         .update('password')
         .digest('hex');
-    collection.insert([{
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: hash,
-        type:'helpdesk',
-    }], function (err, result) {
+    let data;
+    if(req.body.agencyid!=null){
+         data={
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            agencyid: new mongodb.ObjectID(req.body.agencyid),
+            password: hash,
+            status: 1,
+            type:'helpdesk'
+        }
+    }else{
+         data={
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            password: hash,
+            type:'helpdesk',
+             status: 1
+        }
+    }
+    collection.insert([
+        data
+    ], function (err, result) {
         if (err) {
             console.log('error'+err);
             resp.send(JSON.stringify({'status':'error','id':0}));
@@ -2799,8 +2836,53 @@ app.get('/addhelpdisk',function(req,resp){
     });
 });
 
-app.get('/helpdesklist',function (req,resp) {
+app.get('/addagency',function(req,resp){
+    req.body=req.query;
     var collection = db.collection('signupnew');
+    var crypto = require('crypto');
+    var secret = req.body.password;
+    var hash = crypto.createHmac('sha256', secret)
+        .update('password')
+        .digest('hex');
+    collection.insert([{
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: hash,
+        type:'agency',
+        status: 1
+    }], function (err, result) {
+        if (err) {
+            console.log('error'+err);
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            console.log(result);
+            var smtpTransport = mailer.createTransport({
+                service: "Gmail",
+                auth: {
+                    user: "itplcc40@gmail.com",
+                    pass: "DevelP7@"
+                }
+            });
+            var mail = {
+                from: "Admin <geoai@yopmail.com>",
+                //  to: req.body.email,
+                to: req.body.email,
+                subject: 'Congratulations! You have been added as an Agency to GEOAI.',
+                html: 'Username: '+req.body.email +'<br/>Password: '+req.body.password+'<br/>Site: <a href=http://www.geoai.influxiq.com/#/>http://www.geoai.influxiq.com/#/</a>'
+            }
+            smtpTransport.sendMail(mail, function (error, response) {
+                console.log('send');
+                smtpTransport.close();
+            });
+            resp.send(JSON.stringify({'status':'success','id':result.ops[0]._id}));
+        }
+    });
+});
+
+app.get('/helpdesklist',function (req,resp) {
+  //  var collection = db.collection('signupnew');
+    var collection = db.collection('helpdesklist_userid_view');
     collection.find({type:'helpdesk'}).toArray(function(err, items) {
         if (err) {
             console.log(err);
@@ -2810,6 +2892,20 @@ app.get('/helpdesklist',function (req,resp) {
         }
     });
 });
+app.get('/agencylist',function (req,resp) {
+    var collection = db.collection('agencylist_agencyid_view');
+ //   var collection = db.collection('signupnew');
+   // collection.find({type:'agency'}).toArray(function(err, items) {
+    collection.find().toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'res':[]}));
+        } else {
+            resp.send(JSON.stringify({'res':items}));
+        }
+    });
+});
+
 
 app.get('/getbidrequest_old',function (req,resp) {
     var link = 'https://geofencedsp.com/assets/php/demo.php';
@@ -2817,7 +2913,7 @@ app.get('/getbidrequest_old',function (req,resp) {
         if(!error2) {
             // console.log(JSON.parse(html2));
             //  var a= JSON.parse(html2);
-            //   console.log(html2);
+         //   console.log(html2);
             var collection = db.collection('bidrequest');
             collection.insert([{
                     added_time: Date.now(),
@@ -2860,10 +2956,12 @@ app.post('/getbidrequest_oldd',function (req,resp) {
         });
 });
 
-app.get('/getbidrequest',function (req,resp) {
-    req.query = req.body;
+app.post('/getbidrequest',function (req,resp) {
+   // req.body = req.query;
     var collection = db.collection('bidrequest');
-    // console.log(JSON.stringify(req.body));
+   // console.log(JSON.stringify(req.body));
+   // console.log(req.body);
+   // console.log(req.query);
     var url ;
     if(req.query.id==1){
         var url = 'https://geofencedsp.com/assets/php/bidimage.php';
@@ -2908,7 +3006,7 @@ app.get('/statuschange', function (req,resp) {
     });
     var mailOptions;
     if(req.body.status==0){
-        mailOptions = {
+         mailOptions = {
             from: "GEOAI Admin <support@geoai.com>",
             to: req.body.email,
             subject: 'Your account has been deactivated',
@@ -2917,12 +3015,12 @@ app.get('/statuschange', function (req,resp) {
     }
 
     if(req.body.status==1){
-        mailOptions = {
+         mailOptions = {
             from: "GEOAI Admin <support@geoai.com>",
             to: req.body.email,
             subject: 'Your account is now activated',
-            text: req.body.note ,
-        };
+             text: req.body.note ,
+    };
     }
 
     transporter.sendMail(mailOptions, function(error, info){
@@ -2968,12 +3066,38 @@ app.get('/updaterole', function (req, resp) {
     var collection = db.collection('role');
     var o_id = new mongodb.ObjectID('5ba08dcdc2da31239d7808a1');
     var data = {
-        role_mark_up: req.body.role_mark_up,
-        smatoo_mark_up: req.body.smatoo_mark_up
+        role_mark_up: parseInt(req.body.role_mark_up),
+        smatoo_mark_up: parseInt(req.body.smatoo_mark_up)
     }
     collection.update({_id:o_id}, {$set: data}, true, true);
     resp.send(JSON.stringify({'status': 'success'}));
 });
+
+app.get('/updateaddrolemarkupval', function (req, resp) {
+    req.body=req.query;
+    var collection = db.collection('signupnew');
+    var o_id = new mongodb.ObjectID(req.query.user._id);
+    var data = {
+        role_mark_up: parseInt(req.body.role_mark_up),
+        //smatoo_mark_up: req.body.smatoo_mark_up
+    }
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status': 'success'}));
+});
+
+app.get('/updatesmaatomarkupval', function (req, resp) {
+    req.body=req.query;
+    var collection = db.collection('signupnew');
+    var o_id = new mongodb.ObjectID(req.query.user._id);
+    var data = {
+        smatoo_mark_up: req.query.smaato_mark_up,
+        //smatoo_mark_up: req.body.smatoo_mark_up
+    }
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status': 'success',req:req.query}));
+});
+
+
 
 app.get('/roledetails',function(req,resp){
     req.body=req.query;
@@ -2995,82 +3119,59 @@ app.get('/addbanner',function(req,resp){
     req.body=req.query;
     var collection = db.collection('banners');
     if(req.body.banner_title!=null){
-        collection.insert([{
-                banner_type: req.body.banner_type,
-                banner_title: req.body.banner_title,
-                editablearea_1: req.body.editablearea_1,
-                editablearea_2: req.body.editablearea_2,
-                editablearea_3: req.body.editablearea_3,
-                editablearea_4: req.body.editablearea_4,
-                editablearea_5: req.body.editablearea_5,
-                added_by: req.body.added_by,
-                status: req.body.status,
-                added_on: moment().unix() //Date.now()
-            }],
-            function(err, result) {
-                if (err){
-                    console.log('err');
-                    resp.send(JSON.stringify({'id':0, 'status':'Some error occured..!'}));
-                }
-                else{
-                    let arr = [];
-                    arr =  getall_admin_helpdesk_emailids();
-                    var smtpTransport = mailer.createTransport({
-                        service: "Gmail",
-                        auth: {
-                            user: "itplcc40@gmail.com",
-                            pass: "DevelP7@"
-                        }
-                    });
-                    var d = new Date();
-                    var month = d .getMonth() + 1;
-                    var day = d .getDate();
-                    var year = d .getFullYear();
-                    var dateinproperformat = month + "/" + day + "/" + year;
-
-                    var mail = {
-                        from: "Admin <geoai@yopmail.com>",
-                        to: arr,
-                        subject: 'New banner added.',
-                        html: 'A new banner is added by <b>'+req.body.added_by_fname +' '+req.body.added_by_lname + '</b> on ' + dateinproperformat
+    collection.insert([{
+            banner_type: req.body.banner_type,
+            banner_title: req.body.banner_title,
+            editablearea_1: req.body.editablearea_1,
+            editablearea_2: req.body.editablearea_2,
+            editablearea_3: req.body.editablearea_3,
+            editablearea_4: req.body.editablearea_4,
+            editablearea_5: req.body.editablearea_5,
+            added_by: req.body.added_by,
+            status: req.body.status,
+            added_on: moment().unix() //Date.now()
+        }],
+        function(err, result) {
+            if (err){
+                console.log('err');
+                resp.send(JSON.stringify({'id':0, 'status':'Some error occured..!'}));
+            }
+            else{
+                let arr = [];
+                arr =  getall_admin_helpdesk_emailids();
+                var smtpTransport = mailer.createTransport({
+                    service: "Gmail",
+                    auth: {
+                        user: "itplcc40@gmail.com",
+                        pass: "DevelP7@"
                     }
-                    smtpTransport.sendMail(mail, function (error, response) {
-                        console.log('send');
-                        smtpTransport.close();
-                    });
-                    resp.send(JSON.stringify({'id':result.ops[0]._id, 'status':'success'}));
+                });
+                var d = new Date();
+                var month = d .getMonth() + 1;
+                var day = d .getDate();
+                var year = d .getFullYear();
+                var dateinproperformat = month + "/" + day + "/" + year;
+
+                var mail = {
+                    from: "Admin <geoai@yopmail.com>",
+                    to: arr,
+                    subject: 'New banner added.',
+                    html: 'A new banner is added by <b>'+req.body.added_by_fname +' '+req.body.added_by_lname + '</b> on ' + dateinproperformat
                 }
-            });
+                smtpTransport.sendMail(mail, function (error, response) {
+                    console.log('send');
+                    smtpTransport.close();
+                });
+                resp.send(JSON.stringify({'id':result.ops[0]._id, 'status':'success'}));
+            }
+        });
     }
     else{
         resp.send(JSON.stringify({'id':1, 'status':'error'}));
     }
 });
 
-app.get('/getbannersbyemail', function (req,resp) {
-    var collection= db.collection('banners');
-    if(req.query.page!=null){
-        if(req.query.page=='bannerlist'){
-            collection.find({added_by:req.query.email}).toArray(function(err, items) {
-                resp.send(JSON.stringify(items));
-            });
-        }
-        if(req.query.page=='campaignlists'){
-            cond = {
-                $and : [
-                    {added_by : req.query.email},
-                    {status : '1'}
-                ]
-            };
-            collection.find(cond).toArray(function(err, items) {
-                resp.send(JSON.stringify(items));
-            });
-        }
-    }
-    else{
-        resp.send(JSON.stringify({'id':-1}));
-    }
-});
+
 /*
  var collection = db.collection('ulist');
  var searchquery={};
@@ -3097,10 +3198,10 @@ app.get('/getbannersbyemail', function (req,resp) {
  resp.send(JSON.stringify({'status': 'success', 'id': items ,'idcount': items.length}));
  }
  });
- * */
+* */
 
 app.get('/getbanners1', function (req,resp) {
-    //  var collection= db.collection('banners');
+  //  var collection= db.collection('banners');
     var collection= db.collection('bannerlistview');
     if(req.query.page!=null) {
         if (req.query.page == 'bannerlist') {
@@ -3110,8 +3211,8 @@ app.get('/getbanners1', function (req,resp) {
             }
 
             /*collection.find().toArray(function (err, items) {
-             resp.send(JSON.stringify(items));
-             });*/
+                resp.send(JSON.stringify(items));
+            });*/
             collection.find(searchquery).toArray(function (err, items) {
                 if (err) {
                     console.log(err);
@@ -3137,26 +3238,26 @@ app.get('/getbanners', function (req,resp) {
     //  var collection= db.collection('banners');
     var collection= db.collection('bannerlistview');
     if(req.query.page!=null) {
-        var searchquery={};
-        if(req.query.page == 'campaignlists') {
-            searchquery['status']='1';
-        }
-        if(typeof(req.query.parent)!='undefined' && req.query.parent!='' ) {
-            searchquery['added_by']={$regex : ".*"+req.query.parent+".*"};
-            //  searchquery['Namedetails[0].firstname']={$regex : ".*"+req.query.parent+".*"};
-            //   searchquery['Namedetails[0].firstname']='Admin';
-        }
-        /*collection.find().toArray(function (err, items) {
-         resp.send(JSON.stringify(items));
-         });*/
-        collection.find(searchquery).toArray(function (err, items) {
-            if (err) {
-                console.log(err);
-                resp.send(JSON.stringify({'status': 'error'}));
-            } else {
-                resp.send(JSON.stringify(items));
+            var searchquery={};
+            if(req.query.page == 'campaignlists') {
+                searchquery['status']='1';
             }
-        });
+            if(typeof(req.query.parent)!='undefined' && req.query.parent!='' ) {
+                searchquery['added_by']={$regex : ".*"+req.query.parent+".*"};
+              //  searchquery['Namedetails[0].firstname']={$regex : ".*"+req.query.parent+".*"};
+             //   searchquery['Namedetails[0].firstname']='Admin';
+            }
+            /*collection.find().toArray(function (err, items) {
+             resp.send(JSON.stringify(items));
+             });*/
+            collection.find(searchquery).toArray(function (err, items) {
+                if (err) {
+                    console.log(err);
+                    resp.send(JSON.stringify({'status': 'error'}));
+                } else {
+                    resp.send(JSON.stringify(items));
+                }
+            });
     }
     else{
         resp.send(JSON.stringify({'id':-1}));
@@ -3256,7 +3357,7 @@ app.get('/changeallmybannersstatus',function(req,resp){
     var arr = Object.keys(req.body.arrid).map(function (key) { return req.body.arrid[key]; });
     arrayfullinfo['addedby']= Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].added_by; });
     arrayfullinfo['banner_title']= Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].banner_title; });
-    // var arraddedby = Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].added_by; });
+   // var arraddedby = Object.keys(req.body.fullarr).map(function (key) { return req.body.fullarr[key].added_by; });
 
     //update
     var i = 0;
@@ -3276,18 +3377,18 @@ app.get('/changeallmybannersstatus',function(req,resp){
     });
     var mailOptions;
     var textchange;
-    for(let i in arrayfullinfo['addedby']){
-        mailOptions = {
-            from: "GEOAI Admin <support@geoai.com>",
-            to: arrayfullinfo['addedby'][i],
-            subject: 'Your banner ' + arrayfullinfo['banner_title'][i] + textchange,
-            text: req.body.note ,
-        };
-        transporter.sendMail(mailOptions, function (error, response) {
-            console.log('send');
-            transporter.close();
-        });
-    }
+        for(let i in arrayfullinfo['addedby']){
+            mailOptions = {
+                from: "GEOAI Admin <support@geoai.com>",
+                to: arrayfullinfo['addedby'][i],
+                  subject: 'Your banner ' + arrayfullinfo['banner_title'][i] + textchange,
+                text: req.body.note ,
+            };
+            transporter.sendMail(mailOptions, function (error, response) {
+                console.log('send');
+                transporter.close();
+            });
+        }
     resp.send(JSON.stringify({'status':'success'}));
 });
 
@@ -3358,7 +3459,7 @@ app.get('/audienceadd',function(req,resp){
             audiencename: req.body.audiencename,
             audiencedescription: req.body.audiencedescription,
             searchcount: req.body.searchcount,
-            // audiencedata: req.body.audiencedata,
+           // audiencedata: req.body.audiencedata,
             added_by: req.body.added_by,
             added_on: Date.now()
         }], function (err, result) {
@@ -3378,7 +3479,7 @@ app.get('/audienceadd',function(req,resp){
 
 app.get('/audiencedataadd',function(req,resp){
     req.body=req.query;
-    var collection = db.collection('audiencedata');
+    var collection = db.collection('searchresultdata');
     var o_id = new mongodb.ObjectID(req.body.audience_id);
     if(req.body.audiencedata!=null){
         collection.insert([{
@@ -3399,12 +3500,20 @@ app.get('/audiencedataadd',function(req,resp){
     }
 });
 
+
 app.get('/getaudiencelist',function (req,resp) {
     req.body=req.query;
-    // var collection = db.collection('all_audience_list');
-    var collection = db.collection('audience');
+   // var collection = db.collection('all_audience_list');
+  //  var collection = db.collection('audience');
+    var collection = db.collection('audiencelist_campaigncount_view');
     console.log(req.body.emailid);
-    collection.find({added_by:req.body.emailid}).toArray(function(err, items) {
+
+    var searchquery={};
+    if(req.body.emailid!=null) {
+        searchquery['added_by']=req.body.emailid;
+    }
+
+    collection.find(searchquery).toArray(function(err, items) {
         if (err) {
             console.log(err);
             resp.send(JSON.stringify({'status':'error','items':null}));
@@ -3417,7 +3526,7 @@ app.get('/getaudiencelist',function (req,resp) {
 
 });
 
-app.get('/addaudienceidtocampaign',function (req,resp) {
+/*app.get('/addaudienceidtocampaign',function (req,resp) {
     req.body=req.query;
     var collection = db.collection('addcampaign');
     var o_audienceid = new mongodb.ObjectID(req.body.audienceid);
@@ -3425,6 +3534,52 @@ app.get('/addaudienceidtocampaign',function (req,resp) {
     var data = {audienceid : o_audienceid};
     collection.update({_id:o_campaignid}, {$set: data}, true, true);
     resp.send(JSON.stringify({'status':'success'}));
+});*/
+
+app.get('/addaudienceidtocampaign',function (req,resp) {
+    req.body=req.query;
+    var collection = db.collection('addcampaign');
+    var o_audienceid = new mongodb.ObjectID(req.body.audienceid);
+    var o_campaignid = new mongodb.ObjectID(req.body.campaignid);
+    var data = {audienceid : o_audienceid, status: '3'};
+    collection.update({_id:o_campaignid}, {$set: data},function(err, results) {
+        if (err){
+            console.log('err');
+            resp.send(JSON.stringify({'status':'error'}));
+        }
+        else {
+            collection.find({_id:o_campaignid}).toArray(function(err, items) {
+                if (err) {
+                    console.log(err);
+                    resp.send(JSON.stringify({'status':'error','items':null}));
+                } else {
+                    console.log(items[0]);
+                    let campaigndetails = items[0];
+                    let arr = [];
+                    arr = getall_admin_helpdesk_emailids();
+                    var smtpTransport = mailer.createTransport({
+                        service: "Gmail",
+                        auth: {
+                            user: "itplcc40@gmail.com",
+                            pass: "DevelP7@"
+                        }
+                    });
+                    var mail = {
+                        from: "Admin <geoai@yopmail.com>",
+                        to: arr,
+                        subject: 'Updated a Campaign',
+                        html: 'A campaign is updated. The details are as follows:<br/>Campaign Name: ' + campaigndetails.campaignname + '<br/>Total Budget: ' + campaigndetails.totalbudget + '<br/>CPA: ' + campaigndetails.cpa + '<br/>EPC: ' + campaigndetails.epc + '<br/>Daily Budget: ' + campaigndetails.dailybudget + '<br/>Starting Bid: ' + campaigndetails.startingbid + '<br/>Conversion Value: ' + campaigndetails.conversionvalue + '<br/>Date Range: ' + campaigndetails.startdate + ' - ' + campaigndetails.enddate + '<br/>Frequency Cap: ' + campaigndetails.fcap + '<br/><br/>Click on the link below to make this campaign Active/Inactive -<br/><br/><br/>Link: <a href=https://geofencedsp.com/#/editcampaign/' + campaigndetails._id + '/1>https://geofencedsp.com/#/editcampaign/' + campaigndetails._id + '/1</a>'
+                    }
+                    smtpTransport.sendMail(mail, function (error, response) {
+                        console.log('send');
+                        smtpTransport.close();
+                    });
+                    resp.send(JSON.stringify({'status': 'success'}));
+                }
+            });
+        }
+    });
+
 });
 
 app.get('/addbanneridtocampaign',function (req,resp) {
@@ -3434,9 +3589,48 @@ app.get('/addbanneridtocampaign',function (req,resp) {
     console.log(req.body.bannerid);
     var o_bannerid = new mongodb.ObjectID(req.body.bannerid);
     var o_campaignid = new mongodb.ObjectID(req.body.campaignid);
-    var data = {bannerid : o_bannerid};
-    collection.update({_id:o_campaignid}, {$set: data}, true, true);
-    resp.send(JSON.stringify({'status':'success'}));
+    var data = {bannerid : o_bannerid, status: '3'};
+   /* collection.update({_id:o_campaignid}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status':'success'}));*/
+
+    collection.update({_id:o_campaignid}, {$set: data},function(err, results) {
+        if (err){
+            console.log('err');
+            resp.send(JSON.stringify({'status':'error'}));
+        }
+        else {
+            collection.find({_id:o_campaignid}).toArray(function(err, items) {
+                if (err) {
+                    console.log(err);
+                    resp.send(JSON.stringify({'status':'error','items':null}));
+                } else {
+                    console.log(items[0]);
+                    let campaigndetails = items[0];
+                    let arr = [];
+                    arr = getall_admin_helpdesk_emailids();
+                    var smtpTransport = mailer.createTransport({
+                        service: "Gmail",
+                        auth: {
+                            user: "itplcc40@gmail.com",
+                            pass: "DevelP7@"
+                        }
+                    });
+                    var mail = {
+                        from: "Admin <geoai@yopmail.com>",
+                        to: arr,
+                        subject: 'Updated a Campaign',
+                        html: 'A campaign is updated. The details are as follows:<br/>Campaign Name: ' + campaigndetails.campaignname + '<br/>Total Budget: ' + campaigndetails.totalbudget + '<br/>CPA: ' + campaigndetails.cpa + '<br/>EPC: ' + campaigndetails.epc + '<br/>Daily Budget: ' + campaigndetails.dailybudget + '<br/>Starting Bid: ' + campaigndetails.startingbid + '<br/>Conversion Value: ' + campaigndetails.conversionvalue + '<br/>Date Range: ' + campaigndetails.startdate + ' - ' + campaigndetails.enddate + '<br/>Frequency Cap: ' + campaigndetails.fcap + '<br/><br/>Click on the link below to make this campaign Active/Inactive -<br/><br/><br/>Link: <a href=https://geofencedsp.com/#/editcampaign/' + campaigndetails._id + '/1>https://geofencedsp.com/#/editcampaign/' + campaigndetails._id + '/1</a>'
+                    }
+                    smtpTransport.sendMail(mail, function (error, response) {
+                        console.log('send');
+                        smtpTransport.close();
+                    });
+                    resp.send(JSON.stringify({'status': 'success'}));
+                }
+            });
+        }
+    });
+
 });
 
 
@@ -3453,7 +3647,74 @@ app.get('/getusers',function (req,resp) {
     });
 });
 
+/*app.get('/getbannersbyemail', function (req,resp) {
+  //  var collection= db.collection('banners');
+    var collection= db.collection('bannerlist_campaigncount_view');
+    if(req.query.page!=null){
+        if(req.query.page=='bannerlist'){
+            collection.find({added_by:req.query.email}).toArray(function(err, items) {
+                resp.send(JSON.stringify(items));
+            });
+        }
+        if(req.query.page=='campaignlists'){
+            cond = {
+                $and : [
+                    {added_by : req.query.email},
+                    {status : '1'}
+                ]
+            };
+            collection.find(cond).toArray(function(err, items) {
+                resp.send(JSON.stringify(items));
+            });
+        }
+    }
+    else{
+        resp.send(JSON.stringify({'id':-1}));
+    }
+});*/
+app.get('/getbannersbyemail', function (req,resp) {
+    var collection= db.collection('bannerlist_campaigncount_view');
+    var searchquery={};
+    if(req.query.page!=null){
 
+
+        if(req.query.page=='bannerlist'){
+            if(req.query.searchbystatus!= '' ) {
+                searchquery['status'] = req.query.searchbystatus;
+            }
+            searchquery['added_by'] = req.query.email;
+            var cond = {};
+            cond = {
+                $and: [
+
+                    searchquery
+                ]
+            };
+            console.log(cond);
+            collection.find(cond).toArray(function(err, items) {
+                resp.send(JSON.stringify(items));
+            });
+        }
+
+
+        if(req.query.page=='campaignlists'){
+            cond = {
+                $and : [
+                    {added_by : req.query.email},
+                    {status : '1'}
+                ]
+            };
+            collection.find(cond).toArray(function(err, items) {
+                resp.send(JSON.stringify(items));
+            });
+        }
+
+
+    }
+    else{
+        resp.send(JSON.stringify({'id':-1}));
+    }
+});
 app.get('/getbannerss',function (req,resp) {
     var collection = db.collection('bannerlistview');
     var searchquery={};
@@ -3488,44 +3749,76 @@ app.get('/getbannerss',function (req,resp) {
     });
     //resp.send(searchquery);
 });
-/*app.get('/getbannerss',function (req,resp) {
- var collection = db.collection('bannerlistview');
 
- var searchquery={};
- if(typeof(req.query.values)!='undefined' ) {
- /!* searchquery = {
- $or : [
- {added_by : 'pop@yopmail.com'},
- { added_by: 'tapabrata.influxiq@gmail.com' }
- ]
- }; *!/
- // searchquery['added_by']= req.query.values;
- searchquery['added_by']= 'pop@yopmail.com','tapabrata.influxiq@gmail.com';
- }
- if(req.query.page=='campaignlists'){
- searchquery['status']='1';
- }
- resp.send(searchquery);
- /!* collection.find(searchquery).toArray(function(err, items) {
- if (err) {
- console.log(err);
- resp.send(JSON.stringify({'res':[]}));
- } else {
- resp.send(JSON.stringify(items));
- }
- });*!/
- db.test.aggregate([
- {
- $match: {
- $and: [
- {added_by: {$in: req.query.values}},
- {type: {$nin: ["BARBIE"]}},
- {time: {$lt:ISODate("2013-12-09T00:00:00Z")}}
- ]
- }
- }
- ])
- });*/
+app.get('/getbannerss1',function (req,resp) {
+    var collection = db.collection('bannerlistview');
+    var searchquery={};
+    if(typeof(req.query.values)!='undefined' ) {
+        searchquery['added_by'] = {$in: req.query.values};
+    }
+    if(req.query.searchbystatus!='' ) {
+        searchquery['status'] = req.query.searchbystatus;
+    }
+    if(typeof(req.query.startdate)!='undefined' && typeof(req.query.enddate)!='undefined') {
+        searchquery['added_on'] = {$gte: (parseInt(req.query.startdate)), $lte: (parseInt(req.query.enddate))};
+    }
+    if(req.query.page=='campaignlists' ) {
+        searchquery['status'] = '1';
+    }
+    var cond = {};
+    cond = {
+        $and: [
+
+            searchquery
+        ]
+    };
+    collection.find(cond).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'res':[]}));
+        } else {
+            resp.send(JSON.stringify(items));
+        }
+    });
+});
+/*app.get('/getbannerss',function (req,resp) {
+    var collection = db.collection('bannerlistview');
+
+    var searchquery={};
+    if(typeof(req.query.values)!='undefined' ) {
+        /!* searchquery = {
+            $or : [
+                {added_by : 'pop@yopmail.com'},
+                { added_by: 'tapabrata.influxiq@gmail.com' }
+            ]
+        }; *!/
+       // searchquery['added_by']= req.query.values;
+       searchquery['added_by']= 'pop@yopmail.com','tapabrata.influxiq@gmail.com';
+    }
+    if(req.query.page=='campaignlists'){
+        searchquery['status']='1';
+    }
+    resp.send(searchquery);
+   /!* collection.find(searchquery).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'res':[]}));
+        } else {
+            resp.send(JSON.stringify(items));
+        }
+    });*!/
+    db.test.aggregate([
+        {
+            $match: {
+                $and: [
+                    {added_by: {$in: req.query.values}},
+                    {type: {$nin: ["BARBIE"]}},
+                    {time: {$lt:ISODate("2013-12-09T00:00:00Z")}}
+                ]
+            }
+        }
+    ])
+});*/
 
 function getall_admin_helpdesk_emailids(){
     arr=[];
@@ -3548,3 +3841,260 @@ function getall_admin_helpdesk_emailids(){
     return arr;
 }
 
+
+
+app.get('/insert_agency_id_to_user', function (req, resp) {
+    req.body=req.query;
+    var collection = db.collection('signupnew');
+    var data = {
+        agencyid: new mongodb.ObjectID(req.body.agencyid)
+    }
+    for(let i in req.body.useremail){
+        collection.update({email:req.body.useremail[i]}, {$set: data},true,true);
+    }
+    resp.send(JSON.stringify({'status':'success'}));
+   /* collection.update({email:req.body.useremail[0]}, {$set: data},function(err, results) {
+        resp.send(JSON.stringify({'status':'success??'}));
+    });*/
+});
+
+app.get('/insert_helpdesk_id_to_user', function (req, resp) {
+    req.body=req.query;
+    var collection = db.collection('signupnew');
+    var data = {
+        helpdeskid: new mongodb.ObjectID(req.body.helpdeskid)
+    }
+    for(let i in req.body.useremail){
+        collection.update({email:req.body.useremail[i]}, {$set: data},true,true);
+    }
+    resp.send(JSON.stringify({'status':'success'}));
+});
+
+app.get('/edithelpdesk',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('signupnew');
+    var data = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+    }
+    var o_id = new mongodb.ObjectID(req.body.id);
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status':'success'}));
+});
+/*
+app.get('/demo', function (req, resp) {
+    var collection = db.collection('signupnew');
+    var data = {
+        agencyid: new mongodb.ObjectID('5c0e33e36112fb523b7f4743')
+    }
+    collection.update({email:'pop@yopmail.com'}, {$set: data},function(err, results) {
+        resp.send(JSON.stringify({'status':'success'}));
+    });
+});*/
+
+
+app.get('/getusers_who_has_this_agencyid',function(req,resp){
+    req.body=req.query;
+    var resitem = {};
+    var collection = db.collection('signupnew');
+    var o_agencyid = new mongodb.ObjectID(req.body.agencyid);
+    cond = {
+        $and : [
+            {agencyid : o_agencyid},
+            {type : req.body.type}
+        ]
+    };
+    collection.find(cond).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            resp.send(JSON.stringify({'status':'success','id':items}));
+        }
+    });
+});
+
+app.get('/getusers_who_has_this_helpdeskid',function(req,resp){
+    req.body=req.query;
+    var resitem = {};
+    var collection = db.collection('signupnew');
+    var o_helpdeskid = new mongodb.ObjectID(req.body.helpdeskid);
+    collection.find({helpdeskid : o_helpdeskid}).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            resp.send(JSON.stringify({'status':'success','id':items}));
+        }
+    });
+});
+
+
+app.get('/remove_agencyid', function (req, resp) {
+    req.body=req.query;
+    var o_id = new mongodb.ObjectID(req.body.userid);
+    var collection = db.collection('signupnew');
+    var data = {
+        agencyid: null
+    }
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status':'success'}));
+});
+
+app.get('/remove_helpdeskid', function (req, resp) {
+    req.body=req.query;
+    var o_id = new mongodb.ObjectID(req.body.userid);
+    var collection = db.collection('signupnew');
+    var data = {
+        helpdeskid: null
+    }
+    collection.update({_id:o_id}, {$set: data}, true, true);
+    resp.send(JSON.stringify({'status':'success'}));
+});
+
+app.get('/get_campaigns_who_has_this_audienceid',function(req,resp){
+    req.body=req.query;
+    var resitem = {};
+    var collection = db.collection('addcampaign');
+    var o_audienceid = new mongodb.ObjectID(req.body.audienceid);
+    collection.find({audienceid : o_audienceid}).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            resp.send(JSON.stringify({'status':'success','id':items}));
+        }
+    });
+});
+
+app.get('/get_campaigns_who_has_this_bannerid',function(req,resp){
+    req.body=req.query;
+    var resitem = {};
+    var collection = db.collection('addcampaign');
+    var o_bannerid = new mongodb.ObjectID(req.body.bannerid);
+    collection.find({bannerid : o_bannerid}).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            resp.send(JSON.stringify({'status':'success','id':items}));
+        }
+    });
+});
+
+app.get('/editaudiencedetails',function(req,resp){        // this is for audiencelist-editaudience page
+    req.body=req.query;
+    console.log("editaudiencedetails from server.js called");
+    var resitem = {};
+    var collection = db.collection('audience_search_criteria');
+    var o_id = new mongodb.ObjectID(req.body.id);
+    collection.find({_id:o_id}).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            resitem = items[0];
+            resp.send(JSON.stringify({'status':'success','item':resitem}));
+        }
+    });
+});
+
+app.get('/searchcriteriaadd',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('searchcriteria');
+    var o_id = new mongodb.ObjectID(req.body.audience_id);
+        collection.insert([{
+            audience_id: o_id,
+            Physical_State: req.body.Physical_State,
+            Physical_City: req.body.Physical_City,
+            Vendor_State_County: req.body.Vendor_State_County,
+            Physical_Zip: req.body.Physical_Zip,
+            Physical_Address: req.body.Physical_Address,
+            proximity: req.body.proximity,
+            Ind_Age_Code: req.body.Ind_Age_Code,
+            Ind_Gender_Code: req.body.Ind_Gender_Code,
+            Ind_Household_Rank_Code: req.body.Ind_Household_Rank_Code,
+            Income_Code: req.body.Income_Code,
+            Home_Market_Value: req.body.Home_Market_Value,
+            Median_HseHld_Income_Code: req.body.Median_HseHld_Income_Code,
+            Median_Home_Value_Code: req.body.Median_Home_Value_Code,
+            Length_Of_Residence_Code: req.body.Length_Of_Residence_Code,
+            Marital_Status_Code: req.body.Marital_Status_Code,
+            NetWorth_Code: req.body.NetWorth_Code,
+            searchtype: req.body.searchtype,
+            maporcsv_upload: req.body.maporcsv_upload
+        }], function (err, result) {
+            if (err) {
+                console.log('error'+err);
+                resp.send(JSON.stringify({'status':'error','id':0}));
+            } else {
+                // console.log(result);
+                resp.send(JSON.stringify({'status':'success','id':result.ops[0]._id}));
+            }
+        });
+});
+
+
+app.get('/audienceedit',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('audience');
+    if(req.body.audiencename!=null){
+
+        var data={
+            audiencename: req.body.audiencename,
+            audiencedescription: req.body.audiencedescription,
+            searchcount: req.body.searchcount,
+        }
+        collection.update(
+            {_id: new mongodb.ObjectID(req.body.audienceid)},
+            {$set: data},
+            function (err, results) {
+                if (err) {
+                    resp.send(JSON.stringify({'status': 'error', 'id': 0}));
+                    throw err;
+                }
+                else {
+                    resp.send(JSON.stringify({'status':'success','id':1}));
+                }
+            });
+    }
+    else{
+        resp.send(JSON.stringify({'status':'error','id':-1}));
+    }
+});
+
+app.get('/searchcriteriaedit',function(req,resp){
+    req.body=req.query;
+    var collection = db.collection('searchcriteria');
+    var o_id = new mongodb.ObjectID(req.body.audience_id);
+    var data={
+        Physical_State: req.body.Physical_State,
+        Physical_City: req.body.Physical_City,
+        Vendor_State_County: req.body.Vendor_State_County,
+        Physical_Zip: req.body.Physical_Zip,
+        Physical_Address: req.body.Physical_Address,
+        proximity: req.body.proximity,
+        Ind_Age_Code: req.body.Ind_Age_Code,
+        Ind_Gender_Code: req.body.Ind_Gender_Code,
+        Ind_Household_Rank_Code: req.body.Ind_Household_Rank_Code,
+        Income_Code: req.body.Income_Code,
+        Home_Market_Value: req.body.Home_Market_Value,
+        Median_HseHld_Income_Code: req.body.Median_HseHld_Income_Code,
+        Median_Home_Value_Code: req.body.Median_Home_Value_Code,
+        Length_Of_Residence_Code: req.body.Length_Of_Residence_Code,
+        Marital_Status_Code: req.body.Marital_Status_Code,
+        NetWorth_Code: req.body.NetWorth_Code,
+        searchtype: req.body.searchtype,
+        maporcsv_upload: req.body.maporcsv_upload
+    }
+    collection.update(
+        {audience_id: o_id},
+        {$set: data},
+        function (err, results) {
+            if (err) {
+                resp.send(JSON.stringify({'status': 'error', 'id': 0}));
+                throw err;
+            }
+            else {
+                resp.send(JSON.stringify({'status':'success','id':results[0]}));
+            }
+        });
+
+
+
+});

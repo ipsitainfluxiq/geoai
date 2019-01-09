@@ -18,20 +18,27 @@ export class AddcampaignComponent implements OnInit {
     public serverurl;
     public id;
     public emailcookie: CookieService;
+    public alldetailcookie: CookieService;
     public mailcookiedetails;
+    public cookiedetailsforalldetails;
     public daterangeerror = null;
     public isdate;
+    public userdetails;
 
-    constructor(fb: FormBuilder, addcookie: CookieService, private _http: HttpClient, private router: Router, private _commonservices: Commonservices, emailcookie: CookieService, private route: ActivatedRoute) {
+    constructor(fb: FormBuilder, private _http: HttpClient, private router: Router, private _commonservices: Commonservices, emailcookie: CookieService, private route: ActivatedRoute, alldetailcookie: CookieService) {
         this.fb = fb;
         this.serverurl = _commonservices.url;
         this.emailcookie = emailcookie;
         this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
         console.log('cookiedetails');
-        console.log('get id from saved cookie ->  ' + this.mailcookiedetails);
+        console.log('get email from saved cookie ->  ' + this.mailcookiedetails);
+        this.alldetailcookie = alldetailcookie ;
+        this.cookiedetailsforalldetails = this.alldetailcookie.get('cookiedetailsforalldetails');
+        console.log('get id from saved cookie ->  ' + this.cookiedetailsforalldetails);
     }
 
     ngOnInit() {
+        this.getdetails();
         this.route.params.subscribe(params => {
             this.id = params['id'];
             console.log(this.id);
@@ -41,9 +48,9 @@ export class AddcampaignComponent implements OnInit {
         });
         this.dataForm = this.fb.group({
             campaignname: ['', Validators.required],
-            totalcampaignspend: ['', Validators.required],
-            cpa: ['', Validators.required],
-            epc: ['', Validators.required],
+            totalbudget: ['', Validators.required],
+            cpa: [''],
+            epc: [''],
             dailybudget: ['', Validators.required],
             startingbid: ['', Validators.required],
             conversionvalue: ['', Validators.required],
@@ -53,7 +60,24 @@ export class AddcampaignComponent implements OnInit {
         });
         this.isdate = new Date();
     }
-
+    getdetails(){
+        let link = this.serverurl + 'details';
+        let data = {
+            _id: this.cookiedetailsforalldetails
+        };
+        this._http.post(link, data)
+            .subscribe(res => {
+                let result: any;
+                result = res;
+                if (result.status == 'success' && typeof(result.item) != 'undefined') {
+                    this.userdetails = result.item;
+                    console.log('this.userdetails');
+                    console.log(this.userdetails);
+                }
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
     dosubmit(formval) {
         console.log(formval);
         this.daterangeerror = null;
@@ -76,7 +100,7 @@ export class AddcampaignComponent implements OnInit {
             let data = {
                 campaignname: formval.campaignname,
                 status: 3, //pending
-                totalcampaignspend: formval.totalcampaignspend,
+                totalbudget: formval.totalbudget,
                 cpa: formval.cpa,
                 epc: formval.epc,
                 dailybudget: formval.dailybudget,
@@ -85,6 +109,8 @@ export class AddcampaignComponent implements OnInit {
                 startdate: startdate,
                 enddate: enddate,
                 fcap: formval.fcap,
+                role_mark_up: this.userdetails.role_mark_up,
+                smatoo_mark_up: this.userdetails.smatoo_mark_up,
                 added_by: this.mailcookiedetails,
             };
             this._http.post(link, data)
@@ -110,9 +136,9 @@ export class AddcampaignComponent implements OnInit {
                     userdet.campaignname = 'Copy of '+userdet.campaignname;
                     this.dataForm = this.fb.group({
                         campaignname: [userdet.campaignname, Validators.required],
-                        totalcampaignspend: [userdet.totalcampaignspend, Validators.required],
-                        cpa: [userdet.cpa, Validators.required],
-                        epc: [userdet.epc, Validators.required],
+                        totalbudget: [userdet.totalbudget, Validators.required],
+                        cpa: [userdet.cpa],
+                        epc: [userdet.epc],
                         dailybudget: [userdet.dailybudget, Validators.required],
                         startingbid: [userdet.startingbid, Validators.required],
                         conversionvalue: [userdet.conversionvalue, Validators.required],

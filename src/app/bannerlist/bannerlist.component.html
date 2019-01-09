@@ -2,11 +2,11 @@
 
 
 <!------Body SECTION--->
-<div class="adminmainwarpper addbannerlistwarpper searchbannerlist">
+<div class="adminmainwarpper searchbannerlist"><!--addbannerlistwarpper-->
     <div class="bannerlistblock">
         <div class="searchbannerinner">
-            <h2><label *ngIf="mybanners?.length>0 && cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'" class="bannerlistblocklbl">Your Banners</label>
-            <label *ngIf="mybanners?.length>0 && cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'" class="bannerlistblocklbl">All Banners</label></h2>
+            <h2><label *ngIf="mybanners?.length>0 && cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'" class="bannerlistblocklbl">Your Creatives</label>
+            <label *ngIf="mybanners?.length>0 && cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'" class="bannerlistblocklbl">All Creatives</label></h2>
             <div class="searchbannertable" *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">
                 <div class="col-searchbanner">
                     <label>Search by User:</label>
@@ -58,9 +58,33 @@
 
                     >
                 </div>
+               <!-- <div class="col-searchbanner hide">
+                    <label>Search by Creative Name:</label>
+                    <input type="text" #listFilter (keyup)="0">
+                </div>-->
             </div>
-            <button type="button" class="btnblue" (click)="callbanners()"  *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">Search</button>
+            <div class="searchbannertable searchbannertablenew" *ngIf="cookiedetailsforalldetails_type=='user'">
+                <div class="col-searchbanner">
+                    <label>Search by Status:</label>
+                    <select [(ngModel)]="searchbystatus">
+                        <option value="">All</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                        <option value="3">Pending</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="button" class="btnblue btnbluepurple" (click)="getbannersbyemail()"  *ngIf=" cookiedetailsforalldetails_type=='user'">Search</button>
+                </div>
+            </div>
+            <div><button type="button" class="btnblue btnbluepurple" (click)="callbanners()"  *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">Search</button></div>
+
+            <div><button type="button" class="btnblue btnbluepurple" (click)="popupforcreative()" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">Add Creative</button></div>
+            <div class="clearfix"></div>
+
         </div>
+
+
 
 
 
@@ -72,29 +96,35 @@
 
 
 
-        <div class="bodytopactiondivwrapper" *ngIf="mybanners?.length>0 && (cookiedetailsforalldetails_type=='admin')">
+        <div class="bodytopactiondivwrapper onelineblock" *ngIf="mybanners?.length>0 && (cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk')">
             <div class="bodytopactiondiv">
                 <div class="bodytopactiondlist">
-                    <input type="checkbox" [(ngModel)]="selectallmybanners" (click)="allcheck()">
-                    <span>Select All : </span>
                     <ul class="list-inline">
-                        <!--<li (click)="resumebanners(1)"><a><img src="../../assets/images/geoaiadmin_iconresume.png" >Activate</a></li>-->
-                        <li (click)="modal_banner_status(1)" *ngIf="checkboxarr?.length>0"><a><img src="../../assets/images/checked.png" class="activated">Activate</a></li>
-                       <!-- <li (click)="resumebanners(0)"><a><img src="../../assets/images/geoaiadmin_iconpause.png">Deactivate</a></li>-->
-                        <li (click)="modal_banner_status(0)" *ngIf="checkboxarr?.length>0"><a><img src="../../assets/images/cancel.png" class="deactivated">Deactivate</a></li>
-                        <li><a><span class="iconactive"></span> Active</a></li>
-                        <li><a><span class="iconinactive"></span> Inactive</a></li>
-                        <li><a><span class="iconpending"></span> Pending</a></li>
-                    </ul>
+                        <div class="newlistleftdiv">
+                            <li>
+                                <div class="checkboxselectall">
+                                    <input type="checkbox" [(ngModel)]="selectallmybanners" (click)="allcheck()">
+                                    <span>Select All</span>
+                                </div>
+                            </li>
+                            <!--<li (click)="resumebanners(1)"><a><img src="../../assets/images/geoaiadmin_iconresume.png" >Activate</a></li>-->
+                            <li (click)="modal_banner_status(1)" *ngIf="checkboxarr?.length>0"><a><img src="../../assets/images/checked.png" class="activated">Activate</a></li>
+                            <!-- <li (click)="resumebanners(0)"><a><img src="../../assets/images/geoaiadmin_iconpause.png">Deactivate</a></li>-->
+                            <li (click)="modal_banner_status(0)" *ngIf="checkboxarr?.length>0"><a><img src="../../assets/images/cancel.png" class="deactivated">Deactivate</a></li>
+                            <li><a><span class="iconactive">Active</span></a></li>
+                            <li><a><span class="iconinactive">Inactive</span></a></li>
+                            <li><a><span class="iconpending">Pending</span></a></li>
+                        </div>
+                   </ul>
                 </div>
             </div>
         </div>
 
-        <div *ngFor="let item of mybanners  |  orderBy:'added_on':'desc' | paginate: { itemsPerPage: 10, currentPage: p }; let i=index " class="row bannerlistblocksingle" [ngClass]="addtdclass(item.status)">
+        <div *ngFor="let item of mybanners |  orderBy:'added_on':'desc' | paginate: { itemsPerPage: 10, currentPage: p }; let i=index " class="row bannerlistblocksingle" [ngClass]="addtdclass(item.status)">
 
             <!--BLOCK 1-->
 
-                <input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i],item)" [(ngModel)]="checkboxvalue[i]"  *ngIf="cookiedetailsforalldetails_type=='admin'">
+                <input type="checkbox" class="icheck" (change)="checkboxid(i,item._id,checkboxvalue[i],item)" [(ngModel)]="checkboxvalue[i]"  *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">
 
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" *ngIf="item.banner_type==0">
                 <div class="bannermainblock0 newimghiidecls" >
@@ -105,18 +135,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==0">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 1</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 1</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==0">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue " (click)="editbanner(item._id)"   *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple " (click)="editbanner(item._id)"   *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -135,18 +171,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==1">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 2</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 2</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==1">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -167,18 +209,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==2">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 3</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 3</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==2">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -200,18 +248,26 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==3">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 4</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 4</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
+
+
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==3">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -234,18 +290,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==4">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 5</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 5</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==4">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -270,18 +332,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"  *ngIf="item.banner_type==5">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 6</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 6</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==5">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -302,18 +370,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==6" >
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 7</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 7</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==6">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -331,18 +405,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"  *ngIf="item.banner_type==7">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 8</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 8</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==7">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -361,18 +441,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"   *ngIf="item.banner_type==8">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 9</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 9</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==8">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -391,18 +477,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==9">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 10</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 10</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==9">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -422,18 +514,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==10">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 11</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 11</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==10">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -453,18 +551,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==11">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 12</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 12</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==11">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -484,18 +588,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==12">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 13</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 13</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==12">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -513,18 +623,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==13">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 14</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 14</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==13">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -543,18 +659,24 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==14">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 15</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 15</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==14">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -574,18 +696,26 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==15">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 16</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 16</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
+
+
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==15">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
@@ -605,458 +735,40 @@
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="item.banner_type==16">
-                <h2 *ngIf="item.banner_title==null || item.banner_title==''">Banner Type - 17</h2>
-                <h2 *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</h2>
+                <h2>
+                    <span *ngIf="item.banner_title==null || item.banner_title==''">Creative Type - 17</span>
+                    <span *ngIf="item.banner_title!=null && item.banner_title!=''">{{item.banner_title}}</span>
+                    <span *ngIf="item.promotion_type=='google_play'">Google Play</span>
+                    <span *ngIf="item.promotion_type=='apple_store'">Apple Store</span>
+                    <span *ngIf="item.promotion_type=='web_url'">Web Url</span>
+                    <span *ngIf="item.click_through_url!=null">{{item.click_through_url}}</span>
+                </h2>
             </div>
             <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction" *ngIf="item.banner_type==16">
                 <div class="btn-bannerlist text-center">
                     <button type="button" class="btnblue hide">
                         <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
                     </button>
-                    <button type="button" class="btnblue" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpurple" (click)="editbanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
                     </button>
-                    <button type="button" class="btnblue" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
+                    <button type="button" class="actionbtn_btnpink" (click)="confirmdeletebanner(item._id)" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
                     </button>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">by {{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</div>
                     <div *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='helpdesk'">on {{showdate(item.added_on)}}</div>
                 </div>
             </div>
-
+            <div class="bannerlistcampaign">
+            <p>No. of Campaigns:{{item.sizeofcampaign}}</p>
+            <button class="actionbtn_btnblack" (click)="opencampaignmodal(item._id)">Show Campaigns</button>
+        </div>
         </div>
         <div class="pagination_wrapper" *ngIf="mybanners?.length>5">
             <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
-        <div  *ngIf="mybanners?.length>0 && cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">
-            <label class="bannerlistblocklbl">Banner Styles</label>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock0">
-                    <div class="bannermainblock0" >
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock0img">
-                        <a href="javascript:void(0)" class="bannermainblock0btn">View More<!--<img src="../../assets/images/viewmore1.jpg">--></a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo0">
-                    <h2>Banner Type - 1</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(0)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock1">
-                    <div class="bannermainblock1" >
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock1img">
-                        <a href="javascript:void(0)" class="bannermainblock1btn">View More<!--<img src="../../assets/images/viewmore9.jpg">--></a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"  id="bannerlistsingleinfo1">
-                    <!--<h2>My First Banner Design</h2>-->
-                    <h2>Banner Type - 2</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(1)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock2">
-                    <div class="bannermainblock2" style="background-image: url('../../assets/images/300-50_bg1.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock2img">
-                        <span  class="bannermainblock2txt">INDUSTRY-BASED<br/>
-                            MARKETING</span>
-                        <a href="javascript:void(0)" class="bannermainblock2btn"><span>View More</span><!--<img src="../../assets/images/viewmore8.jpg">--></a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo2">
-                    <h2>Banner Type - 3</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(2)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock3">
-                    <div class="bannermainblock3">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock3img">
-                        <span class="bannermainblock3txt">DIRECT<br> CONNECTIONS </span>
-                        <!--<img src="../../assets/images/300_50_img2.jpg" class="bannermainblock3img1">-->
-                        <a href="javascript:void(0)" class="bannermainblock3btn"><span>View More</span><!--<img src="../../assets/images/viewmore13.jpg">--></a>
-                        <img src="../../assets/images/300_50_img1.jpg" class="bannermainblock3img2">
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo3">
-                    <h2>Banner Type - 4</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(3)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock4">
-                    <div class="bannermainblock4" style="background-image: url('../../assets/images/300-50_bg7.jpg'); background-size: cover; background-repeat: no-repeat;border: solid 2px #b4e20d;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock4img">
-                        <!--<img src="../../assets/images/300_50_img4.jpg" class="bannermainblock4img1">-->
-                        <span class="bannermainblock4txt">DIRECT<br> CONNECTIONS </span>
-                        <a href="javascript:void(0)" class="bannermainblock4btn">view more<!--<img src="../../assets/images/viewmore14.png">--></a>
-                        <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock4img2">
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo4">
-                    <h2>Banner Type - 5</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(4)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock5">
-                    <div class="bannermainblock5">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock5img">
-                        <span class="bannermainblock5txt">DIRECT CONNECTIONS </span>
-                        <span class="bannermainblock5txt2">INDUSTRY-BASED <br/>
-                            MARKETING</span>
-                        <a href="javascript:void(0)" class="bannermainblock5btn">view more</a>
-                        <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock5img2">
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo5">
-                    <h2>Banner Type - 6</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(5)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock6">
-                    <div class="bannermainblock6">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock6img">
-                        <span class="bannermainblock6txt">DIRECT CONNECTIONS </span>
-                        <a href="javascript:void(0)" class="bannermainblock6btn">view more<!--<img src="../../assets/images/viewmore15.png">--></a>
-                        <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock6img2">
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo6">
-                    <h2>Banner Type - 7</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(6)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock7">
-                    <div class="bannermainblock7" style="background-image: url('../../assets/images/320-50_bg1.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock7img">
-                        <span class="bannermainblock7txt">GEO AI<br/>TECHNOLOGIES</span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo7">
-                    <h2>Banner Type - 8</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(7)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock8">
-                    <div class="bannermainblock8" style="background-image: url('../../assets/images/320-50_bg2.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock8img">
-                        <span class="bannermainblock8txt">GEO AI<br/>TECHNOLOGIES</span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo8">
-                    <h2>Banner Type - 9</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(8)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock9">
-                    <div class="bannermainblock9" style="background-image: url('../../assets/images/320-50_bg3.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock9img">
-                        <span class="bannermainblock9txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo9">
-                    <h2>Banner Type - 10</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(9)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock10">
-                    <div class="bannermainblock10" style="background-image: url('../../assets/images/320-50_bg4.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock10img">
-                        <span class="bannermainblock10txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
-                        <a href="javascript:void(0)" class="bannermainblock10btn">View More</a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo10">
-                    <h2>Banner Type - 11</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(10)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock11">
-                    <div class="bannermainblock11" style="background-image: url('../../assets/images/320-50_bg5.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock11img">
-                        <span class="bannermainblock11txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
-                        <a href="javascript:void(0)" class="bannermainblock11btn">View More</a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo11">
-                    <h2>Banner Type - 12</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(11)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock12">
-                    <div class="bannermainblock12" style="background-image: url('../../assets/images/320-50_bg6.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock12img">
-                        <span class="bannermainblock12txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo12">
-                    <h2>Banner Type - 13</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(12)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock13">
-                    <div class="bannermainblock13" style="background-image: url('../../assets/images/320-50_bg7.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock13img">
-                        <span class="bannermainblock13txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo13">
-                    <h2>Banner Type - 14</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(13)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock14">
-                    <div class="bannermainblock14" style="background-image: url('../../assets/images/320-50_bg8.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock14img">
-                        <span class="bannermainblock14txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo14">
-                    <h2>Banner Type - 15</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue" (click)="callduplicate(14)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock15">
-                    <div class="bannermainblock15" style="background-image: url('../../assets/images/320-50_bg9.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock15img">
-                        <span class="bannermainblock15txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
-                        <a href="javascript:void(0)" class="bannermainblock15btn">View More</a>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo15">
-                    <h2>Banner Type - 16</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue"  (click)="callduplicate(15)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row bannerlistblocksingle">
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock16">
-                    <div class="bannermainblock16" style="background-image: url('../../assets/images/320-50_bg10.jpg'); background-repeat: no-repeat;">
-                        <img src="../../assets/images/banner_logo1.png" class="bannermainblock16img">
-                        <span class="bannermainblock16txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo16">
-                    <h2>Banner Type - 17</h2>
-                </div>
-                <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
-                    <div class="btn-bannerlist text-center">
-                        <button type="button" class="btnblue"  (click)="callduplicate(16)">
-                            <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Duplicate
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
-                        </button>
-                        <button type="button" class="btnblue hide">
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+       <!-- mybanners?.length>0 &&-->
+
     </div>
 
 </div>
@@ -1080,7 +792,7 @@
 <!------End Footer SECTION--->
 
 
-<div *ngIf="modalmapShown" class="modal fade mapwrapper" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+<!--<div *ngIf="modalmapShown" class="modal fade mapwrapper" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="hi1">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -1088,13 +800,13 @@
                 <div class="showbannerinmodalwrapper">
                     <div class="bannerlists">
                         <div class="formblock">
-                            <!--  <input type="text" value="My First Banner Design" class="hide">-->
-                            <div id="showhtmlinmodal" >     <!--TEXT FIELD-->         </div>
+                            &lt;!&ndash;  <input type="text" value="My First Banner Design" class="hide">&ndash;&gt;
+                            <div id="showhtmlinmodal" >     &lt;!&ndash;TEXT FIELD&ndash;&gt;         </div>
                         </div>
                     </div>
                     <div class="bannerlists">
                         <div id="showbannerinmodaldiv">
-                            <!-- <span id="showbannerinmodal" (click)="jqueryclickcall()">-->
+                            &lt;!&ndash; <span id="showbannerinmodal" (click)="jqueryclickcall()">&ndash;&gt;
                             <span id="showbannerinmodal">
                             </span>
                             <div class="editiconclick" tooltip="Highlighter" [tooltipAnimation]="true"><span aria-hidden="true" class="glyphicon glyphicon-edit" (click)="highlighteditfunc()"></span></div>
@@ -1120,7 +832,7 @@
                             <div class="browsefileblockimgmultiplerow">
                                 <div class="browsefileblockimgmultiplerowsingle" *ngIf="files[0].response?.generatedName!=null">
                                     <div class="browsefileblockimgmultiplerowimgagebig">
-                                        <!--<img  class="im g-responsive center-block firstimgheightset" style="width: 100%; height: auto" src="../../assets/uploads/{{files[0].response.generatedName}}" > --> <img  class="im g-responsive center-block firstimgheightset" style="width: 100%; height: auto" src="{{imageurl}}uploads/{{files[0].response.generatedName}}" >
+                                        &lt;!&ndash;<img  class="im g-responsive center-block firstimgheightset" style="width: 100%; height: auto" src="../../assets/uploads/{{files[0].response.generatedName}}" > &ndash;&gt; <img  class="im g-responsive center-block firstimgheightset" style="width: 100%; height: auto" src="{{imageurl}}uploads/{{files[0].response.generatedName}}" >
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -1157,50 +869,65 @@
                 </div>
 
                 <div *ngIf="divfortitle">
-                    <label>Banner Title</label>
+                    <label>Creative Title</label>
                     <textarea class="textfield" [(ngModel)]="ad_bannertext"></textarea>
-                    <!-- <button (click)="savebanner()" class="savebtn text-center">Save</button>-->
+                    &lt;!&ndash; <button (click)="savebanner()" class="savebtn text-center">Save</button>&ndash;&gt;
                 </div>
-                <input type="button" value="Save Banner" class="btn btn-primary btnform center-block btnsavepopimage button1" (click)="gettitleBanner()" *ngIf="editflag==0">
-                <input type="button" value="Save Banner" class="btn btn-primary btnform center-block btnsavepopimage button2 hide" (click)="savebanner()" *ngIf="editflag==0">
-                <input type="button" value="Update Banner" class="btn btn-primary btnform center-block btnsavepopimage button1" (click)="gettitleBanner()" *ngIf="editflag==1">
-                <input type="button" value="Update Banner" class="btn btn-primary btnform center-block btnsavepopimage button2 hide" (click)="updateBanner()" *ngIf="editflag==1">
+                <input type="button" value="Save Creative" class="btn btn-primary btnform center-block btnsavepopimage button1" (click)="gettitleBanner()" *ngIf="editflag==0">
+                <input type="button" value="Save Creative" class="btn btn-primary btnform center-block btnsavepopimage button2 hide" (click)="savebanner()" *ngIf="editflag==0">
+                <input type="button" value="Update Creative" class="btn btn-primary btnform center-block btnsavepopimage button1" (click)="gettitleBanner()" *ngIf="editflag==1">
+                <input type="button" value="Update Creative" class="btn btn-primary btnform center-block btnsavepopimage button2 hide" (click)="updateBanner()" *ngIf="editflag==1">
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
-<div *ngIf="modalconfirmdeletedbanner" class="modal fade mapwrapper" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
-     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-body">
-                <b>Are you sure you want to delete this banner?</b>
-                <input type="button" value="Yes" class="btn btn-primary btnform center-block btnsavepopimage button1" (click)="deletebanner()">
-                <input type="button" value="No" class="btn btn-primary btnform center-block btnsavepopimage button2" (click)="onHidden()">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="modaldeletedbanner" class="modal fade mapwrapper" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
-     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-body">
-                <b>Banner is successfully deleted!</b>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="modalchangestatus" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+<div *ngIf="modalconfirmdeletedbanner" class="modal fade mapwrapper commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title pull-left" *ngIf="modalchangestatusvalue==0">Make banner(s) Inactive</h4>
-                <h4 class="modal-title pull-left" *ngIf="modalchangestatusvalue==1">Make banner(s) Active</h4>
+                <div class="commonlogodiv">
+                    <img src="../../assets/images/geoaiadmin_logo_new.png">
+                </div>
+            </div>
+            <div class="modal-body">
+                <b>Are you sure you want to delete this Creative?</b>
+            </div>
+            <div class="modal-footer">
+                <input type="button" value="No" class="btn btn-primary btnform center-block btnsavepopimage button2" (click)="onHidden()">
+                <input type="button" value="Yes" class="btn btn-primary btnform center-block btnsavepopimage button1" (click)="deletebanner()">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="modaldeletedbanner" class="modal fade mapwrapper commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="commonlogodiv">
+                    <img src="../../assets/images/geoaiadmin_logo_new.png">
+                </div>
+            </div>
+            <div class="modal-body">
+                <b>Creative is successfully deleted!</b>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="modalchangestatus" class="modal fade commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="commonlogodiv">
+                    <img src="../../assets/images/geoaiadmin_logo_new.png">
+                </div>
+                <h4 class="modal-title pull-left" *ngIf="modalchangestatusvalue==0">Make Creative(s) Inactive</h4>
+                <h4 class="modal-title pull-left" *ngIf="modalchangestatusvalue==1">Make Creative(s) Active</h4>
                 <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1215,6 +942,587 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="resumebanners()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="iscampaignModalShown" class="modal fade commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="commonlogodiv">
+                    <img src="../../assets/images/geoaiadmin_logo_new.png">
+                </div>
+                <h4 class="modal-title pull-left">Campaign Lists</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="col-md-12 table-bordered table-striped table-condensed cf" *ngIf="get_campaigns_has_this_bannerid?.length>0">
+                    <thead class="cf">
+                    <tr>
+                        <th class="numeric text-center">campaign name</th>
+                        <th class="numeric text-center">The EPC</th>
+                        <th class="numeric text-center">The CPA</th>
+                        <th class="numeric text-center">Date Range <br>(Start - End)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of get_campaigns_has_this_bannerid  | orderBy:'added_on': 'desc';">
+                        <td data-title="campaign name" class=" text-center">{{item.campaignname}}</td>
+                        <td data-title="The EPC" class="numeric text-center">${{item.epc}}</td>
+                        <td data-title="The CPA" class="numeric text-center">${{item.cpa}}</td>
+                        <td data-title="Date Range (Start - End)" class="numeric text-center"><span>S.D. : <span>{{showproperdateformat(item.startdate)}}</span></span><span> E.D. :<span>{{showproperdateformat(item.enddate)}}</span></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h3 *ngIf="get_campaigns_has_this_bannerid?.length==0" class="text-center">No campiagns added!</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="creativemodal" class="modal fade mapwrapper commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="commonlogodiv">
+                    <img src="../../assets/images/geoaiadmin_logo_new.png">
+                </div>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="stepone==1">
+                <h3 class="text-center">Choose A Type</h3>
+                <label class="bannerlistblocklbl">Creative Styles</label>
+                <div class="row bannerlistblocksingle ">
+                    <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock0">
+                            <div class="bannermainblock0" >
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock0img">
+                                <a href="javascript:void(0)" class="bannermainblock0btn">View More<!--<img src="../../assets/images/viewmore1.jpg">--></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo0">
+                            <h2>Creative Type - 1</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(0)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle ">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock1">
+                            <div class="bannermainblock1" >
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock1img">
+                                <a href="javascript:void(0)" class="bannermainblock1btn">View More<!--<img src="../../assets/images/viewmore9.jpg">--></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"  id="bannerlistsingleinfo1">
+                            <!--<h2>My First Banner Design</h2>-->
+                            <h2>Creative Type - 2</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue btnbluepurple" (click)="callduplicate(1)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle ">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock2">
+                            <div class="bannermainblock2" style="background-image: url('../../assets/images/300-50_bg1.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock2img">
+                                <span  class="bannermainblock2txt">INDUSTRY-BASED<br/>
+                            MARKETING</span>
+                                <a href="javascript:void(0)" class="bannermainblock2btn"><span>View More</span><!--<img src="../../assets/images/viewmore8.jpg">--></a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo2">
+                            <h2>Creative Type - 3</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(2)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock3">
+                            <div class="bannermainblock3">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock3img">
+                                <span class="bannermainblock3txt">DIRECT<br> CONNECTIONS </span>
+                                <!--<img src="../../assets/images/300_50_img2.jpg" class="bannermainblock3img1">-->
+                                <a href="javascript:void(0)" class="bannermainblock3btn"><span>View More</span><!--<img src="../../assets/images/viewmore13.jpg">--></a>
+                                <img src="../../assets/images/300_50_img1.jpg" class="bannermainblock3img2">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo3">
+                            <h2>Creative Type - 4</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(3)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock4">
+                            <div class="bannermainblock4" style="background-image: url('../../assets/images/300-50_bg7.jpg'); background-size: cover; background-repeat: no-repeat;border: solid 2px #b4e20d;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock4img">
+                                <!--<img src="../../assets/images/300_50_img4.jpg" class="bannermainblock4img1">-->
+                                <span class="bannermainblock4txt">DIRECT<br> CONNECTIONS </span>
+                                <a href="javascript:void(0)" class="bannermainblock4btn">view more<!--<img src="../../assets/images/viewmore14.png">--></a>
+                                <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock4img2">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo4">
+                            <h2>Creative Type - 5</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(4)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock5">
+                            <div class="bannermainblock5">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock5img">
+                                <span class="bannermainblock5txt">DIRECT CONNECTIONS </span>
+                                <span class="bannermainblock5txt2">INDUSTRY-BASED <br/>
+                            MARKETING</span>
+                                <a href="javascript:void(0)" class="bannermainblock5btn">view more</a>
+                                <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock5img2">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo5">
+                            <h2>Creative Type - 6</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(5)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock6">
+                            <div class="bannermainblock6">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock6img">
+                                <span class="bannermainblock6txt">DIRECT CONNECTIONS </span>
+                                <a href="javascript:void(0)" class="bannermainblock6btn">view more<!--<img src="../../assets/images/viewmore15.png">--></a>
+                                <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock6img2">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo6">
+                            <h2>Creative Type - 7</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(6)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock7">
+                            <div class="bannermainblock7" style="background-image: url('../../assets/images/320-50_bg1.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock7img">
+                                <span class="bannermainblock7txt">GEO AI<br/>TECHNOLOGIES</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo7">
+                            <h2>Creative Type - 8</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(7)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock8">
+                            <div class="bannermainblock8" style="background-image: url('../../assets/images/320-50_bg2.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock8img">
+                                <span class="bannermainblock8txt">GEO AI<br/>TECHNOLOGIES</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo8">
+                            <h2>Creative Type - 9</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(8)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock9">
+                            <div class="bannermainblock9" style="background-image: url('../../assets/images/320-50_bg3.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock9img">
+                                <span class="bannermainblock9txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo9">
+                            <h2>Creative Type - 10</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(9)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock10">
+                            <div class="bannermainblock10" style="background-image: url('../../assets/images/320-50_bg4.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock10img">
+                                <span class="bannermainblock10txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                                <a href="javascript:void(0)" class="bannermainblock10btn">View More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo10">
+                            <h2>Creative Type - 11</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(10)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock11">
+                            <div class="bannermainblock11" style="background-image: url('../../assets/images/320-50_bg5.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock11img">
+                                <span class="bannermainblock11txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                                <a href="javascript:void(0)" class="bannermainblock11btn">View More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo11">
+                            <h2>Creative Type - 12</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(11)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock12">
+                            <div class="bannermainblock12" style="background-image: url('../../assets/images/320-50_bg6.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock12img">
+                                <span class="bannermainblock12txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo12">
+                            <h2>Creative Type - 13</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(12)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock13">
+                            <div class="bannermainblock13" style="background-image: url('../../assets/images/320-50_bg7.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock13img">
+                                <span class="bannermainblock13txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo13">
+                            <h2>Creative Type - 14</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(13)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock14">
+                            <div class="bannermainblock14" style="background-image: url('../../assets/images/320-50_bg8.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock14img">
+                                <span class="bannermainblock14txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo14">
+                            <h2>Creative Type - 15</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue" (click)="callduplicate(14)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock15">
+                            <div class="bannermainblock15" style="background-image: url('../../assets/images/320-50_bg9.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock15img">
+                                <span class="bannermainblock15txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                                <a href="javascript:void(0)" class="bannermainblock15btn">View More</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo15">
+                            <h2>Creative Type - 16</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue"  (click)="callduplicate(15)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bannerlistblocksingle">
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleimage" id="bannermainblock16">
+                            <div class="bannermainblock16" style="background-image: url('../../assets/images/320-50_bg10.jpg'); background-repeat: no-repeat;">
+                                <img src="../../assets/images/banner_logo1.png" class="bannermainblock16img">
+                                <span class="bannermainblock16txt"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" id="bannerlistsingleinfo16">
+                            <h2>Creative Type - 17</h2>
+                        </div>
+                        <div class="col-md-4 col-sm-4 bannerlists bannerlistsinglebtnaction">
+                            <div class="btn-bannerlist text-center">
+                                <button type="button" class="btnblue"  (click)="callduplicate(16)">
+                                    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Select
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT
+                                </button>
+                                <button type="button" class="btnblue hide">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> DELETE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="steptwo==1">
+                    <div class="showbannerinmodalwrapper">
+                        <div class="bannerlists">
+                            <div class="formblock">
+                                <div id="showhtmlinmodal" >     <!--TEXT FIELD-->         </div>
+                            </div>
+                        </div>
+                        <div class="bannerlists">
+                            <div id="showbannerinmodaldiv">
+                                <span id="showbannerinmodal">
+                            </span>
+                                <div class="actionbtn_btnpurple" tooltip="Highlighter" [tooltipAnimation]="true"><span aria-hidden="true" class="glyphicon glyphicon-edit" (click)="highlighteditfunc()"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="updatetext hide">
+                        <textarea class="textfield updatetexttextfield" [(ngModel)]="ad_text"></textarea>
+                        <button (click)="updateadvettise(1)" class="savebtn text-center btnbluepurple">Save</button>
+                    </div>
+                    <div class="updatebtn hide">
+                        <textarea class="textfield updatebtntextfield" [(ngModel)]="ad_btn"></textarea>
+                        <button (click)="updateadvettise(2)" class="savebtn text-center btnbluepurple">Save</button>
+                    </div>
+                    <div class="updateimg hide">
+                        <input class="img-responsive center-block clearfix updateimgfile" type="file" (change)="onFileChanged($event,1)" style="display: none">
+                    </div>
+                    <!--<div class="updateimg hide">
+                        <input class="img-responsive center-block clearfix" type="file" name="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput(1,$event)" [uploadInput]="uploadInput">
+                        <div class="browsefileblockimg">
+                            <div class="row" *ngIf="files.length>0">
+                                <b class="text-center">
+                                    <p *ngIf="files[0].progress.data.percentage!=100" class="uploadtext">Uploading Percentage: {{files[0].progress.data.percentage}} %</p>
+                                    <p *ngIf="files[0].progress.data.percentage==100" class="uploadtext">Upload Complete: 100 %</p>
+                                </b>
+                                <div class="browsefileblockimgmultiplerow">
+                                    <div class="browsefileblockimgmultiplerowsingle" *ngIf="files[0].response?.generatedName!=null">
+                                        <div class="browsefileblockimgmultiplerowimgagebig">
+                                            &lt;!&ndash;<img  class="im g-responsive center-block firstimgheightset" style="width: 100%; height: auto" src="../../assets/uploads/{{files[0].response.generatedName}}" > &ndash;&gt; <img  class="im g-responsive center-block firstimgheightset" style="width: 100%; height: auto" src="{{imageurl}}uploads/{{files[0].response.generatedName}}" >
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <input type="button" *ngIf="files[0].response?.generatedName!=null" value="Save Images" class="btn btn-primary btnform center-block btnsavepopimage" (click)="updateadvettise(3)">
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div class="updateimg2 hide">
+                        <input class="img-responsive center-block clearfix updateimgfile2" type="file" (change)="onFileChanged($event,2)" style="display: none">
+                        <div class="browsefileblockimg">
+                        </div>
+                    </div>
+                    <!--<div class="updateimg2 hide">
+                        <input class="img-responsive center-block clearfix" type="file" name="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput(2,$event)" [uploadInput]="uploadInput">
+                        <div class="browsefileblockimg">
+                            <div class="row" *ngIf="files1.length>0">
+                                <b class="text-center">
+                                    <p *ngIf="files1[0].progress.data.percentage!=100" class="uploadtext">Uploading Percentage: {{files1[0].progress.data.percentage}} %</p>
+                                    <p *ngIf="files1[0].progress.data.percentage==100" class="uploadtext">Upload Complete: 100 %</p>
+                                </b>
+                                <div class="browsefileblockimgmultiplerow">
+                                    <div class="browsefileblockimgmultiplerowsingle" *ngIf="files1[0].response?.generatedName!=null">
+                                        <div class="browsefileblockimgmultiplerowimgagebig">
+                                            <img  class="img-responsive center-block firstimgheightset" style="width: 100%; height: auto" src="{{imageurl}}uploads/{{files1[0].response.generatedName}}" >
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                <input type="button" *ngIf="files1[0].response?.generatedName!=null" value="Save Images" class="btn btn-primary btnform center-block btnsavepopimage" (click)="updateadvettise(4)">
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div class="updatetext2 hide">
+                        <textarea class="textfield updatetext2textfield" [(ngModel)]="ad_text1"></textarea>
+                        <button (click)="updateadvettise(5)" class="savebtn text-center btnbluepurple">Save</button>
+                    </div>
+                    <div *ngIf="divfortitle">
+                        <label>Creative Title</label>
+                        <textarea class="textfield" [(ngModel)]="ad_bannertext"></textarea>
+                        <span class="has-error" *ngIf ="ad_bannertext_error">{{ad_bannertext_error}}</span>
+                        <label>Click Through Url</label>
+                        <input type="url" class="textfield" [(ngModel)]="click_through_url" >
+                        <span class="has-error" *ngIf ="click_through_url_error">{{click_through_url_error}}</span>
+                        <label>Promotion Type</label>
+                        <select  class="textfield" [(ngModel)]="promotion_type" >
+                            <option value="">Choose Type</option>
+                            <option value="google_play">Google Play</option>
+                            <option value="apple_store">Apple Store</option>
+                            <option value="web_url">Web Url</option>
+                        </select>
+                        <span class="has-error" *ngIf ="promotion_type_error">{{promotion_type_error}}</span>
+                    </div>
+                    <input type="button" value="Save Creative" class="btn btn-primary btnform center-block btnsavepopimage button1 btnbluepurple" (click)="gettitleBanner()" *ngIf="editflag==0">
+                    <input type="button" value="Save Creative" class="btn btn-primary btnform center-block btnsavepopimage button2 btnbluepurple hide" (click)="savebanner()" *ngIf="editflag==0">
+                    <input type="button" value="Update Creative" class="btn btn-primary btnform center-block btnsavepopimage button1 btnbluepurple" (click)="gettitleBanner()" *ngIf="editflag==1">
+                    <input type="button" value="Update Creative" class="btn btn-primary btnform center-block btnsavepopimage button2 btnbluepurple hide" (click)="updateBanner()" *ngIf="editflag==1">
+                </div>
             </div>
         </div>
     </div>

@@ -45,68 +45,68 @@
         <div class="userinfoblock signup">
           <h2>User Info</h2>
           <div class="form-group">
-              <div class="col-md-5 col-sm-12 txtfield"><label>First Name</label></div>
-              <div class="col-md-7 col-sm-12 txtfield">
+              <div class="col-md-5 col-sm-4 col-xs-12 txtfield"><label>First Name</label></div>
+              <div class="col-md-7 col-sm-8 col-xs-12 txtfield">
                 <input type="text" [formControl]="dataForm.controls['firstname']">
                 <span class="has-error" *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid">First Name is Required !</span>
               </div>
           </div>
           <div class="form-group">
-            <div class="col-md-5 col-sm-12 txtfield"><label>Last Name</label></div>
-            <div class="col-md-7 col-sm-12 txtfield">
+            <div class="col-md-5 col-sm-4 col-xs-12 txtfield"><label>Last Name</label></div>
+            <div class="col-md-7 col-sm-8 col-xs-12 txtfield">
               <input type="text" [formControl]="dataForm.controls['lastname']">
               <span class="has-error" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid">Last Name is Required !</span>
             </div>
           </div>
 
           <div class="form-group">
-            <div class="col-md-5 col-sm-12 txtfield"><label>Password:</label></div>
-            <div class="col-md-7 col-sm-12 txtfield">
+            <div class="col-md-5 col-sm-4 col-xs-12 txtfield"><label>Password:</label></div>
+            <div class="col-md-7 col-sm-8 col-xs-12 txtfield">
               <input type="password" class="form-control" [formControl]="dataForm.controls['password']"/>
             </div>
           </div>
 
           <div class="form-group">
-            <div class="col-md-5 col-sm-12 txtfield"><label>Confirm  Password:</label></div>
-            <div class="col-md-7 col-sm-12 txtfield">
+            <div class="col-md-5 col-sm-4 col-xs-12 txtfield"><label>Confirm  Password:</label></div>
+            <div class="col-md-7 col-sm-8 col-xs-12 txtfield">
               <input type="password" class="form-control" [formControl]="dataForm.controls['confpassword']"/>
               <span class="has-error" *ngIf="passerror">{{passerror}}</span>
             </div>
           </div>
           <div class="form-group">
-            <div class="col-md-5 col-sm-12 txtfield"><label>E-mail Address</label></div>
-            <div class="col-md-7 col-sm-12 txtfield">
+            <div class="col-md-5 col-sm-4 col-xs-12 txtfield"><label>E-mail Address</label></div>
+            <div class="col-md-7 col-sm-8 col-xs-12 txtfield">
               <input type="text" [formControl]="dataForm.controls['email']" readonly>
             </div>
           </div>
           <div *ngIf="cookiedetailsforalldetails_type==0">
           <div class="form-group">
-            <div class="col-md-5 col-sm-12 txtfield"><label>Company Name</label></div>
-            <div class="col-md-7 col-sm-12 txtfield">
+            <div class="col-md-5 col-sm-4 col-xs-12 txtfield"><label>Company Name</label></div>
+            <div class="col-md-7 col-sm-8 col-xs-12 txtfield">
               <input type="text" [formControl]="dataForm.controls['companyname']">
               <span class="has-error" *ngIf ="dataForm.controls['companyname'].touched && !dataForm.controls['companyname'].valid">Company Name is Required !</span>
             </div>
           </div>
           <div class="form-group">
-            <div class="col-md-5 col-sm-12 txtfield"><label>Country</label></div>
-            <div class="col-md-7 col-sm-12 txtfield">
+            <div class="col-md-5 col-sm-4 col-xs-12 txtfield"><label>Country</label></div>
+            <div class="col-md-7 col-sm-8 col-xs-12 txtfield">
               <input type="text" [formControl]="dataForm.controls['country']">
               <span class="has-error" *ngIf ="dataForm.controls['country'].touched && !dataForm.controls['country'].valid">Country is Required !</span>
             </div>
           </div>
           <div class="form-group">
-            <div class="col-md-5 col-sm-12 txtfield"><label>Company Website</label></div>
-            <div class="col-md-7 col-sm-12 txtfield"><input type="text" [formControl]="dataForm.controls['companywebsite']">
+            <div class="col-md-5 col-sm-4 col-xs-12 txtfield"><label>Company Website</label></div>
+            <div class="col-md-7 col-sm-8 col-xs-12 txtfield"><input type="text" [formControl]="dataForm.controls['companywebsite']">
               <span class="has-error" *ngIf ="dataForm.controls['companywebsite'].touched && !dataForm.controls['companywebsite'].valid">Company Website is Required !</span></div>
           </div>
           <div class="form-group">
-              <div class="col-md-5 col-sm-12 txtfield"><label>City</label></div>
-              <div class="col-md-7 col-sm-12 txtfield"> <input type="text" [formControl]="dataForm.controls['city']">
+              <div class="col-md-5 col-sm-4 col-xs-12 txtfield"><label>City</label></div>
+              <div class="col-md-7 col-sm-8 col-xs-12 txtfield"> <input type="text" [formControl]="dataForm.controls['city']">
                 <span class="has-error" *ngIf ="dataForm.controls['city'].touched && !dataForm.controls['city'].valid">City is Required !</span></div>
           </div>
           <div class="form-group">
-              <div class="col-md-5 col-sm-12 txtfield"><label>Your marketing budget</label></div>
-              <div class="col-md-7 col-sm-12 txtfield">
+              <div class="col-md-5 col-sm-4 col-xs-12 txtfield"><label>Your marketing budget</label></div>
+              <div class="col-md-7 col-sm-8 col-xs-12 txtfield">
                 <!--<input type="text" [formControl]="dataForm.controls['marketingbudget']">-->
                 <select class="classic" [formControl]="dataForm.controls['marketingbudget']">
                   <option value="1">$30-50k</option>

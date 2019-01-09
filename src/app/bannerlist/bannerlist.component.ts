@@ -22,6 +22,8 @@ export class BannerlistComponent implements OnInit {
     public modaldeletedbanner: boolean = false;
     public modalconfirmdeletedbanner: boolean = false;
     public modalchangestatus: boolean = false;
+    public iscampaignModalShown: boolean = false;
+    public creativemodal: boolean = false;
     public modalchangestatusvalue;
     public divnumber;
     public filterval_by_addedby: any = '';
@@ -67,10 +69,23 @@ export class BannerlistComponent implements OnInit {
     static autovalues = [];
     static namesearchvalues = [];
    // public selarr = [];
+    public bannerid;
+    public get_campaigns_has_this_bannerid;
+    public stepone: any = 0;
+    public steptwo: any = 0;
+    public uploadurl;
+    public bannerimage;
+    public bannerimage1;
+    public click_through_url;
+    public promotion_type='';
+    public click_through_url_error;
+    public ad_bannertext_error;
+    public promotion_type_error;
 
     constructor(private _commonservices: Commonservices, emailcookie: CookieService, private _http: HttpClient, private router: Router, alldetailcookie: CookieService) {
         this.serverurl = _commonservices.url;
         this.imageurl = _commonservices.imageurl;
+        this.uploadurl = _commonservices.uploadurl;
         this.files = []; // local uploading files array
         this.files1 = [];
         this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
@@ -80,7 +95,7 @@ export class BannerlistComponent implements OnInit {
         this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
         this.cookiedetailsforalldetails_type = this.alldetailcookie.get('type');
         this.getusers();
-        if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk'){
+        if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk' || this.cookiedetailsforalldetails_type == 'agency'){
             this.getbanners();
         }
         else{
@@ -128,6 +143,9 @@ export class BannerlistComponent implements OnInit {
     removeuser(item){
         let indexval = BannerlistComponent.autovalues.indexOf(item);
         BannerlistComponent.autovalues.splice(indexval, 1);
+        if(BannerlistComponent.autovalues.length==0){
+            this.callbanners();
+        }
     }
     getChoiceLabel(choice: any) {
         console.log('choice-----------------');
@@ -181,10 +199,24 @@ export class BannerlistComponent implements OnInit {
             });
     }
 
+ /*   sort_getbannersbyemail(){
+        console.log(this.mybanners);
+        console.log(this.searchbystatus);
+        let arrmybanner=  [];
+        for(let i in this.mybanners){
+            if(this.mybanners[i].status==this.searchbystatus){
+                arrmybanner.push(this.mybanners[i]);
+            }
+        }
+        console.log(arrmybanner);
+        return arrmybanner;
+    }*/
+
     getbannersbyemail(){
         let link = this.serverurl + 'getbannersbyemail';
         let data = {
             email: this.mailcookiedetails,
+            searchbystatus:this.searchbystatus,
             page: 'bannerlist'
         };
         this._http.post(link, data)
@@ -216,15 +248,17 @@ export class BannerlistComponent implements OnInit {
             .subscribe(res => {
                 let result = res;
                 this.mybanners = res;
+                console.log('this.mybanners');
                 console.log(this.mybanners);
-
             }, error => {
                 console.log('Oooops!');
             });
     }
     callduplicate(val){
         this.divnumber = val;
-        this.modalmapShown = true;
+      //  this.modalmapShown = true;
+       // this.stepone=0;
+        this.steptwo=1;
         setTimeout(() => {
             $('#showbannerinmodal').append($('#bannermainblock'+val).html());
             $('#showhtmlinmodal').append($('#bannerlistsingleinfo'+val).html());
@@ -241,6 +275,7 @@ export class BannerlistComponent implements OnInit {
                 $( ".updateimg2" ).addClass( "hide" );
                 $( ".updatetext2" ).addClass( "hide" );
                 $( ".updatebtn" ).removeClass( "hide" );
+                    $( ".updatebtn .updatebtntextfield" ).val($('#showbannerinmodal .bannermainblock'+val+'btn').text());
             });
 
             $('#showbannerinmodal .bannermainblock'+val+'img').click( function() {
@@ -250,6 +285,7 @@ export class BannerlistComponent implements OnInit {
                 $( ".updateimg2" ).addClass( "hide" );
                 $( ".updatetext2" ).addClass( "hide" );
                 $( ".updateimg" ).removeClass( "hide" );
+                $( ".updateimg .updateimgfile").trigger("click");
             });
 
             $('#showbannerinmodal .bannermainblock'+val+'img2').click( function() {
@@ -259,6 +295,7 @@ export class BannerlistComponent implements OnInit {
                 $( ".updateimg" ).addClass( "hide" );
                 $( ".updatetext2" ).addClass( "hide" );
                 $( ".updateimg2" ).removeClass( "hide" );
+                $( ".updateimg2 .updateimgfile2").trigger("click");
             });
 
             $('#showbannerinmodal .bannermainblock'+val+'txt').click( function() {
@@ -268,6 +305,7 @@ export class BannerlistComponent implements OnInit {
                 $( ".updateimg2" ).addClass( "hide" );
                 $( ".updatetext2" ).addClass( "hide" );
                 $( ".updatetext" ).removeClass( "hide" );
+                $( ".updatetext .updatetexttextfield" ).val($('#showbannerinmodal .bannermainblock'+val+'txt').text());
             });
 
             $('#showbannerinmodal .bannermainblock'+val+'txt2').click( function() {
@@ -277,7 +315,9 @@ export class BannerlistComponent implements OnInit {
                 $( ".updatetext" ).addClass( "hide" );
                 $( ".updateimg2" ).addClass( "hide" );
                 $( ".updatetext2" ).removeClass( "hide" );
+                $( ".updatetext2 .updatetext2textfield" ).val($('#showbannerinmodal .bannermainblock'+val+'txt2').text());
             });
+            this.stepone=0;
         },500);
     }
     getbannerstructure1(type,i,item){
@@ -319,18 +359,15 @@ export class BannerlistComponent implements OnInit {
         },500);
     }
 
-    onUploadOutput(type,output: UploadOutput): void {
-        //  setTimeout(() => {
-        // alert(8);
-        if (output.type === 'allAddedToQueue') { // when all files added in queue
-            // uncomment this if you want to auto upload files when added
+    /*onUploadOutput(type,output: UploadOutput): void {
+        if (output.type === 'allAddedToQueue') {
             const event: UploadInput = {
                 type: 'uploadAll',
                 url: this.serverurl + 'uploads',
                 method: 'POST'
             };
             this.uploadInput.emit(event);
-        } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') { // add file to array when added
+        } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') {
             if (output.file.response != "") {
                 if(type==1){
                     this.files = [];
@@ -342,12 +379,7 @@ export class BannerlistComponent implements OnInit {
                 }
             }
         } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
-            //  console.log(this.files);
-            // update current data in files array for uploading file
-            //  const index = this.files.findIndex(file => typeof output.file !== 'undefined' && file.id === output.file.id);
-            //  this.files[index] = output.file;
         } else if (output.type === 'removed') {
-            // remove file from array when removed
             if(type==1){
                 this.files = this.files.filter((file: UploadFile) => file !== output.file);
             }   if(type==2){
@@ -370,6 +402,32 @@ export class BannerlistComponent implements OnInit {
             console.log(this.files1);
         }
 
+    }*/
+    onFileChanged(event,type) {
+        console.log('event');
+        console.log(event);
+       let selectedFile = event.target.files[0];
+        const uploadData = new FormData();
+        uploadData.append('file', selectedFile);
+        this._http.post(this.uploadurl, uploadData)
+            .subscribe(event => {
+                var res :any;
+                res = event;
+                if(res.error_code == 0){
+                    console.log('res');
+                    console.log(res);
+                    if(type==1){
+                    this.bannerimage = res.filename;
+                        this.updateadvettise(3);
+                    }
+                    if(type==2){
+                    this.bannerimage1 = res.filename;
+                        this.updateadvettise(4);
+                    }
+                }
+            }, error => {
+                console.log('Oooops!');
+            });
     }
 
     updateadvettise(type){
@@ -395,13 +453,15 @@ export class BannerlistComponent implements OnInit {
             $( ".updatebtn" ).addClass( "hide" );
         }
         if(type==3){
-            var imgpath = '../../assets/uploads/' + this.files[0].response.generatedName;
+         //   var imgpath = '../../assets/uploads/' + this.files[0].response.generatedName;
+            var imgpath = this.imageurl+'uploads/' + this.bannerimage;
             var imgclass  = 'bannermainblock' + this.divnumber + 'img';
             $('#showbannerinmodal .bannermainblock'+this.divnumber+'img').remove();
             $('#showbannerinmodal .bannermainblock'+this.divnumber).append("<img src="+imgpath+" class="+imgclass+">" );
         }
         if(type==4){
-            var imgpath1 = '../../assets/uploads/' + this.files1[0].response.generatedName;
+          //  var imgpath1 = '../../assets/uploads/' + this.files1[0].response.generatedName;
+            var imgpath1 = this.imageurl+'uploads/' + this.bannerimage1;
             var imgclass1  = 'bannermainblock' + this.divnumber + 'img2';
             $('#showbannerinmodal .bannermainblock'+this.divnumber+'img2').remove();
             $('#showbannerinmodal .bannermainblock'+this.divnumber).append("<img src="+imgpath1+" class="+imgclass1+">" );
@@ -421,6 +481,8 @@ export class BannerlistComponent implements OnInit {
         this.modalchangestatus = false;
         this.files = [];
         this.editflag = 0;
+        this.iscampaignModalShown = false;
+        this.creativemodal = false;
     }
     highlighteditfunc(){
         var divimg = 'bannermainblock'+this.divnumber+'img';
@@ -442,6 +504,10 @@ export class BannerlistComponent implements OnInit {
         $('.button2').removeClass('hide');
     }
     savebanner(){
+        this.ad_bannertext_error = null;
+        this.promotion_type_error = null;
+        this.click_through_url_error = null;
+
         if(this.ad_text==null){
             //  this.ad_text_main = $('#showbannerinmodal .bannermainblock'+this.divnumber+'txt').text();
             this.ad_text_main = $('#showbannerinmodal .bannermainblock'+this.divnumber+'txt').text();
@@ -471,42 +537,62 @@ export class BannerlistComponent implements OnInit {
         if(this.ad_text1==null){
             this.ad_text1_main = $('#showbannerinmodal .bannermainblock'+this.divnumber+'txt2').text();
         }
-
-        let link = this.serverurl + 'addbanner';
-        let data = {
-            banner_type: this.divnumber,
-            banner_title: this.ad_bannertext,
-            editablearea_1: this.ad_text_main,
-            editablearea_2: this.ad_btn_main,
-            editablearea_3: this.ad_img_main,
-            editablearea_4: this.ad_img1_main,
-            editablearea_5: this.ad_text1_main,
-            added_by: this.mailcookiedetails,
-            added_by_fname: this.alldetailcookie.get('fname'),
-            added_by_lname: this.alldetailcookie.get('lname'),
-            status: 3, //pending
-        };
-        console.log(data);
-        //let random = Math.floor(Math.random() * (999999 - 100000)) + 100000;
-        let random =  Math.floor(Math.random() * (100 - 1 )) + 1;
-        this._http.post(link, data)
-            .subscribe(res => {
-                console.log('kkkkkkkk');
-                // this.router.navigate(['/bannerlist',random]);
-                console.log(this.modalmapShown);
-                this.modalmapShown = false;
-                console.log(this.modalmapShown);
-                this.divfortitle = false;
-                this.ad_bannertext = null;
-                if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk'){
-                    this.getbanners();
+        if(this.ad_bannertext==null){
+            this.ad_bannertext_error = 'Provide Creative Name';
+        }
+        if(this.promotion_type==''){
+            this.promotion_type_error = 'Provide promotion type';
+        }
+            if(this.click_through_url!=null){
+                if ( this.click_through_url.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)) {
+                    console.log('url right');
+                    this.click_through_url_error = null;
                 }
                 else{
-                    this.getbannersbyemail();
+                    console.log('url wrng');
+                    this.click_through_url_error = 'Give proper URL';
                 }
-            }, error => {
-                console.log('Oooops!');
-            });
+            }
+            else{
+                this.click_through_url_error = 'Provide an URL';
+            }
+        if(this.ad_bannertext_error==null && this.promotion_type_error==null && this.click_through_url_error==null){
+            let link = this.serverurl + 'addbanner';
+            let data = {
+                banner_type: this.divnumber,
+                banner_title: this.ad_bannertext,
+                editablearea_1: this.ad_text_main,
+                editablearea_2: this.ad_btn_main,
+                editablearea_3: this.ad_img_main,
+                editablearea_4: this.ad_img1_main,
+                editablearea_5: this.ad_text1_main,
+                added_by: this.mailcookiedetails,
+                added_by_fname: this.alldetailcookie.get('fname'),
+                added_by_lname: this.alldetailcookie.get('lname'),
+                status: 3, //pending
+                promotion_type: this.promotion_type,
+                click_through_url: this.click_through_url
+            };
+            console.log(data);
+            let random =  Math.floor(Math.random() * (100 - 1 )) + 1;
+            this._http.post(link, data)
+                .subscribe(res => {
+                    this.creativemodal = false;
+                    this.divfortitle = false;
+                    this.ad_bannertext = null;
+                    this.bannerimage = null;
+                    this.bannerimage1 = null;
+                    if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk'){
+                        this.getbanners();
+                    }
+                    else{
+                        this.getbannersbyemail();
+                    }
+                }, error => {
+                    console.log('Oooops!');
+                });
+}
+
     }
 
     calltop(){
@@ -558,8 +644,12 @@ export class BannerlistComponent implements OnInit {
                 console.log(result);
                 console.log(result.item.banner_type);
                 this.divnumber = result.item.banner_type;
-                this.modalmapShown = true;
+               // this.modalmapShown = true;
+                this.creativemodal = true;
+                this.stepone = 1;
+                this.steptwo = 1;
                 setTimeout(() => {
+                    console.log($('#bannerlistsingleinfo'+result.item.banner_type).html());
                     $('#showbannerinmodal').append($('#bannermainblock'+result.item.banner_type).html());
                     $('#showhtmlinmodal').append($('#bannerlistsingleinfo'+result.item.banner_type).html());
                     if(result.item.editablearea_1!=null && result.item.editablearea_1 !=''){
@@ -573,13 +663,15 @@ export class BannerlistComponent implements OnInit {
                     if(result.item.editablearea_3!=null && result.item.editablearea_3 !=''){
                         console.log('==============');
                         console.log(result.item.editablearea_3);
-                        var imgpath = '../../assets/uploads/' + result.item.editablearea_3;
+                      //  var imgpath = '../../assets/uploads/' + result.item.editablearea_3;
+                        var imgpath = this.imageurl + 'uploads/' + result.item.editablearea_3;
                         var imgclass  = 'bannermainblock' + result.item.banner_type + 'img';
                         $('#showbannerinmodal .bannermainblock'+result.item.banner_type+'img').remove();
                         $('#showbannerinmodal .bannermainblock'+result.item.banner_type).append("<img src="+imgpath+" class="+imgclass+">");
                     }
                     if(result.item.editablearea_4!=null && result.item.editablearea_4 !=''){
-                        var imgpath1 = '../../assets/uploads/' + result.item.editablearea_4;
+                      //  var imgpath1 = '../../assets/uploads/' + result.item.editablearea_4;
+                        var imgpath1 = this.imageurl + 'uploads/' + result.item.editablearea_4;
                         var imgclass1  = 'bannermainblock' + result.item.banner_type + 'img2';
                         $('#showbannerinmodal .bannermainblock'+result.item.banner_type+'img2').remove();
                         $('#showbannerinmodal .bannermainblock'+result.item.banner_type).append("<img src="+imgpath1+" class="+imgclass1+">");
@@ -599,6 +691,7 @@ export class BannerlistComponent implements OnInit {
                         $( ".updateimg2" ).addClass( "hide" );
                         $( ".updatetext2" ).addClass( "hide" );
                         $( ".updatebtn" ).removeClass( "hide" );
+                        $( ".updatebtn .updatebtntextfield" ).val($('#showbannerinmodal .bannermainblock'+result.item.banner_type+'btn').text());
                     });
                     $('#showbannerinmodal .bannermainblock'+result.item.banner_type+'img').click( function() {
                         console.log('click img');
@@ -607,6 +700,7 @@ export class BannerlistComponent implements OnInit {
                         $( ".updateimg2" ).addClass( "hide" );
                         $( ".updatetext2" ).addClass( "hide" );
                         $( ".updateimg" ).removeClass( "hide" );
+                        $( ".updateimg .updateimgfile").trigger("click");
                     });
 
                     $('#showbannerinmodal .bannermainblock'+result.item.banner_type+'img2').click( function() {
@@ -616,6 +710,7 @@ export class BannerlistComponent implements OnInit {
                         $( ".updateimg" ).addClass( "hide" );
                         $( ".updatetext2" ).addClass( "hide" );
                         $( ".updateimg2" ).removeClass( "hide" );
+                        $( ".updateimg2 .updateimgfile2").trigger("click");
                     });
 
                     $('#showbannerinmodal .bannermainblock'+result.item.banner_type+'txt').click( function() {
@@ -625,6 +720,7 @@ export class BannerlistComponent implements OnInit {
                         $( ".updateimg2" ).addClass( "hide" );
                         $( ".updatetext2" ).addClass( "hide" );
                         $( ".updatetext" ).removeClass( "hide" );
+                        $( ".updatetext .updatetexttextfield" ).val($('#showbannerinmodal .bannermainblock'+result.item.banner_type+'txt').text());
                     });
 
                     $('#showbannerinmodal .bannermainblock'+result.item.banner_type+'txt2').click( function() {
@@ -634,8 +730,13 @@ export class BannerlistComponent implements OnInit {
                         $( ".updatetext" ).addClass( "hide" );
                         $( ".updateimg2" ).addClass( "hide" );
                         $( ".updatetext2" ).removeClass( "hide" );
+                        $( ".updatetext2 .updatetext2textfield" ).val($('#showbannerinmodal .bannermainblock'+result.item.banner_type+'txt2').text());
                     });
-                },500);
+                    this.stepone = 0;
+                    this.ad_bannertext = result.item.banner_title;
+                    this.promotion_type = result.item.promotion_type;
+                    this.click_through_url = result.item.click_through_url;
+                },100);
 
             },error => {
                 console.log('Oooops!');
@@ -670,6 +771,26 @@ export class BannerlistComponent implements OnInit {
         if(this.ad_text1==null){
             this.ad_text1_main = $('#showbannerinmodal .bannermainblock'+this.divnumber+'txt2').text();
         }
+        if(this.ad_bannertext==null){
+            this.ad_bannertext_error = 'Provide Creative Name';
+        }
+        if(this.promotion_type==''){
+            this.promotion_type_error = 'Provide promotion type';
+        }
+        if(this.click_through_url!=null){
+            if ( this.click_through_url.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)) {
+                console.log('url right');
+                this.click_through_url_error = null;
+            }
+            else{
+                console.log('url wrng');
+                this.click_through_url_error = 'Give proper URL';
+            }
+        }
+        else{
+            this.click_through_url_error = 'Provide an URL';
+        }
+        if(this.ad_bannertext_error==null && this.promotion_type_error==null && this.click_through_url_error==null){
 
         let link = this.serverurl + 'updatesbanner';
         let data = {
@@ -682,14 +803,15 @@ export class BannerlistComponent implements OnInit {
             editablearea_5: this.ad_text1_main,
             added_by: this.mailcookiedetails,
             id: this.editbannerid,
+            promotion_type: this.promotion_type,
+            click_through_url: this.click_through_url
         };
         console.log(data);
         let random =  Math.floor(Math.random() * (100 - 1 )) + 1;
         this._http.post(link, data)
             .subscribe(res => {
-                console.log(this.modalmapShown);
-                this.modalmapShown = false;
-                console.log(this.modalmapShown);
+              //  this.modalmapShown = false;
+                this.creativemodal = false;
                 this.divfortitle = false;
                 this.ad_bannertext = null;
                 if(this.cookiedetailsforalldetails_type == 'admin' || this.cookiedetailsforalldetails_type == 'helpdesk'){
@@ -702,6 +824,8 @@ export class BannerlistComponent implements OnInit {
                 console.log('Oooops!');
             });
     }
+    }
+
     addtdclass(status){
         if(status==1){
             return 'showgreen';
@@ -809,5 +933,33 @@ export class BannerlistComponent implements OnInit {
     }
     showdate(dd){
         return moment(dd* 1000).format('Do MMM YYYY');
+    }
+    opencampaignmodal(bannerid){
+        this.bannerid = bannerid;
+        this.iscampaignModalShown = true;
+        this.get_campaigns_who_has_this_bannerid();
+    }
+    get_campaigns_who_has_this_bannerid(){
+        let link = this.serverurl + 'get_campaigns_who_has_this_bannerid';
+        let data = {bannerid: this.bannerid};
+        this._http.post(link, data)
+            .subscribe(res => {
+                let result : any;
+                result = res;
+                if(result.status=='success'){
+                    this.get_campaigns_has_this_bannerid = result.id;
+                    console.log('this.get_campaigns_has_this_bannerid');
+                    console.log(this.get_campaigns_has_this_bannerid);
+                }
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
+    showproperdateformat(dt){
+        return  moment(dt).format('MMM D, YYYY');
+    }
+    popupforcreative(){
+        this.stepone = 1;
+        this.creativemodal = true;
     }
 }

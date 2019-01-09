@@ -1,19 +1,36 @@
-@media only screen and (max-width:1666px){.adminmainwarpper{width:92% !important;}
+@media only screen and (max-width:1920px){
+   /* .adminmainwarpper {
+        width: 96%;
+    }*/
+    /*.adminmainwarpper{width:92% !important;}*/
     .formblock2 .btnoulineround{margin-bottom:7px !important;}
 }
-@media only screen and (max-width:1366px){.adminmainwarpper{width:92%;}
+
+@media only screen and (max-width:1666px) {
+    .adminmainwarpper {
+        width: 96%;
+    }
+}
+@media only screen and (max-width:1366px){
+    .adminmainwarpper{width:92%;}
+    .dashboardmainwrapper{width: 92% !important;}
     .signupwarpper{width:92% !important;padding:30px !important;}
     .formblock2 .btnoulineround{margin-bottom:8px;}
     .formblock2 .btnoulineround:last-child{margin-bottom:8px;}
     #no-more-tables .table-bordered>thead>tr>th{padding:4px 4px;}
 }
-@media only screen and (max-width:1280px){.adminmainwarpper.addcampaignwarpper{width:92% !important;padding:24px 24px;}
+@media only screen and (max-width:1280px){
+    .adminmainwarpper.addcampaignwarpper{width:92% !important;padding:24px 24px;}
     .footerlogodiv{background-position:left -29% bottom, right -30% bottom;}
+    .adminmainwarpper {width: 92% !important;}
+    .dashboardmainwrapper{width: 92% !important;}
 }
-@media only screen and (max-width:1199px){.headerlogodiv{background-position:left -50% top, right -50% top;}
+@media only screen and (max-width:1199px){
+    .headerlogodiv{background-position:left -50% top, right -50% top;}
     .footerlogodiv{background-position:left -30% bottom, right -40% bottom;}
 }
-@media only screen and (max-width:1199px){.bodytopsearchlistwrapper{margin-top:0px !important;}
+@media only screen and (max-width:1199px){
+    .bodytopsearchlistwrapper{margin-top:0px !important;}
     #no-more-tables .table-bordered>tbody>tr>td{font-size:14px;}
     /*.addcampaignwarpper .form-group{width:49% !important;padding-right:5px !important;padding-left:5px !important;}
     .addcampaignwarpper .form-group:nth-child(odd){padding-left:0px !important;padding-right:5px !important;}
@@ -24,7 +41,8 @@
     #no-more-tables .table-bordered>thead>tr>th:last-child{border-right:0px solid #018ac7!important;}
     #no-more-tables .table-bordered>thead>tr>th:first-child{border-left:0px solid #018ac7!important;}
     #no-more-tables .table-bordered>tbody>tr:last-child td{border-top:0px solid #018ac7!important;}
-    .adminmainwarpper{padding:15px;}
+    .adminmainwarpper{padding:20px;}
+    .adminmainwarpper.userinfowarpper{width: 550px !important;}
     #no-more-tables table,
     #no-more-tables thead,
     #no-more-tables tbody,
@@ -42,7 +60,19 @@
     #no-more-tables td:before{position:absolute;top:50%;left:24%;width:45%;padding-right:10px;white-space:normal;text-align:left;font-weight:bold;transform:translate(-50%, -50%);font-weight:bold;font-family:"OpenSansSemibold" !important;}
     #no-more-tables td:before{content:attr(data-title);}
 }
-@media only screen and (max-width:1100px){.bannerlistblocksingle{display:inline-flex;width:49.7%;margin:0 10px;}
+@media only screen and (max-width:1100px){
+    .bannerlistblocksingle {display: inline-flex; width: 49% !important; margin: .5% !important;}
+    .bannerlistblocksingle input[type="checkbox"] {margin: 15px auto 0px; top: 0; position: inherit; left: 0; transform: inherit; z-index: 999;}
+    .bannerlistblocksingle .bannerlists {padding: 10px 0px; height: 40px; min-height: inherit;}
+    .bannerlistsinglebtnaction .btn-bannerlist {float: none; display: inline-block; min-height: inherit;}
+    .bannerlistcampaign {padding-right: 0px; width: 100%;}
+    .bannerlistblocksingle .bannerlistcampaign p {margin: 10px auto; display: block; width: 100%; text-align: center;}
+    .actionbtn_btnblack, .actionbtn_btnblack:hover {margin: 4px auto 15px !important; display: block;}
+    .searchbannerlist .showgreen {margin-bottom: 0 !important; border-bottom: 2px solid #f2f8f9 !important;}
+    .searchbannerlist .showred {margin-bottom: 0 !important; border-bottom: 2px solid #f2f8f9 !important;}
+    .searchbannerlist .showgrey {margin-bottom: 0 !important; border-bottom: 2px solid #f2f8f9 !important;}
+
+
     .bannerlists{width:100% !important;}
     .bannerlistsingleimage{padding:10px;min-height:48px;}
     .bannermainblock, .bannermainblock1, .bannermainblock2, .bannermainblock3, .bannermainblock4, .bannermainblock5, .bannermainblock6, .bannermainblock7, .bannermainblock8, .bannermainblock9, .bannermainblock10, .bannermainblock11, .bannermainblock12, .bannermainblock13, .bannermainblock14, .bannermainblock15, .bannermainblock16, .bannermainblock17, .bannermainblock18, .bannermainblock19{position:inherit;top:0;left:0;transform:inherit;margin:0 auto;}
@@ -50,10 +80,12 @@
     .btn-bannerlist{float:none;}
     .bannerlistblocksingle h2{text-align:center;position:inherit;top:0;left:0;transform:inherit;margin:10px auto 0px;}
 }
-@media only screen and (max-width:991px){.buttonlists .btnblueround{margin-bottom:10px !important;}
+@media only screen and (max-width:991px){
+
+    .buttonlists .btnblueround{margin-bottom:10px !important;}
     .footerdiv{position:relative;}
-    .footercopyright{width:90%;margin:5px auto;}
-    .addcampaignwarpper .form-group.dtrangecls{width:100% !important;}
+    .footercopyright { width: 90%; margin: 0px auto; display: block;}
+    /*.addcampaignwarpper .form-group.dtrangecls{width:100% !important;}*/
     .headerlogodiv{background-position:left -170% top, right -150% top;}
     .footerlogodiv{background-position:left -80% bottom, right -90% bottom;}
     #signup_box{height:auto!important;min-height:100vh!important;padding-top:0px!important;padding-bottom:0px!important;}
@@ -67,7 +99,8 @@
 }
 @media only screen and (max-width:800px){.headerlogodiv{background-position:left -400% top, right -300% top;}
 }
-@media only screen and (max-width:767px){.bannerlistsingleimage{min-height:auto;}
+@media only screen and (max-width:767px){
+    .bannerlistsingleimage{min-height:auto;}
 
     .addcampaignwarpper .form-group.dtrangecls {
         width: 98% !important;
@@ -99,7 +132,7 @@
     .menudiv .navbar li:before{display:none;}
     .headerlogodiv{background-position:left -1500% top, right -1500% top;}
     .footerlogodiv{background-position:left -250% bottom, right -250% bottom;}
-    .responsivemenu{display:inline-block;float:left;margin-top:8px;margin-left:5px;margin-bottom:8px;font-size:20px;color:#fff;}
+    .responsivemenu{display:inline-block;float:left;margin-top:8px;margin-left:5px;margin-bottom:8px;font-size:20px;color:#32aedd;}
     .menudiv{width:100%;}
     .navbar-nav{margin:7.5px 0;}
     .menudiv .navbar li::after{display:none;}
@@ -120,8 +153,11 @@
     .notregistered{display:block!important;width:100%!important;text-align:center!important;float:none!important;}
     .notregistered a{display:inline-block;}
     .bodytopactiondlist ul{float:left;margin-left:0px;}
+
+    .bannerlistblocksingle {width: 100% !important; margin: 0% !important;}
 }
-@media only screen and (max-width:600px){.userinfowarpper{width:88%!important;padding:25px;}
+@media only screen and (max-width:600px){
+    .adminmainwarpper.userinfowarpper{width:80%!important;padding:25px;}
 }
 @media only screen and (max-width:540px){.formblock2 .userinfoblock .txtfield label{width:35%;}
     .formblock2 .userinfoblock .txtfield span{width:62%;}
@@ -147,8 +183,10 @@
     .signup_middle_left{text-align:center;position:inherit;top:0;left:0;transform:inherit;width:100%;margin:0 auto;margin-top:20px;}
     .bodytopactiondlist ul{float:none;}
     .bodytopactiondlist span{float:none;}
+    .adminmainwarpper {padding: 0px;}
 }
-@media only screen and (max-width:480px){.submenuwrapper.submenuformblock .formblock .fivediv{width:100%;padding:0px 0px !important;display:inline-block;margin-top:5px;}
+@media only screen and (max-width:480px){
+    .submenuwrapper.submenuformblock .formblock .fivediv{width:100%;padding:0px 0px !important;display:inline-block;margin-top:5px;}
     .formblock2 .userinfoblock .txtfield label{width:100%;}
     .formblock2 .userinfoblock .txtfield span{margin-left:0px;width:100%;}
     .walletwrapperprofileright h1{font-size:24px;}
@@ -160,6 +198,7 @@
     .tripplecolumn_middle{padding-left:0px;padding-right:0px;}
     .tripplecolumn_right{padding-left:0px;padding-right:0px;}
     .adminmainwarpper{width:88%;}
+    .audiencewrapperoutertable .audiencewrapperouter {width: 100%;}
 }
 @media only screen and (max-width:360px){.bannermainblock3, .bannermainblock4, .bannermainblock5, .bannermainblock6, .bannermainblock7, .bannermainblock8, .bannermainblock9,
 .bannermainblock10, .bannermainblock11, .bannermainblock12, .bannermainblock13, .bannermainblock14, .bannermainblock15, .bannermainblock16{width:96%;}

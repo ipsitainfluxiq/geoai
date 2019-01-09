@@ -13,6 +13,7 @@ import { TrialComponent } from './trial/trial.component';
 import { CampaignsettingsComponent } from './campaignsettings/campaignsettings.component';
 import { HelpdeskaddComponent } from './helpdeskadd/helpdeskadd.component';
 import { HelpdesklistComponent } from './helpdesklist/helpdesklist.component';
+import { HelpdeskeditComponent } from './helpdeskedit/helpdeskedit.component';
 import {DatepickerModule} from 'ngx-bootstrap/datepicker';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
  // import {UiSwitchModule} from 'angular2-ui-switch';
@@ -96,6 +97,11 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { NgxUploaderModule } from 'ngx-uploader';
 import { RolesettingsComponent } from './rolesettings/rolesettings.component';
 import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
+import { AgencyaddComponent } from './agencyadd/agencyadd.component';
+import { AgencylistComponent } from './agencylist/agencylist.component';
+import { AgencyeditComponent } from './agencyedit/agencyedit.component';
+import { AudienceeditextraComponent } from './audienceeditextra/audienceeditextra.component';
+import { UseraddComponent } from './useradd/useradd.component';
 //import { NgxDateRangePickerModule } from 'ngx-daterangepicker';
 
 @NgModule({
@@ -170,7 +176,13 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
       BannerlistComponent,
       HelpdeskaddComponent,
       HelpdesklistComponent,
-      RolesettingsComponent
+      RolesettingsComponent,
+      AgencyaddComponent,
+      AgencylistComponent,
+      AgencyeditComponent,
+      HelpdeskeditComponent,
+      AudienceeditextraComponent,
+      UseraddComponent
   ],
     imports: [
         BrowserModule,

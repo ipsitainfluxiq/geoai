@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { HttpClient, HttpParams  } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-// import {CookieService} from 'angular2-cookie/core';
 import {Commonservices} from '../app.commonservices' ;
 import {CookieService} from 'ngx-cookie-service';
 @Component({
@@ -30,14 +29,9 @@ export class LoginComponent implements OnInit {
         this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
         this.cookiedetailsforalldetails = this.alldetailcookie.get('cookiedetailsforalldetails');
         console.log(this.mailcookiedetails);
-        console.log('login call-----------------------');
-       /* if (this.mailcookiedetails != null || this.mailcookiedetails != '') {
-            console.log('login mailcookiedetails----------------------');
-            this.router.navigateByUrl('/campaignlists');
-        }*/
-      /*  if (this.mailcookiedetails != null) {
-            this.router.navigateByUrl('/campaignlists');
-        }*/
+        if (this.mailcookiedetails != '') {
+                this.router.navigateByUrl('/campaignlists');
+        }
     }
 
     ngOnInit() {
@@ -59,6 +53,7 @@ export class LoginComponent implements OnInit {
         if (this.dataForm.valid) {
            // var link = 'http://localhost:3004/login';
             let link = this.serverurl + 'login';
+          //  let link = 'http://166.62.39.137:3000/login';
             let data = {email: formval.email, password: formval.password};
 
             this._http.post(link, data)

@@ -45,7 +45,7 @@
 
       <div class="form-group">
         <label for="campaignname" class="col-xs-12 lblform">Campaign Name</label>
-        <div class="col-xs-12 txtfield">
+        <div class="txtfield">
           <input type="text" class="form-control" id="campaignname" placeholder="" [formControl]="dataForm.controls['campaignname']" [attr.disabled]="type==1 ? '' : null"  >
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['campaignname'].touched && !dataForm.controls['campaignname'].valid">Campaign Name is Required !</span>
@@ -64,33 +64,33 @@
       </div>-->
 
       <div class="form-group">
-        <label for="totalcampaignspend" class="col-xs-12 lblform">Total Campaign spend</label>
-        <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="totalcampaignspend" placeholder="" [formControl]="dataForm.controls['totalcampaignspend']" [attr.disabled]="type==1 ? '' : null">
+        <label for="totalcampaignspend" class="col-xs-12 lblform">Total Campaign spend <span>( $ )</span></label>
+        <div class="txtfield">
+          <!--<label>$</label>--><input type="text" class="form-control" id="totalcampaignspend" placeholder="" [formControl]="dataForm.controls['totalbudget']" [attr.disabled]="type==1 ? '' : null">
         </div>
-        <span class="has-error" *ngIf ="dataForm.controls['totalcampaignspend'].touched && !dataForm.controls['totalcampaignspend'].valid">This field is Required !</span>
+        <span class="has-error" *ngIf ="dataForm.controls['totalbudget'].touched && !dataForm.controls['totalbudget'].valid">This field is Required !</span>
       </div>
 
-      <div class="form-group">
-        <label for="totalcampaignspend" class="col-xs-12 lblform">CPA</label>
-        <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="cpa" placeholder="" [formControl]="dataForm.controls['cpa']" [attr.disabled]="type==1 ? '' : null">
+      <div class="form-group hide">
+        <label for="totalcampaignspend" class="col-xs-12 lblform">CPA <span>( $ )</span></label>
+        <div class="txtfield">
+          <!--<label>$</label>--><input type="text" class="form-control" id="cpa" placeholder="" [formControl]="dataForm.controls['cpa']" [attr.disabled]="type==1 ? '' : null">
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['cpa'].touched && !dataForm.controls['cpa'].valid">Cpa is Required !</span>
       </div>
 
-      <div class="form-group">
-        <label for="totalcampaignspend" class="col-xs-12 lblform">EPC</label>
-        <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="epc" placeholder="" [formControl]="dataForm.controls['epc']" [attr.disabled]="type==1 ? '' : null">
+      <div class="form-group hide">
+        <label for="totalcampaignspend" class="col-xs-12 lblform">EPC <span>( $ )</span></label>
+        <div class="txtfield">
+          <!--<label>$</label>--><input type="text" class="form-control" id="epc" placeholder="" [formControl]="dataForm.controls['epc']" [attr.disabled]="type==1 ? '' : null">
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['epc'].touched && !dataForm.controls['epc'].valid">Epc is Required !</span>
       </div>
 
       <div class="form-group">
-        <label for="dailybudget" class="col-xs-12 lblform">Daily Budget</label>
+        <label for="dailybudget" class="col-xs-12 lblform">Daily Budget <span>( $ )</span></label>
         <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="dailybudget" placeholder="" [formControl]="dataForm.controls['dailybudget']" [attr.disabled]="type==1 ? '' : null">
+          <!--<label>$</label>--><input type="text" class="form-control" id="dailybudget" placeholder="" [formControl]="dataForm.controls['dailybudget']" [attr.disabled]="type==1 ? '' : null">
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['dailybudget'].touched && !dataForm.controls['dailybudget'].valid">Daily Budget is Required !</span>
       </div>
@@ -130,22 +130,21 @@
          </div>
        </div>-->
 
-
       <div class="form-group">
-        <label for="startingbid" class="col-xs-12 lblform">Starting Bid</label>
+        <label for="startingbid" class="col-xs-12 lblform">Starting Bid <span>( $ )</span></label>
         <div class="col-xs-12 txtfield">
-          <input type="text" class="form-control" id="startingbid" placeholder="" [formControl]="dataForm.controls['startingbid']" [attr.disabled]="type==1 ? '' : null">
+          <!--<label>$</label>--><input type="text" class="form-control" id="startingbid" placeholder="" [formControl]="dataForm.controls['startingbid']" [attr.disabled]="type==1 ? '' : null">
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['startingbid'].touched && !dataForm.controls['startingbid'].valid">Starting Bid is Required !</span>
       </div>
 
       <div class="form-group">
         <div class="col-xs-12 divinner">
-          <label for="conversionvalue" class="col-xs-12 lblform">Conversion Value</label>
-          <div class="col-sm-8 col-xs-12 txtfield">
-            <input type="text" class="form-control" id="conversionvalue" placeholder="" [formControl]="dataForm.controls['conversionvalue']" [attr.disabled]="type==1 ? '' : null">
+          <label for="conversionvalue" class="col-xs-12 lblform">Conversion Value <span>( $ )</span></label>
+          <div class="txtfield">
+            <!--<label>$</label>--><input type="text" class="form-control" id="conversionvalue" placeholder="" [formControl]="dataForm.controls['conversionvalue']" [attr.disabled]="type==1 ? '' : null">
           </div>
-          <div class="col-sm-4 col-xs-12 txtfield"><span>based on (CPA)</span></div>
+          <div class="txtfield"><span>BASED ON CPA,CPL OR OTHER MATRIC</span></div>
         </div>
         <span class="has-error" *ngIf ="dataForm.controls['conversionvalue'].touched && !dataForm.controls['conversionvalue'].valid">Conversion Value is Required !</span>
       </div>
@@ -211,23 +210,341 @@
       </div>
 
       <div class="form-group">
-        <label for="frequencycap" class="col-xs-12 lblform">Frequency Cap</label>
+        <label for="frequencycap" class="col-xs-12 lblform">Frequency Cap <span>( $ )</span></label>
         <div class="col-xs-12 divinner">
-          <div class="col-sm-8 col-xs-12 txtfield">
-            <input type="text" class="form-control" id="frequencycap" placeholder="" [formControl]="dataForm.controls['fcap']" [attr.disabled]="type==1 ? '' : null">
+          <div class="txtfield">
+            <!--<label>$</label>--><input type="text" class="form-control" id="frequencycap" placeholder="" [formControl]="dataForm.controls['fcap']" [attr.disabled]="type==1 ? '' : null">
           </div>
-          <div class="col-sm-4 col-xs-12 txtfield"><span>per instance</span></div>
+          <div class="txtfield"><span>per instance</span></div>
           <span class="has-error" *ngIf ="dataForm.controls['fcap'].touched && !dataForm.controls['fcap'].valid">Frequency Cap is Required !</span>
         </div>
       </div>
 
+      <!--Audience-->
+      <div class="form-group audiencewrappernew">
+      <div *ngIf="resultis?.Audiencedetails?.length>0" class="audiencewrapperouter">
+        <div class="audiencewrapper" *ngFor="let item of resultis.Audiencedetails; let i=index" >
+          <h2>
+            <span>Audience Name - {{resultis.Audiencedetails[i].audiencename}}</span>
+          </h2>
+          <div class="audiencedesc">
+            <span>Audience Description - {{resultis.Audiencedetails[i].audiencedescription}}</span><br/>
+            <span>Audience Result - {{resultis.Audiencedetails[i].searchcount}}</span><br/>
+            <span>Audience Added on - {{showdate(resultis.Audiencedetails[i].added_on)}}</span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="resultis?.Audiencedetails?.length==0">
+        <h2>No Audience added</h2>
+      </div>
+      <div>
+        <p *ngIf="resultis?.Audiencedetails?.length>0" (click)="openaudiencelist('Edit')" class="cursorpointer">Edit audience</p>
+        <p *ngIf="resultis?.Audiencedetails?.length==0" (click)="openaudiencelist('Add')" class="cursorpointer">Add audience</p>
+      </div>
+
+
+      <!--Creative-->
+      <div *ngIf="resultis?.Bannerdetails?.length>0">
+       <div *ngFor="let item of resultis.Bannerdetails; let i=index" class="row bannerlistblocksingle">
+         <!--BLOCK 1-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis?.Bannerdetails[i].banner_type==0" >
+          <div class="bannermainblock0 newimghiidecls" >
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock0img" *ngIf="resultis.Bannerdetails[0].editablearea_3==null || resultis.Bannerdetails[0].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[0].editablearea_3}}" class="bannermainblock0img" *ngIf="resultis.Bannerdetails[0].editablearea_3!=null && resultis.Bannerdetails[0].editablearea_3!=''">
+            <a href="javascript:void(0)" class="bannermainblock0btn" *ngIf="resultis.Bannerdetails[0].editablearea_2==null || resultis.Bannerdetails[0].editablearea_2==''">View More</a>
+            <a href="javascript:void(0)" class="bannermainblock0btn" *ngIf="resultis.Bannerdetails[0].editablearea_2!=null && resultis.Bannerdetails[0].editablearea_2!=''">{{resultis.Bannerdetails[0].editablearea_2}}</a>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==0">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 1</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+
+        <!--BLOCK 2-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==1">
+          <div class="bannermainblock1 newimghiidecls" >
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock1img" *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock1img" *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <a href="javascript:void(0)" class="bannermainblock1btn" *ngIf="resultis.Bannerdetails[i].editablearea_2==null || resultis.Bannerdetails[i].editablearea_2==''">View More</a>
+            <a href="javascript:void(0)" class="bannermainblock1btn" *ngIf="resultis.Bannerdetails[i].editablearea_2!=null && resultis.Bannerdetails[i].editablearea_2!=''">{{resultis.Bannerdetails[i].editablearea_2}}</a>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==1">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 2</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+        <!--BLOCK 3-->
+
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==2">
+          <div class="bannermainblock2 newimghiidecls" style="background-image: url('../../assets/images/300-50_bg1.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock2img" *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock2img" *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span  class="bannermainblock2txt" *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''">INDUSTRY-BASED<br/>
+                        MARKETING</span>
+            <span  class="bannermainblock2txt" *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}}</span>
+            <a href="javascript:void(0)" class="bannermainblock2btn"><span *ngIf="resultis.Bannerdetails[i].editablearea_2==null || resultis.Bannerdetails[i].editablearea_2==''">View More</span><span *ngIf="resultis.Bannerdetails[i].editablearea_2!=null || resultis.Bannerdetails[i].editablearea_2!=''">{{resultis.Bannerdetails[i].editablearea_2}}</span></a>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==2">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 3</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+        <!--BLOCK 4-->
+
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==3">
+          <div class="bannermainblock3 newimghiidecls">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock3img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock3img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null || resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock3txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''">DIRECT<br> CONNECTIONS </span>
+            <span class="bannermainblock3txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+            <a href="javascript:void(0)" class="bannermainblock3btn"><span *ngIf="resultis.Bannerdetails[i].editablearea_2==null || resultis.Bannerdetails[i].editablearea_2==''">View More</span><span *ngIf="resultis.Bannerdetails[i].editablearea_2!=null && resultis.Bannerdetails[i].editablearea_2!=''">{{resultis.Bannerdetails[i].editablearea_2}}</span></a>
+            <img src="../../assets/images/300_50_img1.jpg" class="bannermainblock3img2" *ngIf="resultis.Bannerdetails[i].editablearea_4==null || resultis.Bannerdetails[i].editablearea_4==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_4}}" class="bannermainblock3img2" *ngIf="resultis.Bannerdetails[i].editablearea_4!=null && resultis.Bannerdetails[i].editablearea_4!=''">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==3">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 4</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+        <!--BLOCK 5-->
+
+
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==4">
+          <div class="bannermainblock4 newimghiidecls" style="background-image: url('../../assets/images/300-50_bg7.jpg'); background-size: cover; background-repeat: no-repeat;border: solid 2px #b4e20d;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock4img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock4img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock4txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''">DIRECT<br> CONNECTIONS </span>
+            <span class="bannermainblock4txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+            <a href="javascript:void(0)" class="bannermainblock4btn"><span *ngIf="resultis.Bannerdetails[i].editablearea_2==null || resultis.Bannerdetails[i].editablearea_2==''">View More</span><span *ngIf="resultis.Bannerdetails[i].editablearea_2!=null && resultis.Bannerdetails[i].editablearea_2!=''">{{resultis.Bannerdetails[i].editablearea_2}}</span></a>
+            <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock4img2" *ngIf="resultis.Bannerdetails[i].editablearea_4==null || resultis.Bannerdetails[i].editablearea_4==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_4}}" class="bannermainblock4img2" *ngIf="resultis.Bannerdetails[i].editablearea_4!=null && resultis.Bannerdetails[i].editablearea_4!=''">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==4">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 5</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+        <!--BLOCK 6-->
+
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage"  *ngIf="resultis.Bannerdetails[i].banner_type==5">
+          <div class="bannermainblock5 newimghiidecls">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock5img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock5img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock5txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''">DIRECT<br> CONNECTIONS </span>
+            <span class="bannermainblock5txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+            <span class="bannermainblock5txt2"  *ngIf="resultis.Bannerdetails[i].editablearea_5==null || resultis.Bannerdetails[i].editablearea_1==''">INDUSTRY-BASED</span>
+            <span class="bannermainblock5txt2"  *ngIf="resultis.Bannerdetails[i].editablearea_5!=null && resultis.Bannerdetails[i].editablearea_5!=''">{{resultis.Bannerdetails[i].editablearea_5}} </span>
+            <a href="javascript:void(0)" class="bannermainblock5btn"><span *ngIf="resultis.Bannerdetails[i].editablearea_2==null || resultis.Bannerdetails[i].editablearea_2==''">View More</span><span *ngIf="resultis.Bannerdetails[i].editablearea_2!=null && resultis.Bannerdetails[i].editablearea_2!=''">{{resultis.Bannerdetails[i].editablearea_2}}</span></a>
+
+            <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock5img2"  *ngIf="resultis.Bannerdetails[i].editablearea_4==null || resultis.Bannerdetails[i].editablearea_4==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_4}}" class="bannermainblock5img2"  *ngIf="resultis.Bannerdetails[i].editablearea_4!=null && resultis.Bannerdetails[i].editablearea_4!=''">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"  *ngIf="resultis.Bannerdetails[i].banner_type==5">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 6</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+        <!--BLOCK 7-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage"  *ngIf="resultis.Bannerdetails[i].banner_type==6">
+          <div class="bannermainblock6 newimghiidecls">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock6img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock6img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock6txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''">DIRECT  CONNECTIONS </span>
+            <span class="bannermainblock6txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+            <a href="javascript:void(0)" class="bannermainblock6btn"><span *ngIf="resultis.Bannerdetails[i].editablearea_2==null || resultis.Bannerdetails[i].editablearea_2==''">View More</span><span *ngIf="resultis.Bannerdetails[i].editablearea_2!=null && resultis.Bannerdetails[i].editablearea_2!=''">{{resultis.Bannerdetails[i].editablearea_2}}</span></a>
+            <img src="../../assets/images/300_50_img3.jpg" class="bannermainblock6img2"  *ngIf="resultis.Bannerdetails[i].editablearea_4==null || resultis.Bannerdetails[i].editablearea_4==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_4}}" class="bannermainblock6img2"  *ngIf="resultis.Bannerdetails[i].editablearea_4!=null && resultis.Bannerdetails[i].editablearea_4!=''">
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==6" >
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 7</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+        <!--BLOCK 8-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage"  *ngIf="resultis.Bannerdetails[i].banner_type==7">
+          <div class="bannermainblock7 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg1.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock7img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock7img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock7txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''">GEO AI<br/>TECHNOLOGIES</span>
+            <span class="bannermainblock7txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"  *ngIf="resultis.Bannerdetails[i].banner_type==7">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 8</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+
+        <!--BLOCK 9-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage"   *ngIf="resultis.Bannerdetails[i].banner_type==8">
+          <div class="bannermainblock8 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg2.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock8img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock8img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock8txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''">GEO AI<br/>TECHNOLOGIES</span>
+            <span class="bannermainblock8txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo"   *ngIf="resultis.Bannerdetails[i].banner_type==8">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 9</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+
+        <!--BLOCK 10-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==9">
+          <div class="bannermainblock9 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg3.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock9img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock9img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock9txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+            <span class="bannermainblock9txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==9">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 10</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+
+        <!--BLOCK 11-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==10">
+          <div class="bannermainblock10 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg4.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock10img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock10img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock10txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+            <span class="bannermainblock10txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+            <a href="javascript:void(0)" class="bannermainblock10btn"><span *ngIf="resultis.Bannerdetails[i].editablearea_2==null || resultis.Bannerdetails[i].editablearea_2==''">View More</span><span *ngIf="resultis.Bannerdetails[i].editablearea_2!=null && resultis.Bannerdetails[i].editablearea_2!=''">{{resultis.Bannerdetails[i].editablearea_2}}</span></a>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==10">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 11</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+
+        <!--BLOCK 12-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==11">
+          <div class="bannermainblock11" style="background-image: url('../../assets/images/320-50_bg5.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock11img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock11img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock11txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+            <span class="bannermainblock11txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+            <a href="javascript:void(0)" class="bannermainblock11btn"><span *ngIf="resultis.Bannerdetails[i].editablearea_2==null || resultis.Bannerdetails[i].editablearea_2==''">View More</span><span *ngIf="resultis.Bannerdetails[i].editablearea_2!=null && resultis.Bannerdetails[i].editablearea_2!=''">{{resultis.Bannerdetails[i].editablearea_2}}</span></a>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==11">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 12</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+
+
+        <!--BLOCK 13-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==12">
+          <div class="bannermainblock12 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg6.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock12img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock12img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock12txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+            <span class="bannermainblock12txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==12">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 13</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+        <!--BLOCK 14-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==13">
+          <div class="bannermainblock13 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg7.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock13img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock13img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock13txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+            <span class="bannermainblock13txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==13">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 14</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+
+        <!--BLOCK 15-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==14">
+          <div class="bannermainblock14 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg8.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock14img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock14img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock14txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+            <span class="bannermainblock14txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==14">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 15</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+
+        <!--BLOCK 16-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==15">
+          <div class="bannermainblock15 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg9.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock15img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock15img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock15txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+            <span class="bannermainblock15txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+            <a href="javascript:void(0)" class="bannermainblock15btn"><span *ngIf="resultis.Bannerdetails[i].editablearea_2==null || resultis.Bannerdetails[i].editablearea_2==''">View More</span><span *ngIf="resultis.Bannerdetails[i].editablearea_2!=null && resultis.Bannerdetails[i].editablearea_2!=''">{{resultis.Bannerdetails[i].editablearea_2}}</span></a>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==15">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 16</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+
+
+        <!--BLOCK 17-->
+        <div class="col-md-8 col-sm-8 bannerlists bannerlistsingleimage" *ngIf="resultis.Bannerdetails[i].banner_type==16">
+          <div class="bannermainblock16 newimghiidecls" style="background-image: url('../../assets/images/320-50_bg10.jpg'); background-repeat: no-repeat;">
+            <img src="../../assets/images/banner_logo1.png" class="bannermainblock16img"  *ngIf="resultis.Bannerdetails[i].editablearea_3==null || resultis.Bannerdetails[i].editablearea_3==''">
+            <img src="../../assets/uploads/{{resultis.Bannerdetails[i].editablearea_3}}" class="bannermainblock16img"  *ngIf="resultis.Bannerdetails[i].editablearea_3!=null && resultis.Bannerdetails[i].editablearea_3!=''">
+            <span class="bannermainblock16txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1==null || resultis.Bannerdetails[i].editablearea_1==''"><b>GEO AI</b><br/>TECHNOLOGIES</span>
+            <span class="bannermainblock16txt"  *ngIf="resultis.Bannerdetails[i].editablearea_1!=null && resultis.Bannerdetails[i].editablearea_1!=''">{{resultis.Bannerdetails[i].editablearea_1}} </span>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 bannerlists bannerlistsingleinfo" *ngIf="resultis.Bannerdetails[i].banner_type==16">
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title==null || resultis.Bannerdetails[i].banner_title==''">Creative Type - 17</h2>
+          <h2 *ngIf="resultis.Bannerdetails[i].banner_title!=null && resultis.Bannerdetails[i].banner_title!=''">{{resultis.Bannerdetails[i].banner_title}}</h2>
+        </div>
+
+      </div>
+      </div>
+      <div *ngIf="resultis?.Bannerdetails?.length==0">
+        <h2>No Creative added</h2>
+      </div>
+      <div>
+        <p *ngIf="resultis?.Bannerdetails?.length>0" (click)="openbannerlist('Edit')">Edit creative</p>
+        <p *ngIf="resultis?.Bannerdetails?.length==0" (click)="openbannerlist('Add')">Add creative</p>
+      </div>
+      </div>
+
+
       <!--when admin/helpdesk click the link from mail they cant see update cancel button that is why type!=1-->
+      <div class="clearfix"></div>
       <div class="form-group btnformdivcls" *ngIf="type!=1">
         <button type="submit" class="btnbluedeep">Update</button>
         <button type="button" class="btnbluedeep" [routerLink]="['/campaignlists']">Cancel</button>
       </div>
+
     </form>
   </div>
+
+
+
+
 
   <div *ngIf="type==1 && alldetailcookie.get('type')=='admin' || alldetailcookie.get('type')=='helpdesk' ">
     <div class="headingstatuswrapper">
@@ -245,6 +562,7 @@
       <button type="submit" class="btnbluedeep" [routerLink]="['/campaignlists']">No</button>
     </div>
   </div>
+
 </div>
 
 
@@ -262,4 +580,109 @@
 </footer>-->
 
 <!------End Footer SECTION--->
+<!--
+<div *ngIf="isModalShown" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add/Edit Audience to this Campaign</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="audiencewrapperoutertable">
+            <div class="row audiencewrapperouterrow">
+              <div *ngFor="let item of audiencelist; let i=index" class="audiencewrapperouter">
+                <div class="audiencewrapper">
+                  <h2>
+                    <input type="radio" name="audienceradio" value="{{item._id}}" [(ngModel)] = "audienceid"> &lt;!&ndash;(click)="audienceitem(item._id)"&ndash;&gt;
+                    <span>Audience Name - {{item.audiencename}}</span>
+                  </h2>
+                  <div class="audiencedesc">
+                    <span>Audience Description - {{item.audiencedescription}}</span><br/>
+                    <span>Audience Result - {{item.searchcount}}</span><br/>
+                    <span>Audience Added on - {{showdate(item.added_on)}}</span>
+                  </div>
+                </div>
+                <button (click)="editaudience(item._id)">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="add_audience_to_campaign()" *ngIf="resultis?.Audiencedetails?.length==0">Save</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="add_audience_to_campaign()" *ngIf="resultis?.Audiencedetails?.length>0">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
 
+
+
+<div *ngIf="editaudienceModal" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Edit Audience</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="audiencewrapperoutertable">
+            <div class="row audiencewrapperouterrow">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="add_audience_to_campaign()" *ngIf="resultis?.Audiencedetails?.length>0">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isModalShown" class="modal fade userlistmodal commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="commonlogodiv">
+          <img src="../../assets/images/geoaiadmin_logo_new.png">
+        </div>
+        <h4 class="modal-title pull-left">{{audiencebannertype}} Audience(s) to this Campaign</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-audienceeditextra [campaignid]="id" typeis="audience" [audiencebannertype]="audiencebannertype"></app-audienceeditextra>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isModalShown1" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">{{audiencebannertype}} Creative(s) to this Campaign</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-audienceeditextra [campaignid]="id" typeis="creative" [audiencebannertype]="audiencebannertype"></app-audienceeditextra>
+      </div>
+    </div>
+  </div>
+</div>

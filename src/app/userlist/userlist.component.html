@@ -1,29 +1,28 @@
 <app-headernew></app-headernew>
-<div class="adminmainwarpper">
+<div class="adminmainwarpper audiencelistwrapper topsearchlistwapper">
   <div class="bodytopsearchlistwrapper">
     <div class="bodytopactiondiv">
-   <!--   .formblock.topsearchlist .form-grounewp:nth-child(2){width:145px!important;float:left;padding-right:10px!important;}-->
+      <!--   .formblock.topsearchlist .form-grounewp:nth-child(2){width:145px!important;float:left;padding-right:10px!important;}-->
       <div class="formblock tosearchlist">
         <div class="form-grounewp">
-          <div class="col-xs-12 txtfield">
+          <div class="txtfield">
+            <label>Search by User Type</label>
             <select [(ngModel)]="filterval2" (change)="searchbyval()" >
-              <option value="" selected>Search by User Type</option>
+              <option value="" selected>Select All</option>
               <option value="helpdesk" >Help Desk</option>
               <option value="user">User</option>
             </select>
           </div>
-          <div class="col-xs-12 txtfield hide">
-            <input type="text" placeholder="Search By Emailid" [(ngModel)]="filterval" #listFilter (keyup)="0">
+          <div class="txtfield hide">
+            <label>Search By Emailid</label>
+            <input type="text" [(ngModel)]="filterval" #listFilter (keyup)="0">
           </div>
-        </div>
-        <div class="clearfix"></div>
-      </div>
-    </div>
-    <div class="bodytopactiondiv">
-      <div class="formblock topsearchlist">
-        <div class="form-grounewp">
-          <div class="col-xs-12 txtfield ">
-            <input type="text" placeholder="Search..." [(ngModel)]="filterval1" (keyup)="searchbyval()">
+          <div class="txtfield">
+            <label>Search</label>
+            <input type="text" [(ngModel)]="filterval1" (keyup)="searchbyval()">
+          </div>
+          <div class="txtfield" *ngIf="cookiedetailsforalldetails_type=='agency'">
+            <a [routerLink]="['/useradd']" class="adadminlink addhelpdesk" >Add User</a>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -41,26 +40,56 @@
           <th class="numeric text-center">Email id</th>
           <th class="numeric text-center">Company Name</th>
           <th class="numeric text-center">Company Website</th>
+          <th class="numeric text-center" *ngIf="usertype=='admin' ">Smaato Markup (%) </th>
+          <th class="numeric text-center" *ngIf="usertype=='admin' " >AddRoll Markup (%) </th>
+          <th class="numeric text-center" *ngIf="usertype=='admin' ">Agency Name</th>
+          <th class="numeric text-center" *ngIf="usertype=='admin' ">Employee Name</th>
           <th class="numeric text-center">No. of Login</th>
+          <th class="numeric text-center">Member Since</th>
           <th class="numeric text-center">Last login time</th>
           <th class="numeric text-center">Action</th>
+
+
         </tr>
         </thead>
 
         <tbody>
         <tr *ngFor="let item of datalist| usersearch:listFilter.value | paginate: { itemsPerPage: 10, currentPage: p } ; let i=index">
-          <td data-title="campaign name" class=" text-center">{{i+1}}</td>
-          <td  data-title="campaign name" class=" text-center" >{{item.firstname}} {{item.lastname}}</td>
-          <td  data-title="campaign name" class=" text-center" >{{item.email}} </td>
-          <td  data-title="campaign name" class=" text-center" >{{item.companyname}}</td>
-          <td  data-title="campaign name" class=" text-center" >{{item.companywebsite}}</td>
-          <td  data-title="campaign name" class=" text-center" >{{item.nooflogin}}</td>
-          <td  data-title="campaign name" class=" text-center" >{{showdate(item.logintime)}}</td>
-          <td  data-title="campaign name" class=" text-center" >
+          <td data-title="#" class=" text-center">{{i+1}}</td>
+          <td  data-title="Name" class=" text-center" >{{item.firstname}} {{item.lastname}}</td>
+          <td  data-title="Email id" class=" text-center" >{{item.email}} </td>
+          <td  data-title="Company Name" class=" text-center" >{{item.companyname}}</td>
+          <td  data-title="Company Website" class=" text-center" >{{item.companywebsite}}</td>
+          <td  data-title="Smaato Markup (%)" class=" text-center" *ngIf="usertype=='admin' " >{{item.smatoo_mark_up}}<br><button type="button" class="actionbtn_btnblack" data-dismiss="modal" (click)="editmodal1(item)" >Edit</button></td>
+          <td  data-title="AddRoll Markup (%)" class=" text-center" *ngIf="usertype=='admin' " >{{item.role_mark_up}}<br><button type="button" class="actionbtn_btnblack" data-dismiss="modal" (click)="editmodal(item)" >Edit</button></td>
+
+
+          <td data-title="Agency Name" class=" text-center" *ngIf="usertype=='admin' ">
+            <span *ngIf="item.agencydetails?.length>0">{{item.agencydetails[0].firstname}} {{item.agencydetails[0].lastname}}</span>
+            <span *ngIf="item.agencydetails?.length==0">-</span>
+            <button type="button" class="actionbtn_btnblack" (click)="agencyhelpdeskupdate(item._id,item.agencydetails[0]._id,'agency')" *ngIf="item.agencydetails?.length>0">Edit</button>
+            <button type="button" class="actionbtn_btnblack" (click)="agencyhelpdeskupdate(item._id,0,'agency')" *ngIf="item.agencydetails?.length==0">Edit</button>
+            </td>
+
+          <td data-title="Employee Name" class=" text-center" *ngIf="usertype=='admin' ">
+            <span *ngIf="item.helpdeskdetails?.length>0">{{item.helpdeskdetails[0].firstname}} {{item.helpdeskdetails[0].lastname}}</span>
+            <span *ngIf="item.helpdeskdetails?.length==0">-</span>
+            <button type="button" class="actionbtn_btnblack" (click)="agencyhelpdeskupdate(item._id, item.helpdeskdetails[0]._id,'helpdesk')" *ngIf="item.helpdeskdetails?.length>0">Edit</button>
+            <button type="button" class="actionbtn_btnblack" (click)="agencyhelpdeskupdate(item._id, 0,'helpdesk')" *ngIf="item.helpdeskdetails?.length==0">Edit</button>
+          </td>
+
+
+
+          <td  data-title="No. of Login" class=" text-center" *ngIf="item.nooflogin>0 " >{{item.nooflogin}}</td>
+          <td  data-title="Member Since" class=" text-center" *ngIf="item.nooflogin==null || item.nooflogin=='' " >{{item.nooflogin}}</td>
+          <td  data-title="Last login Date" class=" text-center" >{{showdate(item.added_on)}}</td>
+          <td  data-title="Last login time" class=" text-center" >{{showdate(item.logintime)}}</td>
+          <td  data-title="Action" class=" text-center" >
             <!--<div *ngIf="item.status==null" class="buttonblock">
               &lt;!&ndash;<button class="btnblue" (click)="statuschange(item._id,1)">Active</button>&ndash;&gt;
               <button class="btnblue" (click)="statuspopup(item._id,0)">Make it inactive</button>
             </div>-->
+            <div class="actionbtnlists">
               <div *ngIf="item.status==1">
                 <b>Active</b>
                 <p (click)="statuspopup(item,0)" class="textcolor">Change Status</p>
@@ -69,14 +98,18 @@
                 <b>Inactive</b>
                 <p (click)="statuspopup(item,1)" class="textcolor">Change Status</p>
               </div>
-            <p (click)="shownotes(item.email)" class="textcolor">Notes</p>
+              <p (click)="shownotes(item.email)" class="textcolor">Notes</p>
+              <a class="actionbtn_btnpurple">Edit</a>
+            </div>
+
           </td>
         </tr>
         </tbody>
       </table>
-      <div class="pagination_wrapper" *ngIf="datalist?.length>10">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="pagination_wrapper" *ngIf="datalist?.length>10">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>
@@ -84,11 +117,14 @@
 <app-footernew></app-footernew>
 
 
-<div *ngIf="isModalShown" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+<div *ngIf="isModalShown" class="modal fade userlistmodal commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
+        <div class="commonlogodiv">
+          <img src="../../assets/images/geoaiadmin_logo_new.png">
+        </div>
         <h4 class="modal-title pull-left" *ngIf="typeis==0">Make it Inactive</h4>
         <h4 class="modal-title pull-left" *ngIf="typeis==1">Make it Active</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
@@ -110,24 +146,90 @@
   </div>
 </div>
 
-<div *ngIf="isModalnoteShown" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+<div *ngIf="ismodalshown3" class="modal fade userlistmodal commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
+        <div class="commonlogodiv">
+          <img src="../../assets/images/geoaiadmin_logo_new.png">
+        </div>
+      </div>
+      <!--<div class="modal-header">
+        <h4 class="modal-title pull-left" *ngIf="typeis==0">Make it Inactive</h4>
+        <h4 class="modal-title pull-left" *ngIf="typeis==1">Make it Active</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>-->
+      <div class="modal-body">
+        <label class="formblock">AddRole Markup(%)</label>
+        <input type="text" [(ngModel)]="addrolemarkupval"> <!--[([(ngModel)]="")]-->
+<div class="clearfix"></div>
+        <div class="modal-footer">
+          <button type="button" class="btnpurple" data-dismiss="modal" (click)="updateaddrolemarkupval()">Update</button>
+        </div>
+      </div>
+      <!--<div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateval()">Update</button>
+      </div>-->
+    </div>
+  </div>
+</div>
+
+<div *ngIf="ismodalshown4" class="modal fade userlistmodal commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="commonlogodiv">
+          <img src="../../assets/images/geoaiadmin_logo_new.png">
+        </div>
+      </div>
+      <!--<div class="modal-header">
+        <h4 class="modal-title pull-left" *ngIf="typeis==0">Make it Inactive</h4>
+        <h4 class="modal-title pull-left" *ngIf="typeis==1">Make it Active</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>-->
+      <div class="modal-body">
+        <label class="formblock">Smaato Markup(%)</label>
+        <input type="text" [(ngModel)]="smaatomarkupval">
+        <div class="clearfix"></div>
+        <div class="modal-footer">
+          <button type="button" class="btnpurple" data-dismiss="modal" (click)="updateaddrolemarkupval1()">Update</button>
+        </div>
+      </div>
+      <!--<div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateval()">Update</button>
+      </div>-->
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isModalnoteShown" class="modal fade userlistmodal commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="commonlogodiv">
+          <img src="../../assets/images/geoaiadmin_logo_new.png">
+        </div>
         <h4 class="modal-title pull-left">Note List</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="container-fluid bodymaindiv">
+        <div class="container-fluid">
           <div id="no-more-tables1">
             <table class="col-md-12 table-bordered table-striped table-condensed cf">
               <thead class="cf">
               <tr>
                 <th class="numeric text-center">#</th>
-               <!-- <th class="numeric text-center">Name</th>-->
+                <!-- <th class="numeric text-center">Name</th>-->
                 <th class="numeric text-center">Note</th>
                 <th class="numeric text-center">Added By</th>
                 <th class="numeric text-center">Added on</th>
@@ -136,7 +238,7 @@
               <tbody>
               <tr *ngFor="let item of notedetails | paginate: { itemsPerPage: 5, currentPage: p1 }; let i=index">
                 <td data-title="campaign name" class=" text-center">{{i+1}}</td>
-               <!-- <td  data-title="campaign name" class=" text-center" >{{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</td>-->
+                <!-- <td  data-title="campaign name" class=" text-center" >{{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</td>-->
                 <td  data-title="campaign name" class=" text-center" >{{item.note}} </td>
                 <td  data-title="campaign name" class=" text-center" >{{item.Namedetails[0].firstname}} {{item.Namedetails[0].lastname}}</td>
                 <td  data-title="campaign name" class=" text-center" >{{showdate(item.added_time)}}</td>
@@ -147,6 +249,53 @@
               <pagination-controls (pageChange)="p1 = $event"></pagination-controls>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="agencyhelpdesk_assign_to_user_modal_shown" class="modal fade userlistmodal commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="commonlogodiv">
+          <img src="../../assets/images/geoaiadmin_logo_new.png">
+        </div>
+        <h4 class="modal-title pull-left">
+          <span *ngIf="agencyhelpdeskid==0">Add</span>
+          <span *ngIf="agencyhelpdeskid!=0">Edit</span>
+          <span *ngIf="agencyhelpdesktype=='agency'">Agency</span>
+          <span *ngIf="agencyhelpdesktype=='helpdesk'">Employee</span>
+          to this Campaign</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="audiencewrapperoutertable">
+            <div class="row audiencewrapperouterrow" id="audiencecampaignid">
+              <div *ngFor="let item of agencyhelpdesklist; let i=index" class="audiencewrapperouter">
+                <div class="audiencewrapper">
+                  <h2>
+                     <input type="radio" name="agencyhelpdeskradio" value="{{item._id}}" [(ngModel)] = "agencyhelpdeskid">
+                    <span>Name - {{item.firstname}} {{item.lastname}}</span>
+                  </h2>
+                  <div class="audiencedesc">
+                    <span>Email - {{item.email}}</span><br/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="update_agencyhelpdeskid_to_user()"  *ngIf="agencyhelpdeskid==0">Save</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="update_agencyhelpdeskid_to_user()"  *ngIf="agencyhelpdeskid!=0">Update</button>
         </div>
       </div>
     </div>

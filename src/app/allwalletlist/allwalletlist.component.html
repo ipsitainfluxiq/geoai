@@ -40,64 +40,23 @@
 
 
 
-<div class="adminmainwarpper">
- <!-- <input type="text" placeholder="Search..." [(ngModel)]="filterval" #listFilter (keyup)="0" class="hide">-->
-  <div class="bodytopsearchlistwrapper">
+<div class="adminmainwarpper audiencelistwrapper topsearchlistwapper topsearchlistwappernew">
+  <!--<div class="bodytopsearchlistwrapper">
     <div class="bodytopactiondiv">
-      <!-- <div class="formblock topsearchlist">
-           <form class="form form-inline" role="form">
-               <div class="form-group">
-                   <div class="col-xs-12 txtfield">
-                       <input type="text" placeholder="Search..." #listFilter (keyup)="0">
-                   </div>
-               </div>
-           <div class="form-group dtrangecls">
-               <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
-                   <div class="col-xs-12 divinner">
-                       <div class="datefieldcontainer">
-                           <input class="datefieldcls" type="date" name="selected_date" />
-                           <span class="openbuttoncls">
-             <button type="button"><img src="../../assets/images/icon-calender.png"></button>
-           </span>
-                       </div>
-                   </div>
-               </div>
-               <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
-                   <div class="col-xs-12 divinner">
-                       <div class="datefieldcontainer">
-                           <input class="datefieldcls" type="date" name="selected_date" />
-                           <span class="openbuttoncls">
-             <button type="button"><img src="../../assets/images/icon-calender.png"></button>
-           </span>
-                       </div>
-                   </div>
-               </div>
-           </div>
-
-               <div class="form-group">
-                   <button type="submit" class="btnblack">Go</button>
-               </div>
-           </form>
-       </div>-->
       <div class="formblock topsearchlist">
-        <!--  <form class="form form-inline" role="form">-->
         <div class="form-grounewp">
-          <div class="col-xs-12 txtfield">
-            <!--<input type="text" placeholder="Search..." [(ngModel)]="filterval1" (keyup)="searchbyval()">-->
+          <div class="txtfield">
+            <label>Search</label>
             <input type="text" placeholder="Search By Emailid" #listFilter (keyup)="0">
           </div>
-        </div>
-        <div class="form-grounewp hide">
-          <div class="col-xs-12 txtfield">
+          <div class="txtfield hide">
             <select class="classic" (change)="searchbyval()" [(ngModel)]="filterval4">
               <option value="" selected>Filter By Type</option>
               <option value="wire">WIre Transfer</option>
               <option value="card">Card</option>
             </select>
           </div>
-        </div>
-        <div class="form-grounewp hide">
-          <div class="col-xs-12 txtfield">
+          <div class="txtfield hide">
             <input class="newinputtext" placeholder="Search by Name:" ng2-auto-complete
                    [source]="datalist"
                    [(ngModel)]="filterval5"
@@ -110,38 +69,90 @@
 
             />
           </div>
-        </div>
-        <div class="form-grounewp dtrangecls hide">
-          <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
-            <div class="col-xs-12 divinner">
-              <div class="datefieldcontainer">
-                <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval2"/>
-                <span class="openbuttoncls">
-                  <button type="button"><img src="../../assets/images/icon-calender.png"></button>
-                </span>
+          <div class="txtfield hide">
+              <div class="dtrangecls">
+                <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+                  <div class="col-xs-12 divinner">
+                    <div class="datefieldcontainer">
+                      <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval2"/>
+                      <span class="openbuttoncls">
+                    <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                  </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+                  <div class="col-xs-12 divinner">
+                    <div class="datefieldcontainer">
+                      <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval3" />
+                      <span class="openbuttoncls">
+                    <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                  </span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
-            <div class="col-xs-12 divinner">
-              <div class="datefieldcontainer">
-                <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval3" />
-                <span class="openbuttoncls">
-                  <button type="button"><img src="../../assets/images/icon-calender.png"></button>
-                </span>
-              </div>
-            </div>
           </div>
         </div>
-        <!--  <div class="form-grounewp">
-              <button type="submit" class="btnblack" (click)="searchbyval()">Go</button>
-          </div>-->
-
         <div class="clearfix"></div>
-        <!--   </form>-->
       </div>
     </div>
-    <!--<div class="rightbtndiv"><a href="javascript:void(0)" class="btnblue" [routerLink]="['/adminwalletlist']">View All Transactions</a></div>-->
+  </div>-->
+  <div class="bodytopsearchlistwrapper">
+    <div class="bodytopactiondiv">
+      <div class="formblock tosearchlist">
+        <div class="form-grounewp">
+          <div class="txtfield">
+            <label>Search</label>
+            <input type="text" placeholder="Search By Email id" #listFilter (keyup)="0">
+          </div>
+          <div class="txtfield hide">
+            <label>Filter By Type</label>
+            <select class="classic" (change)="searchbyval()" [(ngModel)]="filterval4">
+              <option value="" selected>Select All</option>
+              <option value="wire">WIre Transfer</option>
+              <option value="card">Card</option>
+            </select>
+          </div>
+          <div class="txtfield hide">
+            <label>Search by Name</label>
+            <input class="newinputtext" ng2-auto-complete
+                   [source]="datalist"
+                   [(ngModel)]="filterval5"
+                   [list-formatter]="autocompleListFormatter"
+                   value-property-name="name"
+                   display-property-name="name"
+                   (valueChanged)="valueChanged(filterval5)"
+                   (change)="searchbyval()"/>
+          </div>
+          <div class="txtfield hide">
+            <div class="dtrangecls">
+              <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+                <div class="col-xs-12 divinner">
+                  <div class="datefieldcontainer">
+                    <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval2"/>
+                    <span class="openbuttoncls">
+                    <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                  </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-lg-6 divinner">
+                <div class="col-xs-12 divinner">
+                  <div class="datefieldcontainer">
+                    <input class="datefieldcls" type="date" name="selected_date" [(ngModel)]="filterval3" />
+                    <span class="openbuttoncls">
+                    <button type="button"><img src="../../assets/images/icon-calender.png"></button>
+                  </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
   </div>
 
   <div class="container-fluid bodymaindiv">
@@ -160,12 +171,13 @@
 
         <tbody>
         <tr *ngFor="let item of datalist| usersearch:listFilter.value; let i=index">
-          <td data-title="campaign name" class=" text-center">{{i+1}}</td>
-          <td data-title="campaign name" class=" text-center" ><span *ngIf="item.Signupdata?.length>0">{{item.Signupdata[0].firstname}}</span></td>
-          <td data-title="Rem.Budget" class="numeric text-center"><span *ngIf="item.Signupdata?.length>0">{{item.Signupdata[0].lastname}}</span></td>
-          <td data-title="The CPM" class="numeric text-center">{{item._id}}</td>
-          <td data-title="The CPM" class="numeric text-center">{{item.Total}}</td>
-          <td data-title="The CPM" class="numeric text-center" [routerLink]="['/adminwalletlist',item._id]" style="cursor: pointer">VIew All Transactions</td>
+          <td data-title="#" class=" text-center">{{i+1}}</td>
+          <td data-title="First Name" class=" text-center" ><span *ngIf="item.Signupdata?.length>0">{{item.Signupdata[0].firstname}}</span></td>
+          <td data-title="Last Name" class="numeric text-center"><span *ngIf="item.Signupdata?.length>0">{{item.Signupdata[0].lastname}}</span></td>
+          <td data-title="Email id" class="numeric text-center">{{item._id}}</td>
+          <td data-title="Total Transaction Amount" class="numeric text-center">{{item.Total}}</td>
+          <td data-title="Actions" class="numeric text-center" [routerLink]="['/adminwalletlist',item._id]" style="cursor: pointer">
+            <div class="actionbtnlists"><a class="actionbtn_btngreen">VIew All Transactions</a></div></td>
         </tr>
         </tbody>
       </table>

@@ -1,45 +1,65 @@
-<header class="headerdiv">
-  <div class="headerlogodiv">
-    <div class="logowrapper">
-      <a [routerLink]="['/campaignlists']"><img src="../../assets/images/geoaiadmin_logo.png"></a>
+<header class="headerdiv headerdivnew">
+
+  <div class="showdetails">
+    <div class="newdivwrapper">
+      <div class="text-right">
+        <p *ngIf="cookiedetailsforalldetails_type">Type : {{cookiedetailsforalldetails_type}}</p>
+        <p *ngIf="cookiedetailsforalldetails_name">Logged in as : {{cookiedetailsforalldetails_name}}</p>
+      </div>
     </div>
-    <div class="headerbtndiv headerbtndiv1 ">
-      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/audiencelist']" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">Audience List</a>
-      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/bannerlist']" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">My Creatives</a>
-      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/bannerlist']" *ngIf="cookiedetailsforalldetails_type=='admin'">Manage Creatives</a>
-      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/userlist']" *ngIf="cookiedetailsforalldetails_type=='admin'">User List</a>
-      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/helpdesklist']" *ngIf="cookiedetailsforalldetails_type=='admin'">Manage Helpdesk</a>
-      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/searchnew']" *ngIf="cookiedetailsforalldetails_type!='helpdesk'">Manage Audience</a>
-      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/userinformation']"> Manage Account</a>
-    <!--  <a href="javascript:void(0)" class="btnblue" [routerLink]="['/accountdetails']">account Information</a>-->
-      <a href="javascript:void(0)" class="btnblue" [routerLink]="['/rolesettings']" *ngIf="cookiedetailsforalldetails_type=='admin'">Settings</a>
-      <a href="javascript:void(0)" class="btnblue" (click)="logout()">Logout</a>
+  </div>
+  <div class="headerlogodiv">
+    <div class="newdivwrapper">
+      <div class="logowrapper">
+        <a [routerLink]="['/campaignlists']"><img src="../../assets/images/geoaiadmin_logo_new.png"></a>
+      </div>
+      <div class="headerbtndiv headerbtndiv1 ">
+        <a href="javascript:void(0)" class="btnblue header-audiencelistbtn-admin hide" [routerLink]="['/audiencelist']" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">Audience List</a>
+        <a href="javascript:void(0)" class="btnblue header-bannerbtn-admin" [routerLink]="['/bannerlist']" *ngIf="cookiedetailsforalldetails_type!='admin' && cookiedetailsforalldetails_type!='helpdesk'">My Creatives</a>
+        <a href="javascript:void(0)" class="btnblue header-bannerbtn-admin" [routerLink]="['/bannerlist']" *ngIf="cookiedetailsforalldetails_type=='admin'">Manage Creatives</a>
+        <a href="javascript:void(0)" class="btnblue header-userbtn-admin" [routerLink]="['/userlist']" *ngIf="cookiedetailsforalldetails_type=='admin' || cookiedetailsforalldetails_type=='agency' || cookiedetailsforalldetails_type=='helpdesk'">Manage User</a>
+        <a href="javascript:void(0)" class="btnblue header-empbtn-admin" [routerLink]="['/helpdesklist']" *ngIf="cookiedetailsforalldetails_type=='agency' || cookiedetailsforalldetails_type=='admin'">Manage Employee</a>
+        <a href="javascript:void(0)" class="btnblue header-empbtn-btn-admin" [routerLink]="['/agencylist']" *ngIf="cookiedetailsforalldetails_type=='admin'">Manage Agency</a>
+        <!--<a href="javascript:void(0)" class="btnblue" [routerLink]="['/searchnew']" *ngIf="cookiedetailsforalldetails_type=='helpdesk'">Manage Audience</a>-->
+        <a href="javascript:void(0)" class="btnblue dropdownmenunew header-audiencebtn-admin"  *ngIf="cookiedetailsforalldetails_type!='helpdesk'" >Manage Audience
+          <span class="mauddropdownmenu">
+            <a [routerLink]="['/searchnew']">Add Audience</a>
+            <a  [routerLink]="['/audiencelist']">Audience List</a>
+          </span>
+        </a>
+        <a href="javascript:void(0)" class="btnblue header-empbtn-btn1-admin" [routerLink]="['/userinformation']"> Manage Account</a>
+        <!--  <a href="javascript:void(0)" class="btnblue" [routerLink]="['/accountdetails']">account Information</a>-->
+        <a href="javascript:void(0)" class="btnblue header-empbtn-btn2-admin" [routerLink]="['/rolesettings']" *ngIf="cookiedetailsforalldetails_type=='admin'">Settings</a>
+        <a href="javascript:void(0)" class="btnblue logoutcls" (click)="logout()">Logout</a>
+      </div>
     </div>
   </div>
   <div class="container-fluid menublock">
-    <div class="menudiv">
-      <nav class="navbar navbar-default">
-        <div class="navbar-header">
-          <span class="responsivemenu">MENU</span>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-          <div class="clearfix"></div>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="ssd lidiv0"><a href="javascript:void(0)" [routerLink]="['/campaignlists']">Mission control</a></li>
-            <li class="ssd lidiv1"><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
-            <li class="ssd lidiv2" *ngIf="cookiedetailsforalldetails_type=='helpdesk'"><a [routerLink]="['/bannerlist']">Manage Creatives</a></li>
-            <li class="ssd lidiv2" *ngIf="cookiedetailsforalldetails_type!='helpdesk'"><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon" >Default Rules</a></li>
-            <li class="ssd lidiv3" *ngIf="cookiedetailsforalldetails_type=='helpdesk'"><a [routerLink]="['/searchnew']">Manage Audience</a></li>
-            <li class="ssd lidiv3" *ngIf="cookiedetailsforalldetails_type=='user'"><a [routerLink]="['/wallet']">$Money</a></li>
-            <li class="ssd lidiv4" *ngIf="cookiedetailsforalldetails_type=='admin'"><a [routerLink]="['/allwalletlist']">Manage Wallet</a></li>
+    <div class="newdivwrapper">
+      <div class="menudiv">
+        <nav class="navbar navbar-default">
+          <div class="navbar-header">
+            <span class="responsivemenu">MENU</span>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <div class="clearfix"></div>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="ssd lidiv0"><a href="javascript:void(0)" [routerLink]="['/campaignlists']">Mission control</a></li>
+              <li class="ssd lidiv1"><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon">Reporting</a></li>
+              <li class="ssd lidiv2 header-bannerbtn-admin" *ngIf="cookiedetailsforalldetails_type=='helpdesk'"><a [routerLink]="['/bannerlist']">Manage Creatives</a></li>
+              <li class="ssd lidiv2 hide" *ngIf="cookiedetailsforalldetails_type!='helpdesk'"><a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#comingsoon" >Default Rules</a></li>
+              <li class="ssd lidiv3" *ngIf="cookiedetailsforalldetails_type=='helpdesk'"><a [routerLink]="['/searchnew']">Manage Audience</a></li>
+              <li class="ssd lidiv4" *ngIf="cookiedetailsforalldetails_type=='user'"><a [routerLink]="['/wallet']">$Money</a></li>
+              <li class="ssd lidiv5" *ngIf="cookiedetailsforalldetails_type=='admin'"><a [routerLink]="['/allwalletlist']">Manage Wallet</a></li>
 
 
-          </ul>
-        </div>
-      </nav>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
   </div>
 </header>
 

@@ -33,6 +33,9 @@ import {CicrlemapComponent} from '../src/app/cicrlemap/cicrlemap.component';
 import {PolyintersectComponent} from '../src/app/polyintersect/polyintersect.component';
 import {GetcircleComponent} from '../src/app/getcircle/getcircle.component';
 import {LocationsComponent} from '../src/app/locations/locations.component';
+import {AgencyaddComponent} from '../src/app/agencyadd/agencyadd.component';
+import {AgencylistComponent} from '../src/app/agencylist/agencylist.component';
+import {AgencyeditComponent} from '../src/app/agencyedit/agencyedit.component';
 /*------------------------------------------
     --------------------------------------*/
 import {BrowserComponent} from '../src/app/browser/browser.component';
@@ -77,6 +80,8 @@ import {BannerlistComponent} from "./../src/app/bannerlist/bannerlist.component"
 import {HelpdesklistComponent} from "../src/app/helpdesklist/helpdesklist.component";
 import {HelpdeskaddComponent} from "../src/app/helpdeskadd/helpdeskadd.component";
 import {RolesettingsComponent} from "../src/app/rolesettings/rolesettings.component";
+import {HelpdeskeditComponent} from "../src/app/helpdeskedit/helpdeskedit.component";
+import {UseraddComponent} from "../src/app/useradd/useradd.component";
 
 const appRoutes: Routes = [
 
@@ -153,8 +158,11 @@ const appRoutes: Routes = [
     { path: 'helpdesklist', component: HelpdesklistComponent},
     { path: 'helpdeskadd', component: HelpdeskaddComponent},
     { path: 'rolesettings', component: RolesettingsComponent},
-
-
+    {path: 'agencyadd', component:AgencyaddComponent},
+    {path:'agencylist',component:AgencylistComponent},
+    {path:'agencyedit/:id',component:AgencyeditComponent},
+    {path:'helpdeskedit/:id',component:HelpdeskeditComponent},
+    {path:'useradd',component:UseraddComponent},
 ];
 
 

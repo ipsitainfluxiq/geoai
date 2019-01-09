@@ -24,25 +24,47 @@ export class UserlistComponent implements OnInit {
     public filterval2;
     public filterval1;
     public idis;
-    public mailis;
+    public mailis ;
     public typeis;
     public note;
     public noteblankerror;
     public isModalShown: boolean = false;
     public isModalnoteShown: boolean = false;
+    public ismodalshown3:boolean=false;
+    public ismodalshown4:boolean=false;
     public p: number = 1;
     public p1: number = 1;
+    public allcookiedetails:any;
+    public usertype: string;
+    private addrolemarkupval: string;
+    private smaatomarkupval: string;
+    private selecteduser: string;
+    public agencyhelpdeskid:any;
+    public oldagencyhelpdeskid:any;
+    public useridis:any;
+    public agencyhelpdesklist:any;
+    public agencyhelpdesktype:any;
+    public agencyhelpdesk_assign_to_user_modal_shown:boolean=false;
+    public alldetailcookie: CookieService;
+    public cookiedetailsforalldetails_type;
 
-    constructor(private _http: HttpClient, private router: Router, private route: ActivatedRoute, emailcookie: CookieService, private _commonservices: Commonservices) {
+    constructor(private _http: HttpClient, private router: Router, private route: ActivatedRoute, emailcookie: CookieService, private _commonservices:Commonservices,alldetailcookie: CookieService ) {
         this.filterval2 = '';
         this.emailcookie = emailcookie ;
         this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
+        this.usertype = this.emailcookie.get('type');
+        this.allcookiedetails=this.emailcookie.get('cookiedetailsforalldetails');
+        this.alldetailcookie = alldetailcookie ;
         this.showrows = 5;
         this.orderbyquery = 'firstname';
         this.orderbytype = 1;
         this.serverurl = _commonservices.url;
         console.log('mailcookiedetails');
         console.log(this.mailcookiedetails);
+        console.log('this.allcookiedetails');
+        console.log(this.allcookiedetails);
+        console.log(this.alldetailcookie.get('fname'));
+        this.cookiedetailsforalldetails_type = this.alldetailcookie.get('type');
 
     }
 
@@ -51,12 +73,12 @@ export class UserlistComponent implements OnInit {
     }
     getUserList() {
         let link = this.serverurl + 'userlist';
-       // let link = 'http://localhost:3004/userlist';
-        let data = {};
-        this._http.get(link)
+        // let link = 'http://localhost:3004/userlist';
+        let data = {userid:this.emailcookie.get('cookiedetailsforalldetails'),type:this.emailcookie.get('type')};
+        this._http.post(link,data)
             .subscribe(res => {
                 let result: any;
-                 result = res;
+                result = res;
                 console.log(result);
                 this.datalist = result;
 
@@ -98,10 +120,68 @@ export class UserlistComponent implements OnInit {
         this.typeis=type;
         this.isModalShown = true;
     }
+
+    editmodal(val:any){
+        this.selecteduser=val;
+        this.addrolemarkupval=val.role_mark_up;
+        this.smaatomarkupval=val.smaato_mark_up;
+
+        this.ismodalshown3=true;
+
+    }
+    editmodal1(val:any)
+    {
+        this.selecteduser=val;
+        this.addrolemarkupval=val.role_mark_up;
+        this.smaatomarkupval=val.smatoo_mark_up;
+        this.ismodalshown4=true;
+        console.log('val');
+        console.log(val);
+        console.log('this.smaatomarkupval');
+        console.log(this.smaatomarkupval);
+    }
     onHidden() {
         this.isModalShown = false;
         this.isModalnoteShown = false;
+        this.ismodalshown3=false;
+        this.ismodalshown4=false;
+        this.agencyhelpdesk_assign_to_user_modal_shown=false;
     }
+
+    updateaddrolemarkupval() {
+
+        let link = this.serverurl + 'updateaddrolemarkupval';
+        let data= {
+            user : this.selecteduser,
+            role_mark_up : this.addrolemarkupval,
+        };
+        console.log('data');
+        console.log(data);
+        this._http.post(link, data)
+            .subscribe( res => {
+                this.ismodalshown3 = false;
+                this.getUserList();
+            }, error => {
+                console.log("Ooops");
+            });
+    }
+    updateaddrolemarkupval1(){
+        let link = this.serverurl + 'updatesmaatomarkupval';
+        let data= {
+            user : this.selecteduser,
+            smaato_mark_up : this.smaatomarkupval,
+        };
+        console.log('data');
+        console.log(data);
+        this._http.post(link, data)
+            .subscribe( res => {
+                this.ismodalshown4 = false;
+                this.getUserList();
+            }, error => {
+                console.log("Ooops");
+            });
+    }
+
     statuschange(){
         if (this.note != null){
             this.noteblankerror = null;
@@ -116,17 +196,17 @@ export class UserlistComponent implements OnInit {
             note : this.note,
             _id :  this.idis,
             addedby :  this.mailcookiedetails,
-        }
+        };
         if(this.noteblankerror==null){
-        this._http.post(link, data)
-            .subscribe( res => {
-                this.isModalShown = false;
-                this.note = null;
-                this.getUserList();
-            }, error => {
-                console.log("Ooops");
+            this._http.post(link, data)
+                .subscribe( res => {
+                    this.isModalShown = false;
+                    this.note = null;
+                    this.getUserList();
+                }, error => {
+                    console.log("Ooops");
                 });
-    }
+        }
     }
     searchbyval() {
         this.filterval = '';
@@ -152,6 +232,60 @@ export class UserlistComponent implements OnInit {
                 console.log(result);
                 this.notedetails  = result;
 
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
+    agencyhelpdeskupdate(userid,id,type){
+        this.agencyhelpdesklist = null;
+        this.useridis = userid;
+        this.oldagencyhelpdeskid = this.agencyhelpdeskid = id;
+        this.agencyhelpdesktype = type;
+        this.agencyhelpdesk_assign_to_user_modal_shown = true;
+        let link = this.serverurl + 'getagencyhelpdesklist';
+        let data= {
+            type : this.agencyhelpdesktype
+        }
+        this._http.post(link,data)
+            .subscribe(res => {
+                let result: any;
+                result = res;
+                if(result.status=='success' && result.items!=null){
+                    this.agencyhelpdesklist = result.items;
+                }
+                console.log(this.agencyhelpdesklist);
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
+    update_agencyhelpdeskid_to_user(){
+        let link = this.serverurl + 'update_agencyhelpdeskid_for_user';
+        let data;
+        if(this.oldagencyhelpdeskid != this.agencyhelpdeskid){
+            data= {
+                useridis : this.useridis,
+                agencyhelpdeskidis : this.agencyhelpdeskid,
+                type : this.agencyhelpdesktype,
+                adminname: this.alldetailcookie.get('fname') + ' '+this.alldetailcookie.get('lname'),
+                oldagencyhelpdeskid : this.oldagencyhelpdeskid,
+            }
+        }
+        else{
+            data= {
+                useridis : this.useridis,
+                agencyhelpdeskidis : this.agencyhelpdeskid,
+                type : this.agencyhelpdesktype,
+                adminname: this.alldetailcookie.get('fname') + ' '+this.alldetailcookie.get('lname')
+            }
+        }
+        this._http.post(link,data)
+            .subscribe(res => {
+                let result: any;
+                result = res;
+                if(result.status=='success'){
+                    this.agencyhelpdesk_assign_to_user_modal_shown = false;
+                    this.getUserList();
+                }
             }, error => {
                 console.log('Oooops!');
             });

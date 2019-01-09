@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, EventEmitter } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 //import {Http} from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import {Commonservices} from '../app.commonservices' ;
@@ -8,7 +8,6 @@ import { FormGroup, Validators, FormControl, FormBuilder} from '@angular/forms';
 declare var google: any;
 declare  var $;
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
 import {isNumber} from "ngx-bootstrap/chronos/utils/type-checks";
 
 @Component({
@@ -21,6 +20,7 @@ export class SearchnewComponent implements OnInit {
     public  addcookie: CookieService;
     public  cookiedetails;
     public  format: any;
+    public  maptype: any;
     public  emailcookie: CookieService;
     public  mailcookiedetails;
     public serverurl: any;
@@ -62,6 +62,7 @@ export class SearchnewComponent implements OnInit {
     public countrysubmenu: boolean = false;
     public show_state_countries: any = [];
     public zipval: any;
+    public searchcriteriais: any;
     public zipval1: any;
     public zipval2: any;
     public zipval3: any;
@@ -73,6 +74,7 @@ export class SearchnewComponent implements OnInit {
     static invalidzip = false;
     public zipsubmenu: boolean = false;
     public addresssubmenu: boolean = false;
+    public radiusaddressmenu: boolean = false;
     public addressval: any;
     public addressdiv: any = 0;
     public agediv: any = 0;
@@ -97,6 +99,7 @@ export class SearchnewComponent implements OnInit {
     drawingManager: any;
     static totalshapes = [];
     static totalshapesnew = [];
+    static totalshapesdemo = [];
     static ctype;
     static cradius;
     static ccenter;
@@ -112,11 +115,8 @@ export class SearchnewComponent implements OnInit {
     public totalshapeslength: any;
     public mapsubmenu: boolean = false;
     public totalshapesnew: any;
-
+    public selectedFile;
     public uploadjson: any = 0;
-    options: UploaderOptions;
-    files: UploadFile[];
-    uploadInput: EventEmitter<UploadInput>;
     humanizeBytes: Function;
     dragOver: boolean;
     public zone: NgZone;
@@ -173,8 +173,12 @@ export class SearchnewComponent implements OnInit {
     public a;
     public count_loop;
     public i;
+    public uploadurl;
+    public  maporcsv_upload;
+    public  maporcsv_uploadmain;
 
     constructor(addcookie: CookieService, emailcookie: CookieService,  private _http: HttpClient, private router: Router, private route: ActivatedRoute, private _commonservices: Commonservices, public _sanitizer: DomSanitizer, fb: FormBuilder) {
+        this.uploadurl = _commonservices.uploadurl;
         this.fb = fb;
         this.addcookie = addcookie;
         this.cookiedetails = this.addcookie.get('cookiedetails');
@@ -182,7 +186,6 @@ export class SearchnewComponent implements OnInit {
         this.mailcookiedetails = this.emailcookie.get('mailcookiedetails');
         console.log(this.mailcookiedetails);
         this.serverurl = _commonservices.url;
-        this.uploadInput = new EventEmitter<UploadInput>();
         this.getusstates();
         this.searchcriteria();
         this.getuscities();
@@ -340,163 +343,98 @@ export class SearchnewComponent implements OnInit {
             center: { lat: 40.785091, lng: -73.968285 },
             zoom: 8
         });*/
-        this.basicOptions = {
+      /*  this.basicOptions = {
             url: this.serverurl + 'uploads',
             filterExtensions: false,
             allowedExtensions: ['jpg', 'png', 'jpeg']
-        };
+        };*/
         this.dataForm = this.fb.group({
             audiencename: ['', Validators.required],
             audiencedescription: ['', Validators.required]
         });
     }
-    onUploadOutput(output: UploadOutput): void {
-        if (output.type === 'allAddedToQueue') {
-            const event: UploadInput = {
-                type: 'uploadAll',
-                url: this.serverurl + 'uploads',
-                method: 'POST',
-            };
-            this.uploadInput.emit(event);
-        } else if (output.type === 'addedToQueue'  && typeof output.file !== 'undefined') { // add file to array when added
-            if (output.file.response != "") {
-                this.files = [];
-                this.files.push(output.file);
-            }
-        } else if (output.type === 'uploading' && typeof output.file !== 'undefined') {
-          //  console.log(this.files);
-          //  const index = this.files.findIndex(file => typeof output.file !== 'undefined' && file.id === output.file.id);
-          //  this.files[index] = output.file;
-        } else if (output.type === 'removed') {
-            // remove file from array when removed
-            this.files = this.files.filter((file: UploadFile) => file !== output.file);
-        } else if (output.type === 'dragOver') {
-            this.dragOver = true;
-        } else if (output.type === 'dragOut') {
-            this.dragOver = false;
-        } else if (output.type === 'drop') {
-            this.dragOver = false;
-        }
-        console.log('files??');
-        console.log(this.files);
-        this.filenameis= this.files[0].response;
-      //  console.log(this.filenameis);
-    }
-    startUpload(): void {
-        const event: UploadInput = {
-            type: 'uploadAll',
-            url: 'http://ngx-uploader.com/upload',
-            method: 'POST',
-            data: { foo: 'bar' }
-        };
 
-        this.uploadInput.emit(event);
-    }
-    getjson() {
-        this.uploadjson = (1 - this.uploadjson);
-    }
 
-    callupload() {
-       /* var geocoder;
-        geocoder = new google.maps.Geocoder();*/
-        this.uploadarray = [];
-        this.csverroris = null;
-        let link = this.serverurl + 'csvuploads';
-        let data = {filenameis: this.filenameis};
-        this._http.post(link, data)
-            .subscribe(res => {
-                this.openloader = true;
-                    let result1: any;
-                result1 = res;
-                var result = result1.data;
-                if (result1.status == 'Success') {
-                    if (result[0][0] == 'Zip Code' && result[0][1] == 'Latitude' && result[0][2] == 'Longitude' && result[0][3] == 'City' && result[0][4] == 'State' && result[0][5] == 'County') {
-                        this.format = 1;
-                        for (let i in result) {
-                            // removing 1st 0 index row as it's a heading so i>0 (&& result[i][k]%1!=0 && result[i][l]%1!=0)
-                            if (parseInt(i) > 0 && result[i][1] != '' && result[i][2] != '') {
-                                result[i][1] = parseFloat(result[i][1]);
-                                   result[i][2] = parseFloat(result[i][2]);
-                                if(isNumber(result[i][2]) == true && isNumber(result[i][1]) == true && isNaN(result[i][1]) == false && isNaN(result[i][2]) == false){
-                                this.uploadarray.push(result[i]);
-                            }
-                            }
-                        }
-                        console.log('this.uploadarray');
-                        console.log(this.uploadarray);
-                    }
-                    else if (result[0][0] == 'Address') {
-                        this.codeaddress(result);
-                        /*this.format = 2;
-                        var uploadarray1 = [];
-                        var errorgeo = [];
-                        for (let i in result) {
-                            setTimeout(() => {
-                                if (parseInt(i) > 0) {
-                                    var currentarrray = [];
-                                    geocoder.geocode({'address': result[i][0]}, function (results, status) {
-                                        console.log(i);
-                                        if (status == 'OK') {
-                                            currentarrray = [];
-                                            currentarrray.push(result[i][0], results[0].geometry.location.lat(), results[0].geometry.location.lng());
-                                            uploadarray1.push(currentarrray);
-                                            /!*  this.map = new google.maps.Map(document.getElementById('map'), {
-                                             center: results[0].geometry.location,
-                                             zoom: 8
-                                             });
-                                             //  map.setCenter(results[0].geometry.location);
-                                             var marker = new google.maps.Marker({
-                                             map: map,
-                                             position: results[0].geometry.location
-                                             });*!/
+/*new upload process start*/
+    onFileChanged(event) {
+        console.log('event');
+        console.log(event);
+        this.csverroris = '';
+        this.selectedFile = event.target.files[0];
+
+        const uploadData = new FormData();
+        uploadData.append('file', this.selectedFile);
+
+        this._http.post(this.uploadurl, uploadData)
+            .subscribe(event => {
+                var res :any;
+                res = event;
+                if(res.error_code == 0){
+                    console.log('res');
+                    console.log(res);
+                    this.filenameis = {};
+                    this.filenameis.generatedName= res.filename;
+                    this.uploadarray = [];
+                    this.csverroris = null;
+                    let link = this.serverurl + 'csvuploads';
+                    let data = {filenameis: this.filenameis};
+                    this._http.post(link, data)
+                        .subscribe(res => {
+                            this.openloader = true;
+                            let result1: any;
+                            result1 = res;
+                            var result = result1.data;
+                            if (result1.status == 'Success') {
+                                if (result[0][0] == 'Zip Code' && result[0][1] == 'Latitude' && result[0][2] == 'Longitude' && result[0][3] == 'City' && result[0][4] == 'State' && result[0][5] == 'County') {
+                                    this.format = 1;
+                                    for (let i in result) {
+                                        // removing 1st 0 index row as it's a heading so i>0 (&& result[i][k]%1!=0 && result[i][l]%1!=0)
+                                        if (parseInt(i) > 0 && result[i][1] != '' && result[i][2] != '') {
+                                            result[i][1] = parseFloat(result[i][1]);
+                                            result[i][2] = parseFloat(result[i][2]);
+                                            if(isNumber(result[i][2]) == true && isNumber(result[i][1]) == true && isNaN(result[i][1]) == false && isNaN(result[i][2]) == false){
+                                                this.uploadarray.push(result[i]);
+                                            }
                                         }
-                                   /!*  else if (status === google.maps.status.OVER_QUERY_LIMIT) {
-                                        setTimeout(function() {
-                                            codeAddress(zip);
-                                        }, 250 );
-                                    }*!/
-                                    else {
-                                            // alert('Geocode was not successful for the following reason: ' + status);
-                                            errorgeo.push('Geocode was not successful for the following reason: ' + status);
-                                        }
-                                    });
-
-                                    /!* setTimeout(() => {
-                                     console.log('6');
-                                     console.log('currentarrray');
-                                     console.log(currentarrray);
-                                     this.uploadarray.push(currentarrray);
-                                     /!*for(let i in result){
-                                     result[i][1] = parseFloat(result[i][1]);
-                                     result[i][2] = parseFloat(result[i][2]);
-                                     if( result[i][1] != '' && result[i][2] != '' && isNumber(result[i][2]) == true && isNumber(result[i][1]) == true){
-                                     this.uploadarray.push(result[i]);
-                                     }
-                                     }*!/
-                                     }, 1000);*!/
+                                    }
+                                    console.log('this.uploadarray');
+                                    console.log(this.uploadarray);
+                                    this.uploadjson = 0;
                                 }
-                            }, 2000);
-                            if (parseInt(i) + 1 == result.length) {
-                                this.uploadarray = uploadarray1;
+                                else if (result[0][0] == 'Address') {
+                                    this.codeaddress(result);
+                                }
+                                else {
+                                    this.csverroris = 'Wrong CSV Format uploaded!';
+                                    this.uploadarray = [];
+                                }
+                                console.log('###########################################################');
+                                this.maporcsv_upload = 'csv';
                             }
-                        }
-                        console.log('this.uploadarray in callupload');
-                        console.log(this.uploadarray);
-                        console.log('errorgeo');
-                        console.log(errorgeo);*/
-                    }
-                    else {
-                        this.csverroris = 'Wrong CSV Format uploaded!';
-                        this.uploadarray = [];
-                    }
+                            else {
+                                this.csverroris = result1.data;
+                            }
+                            this.openloader = false;
+                        }, error => {
+                            console.log('Oooops!');
+                        });
                 }
                 else {
-                    this.csverroris = result1.data;
+                    this.csverroris = res.msg;
                 }
                 this.openloader = false;
             }, error => {
                 console.log('Oooops!');
             });
+    }
+    /*end*/
+
+
+    getjson() {
+        this.totalshapesnew = [];
+        SearchnewComponent.totalshapes = [];
+        SearchnewComponent.totalshapesnew = [];
+        this.uploadjson = (1 - this.uploadjson);
     }
     codeaddress(result){
         console.log('callown');
@@ -529,6 +467,7 @@ export class SearchnewComponent implements OnInit {
                 console.log(errorgeo);
             }
         }
+        this.uploadjson = 0;
     }
 
     callimport(){
@@ -548,22 +487,27 @@ export class SearchnewComponent implements OnInit {
                 type: 'polygon',
                 poly_arr: SearchnewComponent.totalshapesnew
             });
+            SearchnewComponent.totalshapesdemo.push({
+                type: 'polygon',
+                poly_arr: SearchnewComponent.totalshapesnew
+            });
+
             SearchnewComponent.totalshapesnew=[];
-            if ((SearchnewComponent.totalshapes.length) > 0) {
-                for (let i in SearchnewComponent.totalshapes) {
+            if ((SearchnewComponent.totalshapesdemo.length) > 0) {
+                for (let i in SearchnewComponent.totalshapesdemo) {
                     var totalshapearr = [];
-                    for(let j in SearchnewComponent.totalshapes[i].poly_arr){
-                        var spl = SearchnewComponent.totalshapes[i].poly_arr[j].split(" ");
+                    for(let j in SearchnewComponent.totalshapesdemo[i].poly_arr){
+                        var spl = SearchnewComponent.totalshapesdemo[i].poly_arr[j].split(" ");
                         var obj={
                             lat:parseFloat(spl[0]),
                             lng:parseFloat(spl[1]),
                         }
                         totalshapearr.push(obj);
                     }
-                    console.log('this.callpolygon(totalshapearr11111111);');
+                    console.log('this.callpolygon(totalshapearr11111111)' + i);
                     this.callpolygon(totalshapearr);
                 }
-                SearchnewComponent.totalshapes=[];
+                SearchnewComponent.totalshapesdemo=[];
             }
         }
         this.openloader = false;
@@ -627,6 +571,7 @@ export class SearchnewComponent implements OnInit {
         this.countrysubmenu = false;
         this.zipsubmenu = false;
         this.addresssubmenu = false;
+        this.radiusaddressmenu = false;
         this.radiussubmenu = false;
         this.mapsubmenu = false;
 
@@ -923,10 +868,15 @@ export class SearchnewComponent implements OnInit {
         }
     }
     removefromincomelist(id, name , item){
+        console.log(this.selected_income);
+        console.log(this.selected_incomev);
         let tempvar= id;
         let indexval: any = this.selected_incomev.indexOf(tempvar);
         this.selected_income.splice(indexval, 1);
         this.selected_incomev.splice(indexval, 1);
+        console.log('After splice');
+        console.log(this.selected_income);
+        console.log(this.selected_incomev);
         if(this.selected_income.length==0){
             this.incomesubmenu = false;
         }
@@ -970,9 +920,8 @@ export class SearchnewComponent implements OnInit {
             this.selected_residence.push({attr_id: id, attr_name: name});
             this.selected_residencev.push( id);
         }
-        if(this.selected_residence.length>0){
-            this.residencevaluesubmenu = true;
-        }
+
+
        /* else {
             this.selected_residence.splice(indexval, 1);
             this.selected_residencev.splice(indexval, 1);
@@ -1109,9 +1058,11 @@ export class SearchnewComponent implements OnInit {
         }
     }
     callforsearch() {
+        this.maporcsv_uploadmain = this.maporcsv_upload;
         this.selected_geoshapes = null;
-        this.zipsubmenu = false;
+      //  this.zipsubmenu = false;
         this.addresssubmenu = false;
+        this.radiusaddressmenu = false;
         this.radiussubmenu = false;
         this.mapsubmenu = false;
         this.Physical_Statearr = null;
@@ -1166,21 +1117,7 @@ export class SearchnewComponent implements OnInit {
                 this.Physical_Countryarr = this.Physical_Countryarr + ',' + this.selected_locationscountry[i].country;
             }
         }
-        if (this.zipval != null &&  this.zipval != '') {
-            this.selected_zip.push(this.zipval);
-        }
-        if (this.zipval1 != null &&  this.zipval1 != '') {
-            this.selected_zip.push(this.zipval1);
-        }
-        if (this.zipval2 != null &&  this.zipval2 != '') {
-            this.selected_zip.push(this.zipval2);
-        }
-        if (this.zipval3 != null &&  this.zipval3 != '') {
-            this.selected_zip.push(this.zipval3);
-        }
-        if (this.zipval4 != null &&  this.zipval4 != '') {
-            this.selected_zip.push(this.zipval4);
-        }
+
         for (let i in this.selected_zip) {
             this.selected_ziparr = this.selected_ziparr + ',' + this.selected_zip[i];
         }
@@ -1262,13 +1199,16 @@ export class SearchnewComponent implements OnInit {
         var link;
         if(this.tabopen == 1){
 
-             link = 'https://geofencedsp.com/assets/php/businesscall.php?token=' + this.tokenid;
+           //  link = 'https://geofencedsp.com/assets/php/businesscall.php?token=' + this.tokenid;
+             link = this._commonservices.businesscall+ this.tokenid;
         }
         else{
-             link = 'https://geofencedsp.com/assets/php/callconsumer.php?token=' + this.tokenid;
+           //  link = 'https://geofencedsp.com/assets/php/callconsumer.php?token=' + this.tokenid;
+            link = this._commonservices.callconsumer+ this.tokenid;
         }
         this.searchresult = null;
-        let data = {
+        this.searchcriteriais=  null;
+        let data =  this.searchcriteriais = {
             Physical_State: this.Physical_Statearr,
             Physical_City: this.Physical_Cityarr,
             Vendor_State_County: this.Physical_Countryarr,
@@ -1287,21 +1227,21 @@ export class SearchnewComponent implements OnInit {
             NetWorth_Code: this.selected_networtharr
         };
         console.log(data);
-
         if (SearchnewComponent.invalidzip==false && this.geoerror == null && this.errorvalgeomiles == null && this.errorvalgeozip == null && this.tabopen!=null) {
-            this.ziplength = this.selected_zip.length;
+           /* this.ziplength = this.selected_zip.length;
             if(this.ziplength>0){
                 this.zipsubmenu = true;
-            }
-            if(this.addressval!=null){
+            }*/
+           /* if(this.addressval!=null){
                 this.addresssubmenu = true;
-            }
+            }*/
+
             this.openloader = true;
             this._http.post(link, data)
                 .subscribe(res => {
                     this.openloader = false;
                     this.consumer_value = res;
-                    this.selected_zip = [];
+                 //   this.selected_zip = [];
                   //  this.geomiles = null;
                    // this.geoaddress = null;
                   //  this.geozip = null;
@@ -1311,7 +1251,20 @@ export class SearchnewComponent implements OnInit {
                 });
         }
     }
-
+    addresscheck(){
+        if(this.addressval!=null){
+            this.addresssubmenu = true;
+        }else{
+            this.addresssubmenu = false;
+        }
+    }
+    radiusaddresscheck(){
+        if(this.geomiles!=null && this.geoaddress!=null && this.geozip!=null){
+            this.radiusaddressmenu = true;
+        }else{
+            this.radiusaddressmenu = false;
+        }
+        }
                                             /*For State*/
 
     addtolist(id, name , item) {
@@ -1345,11 +1298,11 @@ export class SearchnewComponent implements OnInit {
                                                 /*For City*/
 
     show_cities(id) { // here id is abbreviation
-        console.log('call?');
-        console.log(this.uscities);
+      //  console.log('call?');
+       // console.log(this.uscities);
         this.show_state_cities=[];
         for (let i in this.uscities) {
-            console.log(this.uscities[i]);
+//            console.log(this.uscities[i]);
             if (this.uscities[i].short_state == id) {
                 this.show_state_cities.push(this.uscities[i]);
             }
@@ -1382,6 +1335,7 @@ export class SearchnewComponent implements OnInit {
             });
     }
     addtocitylist(city , item) {
+        console.log(this.selected_locationscityv);
         this.citysubmenu = false;
         let tempvar= city;
         let indexval: any = this.selected_locationscityv.indexOf(tempvar);
@@ -1451,6 +1405,31 @@ export class SearchnewComponent implements OnInit {
                                             /*For Zip*/
     zipvalidate(val){
         SearchnewComponent.zipvalidation(val);
+        if(SearchnewComponent.invalidzip ==false){
+            this.selected_zip = [];
+            if (this.zipval != null &&  this.zipval != '') {
+                this.selected_zip.push(this.zipval);
+            }
+            if (this.zipval1 != null &&  this.zipval1 != '') {
+                this.selected_zip.push(this.zipval1);
+            }
+            if (this.zipval2 != null &&  this.zipval2 != '') {
+                this.selected_zip.push(this.zipval2);
+            }
+            if (this.zipval3 != null &&  this.zipval3 != '') {
+                this.selected_zip.push(this.zipval3);
+            }
+            if (this.zipval4 != null &&  this.zipval4 != '') {
+                this.selected_zip.push(this.zipval4);
+            }
+            /* this.ziplength = this.selected_zip.length;
+             if(this.ziplength>0){
+             this.zipsubmenu = true;
+             }*/
+            if(this.selected_zip>0){
+                this.zipsubmenu = true;
+            }
+        }
     }
 
     static zipvalidation(val) {
@@ -1465,8 +1444,38 @@ export class SearchnewComponent implements OnInit {
             return SearchnewComponent.invalidzip;
         }
     }
+    removefromziplist(item){
+        console.log('this.selected_zip--before');
+        console.log(this.selected_zip);
+        let indexval: any = this.selected_zip.indexOf(item);
+        this.selected_zip.splice(indexval, 1);
+        if(this.selected_zip.length==0){
+            this.zipsubmenu = false;
+        }
+        console.log('this.selected_zip--after');
+        console.log(this.selected_zip);
+        this.zipval = this.zipval1 = this.zipval2 = this.zipval3 = this.zipval4 = null;
+        for(let i in this.selected_zip){
+            if(parseInt(i)==0) this.zipval = this.selected_zip[0];
+            if(parseInt(i)==1) this.zipval1 = this.selected_zip[1];
+            if(parseInt(i)==2) this.zipval2 = this.selected_zip[2];
+            if(parseInt(i)==3) this.zipval3 = this.selected_zip[3];
+            if(parseInt(i)==4) this.zipval4 = this.selected_zip[4];
+        }
+    }
+                                              /*For Address*/
+    removeaddress(){
+        this.addressval = null;
+    }
+                                              /*For Radius Address*/
+    removeradiusaddress(){
+        this.geomiles = null;
+        this.geoaddress = null;
+        this.geozip = null;
+    }
 
-    openmapdiv() {
+    openmapdiv(type) {
+        this.maptype=type;
         this.myLatLng = { lat: 40.785091, lng: -73.968285 };
         this.modalmapShown = true;
         setTimeout(() => {
@@ -1474,6 +1483,15 @@ export class SearchnewComponent implements OnInit {
                 center: this.myLatLng,
                 zoom: 8
             });
+            if(type==1){
+
+                // just to make csv upload blank -start
+                this.totalshapesnew = [];
+                SearchnewComponent.totalshapes = [];
+                SearchnewComponent.totalshapesnew = [];
+                this.uploadarray = [];
+                // just to make csv upload blank -end
+
         this.drawingManager = new google.maps.drawing.DrawingManager({
             drawingMode: google.maps.drawing.OverlayType.POLYGON,
             drawingControl: true,
@@ -1507,9 +1525,12 @@ export class SearchnewComponent implements OnInit {
                 console.log('SearchnewComponent.totalshapes++------+');
                 console.log(SearchnewComponent.totalshapes);
                 this.totalshapesnew = SearchnewComponent.totalshapes;
+                console.log('***********************************************************************');
+                this.maporcsv_upload = 'map';
                /* console.log('this.totalshapesnew++------+');
                 console.log(this.totalshapesnew);*/
             });
+
             if ((SearchnewComponent.totalshapes.length) > 0) {
                   for (let i in SearchnewComponent.totalshapes) {
                       var totalshapearr = [];
@@ -1525,11 +1546,16 @@ export class SearchnewComponent implements OnInit {
                     this.callpolygon(totalshapearr);
                   }
             }
+            }
         },500);
     }
     deletepolyshape( item: any ) {
+        console.log('call delt');
         let indexval: any = SearchnewComponent.totalshapes.indexOf(item);
         SearchnewComponent.totalshapes.splice(indexval, 1);
+        if(SearchnewComponent.totalshapes.length==0){
+            this.maporcsv_upload = null;
+        }
 
        /* console.log('delete polyshapre after SearchnewComponent.totalshapes');
         console.log(SearchnewComponent.totalshapes);*/
@@ -1576,6 +1602,8 @@ export class SearchnewComponent implements OnInit {
             fillColor: '#0000FF',
             fillOpacity: 0.35
         });
+        console.log('bermudaTriangle');
+        console.log(bermudaTriangle);
         bermudaTriangle.setMap(this.map);
     }
     onHidden() {
@@ -1589,10 +1617,12 @@ export class SearchnewComponent implements OnInit {
         let timestampis = new Date().getTime();
         var link;
         if(this.tabopen==1){
-             link = 'https://geofencedsp.com/assets/php/businesssearchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+            // link = 'https://geofencedsp.com/assets/php/businesssearchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+            link = this._commonservices.businesssearchresults + this.tokenid + '&v=' + timestampis;
         }
         else{
-             link = 'https://geofencedsp.com/assets/php/searchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+           //  link = 'https://geofencedsp.com/assets/php/searchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+             link = this._commonservices.searchresults + this.tokenid + '&v=' + timestampis;
         }
         this._http.get(link)
             .subscribe(res => {
@@ -1614,7 +1644,8 @@ export class SearchnewComponent implements OnInit {
             }, error => {
                 console.log('Oooops!');
             });
-    }zz
+    }
+
     open_submit_audience_div(){
         this.Modal_submit_search_div = true;
     }
@@ -1626,11 +1657,16 @@ export class SearchnewComponent implements OnInit {
         if (this.dataForm.valid){
             let timestampis = new Date().getTime();
             let link;
+            let type;
+            if(this.maporcsv_upload=='map' || this.maporcsv_upload=='csv' )
+            this.maporcsv_uploadmain = this.maporcsv_upload;
             if(this.tabopen==1){
-                link = 'https://geofencedsp.com/assets/php/businesssearchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+              //  link = 'https://geofencedsp.com/assets/php/businesssearchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+                link = this._commonservices.businesssearchresults + this.tokenid + '&v=' + timestampis;
             }
             else{
-                link = 'https://geofencedsp.com/assets/php/searchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+               // link = 'https://geofencedsp.com/assets/php/searchresults.php?token=' + this.tokenid + '&v=' + timestampis;
+                link = this._commonservices.searchresults + this.tokenid + '&v=' + timestampis;
             }
             this.openloader = true;
             this._http.get(link)
@@ -1638,8 +1674,9 @@ export class SearchnewComponent implements OnInit {
                     this.count_loop=0;
                     this.searchresult = res;
                     this.openloader = false;
+                    if(this.searchresult != null){
                     this.call_to_save_data_to_audience(formval);
-
+                    }
                 }, error => {
                     console.log('Oooops!');
                 });
@@ -1654,7 +1691,6 @@ export class SearchnewComponent implements OnInit {
             audiencename: formval.audiencename,
             audiencedescription: formval.audiencedescription,
             searchcount: this.consumer_value.count.SearchCount,
-            // audiencedata: this.a,
             added_by: this.mailcookiedetails,
         };
         this._http.post(link, data)
@@ -1662,13 +1698,53 @@ export class SearchnewComponent implements OnInit {
                 let result: any;
                 result = res;
                 console.log(result.id);
-                // this.a ='';
-                //  this.router.navigate(['/adbannerlist']);
-                this.call_to_save_search_result(formval,result.id);
+                this.savesearchcriteriaofaudience(result.id,formval);
             }, error => {
                 console.log('Oooops!');
             });
 
+    }
+    savesearchcriteriaofaudience(id,formval){
+        let link = this.serverurl + 'searchcriteriaadd';
+        let searchtype;
+        console.log('this.tabopen '+this.tabopen);
+        if(this.tabopen==1) {searchtype = 'business';}
+        else {searchtype = 'consumer';}
+
+        let data = {
+            Physical_State: this.searchcriteriais.Physical_State,
+            Physical_City: this.searchcriteriais.Physical_City,
+            Vendor_State_County: this.searchcriteriais.Vendor_State_County,
+            Physical_Zip: this.searchcriteriais.Physical_Zip,
+            Physical_Address: this.searchcriteriais.Physical_Address,
+            proximity: this.searchcriteriais.proximity,
+            Ind_Age_Code: this.searchcriteriais.Ind_Age_Code,
+            Ind_Gender_Code: this.searchcriteriais.Ind_Gender_Code,
+            Ind_Household_Rank_Code: this.searchcriteriais.Ind_Household_Rank_Code,
+            Income_Code: this.searchcriteriais.Income_Code,
+            Home_Market_Value: this.searchcriteriais.Home_Market_Value,
+            Median_HseHld_Income_Code: this.searchcriteriais.Median_HseHld_Income_Code,
+            Median_Home_Value_Code: this.searchcriteriais.Median_Home_Value_Code,
+            Length_Of_Residence_Code: this.searchcriteriais.Length_Of_Residence_Code,
+            Marital_Status_Code: this.searchcriteriais.Marital_Status_Code,
+            NetWorth_Code: this.searchcriteriais.NetWorth_Code,
+            audience_id: id,
+            searchtype: searchtype,
+            maporcsv_upload:this.maporcsv_uploadmain
+        };
+        if(data!=null){
+        this._http.post(link, data)
+            .subscribe(res => {
+                let result : any;
+                result = res;
+                if(result.status=='success'){
+                    this.router.navigate(['/audiencelist']);
+                    //  this.call_to_save_search_result(formval,id);
+                }
+            }, error => {
+                console.log('Oooops!');
+            });
+    }
     }
     call_to_save_search_result(formval,id){
         if(this.searchresult!=null){
@@ -1681,6 +1757,7 @@ export class SearchnewComponent implements OnInit {
             let j = 0;
             let k = 20;
             this.i = 1;
+            console.log(this.count_loop);
             for(this.i=1;this.i<=this.count_loop;this.i++){
                 this.a ='';
                 for(j;j<k;j++){
@@ -1693,7 +1770,6 @@ export class SearchnewComponent implements OnInit {
             }
         }
     }
-
     call_to_server(formval,id){
         let link = this.serverurl + 'audiencedataadd';
         let data = {
@@ -1710,5 +1786,11 @@ export class SearchnewComponent implements OnInit {
             }, error => {
                 console.log('Oooops!');
             });
+    }
+    showmappointer1(item){
+        let mappoint = item.poly_arr[0].split(' ');
+        this.myLatLng = { lat: parseFloat(mappoint[1]), lng: parseFloat(mappoint[0]) };
+        this.map.setCenter(this.myLatLng);
+        this.map.setZoom(10);
     }
 }

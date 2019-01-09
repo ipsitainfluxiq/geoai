@@ -79,7 +79,9 @@ export class AllwalletlistComponent implements OnInit {
                 let result: any;
                  result = res;
                 this.userdetails = result.res;
+                if(this.userdetails!=null){
                 this.typeis=this.userdetails[0].type;
+                }
             }, error => {
                 console.log('Oooops!');
             });

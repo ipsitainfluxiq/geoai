@@ -1,68 +1,80 @@
 <app-headernew></app-headernew>
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 dashboard_right">
-  <div class="dashboard_right_wrapper">
-    <div class="dashboard1_div1 table-responsive">
-      <h4>Helpdesk List</h4>
 
-      <div style=" padding-bottom: 10px; width: 100%;">
-
-        <div class="adminserchdiv">
-          <label>Search :</label> <input type="text" #listFilter (keyup)="0">
+<div class="adminmainwarpper audiencelistwrapper topsearchlistwapper topsearchlistwappernew helpdesklistwrapper">
+  <div class="bodytopsearchlistwrapper">
+    <div class="bodytopactiondiv">
+      <div class="formblock tosearchlist">
+        <div class="form-grounewp">
+          <div class="txtfield">
+           <!--<input type="text" [(ngModel)]="filterval1" (keyup)="searchbyval()">-->
+            <label>Search</label>
+            <input type="text" #listFilter (keyup)="0">
+          </div>
+          <div class="txtfield">
+            <a [routerLink]="['/helpdeskadd']" class="adadminlink addhelpdesk">Add Employee</a>
+          </div>
         </div>
-
-        <a [routerLink]="['/helpdeskadd']" class="adadminlink">Add Helpdesk</a>
-
         <div class="clearfix"></div>
-      </div>
-      <div class="clearfix"></div>
-
-      <div class="tablediv">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" *ngIf="datalist?.length>0">
-          <tr>
-            <th>#</th>
-            <th>Name <b [ngClass]="getSortClass('firstname')" (click)="manageSorting('firstname')" ></b></th>
-            <th>Email<b [ngClass]="getSortClass('email')" (click)="manageSorting('email')" ></b></th>
-            <th>Action</th>
-          </tr>
-
-          <tbody *ngFor="let item of datalist | paginate: { itemsPerPage: 5, currentPage: p } | orderBy:orderbyquery:orderbytype | usersearch:listFilter.value; let i = index">
-          <tr>
-            <td>{{i+1}}</td>
-            <td>{{item.firstname}} {{item.lastname}}</td>
-            <td>{{item.email}}</td>
-            <td><!--<a [routerLink]="['/helpdeskedit',item._id]">Edit</a>-->
-              <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal" (click)="delConfirm(item._id)">Delete</a></td>
-          </tr>
-          </tbody>
-        </table>
-        <div *ngIf="datalist?.length==0" class="norecord">
-          <h4>No Records Available</h4>
-        </div>
       </div>
     </div>
   </div>
 
+  <div class="container-fluid bodymaindiv">
+    <div id="no-more-tables">
+      <table class="col-md-12 table-bordered table-striped table-condensed cf" *ngIf="datalist?.length>0">
+        <thead class="cf">
+        <tr>
+          <th class="numeric text-center">#</th>
+          <th class="numeric text-center">Name</th>
+          <th class="numeric text-center">Email id</th>
+          <th class="numeric text-center">Manage User</th>
+          <th class="numeric text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of datalist|  usersearch:listFilter.value | paginate: { itemsPerPage: 10, currentPage: p } ; let i=index">
+          <td data-title="#" class=" text-center">{{i+1}}</td>
+          <td  data-title="Name" class=" text-center" >{{item.firstname}} {{item.lastname}}</td>
+          <td  data-title="Email id" class=" text-center" >{{item.email}} </td>
+          <td data-title="Manage User">No Of User:{{shownumber(item.Userdetails)}}<br/>
+            <button class="actionbtn_btnblack" (click)="openusermodal(item)">Manage users</button>
+          </td>
+          <td  data-title="Action" class=" text-center" >
+            <div class="actionbtnlists">
+              <a class="actionbtn_btnpurple" [routerLink]="['/helpdeskedit',item._id]">Edit</a>
+              <a class="actionbtn_btnpink" href="javascript:void(0);" data-toggle="modal" data-target="#myModal" (click)="delConfirm(item._id)">Delete</a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="datalist?.length==0" class="norecord">
+        <h4>No Records Available</h4>
+      </div>
+      <div class="pagination_wrapper" *ngIf="datalist?.length>10">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="clearfix"></div>
-<div class="pagination_wrapper" *ngIf="datalist?.length>5">
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
-</div>
 <app-footernew></app-footernew>
 
-<!--<button type="button" class="btn btn-primary" (click)="staticModal.show()">SStatic modal</button>-->
-<div *ngIf="isModalShown" class="modal fade" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+<div *ngIf="isModalShown" class="modal fade commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
+  <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
+        <div class="commonlogodiv">
+          <img src="../../assets/images/geoaiadmin_logo_new.png">
+        </div>
         <h4 class="modal-title pull-left">Confirm delete</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Are you sure to delete this helpdesk?</p>
+        <p>Are you sure to delete this Employee?</p>
         <!--        Click <b>&times;</b> to close modal.-->
       </div>
       <div class="modal-footer">
@@ -72,8 +84,71 @@
     </div>
   </div>
 </div>
-<!--<app-footer></app-footer>-->
 
-<div class="clearfix"></div>
 
-<!--  ______________________________________________page_initiation_______________________________________  -->
+<div *ngIf="is_user_Modal" class="modal fade useremployeemodal commonclsmodal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="commonlogodiv">
+          <img src="../../assets/images/geoaiadmin_logo_new.png">
+        </div>
+        <h4 class="modal-title pull-left" >Manage Users</h4>
+        <h4 class="modal-title pull-left" ></h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix"></div>
+
+          <mwl-text-input-autocomplete-container>
+            <input type="text"
+                   placeholder="Type @ to search..."
+                   class="form-control"
+                   rows="5"
+                   [(ngModel)]="formControluserValue"
+                   mwlTextInputAutocomplete
+                   [findChoices]="findChoices"
+                   [getChoiceLabel]="getChoiceLabel"
+            >
+          </mwl-text-input-autocomplete-container>
+          <div class="selectedcitycls" *ngIf="getlengthfval()>0">
+            <h4 class="headingusers">Selected Users</h4>
+            <div class="adddivp">
+              <div *ngFor="let item of getuseravl()"  class="showcitiesclass selectedusers" >{{item}}<span (click)="removeuser(item)"></span></div>
+            </div>
+            <button (click)="manageuser()">Add Users</button>
+
+        </div>
+        <table class="col-md-12 table-bordered table-striped table-condensed cf">
+          <thead class="cf">
+          <tr>
+            <th class="numeric text-center">#</th>
+            <th class="numeric text-center">Name</th>
+            <th class="numeric text-center">Email id</th>
+            <th class="numeric text-center" *ngIf="typeis=='Users'">Company Name</th>
+            <th class="numeric text-center" *ngIf="typeis=='Users'">Company Website</th>
+            <th class="numeric text-center" *ngIf="typeis=='Users'">City</th>
+            <th class="numeric text-center" *ngIf="typeis=='Users'">Country</th>
+            <th class="numeric text-center">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of get_users_has_this_helpdeskid ; let i=index">
+            <td data-title="campaign name" class=" text-center">{{i+1}}</td>
+            <td  data-title="campaign name" class=" text-center" >{{item.firstname}} {{item.lastname}}</td>
+            <td  data-title="campaign name" class=" text-center" >{{item.email}} </td>
+            <td  data-title="campaign name" class=" text-center" *ngIf="typeis=='Users'">{{item.companyname}} </td>
+            <td  data-title="campaign name" class=" text-center" *ngIf="typeis=='Users'">{{item.companywebsite}} </td>
+            <td  data-title="campaign name" class=" text-center" *ngIf="typeis=='Users'">{{item.city}} </td>
+            <td  data-title="campaign name" class=" text-center" *ngIf="typeis=='Users'">{{item.country}} </td>
+            <td  data-title="campaign name" class=" text-center" ><a href="javascript:void(0);" data-toggle="modal" data-target="#myModal" (click)="remove_helpdeskid_from_this_user(item._id)" class="actionbtn_btnpink">Remove</a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
